@@ -15,6 +15,7 @@
 		14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACEE1FDA1D6C0095003F /* LaunchScreen.storyboard */; };
 		14A0ACFB1FDA1D6D0095003F /* QianDing007Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0ACFA1FDA1D6D0095003F /* QianDing007Tests.m */; };
 		14A0AD061FDA1D6D0095003F /* QianDing007UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */; };
+		F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,9 @@
 		14A0AD011FDA1D6D0095003F /* QianDing007UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QianDing007UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QianDing007UITests.m; sourceTree = "<group>"; };
 		14A0AD071FDA1D6D0095003F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.debug.xcconfig"; sourceTree = "<group>"; };
+		697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QianDing007.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.release.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,10 +86,13 @@
 		14A0ACD41FDA1D6C0095003F = {
 			isa = PBXGroup;
 			children = (
+				14B4A8171FDE100600B5183C /* QDClass */,
 				14A0ACDF1FDA1D6C0095003F /* QianDing007 */,
 				14A0ACF91FDA1D6D0095003F /* QianDing007Tests */,
 				14A0AD041FDA1D6D0095003F /* QianDing007UITests */,
 				14A0ACDE1FDA1D6C0095003F /* Products */,
+				ACA800DADD83B958E1D91658 /* Pods */,
+				7EA40306F99091D35277AFE5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -140,6 +148,78 @@
 			path = QianDing007UITests;
 			sourceTree = "<group>";
 		};
+		14B4A8171FDE100600B5183C /* QDClass */ = {
+			isa = PBXGroup;
+			children = (
+				14B4A8181FDE102100B5183C /* QDLoginPage(登录) */,
+				14B4A81A1FDE113F00B5183C /* QDMyPage(我的) */,
+				14B4A8191FDE10C100B5183C /* QDReceivablesPage(收款) */,
+			);
+			name = QDClass;
+			sourceTree = "<group>";
+		};
+		14B4A8181FDE102100B5183C /* QDLoginPage(登录) */ = {
+			isa = PBXGroup;
+			children = (
+				14B4A81D1FDE15DD00B5183C /* QDGetPassWord(获取密码) */,
+				14B4A81C1FDE15D900B5183C /* QDQuickLogin(三方登录)  */,
+				14B4A81B1FDE15D100B5183C /* QDRegister(注册) */,
+			);
+			name = "QDLoginPage(登录)";
+			sourceTree = "<group>";
+		};
+		14B4A8191FDE10C100B5183C /* QDReceivablesPage(收款) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "QDReceivablesPage(收款)";
+			sourceTree = "<group>";
+		};
+		14B4A81A1FDE113F00B5183C /* QDMyPage(我的) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "QDMyPage(我的)";
+			sourceTree = "<group>";
+		};
+		14B4A81B1FDE15D100B5183C /* QDRegister(注册) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "QDRegister(注册)";
+			sourceTree = "<group>";
+		};
+		14B4A81C1FDE15D900B5183C /* QDQuickLogin(三方登录)  */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "QDQuickLogin(三方登录) ";
+			sourceTree = "<group>";
+		};
+		14B4A81D1FDE15DD00B5183C /* QDGetPassWord(获取密码) */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "QDGetPassWord(获取密码)";
+			sourceTree = "<group>";
+		};
+		7EA40306F99091D35277AFE5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ACA800DADD83B958E1D91658 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */,
+				B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -147,9 +227,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 14A0AD0A1FDA1D6D0095003F /* Build configuration list for PBXNativeTarget "QianDing007" */;
 			buildPhases = (
+				CB55666BB9684F30AE20BDD4 /* [CP] Check Pods Manifest.lock */,
 				14A0ACD91FDA1D6C0095003F /* Sources */,
 				14A0ACDA1FDA1D6C0095003F /* Frameworks */,
 				14A0ACDB1FDA1D6C0095003F /* Resources */,
+				584CF9C96091DCE8B02EA3D7 /* [CP] Embed Pods Frameworks */,
+				816F1EB865D4C13612757DE8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -270,6 +353,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		584CF9C96091DCE8B02EA3D7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		816F1EB865D4C13612757DE8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CB55666BB9684F30AE20BDD4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		14A0ACD91FDA1D6C0095003F /* Sources */ = {
@@ -423,6 +554,7 @@
 		};
 		14A0AD0B1FDA1D6D0095003F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9MC53XV58;
@@ -435,6 +567,7 @@
 		};
 		14A0AD0C1FDA1D6D0095003F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9MC53XV58;
@@ -514,6 +647,7 @@
 				14A0AD0C1FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		14A0AD0D1FDA1D6D0095003F /* Build configuration list for PBXNativeTarget "QianDing007Tests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +656,7 @@
 				14A0AD0F1FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		14A0AD101FDA1D6D0095003F /* Build configuration list for PBXNativeTarget "QianDing007UITests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +665,7 @@
 				14A0AD121FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
