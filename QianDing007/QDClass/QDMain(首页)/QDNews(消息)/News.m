@@ -10,20 +10,25 @@
 #import "CustomNewsCell.h"
 @interface News (){
     UIView *topView;//导航视图
-
+    
 }
 @end
 
 @implementation News
-
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self createTopView];
     [self createTabelView];
     
-
-    // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -36,6 +41,7 @@
     [self.view addSubview:self.tableView];
     _tableView.separatorStyle = NO;
     _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom).offset(10);
         make.left.right.equalTo(self.view);
@@ -90,11 +96,7 @@
         cell = [[CustomNewsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     cell.contentView.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    cell.textLabel.text = [NSString stringWithFormat:@"%ld",(long)indexPath.row];
-//    cell.textLabel.font = [UIFont systemFontOfSize:18];
-//    cell.textLabel.textColor = [UIColor blackColor];
-//    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-//    [cell addDataSourceToCell:@"1" timeMonth:@"1" statePay:@"1" reasonFail:@"1" timeHour:@"1"];
+    
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -112,7 +114,6 @@
     UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
     if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
         statusBar.backgroundColor = color;
-        
         
     }
 }

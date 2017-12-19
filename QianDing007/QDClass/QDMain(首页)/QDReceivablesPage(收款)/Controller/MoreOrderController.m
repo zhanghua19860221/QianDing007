@@ -36,6 +36,15 @@
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     // Do any additional setup after loading the view.
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+
+
+}
 /**
  创建子控制器
  */
@@ -57,7 +66,7 @@
     scrollView.backgroundColor = [UIColor whiteColor];
     scrollView.pagingEnabled = YES;
     [self.view addSubview:scrollView];
-    //    scrollView.userInteractionEnabled = NO;
+    scrollView.delegate = self ;
     scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, SC_HEIGHT);
     [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tabberView.mas_bottom).offset(20);
@@ -81,7 +90,6 @@
 - (void)createTabberView{
     
     NSArray *textArray = @[@"处理中",@"已到账",@"退 款"];
-    
     tabberView = [[UIView alloc] init];
     tabberView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:tabberView];
@@ -140,8 +148,8 @@
  创建导航栏
  */
 - (void)createNavgation{
-    
-    self.navigationItem.title = @"注册";
+
+    self.navigationItem.title = @"收款记录";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
     [leftButton setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
@@ -150,6 +158,16 @@
     self.navigationItem.leftBarButtonItem = leftItem;
 
 }
+- (void)leftBackClick{
+    
+    //展示tabBar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma ***********************************************************
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

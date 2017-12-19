@@ -9,7 +9,6 @@
 #import "ReceivablesPage.h"
 #import "CustomShowDataView.h"
 #import "MoreOrderController.h"
-
 @interface ReceivablesPage (){
     
     UIView *mebInfoView;//会员信息展示视图
@@ -21,19 +20,30 @@
 @end
 
 @implementation ReceivablesPage
-
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createBasicView];
+
+    
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self createMebInfoView];
     [self createProfitView];
     [self createMyView];
     [self createCodeView];
+    
 }
 /**
  会员信息视图
@@ -131,9 +141,10 @@
     
 }
 -(void)showMoreBtn{
-    MoreOrderController *orderVc = [[MoreOrderController alloc] init];
-    [self presentViewController:orderVc animated:NO completion:nil];
 
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    MoreOrderController *orderVc = [[MoreOrderController alloc] init];
+    [self.navigationController pushViewController:orderVc animated:YES];
 }
 /**
  创建我的等级
@@ -207,6 +218,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 
 }
 - (void)didReceiveMemoryWarning {

@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MiddleViewController : UIViewController
+@interface MiddleViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (strong , nonatomic) UITableView *tableView;
+
 
 @end

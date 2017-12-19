@@ -1,81 +1,81 @@
 //
-//  HomeController.m
+//  RootViewController.m
 //  QianDing007
 //
-//  Created by 张华 on 17/12/13.
+//  Created by 张华 on 17/12/19.
 //  Copyright © 2017年 张华. All rights reserved.
 //
 
-#import "HomeController.h"
+#import "RootViewController.h"
 #import "ReceivablesPage.h"
 #import "MyPage.h"
 #import "News.h"
-@interface HomeController (){
+@interface RootViewController ()
 
-    ReceivablesPage *receivablesVC;//收款界面
-    MyPage *myPageVC;//我的界面
-    News *newsVC;//消息界面
-    UIScrollView *scrollView;//滚动界面
-    UIButton *selectedButton;//记录当前tabber选中的按钮
-    
-}
 @end
 
-@implementation HomeController
+@implementation RootViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self createSubViewController];
-    [self createScrollerView];
-    [self createTabber];
-    self.view.backgroundColor = [UIColor orangeColor];
-    // Do any additional setup after loading the view.
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
 }
-- (void)viewWillAppear:(BOOL)animated{
+-(void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-
-}
-/**
- 创建子控制器
- */
-- (void)createSubViewController{
-    receivablesVC = [[ReceivablesPage alloc] init];
-    newsVC = [[News alloc] init];
-    myPageVC = [[MyPage alloc] init];
-
-    [self addChildViewController:receivablesVC];
-    [self addChildViewController:newsVC];
-    [self addChildViewController:myPageVC];
+    [self.tabBar removeFromSuperview];
 }
 
-/**
- 创建tabber按钮
- */
-- (void)createTabber{
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.view.backgroundColor=[UIColor orangeColor];
+    [self  creatSubView];
+    [self  creatTabBarView];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar:) name:@"showTabBar" object:nil];
+    // Do any additional setup after loading the view.
+}
+- (void)removeTabBar:(NSNotification *)noti{
+
+    _tabberView.hidden = YES;
+}
+- (void)showTabBar:(NSNotification *)noti{
+    
+    _tabberView.hidden = NO;
+}
+
+- (void)creatTabBarView{
     
     NSArray *tabDafImageArray = @[@"操作栏收款未选中",@"操作栏消息未选中",@"操作栏我的未选中"];
     NSArray *tabSelImageArray = @[@"操作栏收款选中",@"操作栏消息选中",@"操作栏我的选中"];
     
-    UIView *tabberView = [[UIView alloc] init];
-    tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
-    tabberView.layer.borderWidth = 1;
-    tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
-    tabberView.frame = CGRectMake(0, SC_HEIGHT-44, SC_WIDTH, 44);
-    [self.view addSubview:tabberView];
-
+    _tabberView = [[UIView alloc] init];
+    _tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
+    _tabberView.layer.borderWidth = 1;
+    _tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
+    _tabberView.frame = CGRectMake(0, SC_HEIGHT-44, SC_WIDTH, 44);
+    [self.view addSubview:_tabberView];
+    
     for (int i=0; i<3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         button.tag = 100+i;
         button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0, 44);
-        [tabberView addSubview:button];
+        [_tabberView addSubview:button];
         
         if (0==i) {
-            
+
             button.selected=YES;
-            selectedButton=button;
+            _selectedButton=button;
         }
         [button setImage:[UIImage imageNamed:tabDafImageArray[i]] forState:UIControlStateNormal];
         [button setImage:[UIImage imageNamed:tabSelImageArray[i]] forState:UIControlStateSelected];
@@ -83,34 +83,33 @@
         [button addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
-
-/**
- Tabber按钮点击事件
- */
-- (void)selectBtn:(UIButton *)btn{
-    
-    if (selectedButton!=btn) {
-        selectedButton.selected=NO;
+-(void)selectBtn:(UIButton*)btn
+{
+    if (_selectedButton!=btn) {
+        _selectedButton.selected=NO;
         btn.selected=YES;
-        selectedButton=btn;
+        _selectedButton=btn;
     }
+    self.selectedIndex=btn.tag-100;
+    
     switch (btn.tag) {
         case 100:
-            scrollView.contentOffset = CGPointMake(0, 0);
             [self setStatusBarBackgroundColor:[UIColor whiteColor]];
             break;
         case 101:
-            scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
             [self setStatusBarBackgroundColor:[UIColor redColor]];
             break;
         case 102:
-            scrollView.contentOffset = CGPointMake(SC_WIDTH*2.0, 0);
             [self setStatusBarBackgroundColor:[UIColor redColor]];
+
             break;
         default:
             break;
     }
+    
+
 }
+
 //设置状态栏颜色
 - (void)setStatusBarBackgroundColor:(UIColor *)color {
     
@@ -119,30 +118,22 @@
         statusBar.backgroundColor = color;
     }
 }
-/**
- scrollerView展示控制器
- */
-- (void)createScrollerView{
+
+-(void)creatSubView
+{
+    ReceivablesPage*first=[[ReceivablesPage alloc] init];
+    UINavigationController*nav=[[UINavigationController alloc] initWithRootViewController:first];
+
+    MyPage *third=[[MyPage alloc] init];
+    News*Second=[[News alloc] init];
     
-    scrollView = [[UIScrollView alloc] init];
-    scrollView.backgroundColor = [UIColor whiteColor];
-    scrollView.pagingEnabled = YES;
-    [self.view addSubview:scrollView];
-//    scrollView.userInteractionEnabled = NO;
-    scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, SC_HEIGHT);
-    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-         make.edges.mas_equalTo(self.view);
-    }];
+    self.viewControllers=@[nav,Second,third];
     
-    for (int i=0; i<3; i++) {
-        UIViewController *vc = self.childViewControllers[i];
-        vc.view.frame= CGRectMake(SC_WIDTH*i, 0, SC_WIDTH, SC_HEIGHT);
-        [scrollView addSubview:vc.view];
-    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
+    
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 
 }
 - (void)didReceiveMemoryWarning {

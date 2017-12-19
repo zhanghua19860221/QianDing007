@@ -10,7 +10,7 @@
 #import "customTextFieldView.h"
 #import "GetPassWord.h"
 #import "RegisterController.h"
-#import "HomeController.h"
+#import "RootViewController.h"
 @interface LoginMain (){
 
     UIImageView *logoImageView;//logo图标
@@ -110,9 +110,9 @@
 }
 - (void)clickLoginBtn{
     
-    HomeController *home = [[HomeController alloc] init];
-    [self.navigationController pushViewController:home animated:NO];
     
+    RootViewController *home = [[RootViewController alloc] init];
+    [self.navigationController pushViewController:home animated:NO];
 }
 - (void)createGetPassWordBtn{
     

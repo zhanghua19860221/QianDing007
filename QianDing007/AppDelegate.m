@@ -8,7 +8,9 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "HomeController.h"
+//#import "HomeController.h"
+#import "RootViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -18,13 +20,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     LoginMain *root = [[LoginMain alloc] init];
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
 
-//    HomeController *root = [[HomeController alloc] init];
+//    RootViewController *root = [[RootViewController alloc] init];
 //    self.window.rootViewController = root ;
     // Override point for customization after application launch.
     return YES;

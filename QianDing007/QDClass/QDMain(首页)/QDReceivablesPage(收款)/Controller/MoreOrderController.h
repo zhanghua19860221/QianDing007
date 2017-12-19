@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MoreOrderController : UIViewController
+@interface MoreOrderController : UIViewController<UIScrollViewDelegate>
+
 
 @end
