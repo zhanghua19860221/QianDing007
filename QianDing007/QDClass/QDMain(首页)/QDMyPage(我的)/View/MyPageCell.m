@@ -42,8 +42,19 @@
     self.secondLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.secondLabel];
 
+
+
+}
+
+-(void)addDataSourceView:(MyPageModel*)model{
+    
+    [self.iconView setImage:[UIImage imageNamed:model.firstStr]];
+    self.firstLabel.text = model.secondStr;
+    self.secondLabel.text = model.thirdStr;
+    [self.directionBtn setImage:[UIImage imageNamed:model.fourStr] forState:UIControlStateNormal];
+    
     [self.iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(15);
+        make.centerY.equalTo(self.contentView.mas_centerY);
         make.left.equalTo(self).offset(15);
         make.width.equalTo(@22);
         make.height.mas_offset(22);
@@ -51,7 +62,7 @@
     }];
     
     [self.firstLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(15);
+        make.centerY.equalTo(self.contentView.mas_centerY);
         make.left.equalTo(self.iconView.mas_right).offset(10);
         make.width.mas_offset(70);
         make.height.mas_offset(22);
@@ -59,31 +70,23 @@
     }];
     
     [self.directionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(15);
+        make.centerY.equalTo(self.contentView.mas_centerY);
         make.right.equalTo(self).offset(-15);
         make.width.mas_offset(20);
         make.height.mas_offset(22);
         
     }];
     
-    [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(15);
-        make.right.equalTo(self.directionBtn.mas_left).offset(-15);
-        make.width.mas_offset(90);
-        make.height.mas_offset(22);
-        
-    }];
+    if ([model.thirdStr isEqualToString:@"未认证"]){
+        [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.contentView.mas_centerY);
+            make.right.equalTo(self.directionBtn.mas_left).offset(-15);
+            make.width.mas_offset(90);
+            make.height.mas_offset(22);
+            
+        }];
+    }
 
-}
-//@property(strong , nonatomic) UIImageView *iconView;
-//@property(strong , nonatomic) UILabel *firstLabel;
-//@property(strong , nonatomic) UILabel *secondLabel;
-//@property(strong , nonatomic) UIButton *directionBtn;
-
--(void)addDataSourceView:(MyPageModel*)model{
-    
-    [self.iconView setImage:[UIImage imageNamed:model.firstStr]];
-//    self.firstLabel.text = model.
     
 
 }
