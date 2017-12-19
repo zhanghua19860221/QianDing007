@@ -10,9 +10,12 @@
 
 @interface customTextFieldView : UIView<UITextFieldDelegate>
 @property (strong , nonatomic) UIImageView *iconView;
-@property (strong , nonatomic) UITextField *textFile;
 @property (strong , nonatomic) UIImageView *lineView;
-@property (strong , nonatomic) UIColor *defaultColor;
-@property (strong , nonatomic) UIColor *selectColor;
-- (id)initView:(UIImage*)defaultImage selectImage:(UIImage*)selectImage defaultColor:(UIColor*)defaultColor selectColor:(UIColor*)selectColor;
+@property (strong , nonatomic) UITextField *textFile;
+@property (strong , nonatomic) NSString *defaultText;
+@property (strong , nonatomic) UIImage *defaultImage;
+@property (strong , nonatomic) UIImage *selectImage;
+
+
+- (id)initView:(UIImage*)defaultImage selectImage:(UIImage*)selectImage defaultText:(NSString*)defaultText;
 @end

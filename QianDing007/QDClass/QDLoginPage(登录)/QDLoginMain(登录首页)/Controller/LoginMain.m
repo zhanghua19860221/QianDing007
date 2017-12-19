@@ -9,6 +9,7 @@
 #import "LoginMain.h"
 #import "customTextFieldView.h"
 #import "GetPassWord.h"
+#import "RegisterController.h"
 #import "HomeController.h"
 @interface LoginMain (){
 
@@ -18,9 +19,6 @@
     UIButton *loginBtn;//登录按钮
     UIButton *getPassWordBtn;//找回密码
     UIButton *registerBtn;//注册
-    UILabel  *loginLabel;//第三方登录文本
-    UIButton *qqLoginBtn;//QQ登录
-    UIButton *wechatLoginBtn;//微信登录
     
 }
 @end
@@ -33,31 +31,36 @@
     [self createLoginTextView];
     [self createLoginBtn];
     [self createGetPassWordBtn];
-    [self createQuickLoginBtn];
     
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+    
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
 
+}
 /**
  创建logo视图
  */
 - (void)createLogoView{
     
     logoImageView = [[UIImageView alloc] init];
-    logoImageView.backgroundColor = [UIColor grayColor];
+    logoImageView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:logoImageView];
+    [logoImageView setImage:[UIImage imageNamed:@"LOGO"]];
     [logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.top.equalTo(self.view).with.offset(60);
-        make.height.mas_equalTo(@80);
-        make.width.mas_equalTo(@100);
+        make.top.mas_equalTo(self.view).offset(40/SCALE_Y);
+        make.height.mas_equalTo(170/SCALE_Y);
+        make.width.mas_equalTo(125/SCALE_X);
         
     }];
 }
@@ -68,24 +71,23 @@
 - (void)createLoginTextView{
     
 
-    telePhoneView = [[customTextFieldView alloc] initView:[UIImage imageNamed:@"telephone11"] selectImage:[UIImage imageNamed:@"telephone22"] defaultColor:[UIColor grayColor] selectColor:[UIColor redColor]];
+    telePhoneView = [[customTextFieldView alloc] initView:[UIImage imageNamed:@"手机未选中"] selectImage:[UIImage imageNamed:@"手机选中"] defaultText:@"输入登录手机号"];
     [self.view addSubview:telePhoneView];
     [telePhoneView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(20);
-        make.right.equalTo(self.view).with.offset(-20);
-        make.top.equalTo(logoImageView.mas_bottom).with.offset(20);
-        make.height.mas_equalTo(@44);
+        make.top.mas_equalTo(logoImageView.mas_bottom).offset(40/SCALE_Y);
+        make.left.mas_equalTo(self.view).offset(15);
+        make.right.mas_equalTo(self.view).offset(-15);
+        make.height.mas_equalTo(50);
     }];
     
-    passWordView = [[customTextFieldView alloc] initView:[UIImage imageNamed:@"telephone11"] selectImage:[UIImage imageNamed:@"telephone22"] defaultColor:[UIColor grayColor] selectColor:[UIColor redColor]];
+    passWordView = [[customTextFieldView alloc] initView:[UIImage imageNamed:@"密码未选中"] selectImage:[UIImage imageNamed:@"密码选中"] defaultText:@"密码为6到18位数字、字母组合"];
     [self.view addSubview:passWordView];
     [passWordView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(telePhoneView.mas_bottom).with.offset(20);
-        make.left.right.height.equalTo(telePhoneView);
+        make.top.mas_equalTo(telePhoneView.mas_bottom).offset(0);
+        make.left.right.height.mas_equalTo(telePhoneView);
     }];
     
 }
-
 /**
  创建登录按钮
  */
@@ -100,12 +102,12 @@
     loginBtn.layer.masksToBounds = YES;
     [self.view addSubview:loginBtn];
     [loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(passWordView.mas_bottom).with.offset(20);
-        make.left.equalTo(self.view).with.offset(20);
-        make.right.equalTo(self.view).with.offset(-20);
+        make.top.mas_equalTo(passWordView.mas_bottom).offset(20);
+        make.left.mas_equalTo(self.view).offset(20);
+        make.right.mas_equalTo(self.view).offset(-20);
         make.height.mas_equalTo(@44);
     }];
-
+    
 }
 - (void)clickLoginBtn{
     
@@ -119,9 +121,10 @@
     [getPassWordBtn setTitle:@"找回密码？" forState:UIControlStateNormal];
     [getPassWordBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.view addSubview:getPassWordBtn];
+    [getPassWordBtn addTarget:self action:@selector(getPassWord) forControlEvents:UIControlEventTouchUpInside];
     [getPassWordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(20);
-        make.top.equalTo(loginBtn.mas_bottom).with.offset(10);
+        make.left.mas_equalTo(self.view).offset(20);
+        make.top.mas_equalTo(loginBtn.mas_bottom).offset(10);
         make.height.mas_equalTo(@44);
         make.width.mas_equalTo(@120);
         
@@ -131,51 +134,34 @@
     [registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     [registerBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.view addSubview:registerBtn];
+    [registerBtn addTarget:self action:@selector(toRegister) forControlEvents:UIControlEventTouchUpInside];
     [registerBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.view).with.offset(-20);
-        make.top.equalTo(loginBtn.mas_bottom).with.offset(10);
+        make.right.mas_equalTo(self.view).offset(-20);
+        make.top.mas_equalTo(loginBtn.mas_bottom).offset(10);
         make.height.mas_equalTo(@44);
         make.width.mas_equalTo(@60);
         
-    }];
-    
-    loginLabel = [[UILabel alloc] init];
-    loginLabel.text = @"第三方登录";
-    [loginLabel setTextColor:COLORFromRGB(0x666666)];
-    loginLabel.font = [UIFont boldSystemFontOfSize:18];
-    loginLabel.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:loginLabel];
-    [loginLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(self.view.mas_centerX);
-        make.top.equalTo(registerBtn.mas_bottom).with.offset(30);
-        make.height.mas_equalTo(@44);
-        make.width.mas_equalTo(@120);
     }];
 }
-- (void)createQuickLoginBtn{
+
+/**
+ PUSH 找回密码页面
+ */
+-(void)getPassWord{
     
-    qqLoginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    qqLoginBtn.backgroundColor = [UIColor grayColor];
-    qqLoginBtn.layer.cornerRadius = 30;
-    qqLoginBtn.layer.masksToBounds = YES;
-    [self.view addSubview:qqLoginBtn];
-    [qqLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(loginLabel.mas_bottom).with.offset(40);
-        make.left.equalTo(self.view).with.offset(60);
-        make.width.mas_equalTo(@60);
-        make.height.mas_equalTo(@60);
-        
-    }];
-    wechatLoginBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    wechatLoginBtn.backgroundColor = [UIColor grayColor];
-    wechatLoginBtn.layer.cornerRadius = 30;
-    wechatLoginBtn.layer.masksToBounds = YES;
-    [self.view addSubview:wechatLoginBtn];
-    
-    [wechatLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.width.height.equalTo(qqLoginBtn);
-        make.right.equalTo(self.view).with.offset(-60);
-    }];
+    GetPassWord *vc = [[GetPassWord alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+
+
+}
+
+/**
+ PUSH 注册页面
+ */
+- (void)toRegister{
+
+    RegisterController *vc = [[RegisterController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 
 }
 - (void)didReceiveMemoryWarning {

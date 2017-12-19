@@ -18,7 +18,6 @@
     UIScrollView *scrollView;//滚动界面
     UIButton *selectedButton;//记录当前tabber选中的按钮
     
-
 }
 @end
 
@@ -29,12 +28,12 @@
     [self createSubViewController];
     [self createScrollerView];
     [self createTabber];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor orangeColor];
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
 
 }
 /**
@@ -42,12 +41,12 @@
  */
 - (void)createSubViewController{
     receivablesVC = [[ReceivablesPage alloc] init];
-    myPageVC = [[MyPage alloc] init];
     newsVC = [[News alloc] init];
-    
+    myPageVC = [[MyPage alloc] init];
+
     [self addChildViewController:receivablesVC];
-    [self addChildViewController:myPageVC];
     [self addChildViewController:newsVC];
+    [self addChildViewController:myPageVC];
 }
 
 /**
@@ -55,39 +54,33 @@
  */
 - (void)createTabber{
     
+    NSArray *tabDafImageArray = @[@"操作栏收款未选中",@"操作栏消息未选中",@"操作栏我的未选中"];
+    NSArray *tabSelImageArray = @[@"操作栏收款选中",@"操作栏消息选中",@"操作栏我的选中"];
+    
     UIView *tabberView = [[UIView alloc] init];
-    tabberView.backgroundColor = [UIColor grayColor];
+    tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
+    tabberView.layer.borderWidth = 1;
+    tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
+    tabberView.frame = CGRectMake(0, SC_HEIGHT-44, SC_WIDTH, 44);
     [self.view addSubview:tabberView];
-    [tabberView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.view).with.offset(0);
-        make.right.equalTo(self.view).with.offset(0);
-        make.bottom.equalTo(self.view).with.offset(0);
-        make.height.mas_equalTo(@44);
-    }];
-    UIButton *oldBtn = nil;
+
     for (int i=0; i<3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         button.tag = 100+i;
-        [button setTitle:@"一" forState:UIControlStateNormal];
+        button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0, 44);
         [tabberView addSubview:button];
-        [button mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(tabberView).with.offset(0);
-            if (oldBtn) {
-                make.left.equalTo(oldBtn.mas_right).with.offset(0);
-            }else{
-                make.left.equalTo(tabberView).with.offset(0);
-            }
-            make.bottom.equalTo(tabberView).with.offset(0);
-            make.width.mas_equalTo(SC_WIDTH/3.0);
-        }];
+        
         if (0==i) {
+            
             button.selected=YES;
             selectedButton=button;
         }
+        [button setImage:[UIImage imageNamed:tabDafImageArray[i]] forState:UIControlStateNormal];
+        [button setImage:[UIImage imageNamed:tabSelImageArray[i]] forState:UIControlStateSelected];
+        
         [button addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
-        oldBtn = button;
     }
 }
 
@@ -104,15 +97,26 @@
     switch (btn.tag) {
         case 100:
             scrollView.contentOffset = CGPointMake(0, 0);
+            [self setStatusBarBackgroundColor:[UIColor whiteColor]];
             break;
         case 101:
             scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
+            [self setStatusBarBackgroundColor:[UIColor redColor]];
             break;
         case 102:
             scrollView.contentOffset = CGPointMake(SC_WIDTH*2.0, 0);
+            [self setStatusBarBackgroundColor:[UIColor redColor]];
             break;
         default:
             break;
+    }
+}
+//设置状态栏颜色
+- (void)setStatusBarBackgroundColor:(UIColor *)color {
+    
+    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
+    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
+        statusBar.backgroundColor = color;
     }
 }
 /**
@@ -120,19 +124,26 @@
  */
 - (void)createScrollerView{
     
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT)];
-    scrollView.backgroundColor = [UIColor orangeColor];
-//  scrollView.pagingEnabled = YES;
-    scrollView.backgroundColor = [UIColor orangeColor];
+    scrollView = [[UIScrollView alloc] init];
+    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.pagingEnabled = YES;
     [self.view addSubview:scrollView];
-    scrollView.userInteractionEnabled = NO;
+//    scrollView.userInteractionEnabled = NO;
     scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, SC_HEIGHT);
+    [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
+         make.edges.mas_equalTo(self.view);
+    }];
     
     for (int i=0; i<3; i++) {
         UIViewController *vc = self.childViewControllers[i];
         vc.view.frame= CGRectMake(SC_WIDTH*i, 0, SC_WIDTH, SC_HEIGHT);
         [scrollView addSubview:vc.view];
     }
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

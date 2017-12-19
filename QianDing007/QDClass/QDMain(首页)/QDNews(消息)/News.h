@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface News : UIViewController
-
+@interface News : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@property (strong ,nonatomic) UITableView *tableView;
 @end

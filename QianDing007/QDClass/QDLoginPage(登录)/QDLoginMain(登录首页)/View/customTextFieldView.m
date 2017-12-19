@@ -9,11 +9,12 @@
 #import "customTextFieldView.h"
 
 @implementation customTextFieldView
-- (id)initView:(UIImage*)defaultImage selectImage:(UIImage*)selectImage defaultColor:(UIColor*)defaultColor selectColor:(UIColor*)selectColor{
+- (id)initView:(UIImage*)defaultImage selectImage:(UIImage*)selectImage defaultText:(NSString*)defaultText{
     self = [super init];
     if (self) {
-        self.defaultColor = defaultColor;
-        self.selectColor  = selectColor;
+        self.defaultImage = defaultImage;
+        self.selectImage = selectImage;
+        self.defaultText = defaultText;
         [self createSubView:defaultImage selectImage:selectImage ];
     }
     return self;
@@ -24,30 +25,31 @@
     [self.iconView setImage:defaultImage];
     [self addSubview:self.iconView];
     [self.iconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).with.offset(0);
-        make.top.equalTo(self).with.offset(0);
-        make.width.mas_equalTo(@40);
-        make.height.mas_equalTo(self.mas_height);
+        make.left.equalTo(self).offset(0);
+        make.centerY.equalTo(self.mas_centerY);
+        make.width.mas_equalTo(14);
+        make.height.mas_equalTo(21);
     }];
     
     self.textFile = [[UITextField alloc] init];
     [self addSubview:self.textFile];
     self.textFile.delegate = self;
+    self.textFile.placeholder = self.defaultText;
     [self.textFile mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).with.offset(0);
-        make.left.equalTo(self.iconView.mas_right).with.offset(10);
-        make.right.equalTo(self).with.offset(-10);
+        make.top.equalTo(self).offset(0);
+        make.left.equalTo(self.iconView.mas_right).offset(10);
+        make.right.equalTo(self).offset(-10);
         make.height.mas_equalTo(self.mas_height);
     }];
     
     self.lineView = [[UIImageView alloc] init];
-    self.lineView.backgroundColor = self.defaultColor;
+    self.lineView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self addSubview:self.lineView];
     [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self).with.offset(0);
-        make.left.equalTo(self).with.offset(0);
-        make.right.equalTo(self).with.offset(0);
-        make.height.mas_equalTo(@1);
+        make.left.equalTo(self);
+        make.bottom.equalTo(self).offset(0);
+        make.width.mas_equalTo(self.mas_width);
+        make.height.mas_equalTo(1);
     }];
 }
 /**
@@ -56,9 +58,9 @@
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
 
-    self.lineView.backgroundColor = self.selectColor;
+    self.lineView.backgroundColor = [UIColor redColor];
+    [self.iconView setImage:self.selectImage];
 }
-
 /**
  询问输入框是否可以结束编辑 ( 键盘是否可以收回)
 

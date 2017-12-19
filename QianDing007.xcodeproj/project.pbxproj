@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407B4911FE1121F0028F341 /* ReceivablesPage.m */; };
+		1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407B4941FE112820028F341 /* CustomShowDataView.m */; };
 		1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1418F93B1FDFC87E00D3F754 /* GetPassWord.m */; };
 		1424F6661FDE35EE00309E33 /* LoginMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1424F6651FDE35EE00309E33 /* LoginMain.m */; };
-		149A56931FE0B856005AEA1C /* ReceivablesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 149A56921FE0B856005AEA1C /* ReceivablesPage.m */; };
 		149A56961FE0B869005AEA1C /* MyPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 149A56951FE0B869005AEA1C /* MyPage.m */; };
 		149A56A61FE0B8BB005AEA1C /* News.m in Sources */ = {isa = PBXBuildFile; fileRef = 149A56A51FE0B8BB005AEA1C /* News.m */; };
 		149A56AB1FE0B99F005AEA1C /* HomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149A56AA1FE0B99F005AEA1C /* HomeController.m */; };
@@ -22,6 +23,16 @@
 		14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACEE1FDA1D6C0095003F /* LaunchScreen.storyboard */; };
 		14A0ACFB1FDA1D6D0095003F /* QianDing007Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0ACFA1FDA1D6D0095003F /* QianDing007Tests.m */; };
 		14A0AD061FDA1D6D0095003F /* QianDing007UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */; };
+		14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */; };
+		14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836C51FE79EC8006ECD45 /* RegisterController.m */; };
+		14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836CB1FE7A3FC006ECD45 /* CustomTextView.m */; };
+		14D836CF1FE7A939006ECD45 /* CustomGetCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836CE1FE7A939006ECD45 /* CustomGetCode.m */; };
+		14D836D31FE7C313006ECD45 /* MoreOrderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836D21FE7C313006ECD45 /* MoreOrderController.m */; };
+		14D836D61FE7C652006ECD45 /* FrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836D51FE7C652006ECD45 /* FrontViewController.m */; };
+		14D836D91FE7C664006ECD45 /* MiddleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836D81FE7C664006ECD45 /* MiddleViewController.m */; };
+		14D836DC1FE7C68E006ECD45 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836DB1FE7C68E006ECD45 /* ThirdViewController.m */; };
+		14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */; };
+		14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */; };
 		F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */; };
 /* End PBXBuildFile section */
 
@@ -43,13 +54,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1407B4901FE1121F0028F341 /* ReceivablesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReceivablesPage.h; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.h"; sourceTree = "<group>"; };
+		1407B4911FE1121F0028F341 /* ReceivablesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReceivablesPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.m"; sourceTree = "<group>"; };
+		1407B4931FE112820028F341 /* CustomShowDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShowDataView.h; sourceTree = "<group>"; };
+		1407B4941FE112820028F341 /* CustomShowDataView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomShowDataView.m; sourceTree = "<group>"; };
 		1418F93A1FDFC87E00D3F754 /* GetPassWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetPassWord.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/GetPassWord.h"; sourceTree = "<group>"; };
 		1418F93B1FDFC87E00D3F754 /* GetPassWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetPassWord.m; path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/GetPassWord.m"; sourceTree = "<group>"; };
 		1424F6511FDE2CA000309E33 /* QDFirstBloodpch.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDFirstBloodpch.pch; sourceTree = "<group>"; };
-		1424F6641FDE35EE00309E33 /* LoginMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginMain.h; sourceTree = "<group>"; };
-		1424F6651FDE35EE00309E33 /* LoginMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginMain.m; sourceTree = "<group>"; };
-		149A56911FE0B856005AEA1C /* ReceivablesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReceivablesPage.h; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/ReceivablesPage.h"; sourceTree = "<group>"; };
-		149A56921FE0B856005AEA1C /* ReceivablesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReceivablesPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/ReceivablesPage.m"; sourceTree = "<group>"; };
+		1424F6641FDE35EE00309E33 /* LoginMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginMain.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller/LoginMain.h"; sourceTree = "<group>"; };
+		1424F6651FDE35EE00309E33 /* LoginMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginMain.m; path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller/LoginMain.m"; sourceTree = "<group>"; };
 		149A56941FE0B869005AEA1C /* MyPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPage.h; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/MyPage.h"; sourceTree = "<group>"; };
 		149A56951FE0B869005AEA1C /* MyPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/MyPage.m"; sourceTree = "<group>"; };
 		149A56A41FE0B8BB005AEA1C /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = News.h; path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/News.h"; sourceTree = "<group>"; };
@@ -74,6 +87,26 @@
 		14A0AD011FDA1D6D0095003F /* QianDing007UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QianDing007UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QianDing007UITests.m; sourceTree = "<group>"; };
 		14A0AD071FDA1D6D0095003F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14D836BD1FE76AC6006ECD45 /* CustomNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNewsCell.h; sourceTree = "<group>"; };
+		14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNewsCell.m; sourceTree = "<group>"; };
+		14D836C41FE79EC8006ECD45 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterController.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/RegisterController.h"; sourceTree = "<group>"; };
+		14D836C51FE79EC8006ECD45 /* RegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RegisterController.m; path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/RegisterController.m"; sourceTree = "<group>"; };
+		14D836CA1FE7A3FC006ECD45 /* CustomTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTextView.h; sourceTree = "<group>"; };
+		14D836CB1FE7A3FC006ECD45 /* CustomTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTextView.m; sourceTree = "<group>"; };
+		14D836CD1FE7A939006ECD45 /* CustomGetCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomGetCode.h; sourceTree = "<group>"; };
+		14D836CE1FE7A939006ECD45 /* CustomGetCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomGetCode.m; sourceTree = "<group>"; };
+		14D836D11FE7C313006ECD45 /* MoreOrderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreOrderController.h; sourceTree = "<group>"; };
+		14D836D21FE7C313006ECD45 /* MoreOrderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreOrderController.m; sourceTree = "<group>"; };
+		14D836D41FE7C652006ECD45 /* FrontViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrontViewController.h; sourceTree = "<group>"; };
+		14D836D51FE7C652006ECD45 /* FrontViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrontViewController.m; sourceTree = "<group>"; };
+		14D836D71FE7C664006ECD45 /* MiddleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiddleViewController.h; sourceTree = "<group>"; };
+		14D836D81FE7C664006ECD45 /* MiddleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiddleViewController.m; sourceTree = "<group>"; };
+		14D836DA1FE7C68E006ECD45 /* ThirdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		14D836DB1FE7C68E006ECD45 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		14D836E01FE7DB61006ECD45 /* ForntTabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForntTabelCell.h; sourceTree = "<group>"; };
+		14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForntTabelCell.m; sourceTree = "<group>"; };
+		14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLabelView.h; sourceTree = "<group>"; };
+		14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLabelView.m; sourceTree = "<group>"; };
 		5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.debug.xcconfig"; sourceTree = "<group>"; };
 		697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QianDing007.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.release.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,9 +138,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1407B48D1FE111E50028F341 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				14D836D01FE7C2A2006ECD45 /* MoreOrderController */,
+			);
+			name = Controller;
+			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller";
+			sourceTree = "<group>";
+		};
+		1407B48E1FE111E50028F341 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Model";
+			sourceTree = "<group>";
+		};
+		1407B48F1FE111E50028F341 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1407B4931FE112820028F341 /* CustomShowDataView.h */,
+				1407B4941FE112820028F341 /* CustomShowDataView.m */,
+				14D836E01FE7DB61006ECD45 /* ForntTabelCell.h */,
+				14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */,
+			);
+			name = View;
+			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/View";
+			sourceTree = "<group>";
+		};
 		1418F93E1FDFD79800D3F754 /* QDNews(消息) */ = {
 			isa = PBXGroup;
 			children = (
+				14D836BA1FE749D1006ECD45 /* Controller */,
+				14D836BB1FE749D1006ECD45 /* Model */,
+				14D836BC1FE749D1006ECD45 /* View */,
 				149A56A41FE0B8BB005AEA1C /* News.h */,
 				149A56A51FE0B8BB005AEA1C /* News.m */,
 			);
@@ -117,8 +182,6 @@
 		1424F6611FDE319700309E33 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				1424F6641FDE35EE00309E33 /* LoginMain.h */,
-				1424F6651FDE35EE00309E33 /* LoginMain.m */,
 			);
 			name = Controller;
 			path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller";
@@ -251,8 +314,11 @@
 		14B4A8191FDE10C100B5183C /* QDReceivablesPage(收款) */ = {
 			isa = PBXGroup;
 			children = (
-				149A56911FE0B856005AEA1C /* ReceivablesPage.h */,
-				149A56921FE0B856005AEA1C /* ReceivablesPage.m */,
+				1407B48F1FE111E50028F341 /* View */,
+				1407B48E1FE111E50028F341 /* Model */,
+				1407B48D1FE111E50028F341 /* Controller */,
+				1407B4901FE1121F0028F341 /* ReceivablesPage.h */,
+				1407B4911FE1121F0028F341 /* ReceivablesPage.m */,
 			);
 			name = "QDReceivablesPage(收款)";
 			sourceTree = "<group>";
@@ -260,6 +326,9 @@
 		14B4A81A1FDE113F00B5183C /* QDMyPage(我的) */ = {
 			isa = PBXGroup;
 			children = (
+				14E6CA691FE5119000D55DEE /* Controller */,
+				14E6CA6A1FE5119000D55DEE /* Model */,
+				14E6CA6B1FE5119000D55DEE /* View */,
 				149A56941FE0B869005AEA1C /* MyPage.h */,
 				149A56951FE0B869005AEA1C /* MyPage.m */,
 			);
@@ -269,6 +338,11 @@
 		14B4A81B1FDE15D100B5183C /* QDRegister(注册) */ = {
 			isa = PBXGroup;
 			children = (
+				14D836C71FE79ED9006ECD45 /* Controller */,
+				14D836C81FE79ED9006ECD45 /* Model */,
+				14D836C91FE79ED9006ECD45 /* View */,
+				14D836C41FE79EC8006ECD45 /* RegisterController.h */,
+				14D836C51FE79EC8006ECD45 /* RegisterController.m */,
 			);
 			name = "QDRegister(注册)";
 			sourceTree = "<group>";
@@ -283,6 +357,9 @@
 		14B4A81D1FDE15DD00B5183C /* QDGetPassWord(获取密码) */ = {
 			isa = PBXGroup;
 			children = (
+				14D836C01FE79D7C006ECD45 /* Controller */,
+				14D836C11FE79D7C006ECD45 /* Model */,
+				14D836C21FE79D7C006ECD45 /* View */,
 				1418F93A1FDFC87E00D3F754 /* GetPassWord.h */,
 				1418F93B1FDFC87E00D3F754 /* GetPassWord.m */,
 			);
@@ -292,11 +369,132 @@
 		14B4A81E1FDE1E2200B5183C /* QDLoginMain(登录首页) */ = {
 			isa = PBXGroup;
 			children = (
-				1424F6611FDE319700309E33 /* Controller */,
-				1424F6621FDE319700309E33 /* Model */,
 				1424F6631FDE319700309E33 /* View */,
+				1424F6621FDE319700309E33 /* Model */,
+				1424F6611FDE319700309E33 /* Controller */,
+				1424F6641FDE35EE00309E33 /* LoginMain.h */,
+				1424F6651FDE35EE00309E33 /* LoginMain.m */,
 			);
 			name = "QDLoginMain(登录首页)";
+			sourceTree = "<group>";
+		};
+		14D836BA1FE749D1006ECD45 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/Controller";
+			sourceTree = "<group>";
+		};
+		14D836BB1FE749D1006ECD45 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/Model";
+			sourceTree = "<group>";
+		};
+		14D836BC1FE749D1006ECD45 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14D836BD1FE76AC6006ECD45 /* CustomNewsCell.h */,
+				14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */,
+			);
+			name = View;
+			path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/View";
+			sourceTree = "<group>";
+		};
+		14D836C01FE79D7C006ECD45 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/Controller";
+			sourceTree = "<group>";
+		};
+		14D836C11FE79D7C006ECD45 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/Model";
+			sourceTree = "<group>";
+		};
+		14D836C21FE79D7C006ECD45 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14D836CA1FE7A3FC006ECD45 /* CustomTextView.h */,
+				14D836CB1FE7A3FC006ECD45 /* CustomTextView.m */,
+				14D836CD1FE7A939006ECD45 /* CustomGetCode.h */,
+				14D836CE1FE7A939006ECD45 /* CustomGetCode.m */,
+			);
+			name = View;
+			path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/View";
+			sourceTree = "<group>";
+		};
+		14D836C71FE79ED9006ECD45 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/Controller";
+			sourceTree = "<group>";
+		};
+		14D836C81FE79ED9006ECD45 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/Model";
+			sourceTree = "<group>";
+		};
+		14D836C91FE79ED9006ECD45 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/View";
+			sourceTree = "<group>";
+		};
+		14D836D01FE7C2A2006ECD45 /* MoreOrderController */ = {
+			isa = PBXGroup;
+			children = (
+				14D836D11FE7C313006ECD45 /* MoreOrderController.h */,
+				14D836D21FE7C313006ECD45 /* MoreOrderController.m */,
+				14D836D41FE7C652006ECD45 /* FrontViewController.h */,
+				14D836D51FE7C652006ECD45 /* FrontViewController.m */,
+				14D836D71FE7C664006ECD45 /* MiddleViewController.h */,
+				14D836D81FE7C664006ECD45 /* MiddleViewController.m */,
+				14D836DA1FE7C68E006ECD45 /* ThirdViewController.h */,
+				14D836DB1FE7C68E006ECD45 /* ThirdViewController.m */,
+			);
+			name = MoreOrderController;
+			sourceTree = "<group>";
+		};
+		14E6CA691FE5119000D55DEE /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Controller";
+			sourceTree = "<group>";
+		};
+		14E6CA6A1FE5119000D55DEE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
+			sourceTree = "<group>";
+		};
+		14E6CA6B1FE5119000D55DEE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */,
+				14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */,
+			);
+			name = View;
+			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/View";
 			sourceTree = "<group>";
 		};
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
@@ -503,16 +701,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14D836D31FE7C313006ECD45 /* MoreOrderController.m in Sources */,
+				14D836CF1FE7A939006ECD45 /* CustomGetCode.m in Sources */,
+				14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */,
+				1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */,
 				149E8B321FDE8C660037B996 /* customTextFieldView.m in Sources */,
+				14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */,
 				1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */,
+				14D836DC1FE7C68E006ECD45 /* ThirdViewController.m in Sources */,
+				14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */,
+				14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */,
 				149A56A61FE0B8BB005AEA1C /* News.m in Sources */,
 				1424F6661FDE35EE00309E33 /* LoginMain.m in Sources */,
 				14A0ACE81FDA1D6C0095003F /* ViewController.m in Sources */,
 				14A0ACE51FDA1D6C0095003F /* AppDelegate.m in Sources */,
+				14D836D61FE7C652006ECD45 /* FrontViewController.m in Sources */,
+				1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */,
 				14A0ACE21FDA1D6C0095003F /* main.m in Sources */,
 				149A56961FE0B869005AEA1C /* MyPage.m in Sources */,
+				14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */,
 				149A56AB1FE0B99F005AEA1C /* HomeController.m in Sources */,
-				149A56931FE0B856005AEA1C /* ReceivablesPage.m in Sources */,
+				14D836D91FE7C664006ECD45 /* MiddleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,12 +870,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9MC53XV58;
-				GCC_PREFIX_HEADER = /Users/zhanghua/Desktop/QianDing007/QianDing007/QDFirstBloodpch.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/QianDing007/QDFirstBloodpch.pch";
 				INFOPLIST_FILE = QianDing007/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.zhanghua.mac.QianDing007;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -676,12 +886,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9MC53XV58;
-				GCC_PREFIX_HEADER = /Users/zhanghua/Desktop/QianDing007/QianDing007/QDFirstBloodpch.pch;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/QianDing007/QDFirstBloodpch.pch";
 				INFOPLIST_FILE = QianDing007/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.zhanghua.mac.QianDing007;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

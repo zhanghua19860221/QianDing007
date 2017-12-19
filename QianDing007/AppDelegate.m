@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
+#import "HomeController.h"
 @interface AppDelegate ()
 
 @end
@@ -18,9 +19,13 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     [self.window makeKeyAndVisible];
+    
     LoginMain *root = [[LoginMain alloc] init];
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
+
+//    HomeController *root = [[HomeController alloc] init];
+//    self.window.rootViewController = root ;
     // Override point for customization after application launch.
     return YES;
 }
