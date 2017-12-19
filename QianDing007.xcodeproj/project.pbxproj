@@ -167,7 +167,7 @@
 			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/View";
 			sourceTree = "<group>";
 		};
-		1418F93E1FDFD79800D3F754 /* QDNews(消息) */ = {
+		1418F93E1FDFD79800D3F754 /* QDNews（消息） */ = {
 			isa = PBXGroup;
 			children = (
 				14D836BA1FE749D1006ECD45 /* Controller */,
@@ -176,7 +176,7 @@
 				149A56A41FE0B8BB005AEA1C /* News.h */,
 				149A56A51FE0B8BB005AEA1C /* News.m */,
 			);
-			name = "QDNews(消息)";
+			name = "QDNews（消息）";
 			sourceTree = "<group>";
 		};
 		1424F6611FDE319700309E33 /* Controller */ = {
@@ -211,7 +211,7 @@
 				149A56A71FE0B917005AEA1C /* QDHomeController(主页) */,
 				14B4A8191FDE10C100B5183C /* QDReceivablesPage(收款) */,
 				14B4A81A1FDE113F00B5183C /* QDMyPage(我的) */,
-				1418F93E1FDFD79800D3F754 /* QDNews(消息) */,
+				1418F93E1FDFD79800D3F754 /* QDNews（消息） */,
 			);
 			name = "QDMain(首页)";
 			sourceTree = "<group>";
@@ -303,7 +303,7 @@
 		14B4A8181FDE102100B5183C /* QDLoginPage(登录) */ = {
 			isa = PBXGroup;
 			children = (
-				14B4A81E1FDE1E2200B5183C /* QDLoginMain(登录首页) */,
+				14B4A81E1FDE1E2200B5183C /* QDLoginMain(首页) */,
 				14B4A81D1FDE15DD00B5183C /* QDGetPassWord(获取密码) */,
 				14B4A81C1FDE15D900B5183C /* QDQuickLogin(三方登录)  */,
 				14B4A81B1FDE15D100B5183C /* QDRegister(注册) */,
@@ -366,7 +366,7 @@
 			name = "QDGetPassWord(获取密码)";
 			sourceTree = "<group>";
 		};
-		14B4A81E1FDE1E2200B5183C /* QDLoginMain(登录首页) */ = {
+		14B4A81E1FDE1E2200B5183C /* QDLoginMain(首页) */ = {
 			isa = PBXGroup;
 			children = (
 				1424F6631FDE319700309E33 /* View */,
@@ -375,7 +375,7 @@
 				1424F6641FDE35EE00309E33 /* LoginMain.h */,
 				1424F6651FDE35EE00309E33 /* LoginMain.m */,
 			);
-			name = "QDLoginMain(登录首页)";
+			name = "QDLoginMain(首页)";
 			sourceTree = "<group>";
 		};
 		14D836BA1FE749D1006ECD45 /* Controller */ = {

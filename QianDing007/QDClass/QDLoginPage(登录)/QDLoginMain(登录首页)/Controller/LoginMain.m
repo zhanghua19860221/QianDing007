@@ -107,7 +107,6 @@
         make.right.mas_equalTo(self.view).offset(-20);
         make.height.mas_equalTo(@44);
     }];
-    
 }
 - (void)clickLoginBtn{
     
