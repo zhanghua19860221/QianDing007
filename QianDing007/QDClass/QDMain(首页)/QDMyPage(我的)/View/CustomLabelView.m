@@ -7,6 +7,12 @@
 //
 
 #import "CustomLabelView.h"
+#import "SecuritySetController.h"
+#import "UserViewController.h"
+#import "MydelegateViewController.h"
+#import "AboutWeController.h"
+#import "CallViewController.h"
+#import "UpdateController.h"
 
 @implementation CustomLabelView
 -(id)initWithFrame:(NSString *)firstImage firstLabel:(NSString*)firstStr secondLabel:(NSString*)secondStr secondImage:(NSString*)secondImage{
@@ -30,6 +36,7 @@
 
     self.directionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.directionBtn setImage:[UIImage imageNamed:self.secondImage] forState:UIControlStateNormal];
+    [self.directionBtn addTarget:self action:@selector(clickToVc) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.directionBtn];
     
     self.firstLabel = [[UILabel alloc] init];
@@ -67,9 +74,8 @@
     [self.directionBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(15);
         make.right.equalTo(self).offset(-15);
-        make.width.mas_offset(9);
+        make.width.mas_offset(20);
         make.height.mas_offset(22);
-
         
     }];
     
@@ -81,6 +87,32 @@
         
     }];
 
+}
+
+- (void)clickToVc{
+    if ([self.firstStr isEqualToString:@"商户认证"]) {
+        
+    }else if([self.firstStr isEqualToString:@"我的代理"]){
+    
+    
+    }else if([self.firstStr isEqualToString:@"安全设置"]){
+        
+        
+    }else if([self.firstStr isEqualToString:@"关于我们"]){
+        
+        
+    }else if([self.firstStr isEqualToString:@"联系我们"]){
+        
+        
+    }else if([self.firstStr isEqualToString:@"检查更新"]){
+        
+        
+    }
+
+
+
+
+    
     
 }
 /*

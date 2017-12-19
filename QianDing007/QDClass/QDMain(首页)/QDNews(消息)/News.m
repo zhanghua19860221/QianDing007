@@ -80,7 +80,7 @@
         make.width.mas_offset(22);
         
     }];
-
+    
 }
 
 #pragma *********************tabelViewDelegate*************************

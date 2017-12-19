@@ -10,5 +10,7 @@
 
 @interface MoreOrderController : UIViewController<UIScrollViewDelegate>
 
+@property (strong , nonatomic) UIScrollView *scrollView;//滚动界面
+@property (strong , nonatomic) UIButton *selectMoreButton;//记录选中按钮
 
 @end

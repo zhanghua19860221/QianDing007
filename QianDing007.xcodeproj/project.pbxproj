@@ -23,6 +23,14 @@
 		14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACEE1FDA1D6C0095003F /* LaunchScreen.storyboard */; };
 		14A0ACFB1FDA1D6D0095003F /* QianDing007Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0ACFA1FDA1D6D0095003F /* QianDing007Tests.m */; };
 		14A0AD061FDA1D6D0095003F /* QianDing007UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */; };
+		14A5FCA81FE92381004B3E07 /* AboutWeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FC9D1FE92381004B3E07 /* AboutWeController.m */; };
+		14A5FCA91FE92381004B3E07 /* CallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FC9F1FE92381004B3E07 /* CallViewController.m */; };
+		14A5FCAA1FE92381004B3E07 /* MydelegateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCA11FE92381004B3E07 /* MydelegateViewController.m */; };
+		14A5FCAB1FE92381004B3E07 /* SecuritySetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCA31FE92381004B3E07 /* SecuritySetController.m */; };
+		14A5FCAC1FE92381004B3E07 /* UpdateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCA51FE92381004B3E07 /* UpdateController.m */; };
+		14A5FCAD1FE92381004B3E07 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCA71FE92381004B3E07 /* UserViewController.m */; };
+		14A5FCB01FE9238B004B3E07 /* MyPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCAF1FE9238B004B3E07 /* MyPageModel.m */; };
+		14A5FCB31FE92395004B3E07 /* MyPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCB21FE92395004B3E07 /* MyPageCell.m */; };
 		14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */; };
 		14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836C51FE79EC8006ECD45 /* RegisterController.m */; };
 		14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836CB1FE7A3FC006ECD45 /* CustomTextView.m */; };
@@ -87,6 +95,22 @@
 		14A0AD011FDA1D6D0095003F /* QianDing007UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QianDing007UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QianDing007UITests.m; sourceTree = "<group>"; };
 		14A0AD071FDA1D6D0095003F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14A5FC9C1FE92381004B3E07 /* AboutWeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWeController.h; sourceTree = "<group>"; };
+		14A5FC9D1FE92381004B3E07 /* AboutWeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWeController.m; sourceTree = "<group>"; };
+		14A5FC9E1FE92381004B3E07 /* CallViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallViewController.h; sourceTree = "<group>"; };
+		14A5FC9F1FE92381004B3E07 /* CallViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CallViewController.m; sourceTree = "<group>"; };
+		14A5FCA01FE92381004B3E07 /* MydelegateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MydelegateViewController.h; sourceTree = "<group>"; };
+		14A5FCA11FE92381004B3E07 /* MydelegateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MydelegateViewController.m; sourceTree = "<group>"; };
+		14A5FCA21FE92381004B3E07 /* SecuritySetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecuritySetController.h; sourceTree = "<group>"; };
+		14A5FCA31FE92381004B3E07 /* SecuritySetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecuritySetController.m; sourceTree = "<group>"; };
+		14A5FCA41FE92381004B3E07 /* UpdateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateController.h; sourceTree = "<group>"; };
+		14A5FCA51FE92381004B3E07 /* UpdateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateController.m; sourceTree = "<group>"; };
+		14A5FCA61FE92381004B3E07 /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewController.h; sourceTree = "<group>"; };
+		14A5FCA71FE92381004B3E07 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
+		14A5FCAE1FE9238B004B3E07 /* MyPageModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageModel.h; sourceTree = "<group>"; };
+		14A5FCAF1FE9238B004B3E07 /* MyPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageModel.m; sourceTree = "<group>"; };
+		14A5FCB11FE92395004B3E07 /* MyPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageCell.h; sourceTree = "<group>"; };
+		14A5FCB21FE92395004B3E07 /* MyPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageCell.m; sourceTree = "<group>"; };
 		14D836BD1FE76AC6006ECD45 /* CustomNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNewsCell.h; sourceTree = "<group>"; };
 		14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNewsCell.m; sourceTree = "<group>"; };
 		14D836C41FE79EC8006ECD45 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterController.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/RegisterController.h"; sourceTree = "<group>"; };
@@ -283,6 +307,36 @@
 			path = QianDing007UITests;
 			sourceTree = "<group>";
 		};
+		14A5FC9A1FE922F0004B3E07 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				14A5FC9C1FE92381004B3E07 /* AboutWeController.h */,
+				14A5FC9D1FE92381004B3E07 /* AboutWeController.m */,
+				14A5FC9E1FE92381004B3E07 /* CallViewController.h */,
+				14A5FC9F1FE92381004B3E07 /* CallViewController.m */,
+				14A5FCA01FE92381004B3E07 /* MydelegateViewController.h */,
+				14A5FCA11FE92381004B3E07 /* MydelegateViewController.m */,
+				14A5FCA21FE92381004B3E07 /* SecuritySetController.h */,
+				14A5FCA31FE92381004B3E07 /* SecuritySetController.m */,
+				14A5FCA41FE92381004B3E07 /* UpdateController.h */,
+				14A5FCA51FE92381004B3E07 /* UpdateController.m */,
+				14A5FCA61FE92381004B3E07 /* UserViewController.h */,
+				14A5FCA71FE92381004B3E07 /* UserViewController.m */,
+			);
+			name = Controller;
+			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Controller";
+			sourceTree = "<group>";
+		};
+		14A5FC9B1FE922F0004B3E07 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				14A5FCAE1FE9238B004B3E07 /* MyPageModel.h */,
+				14A5FCAF1FE9238B004B3E07 /* MyPageModel.m */,
+			);
+			name = Model;
+			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
+			sourceTree = "<group>";
+		};
 		14B4A8171FDE100600B5183C /* QDClass */ = {
 			isa = PBXGroup;
 			children = (
@@ -318,8 +372,8 @@
 		14B4A81A1FDE113F00B5183C /* QDMyPage(我的) */ = {
 			isa = PBXGroup;
 			children = (
-				14E6CA691FE5119000D55DEE /* Controller */,
-				14E6CA6A1FE5119000D55DEE /* Model */,
+				14A5FC9A1FE922F0004B3E07 /* Controller */,
+				14A5FC9B1FE922F0004B3E07 /* Model */,
 				14E6CA6B1FE5119000D55DEE /* View */,
 				149A56941FE0B869005AEA1C /* MyPage.h */,
 				149A56951FE0B869005AEA1C /* MyPage.m */,
@@ -463,25 +517,11 @@
 			name = MoreOrderController;
 			sourceTree = "<group>";
 		};
-		14E6CA691FE5119000D55DEE /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Controller;
-			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Controller";
-			sourceTree = "<group>";
-		};
-		14E6CA6A1FE5119000D55DEE /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
-			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
-			sourceTree = "<group>";
-		};
 		14E6CA6B1FE5119000D55DEE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				14A5FCB11FE92395004B3E07 /* MyPageCell.h */,
+				14A5FCB21FE92395004B3E07 /* MyPageCell.m */,
 				14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */,
 				14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */,
 			);
@@ -693,10 +733,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14A5FCAD1FE92381004B3E07 /* UserViewController.m in Sources */,
 				14D836D31FE7C313006ECD45 /* MoreOrderController.m in Sources */,
 				14D836CF1FE7A939006ECD45 /* CustomGetCode.m in Sources */,
 				14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */,
+				14A5FCAB1FE92381004B3E07 /* SecuritySetController.m in Sources */,
+				14A5FCA91FE92381004B3E07 /* CallViewController.m in Sources */,
 				1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */,
+				14A5FCB31FE92395004B3E07 /* MyPageCell.m in Sources */,
+				14A5FCAC1FE92381004B3E07 /* UpdateController.m in Sources */,
 				149E8B321FDE8C660037B996 /* customTextFieldView.m in Sources */,
 				14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */,
 				1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */,
@@ -705,12 +750,15 @@
 				14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */,
 				149A56A61FE0B8BB005AEA1C /* News.m in Sources */,
 				1424F6661FDE35EE00309E33 /* LoginMain.m in Sources */,
+				14A5FCAA1FE92381004B3E07 /* MydelegateViewController.m in Sources */,
 				14A0ACE81FDA1D6C0095003F /* ViewController.m in Sources */,
 				14A0ACE51FDA1D6C0095003F /* AppDelegate.m in Sources */,
 				14D836D61FE7C652006ECD45 /* FrontViewController.m in Sources */,
+				14A5FCA81FE92381004B3E07 /* AboutWeController.m in Sources */,
 				1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */,
 				14A0ACE21FDA1D6C0095003F /* main.m in Sources */,
 				149A56961FE0B869005AEA1C /* MyPage.m in Sources */,
+				14A5FCB01FE9238B004B3E07 /* MyPageModel.m in Sources */,
 				1439E1D31FE8ADFC0053F829 /* RootViewController.m in Sources */,
 				14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */,
 				14D836D91FE7C664006ECD45 /* MiddleViewController.m in Sources */,

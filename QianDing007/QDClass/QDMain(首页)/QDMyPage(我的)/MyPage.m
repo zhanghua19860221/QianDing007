@@ -8,9 +8,10 @@
 
 #import "MyPage.h"
 #import "CustomLabelView.h"
-
+#import "MyPageModel.h"
 @interface MyPage (){
     
+    NSMutableArray*allArray;
     UIImageView *topView;
     UIView *firstView;
     UIView *secondView;
@@ -30,13 +31,91 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createTopView];
-    [self createBasicFirstView];
-    [self createBasicSecondView];
-    [self createLabelView];
+    [self createTabelView];
+//    [self createBasicFirstView];
+//    [self createBasicSecondView];
+//    [self createLabelView];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
 }
+- (void)createTabelView{
+
+    NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
+    NSArray *stateFirstArray = @[@"未认证",@"空"];
+    NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
+    NSArray *stateSecondArray= @[@"空",@"空",@"空",@"空"];
+    
+    NSMutableArray *firstArray = [[NSMutableArray alloc] init];
+    NSMutableArray *secondArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i<imageFirstArray.count ; i++) {
+        
+        MyPageModel *dataModle = [[MyPageModel alloc] init];
+        dataModle.firstStr  = imageFirstArray[i];
+        dataModle.secondStr = imageFirstArray[i];
+        dataModle.thirdStr  = stateFirstArray[i];
+        dataModle.fourStr   = @"更多图标";
+        [firstArray addObject:dataModle];
+        
+    }
+    for (int i = 0; i<imageSecondArray.count ; i++) {
+        
+        MyPageModel *dataModle = [[MyPageModel alloc] init];
+        dataModle.firstStr  = imageSecondArray[i];
+        dataModle.secondStr = imageSecondArray[i];
+        dataModle.thirdStr  = stateSecondArray[i];
+        dataModle.fourStr   = @"更多图标";
+        [secondArray addObject:dataModle];
+    }
+    
+    allArray = [[NSMutableArray alloc] initWithCapacity:2];
+    [allArray addObject:firstArray];
+    [allArray addObject:secondArray];
+    
+    NSLog(@"allArray.count == %lu",(unsigned long)allArray.count);
+    
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:_tableView];
+    _tableView.separatorStyle = NO;
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topView.mas_bottom).offset(20/SCALE_Y);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(SC_HEIGHT);
+    }];
+
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
+    return allArray.count;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return [allArray[section] count];;
+}
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *ID = @"tableViewCellIdentifier";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    
+    if (cell == nil) {
+        
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    
+    NSLog(@"xxxxx == %@" ,allArray[indexPath.section][indexPath.row]);
+    
+    cell.contentView.backgroundColor = [UIColor cyanColor];
+    
+    return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 20/SCALE_Y;
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 
@@ -109,8 +188,6 @@
  创建label视图
  */
 - (void)createLabelView{
-
-
 
 }
 /**
