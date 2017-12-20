@@ -31,6 +31,15 @@
 		14A5FCAD1FE92381004B3E07 /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCA71FE92381004B3E07 /* UserViewController.m */; };
 		14A5FCB01FE9238B004B3E07 /* MyPageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCAF1FE9238B004B3E07 /* MyPageModel.m */; };
 		14A5FCB31FE92395004B3E07 /* MyPageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A5FCB21FE92395004B3E07 /* MyPageCell.m */; };
+		14AFB7411FE9E8D900B0E32B /* ChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7401FE9E8D900B0E32B /* ChangeTeleController.m */; };
+		14AFB7441FE9E8F600B0E32B /* ChangePassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7431FE9E8F600B0E32B /* ChangePassWordController.m */; };
+		14AFB7491FE9FB1800B0E32B /* MyLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7481FE9FB1800B0E32B /* MyLevelController.m */; };
+		14AFB74E1FE9FCDC00B0E32B /* ChannelSetingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB74D1FE9FCDC00B0E32B /* ChannelSetingController.m */; };
+		14AFB7511FE9FCF700B0E32B /* MyRequestController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7501FE9FCF700B0E32B /* MyRequestController.m */; };
+		14AFB7541FEA2A1E00B0E32B /* MyLevelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7531FEA2A1E00B0E32B /* MyLevelCell.m */; };
+		14AFB7571FEA300A00B0E32B /* MyLeveLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */; };
+		14AFB75A1FEA7B3F00B0E32B /* MyRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */; };
+		14AFB75D1FEA7D0200B0E32B /* CustomRequestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */; };
 		14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */; };
 		14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836C51FE79EC8006ECD45 /* RegisterController.m */; };
 		14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836CB1FE7A3FC006ECD45 /* CustomTextView.m */; };
@@ -111,6 +120,24 @@
 		14A5FCAF1FE9238B004B3E07 /* MyPageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageModel.m; sourceTree = "<group>"; };
 		14A5FCB11FE92395004B3E07 /* MyPageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPageCell.h; sourceTree = "<group>"; };
 		14A5FCB21FE92395004B3E07 /* MyPageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPageCell.m; sourceTree = "<group>"; };
+		14AFB73F1FE9E8D900B0E32B /* ChangeTeleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeTeleController.h; sourceTree = "<group>"; };
+		14AFB7401FE9E8D900B0E32B /* ChangeTeleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTeleController.m; sourceTree = "<group>"; };
+		14AFB7421FE9E8F600B0E32B /* ChangePassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePassWordController.h; sourceTree = "<group>"; };
+		14AFB7431FE9E8F600B0E32B /* ChangePassWordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePassWordController.m; sourceTree = "<group>"; };
+		14AFB7471FE9FB1800B0E32B /* MyLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyLevelController.h; path = MyLevel/MyLevelController.h; sourceTree = "<group>"; };
+		14AFB7481FE9FB1800B0E32B /* MyLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyLevelController.m; path = MyLevel/MyLevelController.m; sourceTree = "<group>"; };
+		14AFB74C1FE9FCDC00B0E32B /* ChannelSetingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChannelSetingController.h; path = ChannelSetting/ChannelSetingController.h; sourceTree = "<group>"; };
+		14AFB74D1FE9FCDC00B0E32B /* ChannelSetingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChannelSetingController.m; path = ChannelSetting/ChannelSetingController.m; sourceTree = "<group>"; };
+		14AFB74F1FE9FCF700B0E32B /* MyRequestController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyRequestController.h; path = MyRequest/MyRequestController.h; sourceTree = "<group>"; };
+		14AFB7501FE9FCF700B0E32B /* MyRequestController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyRequestController.m; path = MyRequest/MyRequestController.m; sourceTree = "<group>"; };
+		14AFB7521FEA2A1E00B0E32B /* MyLevelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLevelCell.h; sourceTree = "<group>"; };
+		14AFB7531FEA2A1E00B0E32B /* MyLevelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLevelCell.m; sourceTree = "<group>"; };
+		14AFB7551FEA300A00B0E32B /* MyLeveLModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyLeveLModel.h; sourceTree = "<group>"; };
+		14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLeveLModel.m; sourceTree = "<group>"; };
+		14AFB7581FEA7B3F00B0E32B /* MyRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRequestModel.h; sourceTree = "<group>"; };
+		14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRequestModel.m; sourceTree = "<group>"; };
+		14AFB75B1FEA7D0200B0E32B /* CustomRequestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRequestView.h; sourceTree = "<group>"; };
+		14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRequestView.m; sourceTree = "<group>"; };
 		14D836BD1FE76AC6006ECD45 /* CustomNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNewsCell.h; sourceTree = "<group>"; };
 		14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNewsCell.m; sourceTree = "<group>"; };
 		14D836C41FE79EC8006ECD45 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterController.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/RegisterController.h"; sourceTree = "<group>"; };
@@ -165,6 +192,9 @@
 		1407B48D1FE111E50028F341 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				14AFB74B1FE9FC7A00B0E32B /* ChannelSetting */,
+				14AFB74A1FE9FC6800B0E32B /* MyRequest */,
+				14AFB7451FE9FAA500B0E32B /* MyLevel */,
 				14D836D01FE7C2A2006ECD45 /* MoreOrderController */,
 			);
 			name = Controller;
@@ -174,6 +204,10 @@
 		1407B48E1FE111E50028F341 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				14AFB7551FEA300A00B0E32B /* MyLeveLModel.h */,
+				14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */,
+				14AFB7581FEA7B3F00B0E32B /* MyRequestModel.h */,
+				14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Model";
@@ -186,6 +220,10 @@
 				1407B4941FE112820028F341 /* CustomShowDataView.m */,
 				14D836E01FE7DB61006ECD45 /* ForntTabelCell.h */,
 				14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */,
+				14AFB7521FEA2A1E00B0E32B /* MyLevelCell.h */,
+				14AFB7531FEA2A1E00B0E32B /* MyLevelCell.m */,
+				14AFB75B1FEA7D0200B0E32B /* CustomRequestView.h */,
+				14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */,
 			);
 			name = View;
 			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/View";
@@ -310,6 +348,7 @@
 		14A5FC9A1FE922F0004B3E07 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				14AFB73B1FE9E89B00B0E32B /* SubbViewController */,
 				14A5FC9C1FE92381004B3E07 /* AboutWeController.h */,
 				14A5FC9D1FE92381004B3E07 /* AboutWeController.m */,
 				14A5FC9E1FE92381004B3E07 /* CallViewController.h */,
@@ -335,6 +374,44 @@
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
+			sourceTree = "<group>";
+		};
+		14AFB73B1FE9E89B00B0E32B /* SubbViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14AFB73F1FE9E8D900B0E32B /* ChangeTeleController.h */,
+				14AFB7401FE9E8D900B0E32B /* ChangeTeleController.m */,
+				14AFB7421FE9E8F600B0E32B /* ChangePassWordController.h */,
+				14AFB7431FE9E8F600B0E32B /* ChangePassWordController.m */,
+			);
+			path = SubbViewController;
+			sourceTree = "<group>";
+		};
+		14AFB7451FE9FAA500B0E32B /* MyLevel */ = {
+			isa = PBXGroup;
+			children = (
+				14AFB7471FE9FB1800B0E32B /* MyLevelController.h */,
+				14AFB7481FE9FB1800B0E32B /* MyLevelController.m */,
+			);
+			name = MyLevel;
+			sourceTree = "<group>";
+		};
+		14AFB74A1FE9FC6800B0E32B /* MyRequest */ = {
+			isa = PBXGroup;
+			children = (
+				14AFB74F1FE9FCF700B0E32B /* MyRequestController.h */,
+				14AFB7501FE9FCF700B0E32B /* MyRequestController.m */,
+			);
+			name = MyRequest;
+			sourceTree = "<group>";
+		};
+		14AFB74B1FE9FC7A00B0E32B /* ChannelSetting */ = {
+			isa = PBXGroup;
+			children = (
+				14AFB74C1FE9FCDC00B0E32B /* ChannelSetingController.h */,
+				14AFB74D1FE9FCDC00B0E32B /* ChannelSetingController.m */,
+			);
+			name = ChannelSetting;
 			sourceTree = "<group>";
 		};
 		14B4A8171FDE100600B5183C /* QDClass */ = {
@@ -738,7 +815,11 @@
 				14D836CF1FE7A939006ECD45 /* CustomGetCode.m in Sources */,
 				14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */,
 				14A5FCAB1FE92381004B3E07 /* SecuritySetController.m in Sources */,
+				14AFB74E1FE9FCDC00B0E32B /* ChannelSetingController.m in Sources */,
 				14A5FCA91FE92381004B3E07 /* CallViewController.m in Sources */,
+				14AFB7441FE9E8F600B0E32B /* ChangePassWordController.m in Sources */,
+				14AFB75A1FEA7B3F00B0E32B /* MyRequestModel.m in Sources */,
+				14AFB7571FEA300A00B0E32B /* MyLeveLModel.m in Sources */,
 				1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */,
 				14A5FCB31FE92395004B3E07 /* MyPageCell.m in Sources */,
 				14A5FCAC1FE92381004B3E07 /* UpdateController.m in Sources */,
@@ -748,7 +829,10 @@
 				14D836DC1FE7C68E006ECD45 /* ThirdViewController.m in Sources */,
 				14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */,
 				14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */,
+				14AFB75D1FEA7D0200B0E32B /* CustomRequestView.m in Sources */,
+				14AFB7491FE9FB1800B0E32B /* MyLevelController.m in Sources */,
 				149A56A61FE0B8BB005AEA1C /* News.m in Sources */,
+				14AFB7511FE9FCF700B0E32B /* MyRequestController.m in Sources */,
 				1424F6661FDE35EE00309E33 /* LoginMain.m in Sources */,
 				14A5FCAA1FE92381004B3E07 /* MydelegateViewController.m in Sources */,
 				14A0ACE81FDA1D6C0095003F /* ViewController.m in Sources */,
@@ -756,11 +840,13 @@
 				14D836D61FE7C652006ECD45 /* FrontViewController.m in Sources */,
 				14A5FCA81FE92381004B3E07 /* AboutWeController.m in Sources */,
 				1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */,
+				14AFB7411FE9E8D900B0E32B /* ChangeTeleController.m in Sources */,
 				14A0ACE21FDA1D6C0095003F /* main.m in Sources */,
 				149A56961FE0B869005AEA1C /* MyPage.m in Sources */,
 				14A5FCB01FE9238B004B3E07 /* MyPageModel.m in Sources */,
 				1439E1D31FE8ADFC0053F829 /* RootViewController.m in Sources */,
 				14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */,
+				14AFB7541FEA2A1E00B0E32B /* MyLevelCell.m in Sources */,
 				14D836D91FE7C664006ECD45 /* MiddleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

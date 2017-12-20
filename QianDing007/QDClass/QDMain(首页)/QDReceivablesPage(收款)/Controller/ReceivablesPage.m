@@ -9,6 +9,9 @@
 #import "ReceivablesPage.h"
 #import "CustomShowDataView.h"
 #import "MoreOrderController.h"
+#import "ChannelSetingController.h"
+#import "MyLevelController.h"
+#import "MyRequestController.h"
 @interface ReceivablesPage (){
     
     UIView *mebInfoView;//会员信息展示视图
@@ -160,7 +163,7 @@
         button.frame = CGRectMake(i*SC_WIDTH/3.0,25.0/SCALE_Y,SC_WIDTH/3.0,55);
         [button setImage:[UIImage imageNamed:myViewArray[i]] forState:UIControlStateNormal];
         [myView addSubview:button];
-        
+        [button addTarget:self action:@selector(buttonType:) forControlEvents:UIControlEventTouchUpInside];
         UILabel *textLabel = [[UILabel alloc] init];
         textLabel.text = textArray[i];
         textLabel.font = [UIFont systemFontOfSize:16];
@@ -169,6 +172,32 @@
         [myView addSubview:textLabel];
         
     }
+}
+-(void)buttonType:(UIButton *)btn{
+    switch (btn.tag) {
+        case 100:{
+            MyLevelController *levelVc = [[MyLevelController alloc] init];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+            [self.navigationController pushViewController:levelVc animated:YES];
+        }
+            break;
+        case 101:{
+            MyRequestController *requestVc = [[MyRequestController alloc] init];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+            [self.navigationController pushViewController:requestVc animated:YES];
+        }
+            break;
+        case 102:{
+            ChannelSetingController*setVc = [[ChannelSetingController alloc] init];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+            [self.navigationController pushViewController:setVc animated:YES];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
 }
 /**
  创建二维码视图

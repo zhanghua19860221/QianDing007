@@ -109,6 +109,7 @@
         
         cell = [[MyPageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
+    cell.contentView.layer.borderColor = [COLORFromRGB(0xf9f9f9) CGColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell addDataSourceView:allArray[indexPath.section][indexPath.row]];
     

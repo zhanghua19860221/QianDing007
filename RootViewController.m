@@ -34,9 +34,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor=[UIColor orangeColor];
     [self  creatSubView];
     [self  creatTabBarView];
+    self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
     //注册通知

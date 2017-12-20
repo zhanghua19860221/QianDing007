@@ -7,7 +7,8 @@
 //
 
 #import "SecuritySetController.h"
-
+#import "ChangeTeleController.h"
+#import "ChangePassWordController.h"
 @interface SecuritySetController ()
 
 @end
@@ -22,6 +23,11 @@
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
+}
+- (void)viewWillAppear:(BOOL)animated{
+
+    [super viewWillAppear:animated];
+    
 }
 - (void)createSubView{
     
@@ -129,15 +135,19 @@
  */
 - (void)changeTelephone{
 
-
+    ChangeTeleController *teleVC = [[ChangeTeleController alloc] init];
+    
+    [self.navigationController pushViewController:teleVC animated:YES];
 }
 /**
  更改密码
  */
 - (void)changePassWord{
 
-
+    ChangePassWordController *passVC = [[ChangePassWordController alloc] init];
     
+    [self.navigationController pushViewController:passVC animated:YES];
+
     
 }
 /**

@@ -68,6 +68,17 @@
     [self.contentView addSubview:_backMoney];
 
 
+    UIImageView *lineView = [[UIImageView alloc] init];
+    lineView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.contentView addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.contentView).offset(-1);
+        make.left.equalTo(self.contentView).offset(15);
+        make.height.mas_equalTo(1);
+        make.width.mas_equalTo(SC_WIDTH-15);
+        
+    }];
+    
 }
 -(void)addDataSourceToCell:(NSString*) backStr{
 
