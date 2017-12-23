@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1405143A1FEE563A00661D1B /* RequestUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 140514391FEE563A00661D1B /* RequestUserController.m */; };
 		1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407B4911FE1121F0028F341 /* ReceivablesPage.m */; };
 		1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407B4941FE112820028F341 /* CustomShowDataView.m */; };
 		1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1418F93B1FDFC87E00D3F754 /* GetPassWord.m */; };
@@ -40,6 +41,15 @@
 		14AFB7571FEA300A00B0E32B /* MyLeveLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */; };
 		14AFB75A1FEA7B3F00B0E32B /* MyRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */; };
 		14AFB75D1FEA7D0200B0E32B /* CustomRequestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */; };
+		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
+		14B421D71FEB939800CC8AE4 /* NewsSetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B421D61FEB939800CC8AE4 /* NewsSetController.m */; };
+		14B421DA1FEBDF9900CC8AE4 /* ProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B421D91FEBDF9900CC8AE4 /* ProfitController.m */; };
+		14D6487A1FECD59700AD57A4 /* GetProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D648791FECD59700AD57A4 /* GetProfitController.m */; };
+		14D6487D1FECD5BA00AD57A4 /* UpProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */; };
+		14D648801FECE16500AD57A4 /* MyGetProfitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D6487F1FECE16500AD57A4 /* MyGetProfitModel.m */; };
+		14D648831FECE2BC00AD57A4 /* MyGetProfitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D648821FECE2BC00AD57A4 /* MyGetProfitCell.m */; };
+		14D648861FED2AEC00AD57A4 /* UpProfitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D648851FED2AEC00AD57A4 /* UpProfitCell.m */; };
+		14D648891FED2B0C00AD57A4 /* MyProfitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D648881FED2B0C00AD57A4 /* MyProfitModel.m */; };
 		14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */; };
 		14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836C51FE79EC8006ECD45 /* RegisterController.m */; };
 		14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836CB1FE7A3FC006ECD45 /* CustomTextView.m */; };
@@ -71,6 +81,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		140514381FEE563A00661D1B /* RequestUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserController.h; sourceTree = "<group>"; };
+		140514391FEE563A00661D1B /* RequestUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserController.m; sourceTree = "<group>"; };
 		1407B4901FE1121F0028F341 /* ReceivablesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReceivablesPage.h; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.h"; sourceTree = "<group>"; };
 		1407B4911FE1121F0028F341 /* ReceivablesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReceivablesPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.m"; sourceTree = "<group>"; };
 		1407B4931FE112820028F341 /* CustomShowDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShowDataView.h; sourceTree = "<group>"; };
@@ -138,6 +150,23 @@
 		14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRequestModel.m; sourceTree = "<group>"; };
 		14AFB75B1FEA7D0200B0E32B /* CustomRequestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRequestView.h; sourceTree = "<group>"; };
 		14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRequestView.m; sourceTree = "<group>"; };
+		14B421921FEB462F00CC8AE4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		14B421D51FEB939800CC8AE4 /* NewsSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSetController.h; sourceTree = "<group>"; };
+		14B421D61FEB939800CC8AE4 /* NewsSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSetController.m; sourceTree = "<group>"; };
+		14B421D81FEBDF9900CC8AE4 /* ProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfitController.h; sourceTree = "<group>"; };
+		14B421D91FEBDF9900CC8AE4 /* ProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfitController.m; sourceTree = "<group>"; };
+		14D648781FECD59700AD57A4 /* GetProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProfitController.h; sourceTree = "<group>"; };
+		14D648791FECD59700AD57A4 /* GetProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProfitController.m; sourceTree = "<group>"; };
+		14D6487B1FECD5BA00AD57A4 /* UpProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpProfitController.h; sourceTree = "<group>"; };
+		14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpProfitController.m; sourceTree = "<group>"; };
+		14D6487E1FECE16500AD57A4 /* MyGetProfitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGetProfitModel.h; sourceTree = "<group>"; };
+		14D6487F1FECE16500AD57A4 /* MyGetProfitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGetProfitModel.m; sourceTree = "<group>"; };
+		14D648811FECE2BC00AD57A4 /* MyGetProfitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGetProfitCell.h; sourceTree = "<group>"; };
+		14D648821FECE2BC00AD57A4 /* MyGetProfitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGetProfitCell.m; sourceTree = "<group>"; };
+		14D648841FED2AEC00AD57A4 /* UpProfitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpProfitCell.h; sourceTree = "<group>"; };
+		14D648851FED2AEC00AD57A4 /* UpProfitCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpProfitCell.m; sourceTree = "<group>"; };
+		14D648871FED2B0C00AD57A4 /* MyProfitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProfitModel.h; sourceTree = "<group>"; };
+		14D648881FED2B0C00AD57A4 /* MyProfitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProfitModel.m; sourceTree = "<group>"; };
 		14D836BD1FE76AC6006ECD45 /* CustomNewsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNewsCell.h; sourceTree = "<group>"; };
 		14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNewsCell.m; sourceTree = "<group>"; };
 		14D836C41FE79EC8006ECD45 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RegisterController.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDRegister(注册)/RegisterController.h"; sourceTree = "<group>"; };
@@ -168,6 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */,
 				F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -189,6 +219,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		140514341FEE552600661D1B /* Mydelegate(我的代理) */ = {
+			isa = PBXGroup;
+			children = (
+				14A5FCA01FE92381004B3E07 /* MydelegateViewController.h */,
+				14A5FCA11FE92381004B3E07 /* MydelegateViewController.m */,
+				140514381FEE563A00661D1B /* RequestUserController.h */,
+				140514391FEE563A00661D1B /* RequestUserController.m */,
+			);
+			name = "Mydelegate(我的代理)";
+			sourceTree = "<group>";
+		};
 		1407B48D1FE111E50028F341 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,13 +389,12 @@
 		14A5FC9A1FE922F0004B3E07 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				140514341FEE552600661D1B /* Mydelegate(我的代理) */,
 				14AFB73B1FE9E89B00B0E32B /* SubbViewController */,
 				14A5FC9C1FE92381004B3E07 /* AboutWeController.h */,
 				14A5FC9D1FE92381004B3E07 /* AboutWeController.m */,
 				14A5FC9E1FE92381004B3E07 /* CallViewController.h */,
 				14A5FC9F1FE92381004B3E07 /* CallViewController.m */,
-				14A5FCA01FE92381004B3E07 /* MydelegateViewController.h */,
-				14A5FCA11FE92381004B3E07 /* MydelegateViewController.m */,
 				14A5FCA21FE92381004B3E07 /* SecuritySetController.h */,
 				14A5FCA31FE92381004B3E07 /* SecuritySetController.m */,
 				14A5FCA41FE92381004B3E07 /* UpdateController.h */,
@@ -371,6 +411,10 @@
 			children = (
 				14A5FCAE1FE9238B004B3E07 /* MyPageModel.h */,
 				14A5FCAF1FE9238B004B3E07 /* MyPageModel.m */,
+				14D6487E1FECE16500AD57A4 /* MyGetProfitModel.h */,
+				14D6487F1FECE16500AD57A4 /* MyGetProfitModel.m */,
+				14D648871FED2B0C00AD57A4 /* MyProfitModel.h */,
+				14D648881FED2B0C00AD57A4 /* MyProfitModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
@@ -383,6 +427,12 @@
 				14AFB7401FE9E8D900B0E32B /* ChangeTeleController.m */,
 				14AFB7421FE9E8F600B0E32B /* ChangePassWordController.h */,
 				14AFB7431FE9E8F600B0E32B /* ChangePassWordController.m */,
+				14B421D81FEBDF9900CC8AE4 /* ProfitController.h */,
+				14B421D91FEBDF9900CC8AE4 /* ProfitController.m */,
+				14D648781FECD59700AD57A4 /* GetProfitController.h */,
+				14D648791FECD59700AD57A4 /* GetProfitController.m */,
+				14D6487B1FECD5BA00AD57A4 /* UpProfitController.h */,
+				14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */,
 			);
 			path = SubbViewController;
 			sourceTree = "<group>";
@@ -504,6 +554,8 @@
 		14D836BA1FE749D1006ECD45 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				14B421D51FEB939800CC8AE4 /* NewsSetController.h */,
+				14B421D61FEB939800CC8AE4 /* NewsSetController.m */,
 			);
 			name = Controller;
 			path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/Controller";
@@ -601,6 +653,10 @@
 				14A5FCB21FE92395004B3E07 /* MyPageCell.m */,
 				14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */,
 				14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */,
+				14D648811FECE2BC00AD57A4 /* MyGetProfitCell.h */,
+				14D648821FECE2BC00AD57A4 /* MyGetProfitCell.m */,
+				14D648841FED2AEC00AD57A4 /* UpProfitCell.h */,
+				14D648851FED2AEC00AD57A4 /* UpProfitCell.m */,
 			);
 			name = View;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/View";
@@ -609,6 +665,7 @@
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14B421921FEB462F00CC8AE4 /* QuartzCore.framework */,
 				697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */,
 			);
 			name = Frameworks;
@@ -817,12 +874,17 @@
 				14A5FCAB1FE92381004B3E07 /* SecuritySetController.m in Sources */,
 				14AFB74E1FE9FCDC00B0E32B /* ChannelSetingController.m in Sources */,
 				14A5FCA91FE92381004B3E07 /* CallViewController.m in Sources */,
+				14D648891FED2B0C00AD57A4 /* MyProfitModel.m in Sources */,
+				14D6487A1FECD59700AD57A4 /* GetProfitController.m in Sources */,
 				14AFB7441FE9E8F600B0E32B /* ChangePassWordController.m in Sources */,
+				14D648801FECE16500AD57A4 /* MyGetProfitModel.m in Sources */,
+				14D648831FECE2BC00AD57A4 /* MyGetProfitCell.m in Sources */,
 				14AFB75A1FEA7B3F00B0E32B /* MyRequestModel.m in Sources */,
 				14AFB7571FEA300A00B0E32B /* MyLeveLModel.m in Sources */,
 				1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */,
 				14A5FCB31FE92395004B3E07 /* MyPageCell.m in Sources */,
 				14A5FCAC1FE92381004B3E07 /* UpdateController.m in Sources */,
+				14D6487D1FECD5BA00AD57A4 /* UpProfitController.m in Sources */,
 				149E8B321FDE8C660037B996 /* customTextFieldView.m in Sources */,
 				14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */,
 				1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */,
@@ -837,6 +899,8 @@
 				14A5FCAA1FE92381004B3E07 /* MydelegateViewController.m in Sources */,
 				14A0ACE81FDA1D6C0095003F /* ViewController.m in Sources */,
 				14A0ACE51FDA1D6C0095003F /* AppDelegate.m in Sources */,
+				1405143A1FEE563A00661D1B /* RequestUserController.m in Sources */,
+				14D648861FED2AEC00AD57A4 /* UpProfitCell.m in Sources */,
 				14D836D61FE7C652006ECD45 /* FrontViewController.m in Sources */,
 				14A5FCA81FE92381004B3E07 /* AboutWeController.m in Sources */,
 				1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */,
@@ -847,7 +911,9 @@
 				1439E1D31FE8ADFC0053F829 /* RootViewController.m in Sources */,
 				14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */,
 				14AFB7541FEA2A1E00B0E32B /* MyLevelCell.m in Sources */,
+				14B421DA1FEBDF9900CC8AE4 /* ProfitController.m in Sources */,
 				14D836D91FE7C664006ECD45 /* MiddleViewController.m in Sources */,
+				14B421D71FEB939800CC8AE4 /* NewsSetController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

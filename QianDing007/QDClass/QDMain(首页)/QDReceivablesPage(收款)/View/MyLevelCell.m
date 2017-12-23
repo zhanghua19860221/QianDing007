@@ -93,6 +93,7 @@
     _buyLevelBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     _buyLevelBtn.layer.borderColor = [COLORFromRGB(0x5c83e2) CGColor];
     _buyLevelBtn.layer.borderWidth = 1;
+    [_buyLevelBtn addTarget:self action:@selector(buyLevelBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_buyLevelBtn];
     
     [_levelView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -216,6 +217,320 @@
 //    @property (strong , nonatomic) UIButton *requestUseBtn;//邀请商家
 //    @property (strong , nonatomic) UIButton *buyLevelBtn;  //购买等级
 
+}
+-(void)buyLevelBtnClick{
+    
+    _maskView = [[UIView alloc] init];
+    UIApplication *ap = [UIApplication sharedApplication];
+    [ap.keyWindow addSubview:_maskView];
+    [_maskView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(ap.keyWindow);
+        make.left.equalTo(ap.keyWindow);
+        make.right.equalTo(ap.keyWindow);
+        make.bottom.equalTo(ap.keyWindow);
+        
+    }];
+    
+    UIImageView *firstView = [[UIImageView alloc] init];
+    firstView.backgroundColor = [UIColor blackColor];
+    firstView.alpha = 0.5;
+    [_maskView addSubview:firstView];
+    
+    UIImageView *secondView = [[UIImageView alloc] init];
+    secondView.backgroundColor = COLORFromRGB(0xffffff);
+    [_maskView addSubview:secondView];
+    secondView.userInteractionEnabled = YES;
+    [firstView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_maskView);
+        make.bottom.equalTo(secondView.mas_top);
+        make.left.right.equalTo(_maskView);
+        
+    }];
+    [secondView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(_maskView);
+        make.left.right.equalTo(_maskView);
+        make.height.mas_equalTo(370);
+        
+    }];
+    
+    
+    UILabel *topLabel = [[UILabel alloc] init];
+    topLabel.text = @"购买确认信息";
+    topLabel.font = [UIFont systemFontOfSize:18];
+    topLabel.textAlignment = NSTextAlignmentLeft;
+    [topLabel setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:topLabel];
+    
+    [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(secondView).offset(16);
+        make.left.equalTo(secondView).offset(130/SCALE_X);
+        make.width.mas_equalTo(180/SCALE_X);
+        make.height.mas_equalTo(18);
+        
+    }];
+    
+    UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [closeBtn setImage:[UIImage imageNamed:@"关闭"] forState:UIControlStateNormal];
+    [closeBtn addTarget:self action:@selector(closeMaskView) forControlEvents:UIControlEventTouchUpInside];
+    [secondView addSubview:closeBtn];
+    
+    [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(topLabel.mas_centerY);
+        make.right.equalTo(secondView).offset(-15);
+        make.width.height.mas_equalTo(25/SCALE_Y);
+        
+    }];
+    
+    UIImageView *firstLine = [[UIImageView alloc] init];
+    firstLine.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [secondView addSubview:firstLine];
+    [firstLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topLabel.mas_bottom).offset(16);
+        make.left.equalTo(secondView);
+        make.width.mas_equalTo(SC_WIDTH);
+        make.height.mas_equalTo(1);
+        
+    }];
+    
+    UILabel *buyModeLabel = [[UILabel alloc] init];
+    buyModeLabel.text = @"购买方式";
+    buyModeLabel.font = [UIFont systemFontOfSize:16];
+    buyModeLabel.textAlignment = NSTextAlignmentLeft;
+    [buyModeLabel setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:buyModeLabel];
+    
+    [buyModeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(firstLine.mas_bottom).offset(52);
+        make.left.equalTo(secondView).offset(50/SCALE_X);
+        make.width.mas_equalTo(68);
+        make.height.mas_equalTo(16);
+
+    }];
+    
+    UIButton * weChatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [weChatBtn setImage:[UIImage imageNamed:@"支付未选中"] forState:UIControlStateNormal];
+    [weChatBtn setImage:[UIImage imageNamed:@"支付选中"] forState:UIControlStateSelected];
+    weChatBtn.selected = YES;
+    weChatBtn.tag = 190;
+    _selectBtn = weChatBtn;
+    [weChatBtn addTarget:self action:@selector(payTypeClick:) forControlEvents:UIControlEventTouchUpInside];
+    [secondView addSubview:weChatBtn];
+    
+    [weChatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(firstLine.mas_bottom).offset(30);
+        make.left.equalTo(buyModeLabel.mas_right).offset(25/SCALE_X);
+        make.width.mas_equalTo(22);
+        make.height.mas_equalTo(22);
+        
+    }];
+    
+    UILabel *weChatLabelOne = [[UILabel alloc] init];
+    weChatLabelOne.text = @"微信支付";
+    weChatLabelOne.font = [UIFont systemFontOfSize:14];
+    weChatLabelOne.textAlignment = NSTextAlignmentLeft;
+    [weChatLabelOne setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:weChatLabelOne];
+    
+    [weChatLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(weChatBtn.mas_centerY);
+        make.left.equalTo(weChatBtn.mas_right).offset(15/SCALE_X);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    UILabel *weChatLabelTwo = [[UILabel alloc] init];
+    weChatLabelTwo.text = @"微信支付";
+    weChatLabelTwo.font = [UIFont systemFontOfSize:14];
+    weChatLabelTwo.textAlignment = NSTextAlignmentLeft;
+    [weChatLabelTwo setTextColor:COLORFromRGB(0x666666)];
+    [secondView addSubview:weChatLabelTwo];
+    
+    [weChatLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(weChatBtn.mas_centerY);
+        make.left.equalTo(weChatLabelOne.mas_right).offset(10/SCALE_X);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    
+    UIButton * aliPayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [aliPayBtn setImage:[UIImage imageNamed:@"支付未选中"] forState:UIControlStateNormal];
+    [aliPayBtn setImage:[UIImage imageNamed:@"支付选中"] forState:UIControlStateSelected];
+    [secondView addSubview:aliPayBtn];
+    aliPayBtn.tag = 191;
+    [aliPayBtn addTarget:self action:@selector(payTypeClick:) forControlEvents:UIControlEventTouchUpInside];
+    [aliPayBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(weChatBtn.mas_bottom).offset(15);
+        make.left.equalTo(buyModeLabel.mas_right).offset(25/SCALE_X);
+        make.width.mas_equalTo(22);
+        make.height.mas_equalTo(22);
+        
+    }];
+    
+    
+    UILabel *aliPayLabelOne = [[UILabel alloc] init];
+    aliPayLabelOne.text = @"支付宝";
+    aliPayLabelOne.font = [UIFont systemFontOfSize:14];
+    aliPayLabelOne.textAlignment = NSTextAlignmentLeft;
+    [aliPayLabelOne setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:aliPayLabelOne];
+    
+    [aliPayLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(aliPayBtn.mas_centerY);
+        make.left.equalTo(aliPayBtn.mas_right).offset(15/SCALE_X);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    UILabel *aliPayLabelTwo = [[UILabel alloc] init];
+    aliPayLabelTwo.text = @"蚂蚁金服";
+    aliPayLabelTwo.font = [UIFont systemFontOfSize:14];
+    aliPayLabelTwo.textAlignment = NSTextAlignmentLeft;
+    [aliPayLabelTwo setTextColor:COLORFromRGB(0x666666)];
+    [secondView addSubview:aliPayLabelTwo];
+    
+    [aliPayLabelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(aliPayBtn.mas_centerY);
+        make.left.equalTo(aliPayLabelOne.mas_right).offset(10/SCALE_X);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    UIImageView *secondLine = [[UIImageView alloc] init];
+    secondLine.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [secondView addSubview:secondLine];
+    [secondLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(aliPayBtn.mas_bottom).offset(30);
+        make.left.equalTo(secondView);
+        make.width.mas_equalTo(SC_WIDTH);
+        make.height.mas_equalTo(1);
+        
+    }];
+    
+    UILabel *buyInfoLabel = [[UILabel alloc] init];
+    buyInfoLabel.text = @"购买信息";
+    buyInfoLabel.font = [UIFont systemFontOfSize:16];
+    buyInfoLabel.textAlignment = NSTextAlignmentLeft;
+    [buyInfoLabel setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:buyInfoLabel];
+
+    [buyInfoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(secondLine.mas_bottom).offset(44);
+        make.left.equalTo(secondView).offset(50/SCALE_X);
+        make.width.mas_equalTo(68);
+        make.height.mas_equalTo(16);
+        
+    }];
+
+    
+    UILabel *buyMoneyOne = [[UILabel alloc] init];
+    buyMoneyOne.text = @"购买金额:";
+    buyMoneyOne.font = [UIFont systemFontOfSize:14];
+    buyMoneyOne.textAlignment = NSTextAlignmentLeft;
+    [buyMoneyOne setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:buyMoneyOne];
+    
+    [buyMoneyOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(secondLine.mas_bottom).offset(30);
+        make.left.equalTo(buyInfoLabel.mas_right).offset(25/SCALE_X);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    UILabel *buyMoneyTwo = [[UILabel alloc] init];
+    buyMoneyTwo.text = @"1999.00";
+    buyMoneyTwo.font = [UIFont systemFontOfSize:14];
+    buyMoneyTwo.textAlignment = NSTextAlignmentLeft;
+    [buyMoneyTwo setTextColor:COLORFromRGB(0xe10000)];
+    [secondView addSubview:buyMoneyTwo];
+    
+    [buyMoneyTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(buyMoneyOne.mas_centerY);
+        make.left.equalTo(buyMoneyOne.mas_right).offset(5/SCALE_X);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+
+    UILabel *buyLevelOne = [[UILabel alloc] init];
+    buyLevelOne.text = @"购买级别:";
+    buyLevelOne.font = [UIFont systemFontOfSize:14];
+    buyLevelOne.textAlignment = NSTextAlignmentLeft;
+    [buyLevelOne setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:buyLevelOne];
+    
+    [buyLevelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(buyMoneyOne.mas_bottom).offset(15);
+        make.left.equalTo(buyInfoLabel.mas_right).offset(25/SCALE_X);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    UILabel *buyLevelTwo = [[UILabel alloc] init];
+    buyLevelTwo.text = self.mebLevel.text;
+    buyLevelTwo.font = [UIFont systemFontOfSize:14];
+    buyLevelTwo.textAlignment = NSTextAlignmentLeft;
+    [buyLevelTwo setTextColor:COLORFromRGB(0x333333)];
+    [secondView addSubview:buyLevelTwo];
+    
+    [buyLevelTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(buyLevelOne.mas_centerY);
+        make.left.equalTo(buyLevelOne.mas_right).offset(5/SCALE_X);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(14);
+        
+    }];
+    
+    UIButton *comitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    comitBtn.backgroundColor = COLORFromRGB(0xe10000);
+    comitBtn.layer.masksToBounds = YES;
+    comitBtn.layer.cornerRadius = 3;
+    [comitBtn setTitle:@"确认购买" forState:UIControlStateNormal];
+    [comitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    [secondView addSubview:comitBtn];
+    
+    [comitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(buyLevelTwo.mas_bottom).offset(30);
+        make.left.equalTo(secondView).offset(15);
+        make.right.equalTo(secondView).offset(-15);
+        make.height.mas_equalTo(50/SCALE_Y);
+        
+    }];
+}
+
+/**
+ 选择支付方式按钮点击事件
+ */
+- (void)payTypeClick:(UIButton*)btn{
+    
+    NSLog(@"21231");
+    
+    if (_selectBtn!=btn) {
+        _selectBtn.selected=NO;
+        btn.selected=YES;
+        _selectBtn=btn;
+    }
+    switch (btn.tag) {
+        case 190:
+            
+            break;
+        case 191:
+            
+            break;
+        default:
+            break;
+    }
+
+}
+- (void)closeMaskView{
+    _maskView.hidden = YES;
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

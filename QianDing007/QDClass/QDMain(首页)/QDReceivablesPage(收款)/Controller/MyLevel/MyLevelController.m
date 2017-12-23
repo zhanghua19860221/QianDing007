@@ -118,7 +118,7 @@
 // 创建Attributed
     NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:upLabel.text];
 // 需要改变的第一个文字的位置
-    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"1"].location;
+    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"差"].location+1;
 // 需要改变的最后一个文字的位置
     NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
 // 需要改变的区间

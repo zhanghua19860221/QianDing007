@@ -36,11 +36,19 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
     [self createTopView];
     [self createTabelView];
+
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+ 
 }
 - (void)createTabelView{
 
@@ -82,7 +90,7 @@
     _tableView.delegate = self;
     _tableView.dataSource = self;
     [self.view addSubview:_tableView];
-    _tableView.separatorStyle = YES;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom).offset(40/SCALE_Y);
@@ -127,7 +135,7 @@
     }else if([tempStr isEqual:@"我的代理"]){
         MydelegateViewController *tempVc1 = [[MydelegateViewController alloc] init];
         [self.navigationController pushViewController:tempVc1 animated:YES];
-    
+
     }else if([tempStr isEqual:@"安全设置"]){
         SecuritySetController *tempVc2 = [[SecuritySetController alloc] init];
         [self.navigationController pushViewController:tempVc2 animated:YES];
@@ -163,10 +171,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
 
-}
 /**
  创建头视图
  */

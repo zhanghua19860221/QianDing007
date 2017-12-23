@@ -8,6 +8,7 @@
 
 #import "News.h"
 #import "CustomNewsCell.h"
+#import "NewsSetController.h"
 @interface News (){
     UIView *topView;//导航视图
     
@@ -32,6 +33,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    UINavigationBar * bar = self.navigationController.navigationBar;
+    bar.barTintColor = COLORFromRGB(0xffffff);
     
 }
 - (void)createTabelView{
@@ -72,6 +75,7 @@
     
     UIButton *topBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [topBtn setImage:[UIImage imageNamed:@"设置图标"] forState:UIControlStateNormal];
+    [topBtn addTarget:self action:@selector(setBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:topBtn];
     [topBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(topView.mas_centerY);
@@ -83,6 +87,14 @@
     
 }
 
+/**
+ 设置按钮点击事件
+ */
+-(void)setBtnClick{
+    
+    NewsSetController *newVc= [[NewsSetController alloc] init];
+    [self.navigationController pushViewController:newVc animated:YES];
+}
 #pragma *********************tabelViewDelegate*************************
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
