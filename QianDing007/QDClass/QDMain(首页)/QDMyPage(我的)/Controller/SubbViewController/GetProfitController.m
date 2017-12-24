@@ -36,7 +36,6 @@
     model.levelStr= @"普通会员";
     model.profitStr= @"81.22元";
     [dataArray addObject:model];
-
     
 }
 -(void)createTabelView{

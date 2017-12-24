@@ -78,7 +78,7 @@
     [_getMoneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_userLabel.mas_bottom).offset(15/SCALE_Y);
         make.left.equalTo(self.contentView).offset(15/SCALE_X);
-        make.width.mas_equalTo(40);
+        make.width.mas_equalTo(50);
         make.height.mas_equalTo(16);
     }];
     
@@ -112,7 +112,7 @@
     [_profitLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_profitLabelOne.mas_centerY);
         make.right.equalTo(_profitLabelOne.mas_left);
-        make.width.mas_equalTo(40);
+        make.width.mas_equalTo(50);
         make.height.mas_equalTo(16);
         
     }];

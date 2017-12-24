@@ -12,10 +12,10 @@
 @property (strong , nonatomic) UILabel *timeLabel;     //时间
 @property (strong , nonatomic) UILabel *userLabel;     //商家名称
 @property (strong , nonatomic) UILabel *getMoneyLabel; //收款
+@property (strong , nonatomic) UILabel *getMoneyLabelOne;//收款
 @property (strong , nonatomic) UIImageView *iconImage; //等级头像
 @property (strong , nonatomic) UILabel *levelLabel;    //会员等级
 @property (strong , nonatomic) UILabel *profitLabel;   //分润
-@property (strong , nonatomic) UILabel *getMoneyLabelOne;//收款
 @property (strong , nonatomic) UILabel *profitLabelOne;  //分润
 
 

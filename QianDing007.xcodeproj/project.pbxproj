@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1405143A1FEE563A00661D1B /* RequestUserController.m in Sources */ = {isa = PBXBuildFile; fileRef = 140514391FEE563A00661D1B /* RequestUserController.m */; };
+		1405143D1FEE658600661D1B /* UserListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1405143C1FEE658600661D1B /* UserListController.m */; };
 		1407B4921FE1121F0028F341 /* ReceivablesPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407B4911FE1121F0028F341 /* ReceivablesPage.m */; };
 		1407B4951FE112820028F341 /* CustomShowDataView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1407B4941FE112820028F341 /* CustomShowDataView.m */; };
 		1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 1418F93B1FDFC87E00D3F754 /* GetPassWord.m */; };
@@ -60,6 +61,14 @@
 		14D836DC1FE7C68E006ECD45 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836DB1FE7C68E006ECD45 /* ThirdViewController.m */; };
 		14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */; };
 		14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */; };
+		14FEFB9E1FEF88700050E524 /* UserListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFB9D1FEF88700050E524 /* UserListModel.m */; };
+		14FEFBA11FEF8A180050E524 /* UserListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA01FEF8A180050E524 /* UserListCell.m */; };
+		14FEFBA41FEF90DE0050E524 /* UserListBasicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA31FEF90DE0050E524 /* UserListBasicController.m */; };
+		14FEFBA71FEF93E60050E524 /* AllLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA61FEF93E60050E524 /* AllLevelController.m */; };
+		14FEFBAA1FEF93FF0050E524 /* ComMonController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA91FEF93FF0050E524 /* ComMonController.m */; };
+		14FEFBAD1FEF94110050E524 /* SilverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBAC1FEF94110050E524 /* SilverController.m */; };
+		14FEFBB01FEF94240050E524 /* GoldController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBAF1FEF94240050E524 /* GoldController.m */; };
+		14FEFBB31FEF94360050E524 /* DiamondsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBB21FEF94360050E524 /* DiamondsController.m */; };
 		F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */; };
 /* End PBXBuildFile section */
 
@@ -83,6 +92,8 @@
 /* Begin PBXFileReference section */
 		140514381FEE563A00661D1B /* RequestUserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserController.h; sourceTree = "<group>"; };
 		140514391FEE563A00661D1B /* RequestUserController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserController.m; sourceTree = "<group>"; };
+		1405143B1FEE658600661D1B /* UserListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListController.h; sourceTree = "<group>"; };
+		1405143C1FEE658600661D1B /* UserListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListController.m; sourceTree = "<group>"; };
 		1407B4901FE1121F0028F341 /* ReceivablesPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ReceivablesPage.h; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.h"; sourceTree = "<group>"; };
 		1407B4911FE1121F0028F341 /* ReceivablesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReceivablesPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.m"; sourceTree = "<group>"; };
 		1407B4931FE112820028F341 /* CustomShowDataView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomShowDataView.h; sourceTree = "<group>"; };
@@ -187,6 +198,22 @@
 		14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForntTabelCell.m; sourceTree = "<group>"; };
 		14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLabelView.h; sourceTree = "<group>"; };
 		14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLabelView.m; sourceTree = "<group>"; };
+		14FEFB9C1FEF88700050E524 /* UserListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListModel.h; sourceTree = "<group>"; };
+		14FEFB9D1FEF88700050E524 /* UserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListModel.m; sourceTree = "<group>"; };
+		14FEFB9F1FEF8A180050E524 /* UserListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListCell.h; sourceTree = "<group>"; };
+		14FEFBA01FEF8A180050E524 /* UserListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListCell.m; sourceTree = "<group>"; };
+		14FEFBA21FEF90DE0050E524 /* UserListBasicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListBasicController.h; sourceTree = "<group>"; };
+		14FEFBA31FEF90DE0050E524 /* UserListBasicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListBasicController.m; sourceTree = "<group>"; };
+		14FEFBA51FEF93E60050E524 /* AllLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllLevelController.h; sourceTree = "<group>"; };
+		14FEFBA61FEF93E60050E524 /* AllLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllLevelController.m; sourceTree = "<group>"; };
+		14FEFBA81FEF93FF0050E524 /* ComMonController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComMonController.h; sourceTree = "<group>"; };
+		14FEFBA91FEF93FF0050E524 /* ComMonController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComMonController.m; sourceTree = "<group>"; };
+		14FEFBAB1FEF94110050E524 /* SilverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SilverController.h; sourceTree = "<group>"; };
+		14FEFBAC1FEF94110050E524 /* SilverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SilverController.m; sourceTree = "<group>"; };
+		14FEFBAE1FEF94240050E524 /* GoldController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoldController.h; sourceTree = "<group>"; };
+		14FEFBAF1FEF94240050E524 /* GoldController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoldController.m; sourceTree = "<group>"; };
+		14FEFBB11FEF94360050E524 /* DiamondsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiamondsController.h; sourceTree = "<group>"; };
+		14FEFBB21FEF94360050E524 /* DiamondsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiamondsController.m; sourceTree = "<group>"; };
 		5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.debug.xcconfig"; sourceTree = "<group>"; };
 		697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QianDing007.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.release.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.release.xcconfig"; sourceTree = "<group>"; };
@@ -222,12 +249,34 @@
 		140514341FEE552600661D1B /* Mydelegate(我的代理) */ = {
 			isa = PBXGroup;
 			children = (
+				1405143E1FEE6A3F00661D1B /* SubViewController */,
 				14A5FCA01FE92381004B3E07 /* MydelegateViewController.h */,
 				14A5FCA11FE92381004B3E07 /* MydelegateViewController.m */,
 				140514381FEE563A00661D1B /* RequestUserController.h */,
 				140514391FEE563A00661D1B /* RequestUserController.m */,
+				1405143B1FEE658600661D1B /* UserListController.h */,
+				1405143C1FEE658600661D1B /* UserListController.m */,
 			);
 			name = "Mydelegate(我的代理)";
+			sourceTree = "<group>";
+		};
+		1405143E1FEE6A3F00661D1B /* SubViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14FEFBA21FEF90DE0050E524 /* UserListBasicController.h */,
+				14FEFBA31FEF90DE0050E524 /* UserListBasicController.m */,
+				14FEFBA51FEF93E60050E524 /* AllLevelController.h */,
+				14FEFBA61FEF93E60050E524 /* AllLevelController.m */,
+				14FEFBA81FEF93FF0050E524 /* ComMonController.h */,
+				14FEFBA91FEF93FF0050E524 /* ComMonController.m */,
+				14FEFBAB1FEF94110050E524 /* SilverController.h */,
+				14FEFBAC1FEF94110050E524 /* SilverController.m */,
+				14FEFBAE1FEF94240050E524 /* GoldController.h */,
+				14FEFBAF1FEF94240050E524 /* GoldController.m */,
+				14FEFBB11FEF94360050E524 /* DiamondsController.h */,
+				14FEFBB21FEF94360050E524 /* DiamondsController.m */,
+			);
+			name = SubViewController;
 			sourceTree = "<group>";
 		};
 		1407B48D1FE111E50028F341 /* Controller */ = {
@@ -415,6 +464,8 @@
 				14D6487F1FECE16500AD57A4 /* MyGetProfitModel.m */,
 				14D648871FED2B0C00AD57A4 /* MyProfitModel.h */,
 				14D648881FED2B0C00AD57A4 /* MyProfitModel.m */,
+				14FEFB9C1FEF88700050E524 /* UserListModel.h */,
+				14FEFB9D1FEF88700050E524 /* UserListModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
@@ -657,6 +708,8 @@
 				14D648821FECE2BC00AD57A4 /* MyGetProfitCell.m */,
 				14D648841FED2AEC00AD57A4 /* UpProfitCell.h */,
 				14D648851FED2AEC00AD57A4 /* UpProfitCell.m */,
+				14FEFB9F1FEF8A180050E524 /* UserListCell.h */,
+				14FEFBA01FEF8A180050E524 /* UserListCell.m */,
 			);
 			name = View;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/View";
@@ -867,6 +920,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14FEFBA11FEF8A180050E524 /* UserListCell.m in Sources */,
 				14A5FCAD1FE92381004B3E07 /* UserViewController.m in Sources */,
 				14D836D31FE7C313006ECD45 /* MoreOrderController.m in Sources */,
 				14D836CF1FE7A939006ECD45 /* CustomGetCode.m in Sources */,
@@ -878,6 +932,7 @@
 				14D6487A1FECD59700AD57A4 /* GetProfitController.m in Sources */,
 				14AFB7441FE9E8F600B0E32B /* ChangePassWordController.m in Sources */,
 				14D648801FECE16500AD57A4 /* MyGetProfitModel.m in Sources */,
+				14FEFBAD1FEF94110050E524 /* SilverController.m in Sources */,
 				14D648831FECE2BC00AD57A4 /* MyGetProfitCell.m in Sources */,
 				14AFB75A1FEA7B3F00B0E32B /* MyRequestModel.m in Sources */,
 				14AFB7571FEA300A00B0E32B /* MyLeveLModel.m in Sources */,
@@ -892,11 +947,18 @@
 				14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */,
 				14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */,
 				14AFB75D1FEA7D0200B0E32B /* CustomRequestView.m in Sources */,
+				14FEFBA41FEF90DE0050E524 /* UserListBasicController.m in Sources */,
 				14AFB7491FE9FB1800B0E32B /* MyLevelController.m in Sources */,
+				14FEFBA71FEF93E60050E524 /* AllLevelController.m in Sources */,
 				149A56A61FE0B8BB005AEA1C /* News.m in Sources */,
+				14FEFB9E1FEF88700050E524 /* UserListModel.m in Sources */,
+				14FEFBAA1FEF93FF0050E524 /* ComMonController.m in Sources */,
 				14AFB7511FE9FCF700B0E32B /* MyRequestController.m in Sources */,
+				14FEFBB31FEF94360050E524 /* DiamondsController.m in Sources */,
+				14FEFBB01FEF94240050E524 /* GoldController.m in Sources */,
 				1424F6661FDE35EE00309E33 /* LoginMain.m in Sources */,
 				14A5FCAA1FE92381004B3E07 /* MydelegateViewController.m in Sources */,
+				1405143D1FEE658600661D1B /* UserListController.m in Sources */,
 				14A0ACE81FDA1D6C0095003F /* ViewController.m in Sources */,
 				14A0ACE51FDA1D6C0095003F /* AppDelegate.m in Sources */,
 				1405143A1FEE563A00661D1B /* RequestUserController.m in Sources */,

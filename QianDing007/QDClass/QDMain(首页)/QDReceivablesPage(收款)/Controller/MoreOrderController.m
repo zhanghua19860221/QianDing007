@@ -67,7 +67,6 @@
     _scrollView.pagingEnabled = YES;
     [self.view addSubview:_scrollView];
     _scrollView.delegate = self ;
-//    _scrollView.scrollEnabled = NO;
     _scrollView.bounces = NO;
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {

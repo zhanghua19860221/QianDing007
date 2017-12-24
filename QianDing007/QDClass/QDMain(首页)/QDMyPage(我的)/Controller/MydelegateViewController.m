@@ -9,6 +9,7 @@
 #import "MydelegateViewController.h"
 #import "ProfitController.h"
 #import "RequestUserController.h"
+#import "UserListController.h"
 @interface MydelegateViewController (){
     UIView *topView;     //欢迎视图
     UIView * firstView;  //第一个模块视图
@@ -71,7 +72,6 @@
         [secondView addSubview:typeLabel];
         
     }
-
 }
 
 /**
@@ -85,8 +85,10 @@
 
         }
             break;
-        case 221:
-            
+        case 221:{
+            UserListController *userListVc = [[UserListController alloc] init];
+            [self.navigationController pushViewController:userListVc animated:YES];
+        }
             break;
         case 222:
             

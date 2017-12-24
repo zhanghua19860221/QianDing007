@@ -12,7 +12,7 @@
 @interface ProfitController (){
     UIView *topView;//创建头视图
     UIButton *selectBtn;//记录选中按钮
-    UIImageView *imageLine;//滚动线条
+    UIImageView *imageLine;//滚动红色线条
     GetProfitController *getProfitVC;//收款分润视图
     UpProfitController *upProfitVC;//升级分润视图
 
@@ -159,7 +159,6 @@
     
     UIButton *tempBtn = nil;
     NSArray *textBtnArray = @[@"收款分润",@"总分润"];
-    
     for (int i = 0; i < 2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = COLORFromRGB(0xffffff);
@@ -245,7 +244,7 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
 
 }
-#pragma **********************************
+#pragma ********************UIScrollViewDelegate**************
 // 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     

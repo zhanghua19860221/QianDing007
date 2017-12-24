@@ -8,12 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "RequestUserController.h"
-@interface AppDelegate (){
-
-
-
-}
+#import "UserListController.h"
+@interface AppDelegate ()
 @end
 
 @implementation AppDelegate
@@ -28,7 +24,7 @@
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
 
-//    RequestUserController *root = [[RequestUserController alloc] init];
+//    UserListController *root = [[UserListController alloc] init];
 //    self.window.rootViewController = root ;
     // Override point for customization after application launch.
     return YES;
