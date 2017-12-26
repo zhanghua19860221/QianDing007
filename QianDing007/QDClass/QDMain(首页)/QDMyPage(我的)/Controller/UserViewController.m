@@ -7,7 +7,8 @@
 //
 
 #import "UserViewController.h"
-
+#import "CompanyController.h"
+#import "PersonalController.h"
 @interface UserViewController (){
     
     UIView *topView;    //创建顶部选择按钮
@@ -15,13 +16,8 @@
     UIView *onePageView;//第一页展示视图
     UIView *twoPageView;//第二页展示视图
     
-    UITextField *companyNameField;//企业名称
-    UITextField *creditField;     //信用代码
-    UITextField *addressField;    //详细地址
-    UITextField *userNameField;   //姓名
-    UITextField *cardedField;     //身份证号
-    UITextField *telePhoneField;  //联系电话
-
+    CompanyController *companyVC;   //企业认证
+    PersonalController *personalVC; //个人认证
     
 }
 @end
@@ -32,9 +28,10 @@
     [super viewDidLoad];
     [self createNavgation];
     [self createChooseView];
+    [self createSubViewController];
     [self createScrollerView];
-    [self createOneView];
-    [self createTwoView];
+//    [self createOneView];
+//    [self createTwoView];
     
     
     self.view.backgroundColor = [UIColor grayColor];
@@ -59,7 +56,7 @@
     _scrollView.delegate = self ;
     //    _scrollView.scrollEnabled = NO;
     _scrollView.bounces = NO;
-    _scrollView.contentSize = CGSizeMake(SC_WIDTH*2.0, 0);
+    _scrollView.contentSize = CGSizeMake(SC_WIDTH*2.0, 2000);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom);
         make.left.equalTo(self.view);
@@ -67,24 +64,26 @@
         make.height.mas_offset(SC_HEIGHT);
         
     }];
+    for (int i=0; i<2; i++) {
+        UIViewController *vc = self.childViewControllers[i];
+        vc.view.frame= CGRectMake(SC_WIDTH*i, 0, SC_WIDTH, SC_HEIGHT);
+        [_scrollView addSubview:vc.view];
+    }
+}
+/**
+ 创建子控制器
+ */
+- (void)createSubViewController{
+    companyVC = [[CompanyController alloc] init];
+    personalVC = [[PersonalController alloc] init];
+
+    [self addChildViewController:companyVC];
+    [self addChildViewController:personalVC];
 }
 
-- (void)createOneView{
-    onePageView = [[UIView alloc] init];
-    onePageView.backgroundColor = COLORFromRGB(0xffffff);
-    [_scrollView addSubview:onePageView];
-    [onePageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_scrollView);
-        make.left.equalTo(_scrollView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(SC_HEIGHT);
-        
-    }];
-
-}
 - (void)createTwoView{
     twoPageView = [[UIView alloc] init];
-    twoPageView.backgroundColor = COLORFromRGB(0x333333);
+    twoPageView.backgroundColor = COLORFromRGB(0xffffff);
     [_scrollView addSubview:twoPageView];
     [twoPageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_scrollView);
@@ -93,76 +92,76 @@
         make.height.mas_equalTo(SC_HEIGHT);
     }];
     
-    UIImageView *line = [[UIImageView alloc] init];
-    line.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:line];
-    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-
-    }];
-    UIImageView *lineOne = [[UIImageView alloc] init];
-    lineOne.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:lineOne];
-    [lineOne mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(line.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-        
-    }];
-    UIImageView *lineTwo = [[UIImageView alloc] init];
-    lineTwo.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:lineTwo];
-    [lineTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineOne.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-        
-    }];
-    UIImageView *lineThird = [[UIImageView alloc] init];
-    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:lineThird];
-    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineTwo.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-        
-    }];
-    UIImageView *lineFour = [[UIImageView alloc] init];
-    lineFour.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:lineFour];
-    [lineFour mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineThird.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-        
-    }];
-    UIImageView *lineFive = [[UIImageView alloc] init];
-    lineFive.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:lineFive];
-    [lineFive mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineFour.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-        
-    }];
-    UIImageView *lineSix = [[UIImageView alloc] init];
-    lineSix.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [twoPageView addSubview:lineSix];
-    [lineSix mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineFive.mas_bottom).offset(50);
-        make.left.equalTo(topView);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(1);
-        
-    }];
+//    UIImageView *line = [[UIImageView alloc] init];
+//    line.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:line];
+//    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(topView.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//
+//    }];
+//    UIImageView *lineOne = [[UIImageView alloc] init];
+//    lineOne.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:lineOne];
+//    [lineOne mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(line.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//        
+//    }];
+//    UIImageView *lineTwo = [[UIImageView alloc] init];
+//    lineTwo.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:lineTwo];
+//    [lineTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineOne.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//        
+//    }];
+//    UIImageView *lineThird = [[UIImageView alloc] init];
+//    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:lineThird];
+//    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineTwo.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//        
+//    }];
+//    UIImageView *lineFour = [[UIImageView alloc] init];
+//    lineFour.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:lineFour];
+//    [lineFour mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineThird.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//        
+//    }];
+//    UIImageView *lineFive = [[UIImageView alloc] init];
+//    lineFive.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:lineFive];
+//    [lineFive mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineFour.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//        
+//    }];
+//    UIImageView *lineSix = [[UIImageView alloc] init];
+//    lineSix.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [twoPageView addSubview:lineSix];
+//    [lineSix mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineFive.mas_bottom).offset(50);
+//        make.left.equalTo(topView);
+//        make.width.mas_equalTo(SC_WIDTH);
+//        make.height.mas_equalTo(1);
+//        
+//    }];
     
     
     
@@ -298,6 +297,7 @@
     [_scrollView setContentOffset:CGPointMake(x*SC_WIDTH, 0) animated:YES];
     
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

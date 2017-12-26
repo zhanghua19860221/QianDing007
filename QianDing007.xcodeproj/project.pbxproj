@@ -69,6 +69,8 @@
 		149536B81FF2579400C85C05 /* UpProfitCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D648851FED2AEC00AD57A4 /* UpProfitCell.m */; };
 		149536B91FF2579400C85C05 /* UserListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA01FEF8A180050E524 /* UserListCell.m */; };
 		149536BA1FF2579400C85C05 /* PresentRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D3A1FF1F013005F2D2F /* PresentRecordCell.m */; };
+		149536BD1FF26C4200C85C05 /* PersonalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149536BC1FF26C4200C85C05 /* PersonalController.m */; };
+		149536C01FF26C5C00C85C05 /* CompanyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149536BF1FF26C5C00C85C05 /* CompanyController.m */; };
 		14A0ACEB1FDA1D6C0095003F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACE91FDA1D6C0095003F /* Main.storyboard */; };
 		14A0ACED1FDA1D6C0095003F /* images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACEC1FDA1D6C0095003F /* images.xcassets */; };
 		14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACEE1FDA1D6C0095003F /* LaunchScreen.storyboard */; };
@@ -111,6 +113,10 @@
 		1439E1D11FE8ADFC0053F829 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1439E1D21FE8ADFC0053F829 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		1439E1DA1FE8D5500053F829 /* QDFirstBloodpch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDFirstBloodpch.pch; sourceTree = "<group>"; };
+		149536BB1FF26C4200C85C05 /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
+		149536BC1FF26C4200C85C05 /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
+		149536BE1FF26C5C00C85C05 /* CompanyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyController.h; sourceTree = "<group>"; };
+		149536BF1FF26C5C00C85C05 /* CompanyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompanyController.m; sourceTree = "<group>"; };
 		149A56941FE0B869005AEA1C /* MyPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyPage.h; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/MyPage.h"; sourceTree = "<group>"; };
 		149A56951FE0B869005AEA1C /* MyPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/MyPage.m"; sourceTree = "<group>"; };
 		149A56A41FE0B8BB005AEA1C /* News.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = News.h; path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/News.h"; sourceTree = "<group>"; };
@@ -661,6 +667,10 @@
 				14CF1D4B1FF23B0B005F2D2F /* ProfitController.m */,
 				14CF1D4C1FF23B0B005F2D2F /* UpProfitController.h */,
 				14CF1D4D1FF23B0B005F2D2F /* UpProfitController.m */,
+				149536BB1FF26C4200C85C05 /* PersonalController.h */,
+				149536BC1FF26C4200C85C05 /* PersonalController.m */,
+				149536BE1FF26C5C00C85C05 /* CompanyController.h */,
+				149536BF1FF26C5C00C85C05 /* CompanyController.m */,
 			);
 			name = SubbViewController;
 			sourceTree = "<group>";
@@ -1027,6 +1037,7 @@
 				149536A21FF256BB00C85C05 /* ManageMoneyController.m in Sources */,
 				149536A31FF256BB00C85C05 /* ProfitController.m in Sources */,
 				149536A41FF256BB00C85C05 /* ChangePassWordController.m in Sources */,
+				149536BD1FF26C4200C85C05 /* PersonalController.m in Sources */,
 				149536A51FF256BB00C85C05 /* ChangeTeleController.m in Sources */,
 				1495368B1FF2561900C85C05 /* ChannelSetingController.m in Sources */,
 				1495368C1FF2561900C85C05 /* MyRequestController.m in Sources */,
@@ -1034,6 +1045,7 @@
 				1495368E1FF2561900C85C05 /* MoreOrderController.m in Sources */,
 				1495368F1FF2561900C85C05 /* MydelegateViewController.m in Sources */,
 				149536901FF2561900C85C05 /* AboutWeController.m in Sources */,
+				149536C01FF26C5C00C85C05 /* CompanyController.m in Sources */,
 				149536911FF2561900C85C05 /* CallViewController.m in Sources */,
 				149536921FF2561900C85C05 /* SecuritySetController.m in Sources */,
 				149536931FF2561900C85C05 /* UpdateController.m in Sources */,
