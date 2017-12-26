@@ -24,12 +24,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createTopView];
-    [self getDataSource];
-    [self createStatistics];
-    [self createMainView];
-    [self createMaskView];
-    [self createRequestView];
+//    [self createTopView];
+//    [self getDataSource];
+//    [self createStatistics];
+//    [self createMainView];
+//    [self createMaskView];
+//    [self createRequestView];
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
 }
@@ -234,7 +234,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self setStatusBarBackgroundColor:COLORFromRGB(0xe10000)];
 
 }
 - (void)createTopView{
@@ -342,7 +341,6 @@
     NSArray *loginViewArray = @[@"微信@2x",@"QQ",@"通讯录"];
     NSArray *loginLabelArrya = @[@"微信邀请",@"QQ邀请",@"通讯录邀请"];
     UIButton *tempBtn = nil;
-    UILabel  *tempLabel = nil;
     for (int i = 0; i<3 ; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:loginViewArray[i]] forState:UIControlStateNormal];
@@ -446,7 +444,6 @@
 - (void)leftBackClick{
     //展示tabBar
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    [self setStatusBarBackgroundColor:COLORFromRGB(0xffffff)];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -468,14 +465,7 @@
     }];
    
 }
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

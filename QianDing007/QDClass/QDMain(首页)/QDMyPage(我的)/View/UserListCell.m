@@ -95,6 +95,7 @@
         make.width.mas_equalTo(90);
         make.height.mas_equalTo(16);
     }];
+    
     _allMoneyLabelOne = [[UILabel alloc] init];
     _allMoneyLabelOne.font = [UIFont systemFontOfSize:16];
     _allMoneyLabelOne.textAlignment = NSTextAlignmentLeft;
@@ -138,6 +139,19 @@
     _userNameLabel.text = model.userNameStr;
     _teleLabelOne.text  = model.teleStr;
     _allMoneyLabelOne.text = model.allMoneyStr;
+
+    // 创建Attributed
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.allMoneyStr];
+    // 需要改变的最后一个文字的位置
+    NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"元"].location;
+    // 需要改变的区间
+    NSRange rangeOne = NSMakeRange(0, secondLocOne);
+    // 改变颜色
+    [noteStrOne addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:rangeOne];
+    // 为label添加Attributed
+    [_allMoneyLabelOne setAttributedText:noteStrOne];
+    
+    
     _openTimeLabelOne.text = model.openTimeStr;
     _mebLevelLabel.text = model.mebLevelStr;
     [_mebIconView setImage:[UIImage imageNamed:model.mebIconStr]];

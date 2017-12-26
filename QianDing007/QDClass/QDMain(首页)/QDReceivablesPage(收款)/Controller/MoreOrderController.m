@@ -42,7 +42,10 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.5;
+    [[UIApplication sharedApplication].keyWindow addSubview:view];
 
 }
 /**

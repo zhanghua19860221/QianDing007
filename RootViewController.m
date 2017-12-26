@@ -54,14 +54,14 @@
 
 - (void)creatTabBarView{
     
-    NSArray *tabDafImageArray = @[@"操作栏收款未选中",@"操作栏消息未选中",@"操作栏我的未选中"];
-    NSArray *tabSelImageArray = @[@"操作栏收款选中",@"操作栏消息选中",@"操作栏我的选中"];
+    NSArray *tabDafImageArray = @[@"收款2",@"消息2",@"我的2"];
+    NSArray *tabSelImageArray = @[@"收款1",@"消息",@"操作栏我的选中@2x"];
     
     _tabberView = [[UIView alloc] init];
     _tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
     _tabberView.layer.borderWidth = 1;
     _tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
-    _tabberView.frame = CGRectMake(0, SC_HEIGHT-44, SC_WIDTH, 44);
+    _tabberView.frame = CGRectMake(0, SC_HEIGHT-49, SC_WIDTH, 49);
     [self.view addSubview:_tabberView];
     
     for (int i=0; i<3; i++) {
@@ -69,7 +69,7 @@
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         button.tag = 100+i;
-        button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0, 44);
+        button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0, 49);
         [_tabberView addSubview:button];
         
         if (0==i) {
@@ -94,13 +94,12 @@
     
     switch (btn.tag) {
         case 100:
-            [self setStatusBarBackgroundColor:[UIColor whiteColor]];
             break;
+            
         case 101:
-            [self setStatusBarBackgroundColor:[UIColor redColor]];
+            
             break;
         case 102:
-            [self setStatusBarBackgroundColor:[UIColor redColor]];
 
             break;
         default:
@@ -110,21 +109,14 @@
 
 }
 
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
-}
-
 -(void)creatSubView
 {
+    
     ReceivablesPage*first=[[ReceivablesPage alloc] init];
     UINavigationController*nav=[[UINavigationController alloc] initWithRootViewController:first];
-
+    
     MyPage *third=[[MyPage alloc] init];
+    
     News*Second=[[News alloc] init];
     
     self.viewControllers=@[nav,Second,third];

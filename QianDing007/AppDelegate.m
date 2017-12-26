@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "UserListController.h"
+#import "UserViewController.h"
 @interface AppDelegate ()
 @end
 
@@ -20,12 +20,20 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    LoginMain *root = [[LoginMain alloc] init];
+  UserViewController *root = [[UserViewController alloc] init];
+    
+//    LoginMain *root = [[LoginMain alloc] init];
+    
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
+    
+    
+    
+//    [[shareDelegate shareNSUserDefaults] setBool:NO forKey:@"b_account"];
+//    BOOL ool = [[shareDelegate shareNSUserDefaults] boolForKey:@"b_account"];
 
-//    UserListController *root = [[UserListController alloc] init];
-//    self.window.rootViewController = root ;
+
+    
     // Override point for customization after application launch.
     return YES;
 }
@@ -33,6 +41,7 @@
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+    
 }
 
 

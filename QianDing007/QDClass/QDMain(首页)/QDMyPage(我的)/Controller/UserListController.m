@@ -185,20 +185,10 @@
     
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self setStatusBarBackgroundColor:COLORFromRGB(0xe10000)];
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xe10000);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
 
-    
-}
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
 }
 /**
  创建导航栏
@@ -218,6 +208,7 @@
  */
 - (void)leftBackClick{
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 #pragma ********************UIScrollViewDelegate**************
 // 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。

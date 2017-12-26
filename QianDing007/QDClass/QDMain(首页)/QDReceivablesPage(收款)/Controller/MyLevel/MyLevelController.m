@@ -71,7 +71,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self setStatusBarBackgroundColor:COLORFromRGB(0xe10000)];
 
 }
 - (void)createTopView{
@@ -189,17 +188,9 @@
     
     //展示tabBar
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    [self setStatusBarBackgroundColor:COLORFromRGB(0xffffff)];
     [self.navigationController popViewControllerAnimated:YES];
 }
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
-}
+
 #pragma ******************tabelViewDelegate*****************************
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 

@@ -73,7 +73,7 @@
     
     
     UIImageView *mebIconView = [[UIImageView alloc] init];
-    [mebIconView setImage:[UIImage imageNamed:@"普通会员等级图标"]];
+    [mebIconView setImage:[UIImage imageNamed:@"普通会员132*132"]];
     mebIconView.frame = CGRectMake(mebLeveLabel.frame.origin.x+mebLeveLabel.frame.size.width+10,mebLeveLabel.frame.origin.y-3, 22, 22);
     [mebInfoView addSubview:mebIconView];
     
@@ -224,19 +224,16 @@
     mebInfoView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:mebInfoView];
 
-    
     profitView = [[UIView alloc] init];
     profitView.backgroundColor = [UIColor whiteColor];
     profitView.frame =CGRectMake(0,mebInfoView.frame.origin.y+mebInfoView.frame.size.height+20,SC_WIDTH,155.0/SCALE_Y);
     [self.view addSubview:profitView];
-
 
     myView = [[UIView alloc] init];
     myView.backgroundColor = [UIColor whiteColor];
     myView.frame =CGRectMake(0, profitView.frame.origin.y+profitView.frame.size.height+20, SC_WIDTH,125.0/SCALE_Y);
     [self.view addSubview:myView];
 
-    
     codeView = [[UIView alloc] init];
     [self.view addSubview:myView];
     codeView.backgroundColor = [UIColor whiteColor];

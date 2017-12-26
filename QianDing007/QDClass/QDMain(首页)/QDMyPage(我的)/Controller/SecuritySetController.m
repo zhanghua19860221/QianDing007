@@ -145,7 +145,6 @@
 - (void)changePassWord{
 
     ChangePassWordController *passVC = [[ChangePassWordController alloc] init];
-    
     [self.navigationController pushViewController:passVC animated:YES];
 
     

@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserViewController : UIViewController
+@interface UserViewController : UIViewController<UIScrollViewDelegate>
+@property (strong , nonatomic) UIScrollView *scrollView;//展示视图
 
 @end

@@ -51,6 +51,7 @@
  */
 - (void)createLogoView{
     
+    
     logoImageView = [[UIImageView alloc] init];
     logoImageView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:logoImageView];
@@ -109,7 +110,6 @@
     }];
 }
 - (void)clickLoginBtn{
-    
     
     RootViewController *home = [[RootViewController alloc] init];
     [self.navigationController pushViewController:home animated:NO];

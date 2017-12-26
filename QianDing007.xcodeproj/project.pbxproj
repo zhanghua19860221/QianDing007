@@ -45,6 +45,13 @@
 		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
 		14B421D71FEB939800CC8AE4 /* NewsSetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B421D61FEB939800CC8AE4 /* NewsSetController.m */; };
 		14B421DA1FEBDF9900CC8AE4 /* ProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B421D91FEBDF9900CC8AE4 /* ProfitController.m */; };
+		14CF1D3B1FF1F014005F2D2F /* PresentRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D3A1FF1F013005F2D2F /* PresentRecordCell.m */; };
+		14CF1D3E1FF1F030005F2D2F /* PresentRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D3D1FF1F030005F2D2F /* PresentRecordModel.m */; };
+		14CF1D4F1FF23B0B005F2D2F /* ChangePassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D451FF23B0B005F2D2F /* ChangePassWordController.m */; };
+		14CF1D501FF23B0B005F2D2F /* ChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D471FF23B0B005F2D2F /* ChangeTeleController.m */; };
+		14CF1D511FF23B0B005F2D2F /* GetProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D491FF23B0B005F2D2F /* GetProfitController.m */; };
+		14CF1D521FF23B0B005F2D2F /* ProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D4B1FF23B0B005F2D2F /* ProfitController.m */; };
+		14CF1D531FF23B0B005F2D2F /* UpProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CF1D4D1FF23B0B005F2D2F /* UpProfitController.m */; };
 		14D6487A1FECD59700AD57A4 /* GetProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D648791FECD59700AD57A4 /* GetProfitController.m */; };
 		14D6487D1FECD5BA00AD57A4 /* UpProfitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */; };
 		14D648801FECE16500AD57A4 /* MyGetProfitModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D6487F1FECE16500AD57A4 /* MyGetProfitModel.m */; };
@@ -61,6 +68,11 @@
 		14D836DC1FE7C68E006ECD45 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836DB1FE7C68E006ECD45 /* ThirdViewController.m */; };
 		14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */; };
 		14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */; };
+		14F58B1D1FF08F1C00594656 /* PresentAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B1C1FF08F1C00594656 /* PresentAccountController.m */; };
+		14F58B231FF08F7200594656 /* EditAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B221FF08F7200594656 /* EditAccountController.m */; };
+		14F58B261FF08FB400594656 /* PresentRecordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B251FF08FB400594656 /* PresentRecordController.m */; };
+		14F58B2A1FF0934500594656 /* shareDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B291FF0934500594656 /* shareDelegate.m */; };
+		14F58B2D1FF09C2600594656 /* SetPresentAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B2C1FF09C2600594656 /* SetPresentAccountController.m */; };
 		14FEFB9E1FEF88700050E524 /* UserListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFB9D1FEF88700050E524 /* UserListModel.m */; };
 		14FEFBA11FEF8A180050E524 /* UserListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA01FEF8A180050E524 /* UserListCell.m */; };
 		14FEFBA41FEF90DE0050E524 /* UserListBasicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBA31FEF90DE0050E524 /* UserListBasicController.m */; };
@@ -69,6 +81,7 @@
 		14FEFBAD1FEF94110050E524 /* SilverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBAC1FEF94110050E524 /* SilverController.m */; };
 		14FEFBB01FEF94240050E524 /* GoldController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBAF1FEF94240050E524 /* GoldController.m */; };
 		14FEFBB31FEF94360050E524 /* DiamondsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBB21FEF94360050E524 /* DiamondsController.m */; };
+		14FEFBB61FEFA87E0050E524 /* ManageMoneyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FEFBB51FEFA87E0050E524 /* ManageMoneyController.m */; };
 		F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */; };
 /* End PBXBuildFile section */
 
@@ -164,12 +177,26 @@
 		14B421921FEB462F00CC8AE4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		14B421D51FEB939800CC8AE4 /* NewsSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSetController.h; sourceTree = "<group>"; };
 		14B421D61FEB939800CC8AE4 /* NewsSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSetController.m; sourceTree = "<group>"; };
-		14B421D81FEBDF9900CC8AE4 /* ProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfitController.h; sourceTree = "<group>"; };
-		14B421D91FEBDF9900CC8AE4 /* ProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfitController.m; sourceTree = "<group>"; };
-		14D648781FECD59700AD57A4 /* GetProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProfitController.h; sourceTree = "<group>"; };
-		14D648791FECD59700AD57A4 /* GetProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProfitController.m; sourceTree = "<group>"; };
-		14D6487B1FECD5BA00AD57A4 /* UpProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpProfitController.h; sourceTree = "<group>"; };
-		14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpProfitController.m; sourceTree = "<group>"; };
+		14B421D81FEBDF9900CC8AE4 /* ProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfitController.h; path = SubbViewController/ProfitController.h; sourceTree = "<group>"; };
+		14B421D91FEBDF9900CC8AE4 /* ProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfitController.m; path = SubbViewController/ProfitController.m; sourceTree = "<group>"; };
+		14CF1D391FF1F013005F2D2F /* PresentRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentRecordCell.h; sourceTree = "<group>"; };
+		14CF1D3A1FF1F013005F2D2F /* PresentRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentRecordCell.m; sourceTree = "<group>"; };
+		14CF1D3C1FF1F030005F2D2F /* PresentRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentRecordModel.h; sourceTree = "<group>"; };
+		14CF1D3D1FF1F030005F2D2F /* PresentRecordModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentRecordModel.m; sourceTree = "<group>"; };
+		14CF1D441FF23B0B005F2D2F /* ChangePassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePassWordController.h; sourceTree = "<group>"; };
+		14CF1D451FF23B0B005F2D2F /* ChangePassWordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePassWordController.m; sourceTree = "<group>"; };
+		14CF1D461FF23B0B005F2D2F /* ChangeTeleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeTeleController.h; sourceTree = "<group>"; };
+		14CF1D471FF23B0B005F2D2F /* ChangeTeleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTeleController.m; sourceTree = "<group>"; };
+		14CF1D481FF23B0B005F2D2F /* GetProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetProfitController.h; sourceTree = "<group>"; };
+		14CF1D491FF23B0B005F2D2F /* GetProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetProfitController.m; sourceTree = "<group>"; };
+		14CF1D4A1FF23B0B005F2D2F /* ProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfitController.h; sourceTree = "<group>"; };
+		14CF1D4B1FF23B0B005F2D2F /* ProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfitController.m; sourceTree = "<group>"; };
+		14CF1D4C1FF23B0B005F2D2F /* UpProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpProfitController.h; sourceTree = "<group>"; };
+		14CF1D4D1FF23B0B005F2D2F /* UpProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpProfitController.m; sourceTree = "<group>"; };
+		14D648781FECD59700AD57A4 /* GetProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetProfitController.h; path = SubbViewController/GetProfitController.h; sourceTree = "<group>"; };
+		14D648791FECD59700AD57A4 /* GetProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetProfitController.m; path = SubbViewController/GetProfitController.m; sourceTree = "<group>"; };
+		14D6487B1FECD5BA00AD57A4 /* UpProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UpProfitController.h; path = SubbViewController/UpProfitController.h; sourceTree = "<group>"; };
+		14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UpProfitController.m; path = SubbViewController/UpProfitController.m; sourceTree = "<group>"; };
 		14D6487E1FECE16500AD57A4 /* MyGetProfitModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGetProfitModel.h; sourceTree = "<group>"; };
 		14D6487F1FECE16500AD57A4 /* MyGetProfitModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyGetProfitModel.m; sourceTree = "<group>"; };
 		14D648811FECE2BC00AD57A4 /* MyGetProfitCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyGetProfitCell.h; sourceTree = "<group>"; };
@@ -198,6 +225,16 @@
 		14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForntTabelCell.m; sourceTree = "<group>"; };
 		14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLabelView.h; sourceTree = "<group>"; };
 		14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLabelView.m; sourceTree = "<group>"; };
+		14F58B1B1FF08F1C00594656 /* PresentAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentAccountController.h; sourceTree = "<group>"; };
+		14F58B1C1FF08F1C00594656 /* PresentAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentAccountController.m; sourceTree = "<group>"; };
+		14F58B211FF08F7200594656 /* EditAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditAccountController.h; sourceTree = "<group>"; };
+		14F58B221FF08F7200594656 /* EditAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditAccountController.m; sourceTree = "<group>"; };
+		14F58B241FF08FB400594656 /* PresentRecordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentRecordController.h; sourceTree = "<group>"; };
+		14F58B251FF08FB400594656 /* PresentRecordController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentRecordController.m; sourceTree = "<group>"; };
+		14F58B281FF0934500594656 /* shareDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = shareDelegate.h; path = "QianDing007/QDClass/QDSingleClass(单例)/shareDelegate.h"; sourceTree = "<group>"; };
+		14F58B291FF0934500594656 /* shareDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = shareDelegate.m; path = "QianDing007/QDClass/QDSingleClass(单例)/shareDelegate.m"; sourceTree = "<group>"; };
+		14F58B2B1FF09C2600594656 /* SetPresentAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPresentAccountController.h; sourceTree = "<group>"; };
+		14F58B2C1FF09C2600594656 /* SetPresentAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPresentAccountController.m; sourceTree = "<group>"; };
 		14FEFB9C1FEF88700050E524 /* UserListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListModel.h; sourceTree = "<group>"; };
 		14FEFB9D1FEF88700050E524 /* UserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListModel.m; sourceTree = "<group>"; };
 		14FEFB9F1FEF8A180050E524 /* UserListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListCell.h; sourceTree = "<group>"; };
@@ -214,6 +251,8 @@
 		14FEFBAF1FEF94240050E524 /* GoldController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoldController.m; sourceTree = "<group>"; };
 		14FEFBB11FEF94360050E524 /* DiamondsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiamondsController.h; sourceTree = "<group>"; };
 		14FEFBB21FEF94360050E524 /* DiamondsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiamondsController.m; sourceTree = "<group>"; };
+		14FEFBB41FEFA87E0050E524 /* ManageMoneyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageMoneyController.h; sourceTree = "<group>"; };
+		14FEFBB51FEFA87E0050E524 /* ManageMoneyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageMoneyController.m; sourceTree = "<group>"; };
 		5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.debug.xcconfig"; sourceTree = "<group>"; };
 		697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QianDing007.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.release.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.release.xcconfig"; sourceTree = "<group>"; };
@@ -256,6 +295,10 @@
 				140514391FEE563A00661D1B /* RequestUserController.m */,
 				1405143B1FEE658600661D1B /* UserListController.h */,
 				1405143C1FEE658600661D1B /* UserListController.m */,
+				14FEFBB41FEFA87E0050E524 /* ManageMoneyController.h */,
+				14FEFBB51FEFA87E0050E524 /* ManageMoneyController.m */,
+				14B421D81FEBDF9900CC8AE4 /* ProfitController.h */,
+				14B421D91FEBDF9900CC8AE4 /* ProfitController.m */,
 			);
 			name = "Mydelegate(我的代理)";
 			sourceTree = "<group>";
@@ -263,18 +306,30 @@
 		1405143E1FEE6A3F00661D1B /* SubViewController */ = {
 			isa = PBXGroup;
 			children = (
+				14D648781FECD59700AD57A4 /* GetProfitController.h */,
+				14D648791FECD59700AD57A4 /* GetProfitController.m */,
+				14D6487B1FECD5BA00AD57A4 /* UpProfitController.h */,
+				14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */,
 				14FEFBA21FEF90DE0050E524 /* UserListBasicController.h */,
 				14FEFBA31FEF90DE0050E524 /* UserListBasicController.m */,
 				14FEFBA51FEF93E60050E524 /* AllLevelController.h */,
 				14FEFBA61FEF93E60050E524 /* AllLevelController.m */,
 				14FEFBA81FEF93FF0050E524 /* ComMonController.h */,
-				14FEFBA91FEF93FF0050E524 /* ComMonController.m */,
 				14FEFBAB1FEF94110050E524 /* SilverController.h */,
+				14FEFBA91FEF93FF0050E524 /* ComMonController.m */,
 				14FEFBAC1FEF94110050E524 /* SilverController.m */,
 				14FEFBAE1FEF94240050E524 /* GoldController.h */,
 				14FEFBAF1FEF94240050E524 /* GoldController.m */,
 				14FEFBB11FEF94360050E524 /* DiamondsController.h */,
 				14FEFBB21FEF94360050E524 /* DiamondsController.m */,
+				14F58B1B1FF08F1C00594656 /* PresentAccountController.h */,
+				14F58B1C1FF08F1C00594656 /* PresentAccountController.m */,
+				14F58B211FF08F7200594656 /* EditAccountController.h */,
+				14F58B221FF08F7200594656 /* EditAccountController.m */,
+				14F58B241FF08FB400594656 /* PresentRecordController.h */,
+				14F58B251FF08FB400594656 /* PresentRecordController.m */,
+				14F58B2B1FF09C2600594656 /* SetPresentAccountController.h */,
+				14F58B2C1FF09C2600594656 /* SetPresentAccountController.m */,
 			);
 			name = SubViewController;
 			sourceTree = "<group>";
@@ -466,6 +521,8 @@
 				14D648881FED2B0C00AD57A4 /* MyProfitModel.m */,
 				14FEFB9C1FEF88700050E524 /* UserListModel.h */,
 				14FEFB9D1FEF88700050E524 /* UserListModel.m */,
+				14CF1D3C1FF1F030005F2D2F /* PresentRecordModel.h */,
+				14CF1D3D1FF1F030005F2D2F /* PresentRecordModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
@@ -474,16 +531,11 @@
 		14AFB73B1FE9E89B00B0E32B /* SubbViewController */ = {
 			isa = PBXGroup;
 			children = (
+				14CF1D431FF23B0B005F2D2F /* SubbViewController */,
 				14AFB73F1FE9E8D900B0E32B /* ChangeTeleController.h */,
 				14AFB7401FE9E8D900B0E32B /* ChangeTeleController.m */,
 				14AFB7421FE9E8F600B0E32B /* ChangePassWordController.h */,
 				14AFB7431FE9E8F600B0E32B /* ChangePassWordController.m */,
-				14B421D81FEBDF9900CC8AE4 /* ProfitController.h */,
-				14B421D91FEBDF9900CC8AE4 /* ProfitController.m */,
-				14D648781FECD59700AD57A4 /* GetProfitController.h */,
-				14D648791FECD59700AD57A4 /* GetProfitController.m */,
-				14D6487B1FECD5BA00AD57A4 /* UpProfitController.h */,
-				14D6487C1FECD5BA00AD57A4 /* UpProfitController.m */,
 			);
 			path = SubbViewController;
 			sourceTree = "<group>";
@@ -518,6 +570,7 @@
 		14B4A8171FDE100600B5183C /* QDClass */ = {
 			isa = PBXGroup;
 			children = (
+				14F58B271FF091D100594656 /* QDSingleClass(单例) */,
 				14B4A8181FDE102100B5183C /* QDLoginPage(登录) */,
 				149A56901FE0B71A005AEA1C /* QDMain(首页) */,
 			);
@@ -600,6 +653,23 @@
 				1424F6651FDE35EE00309E33 /* LoginMain.m */,
 			);
 			name = "QDLoginMain(首页)";
+			sourceTree = "<group>";
+		};
+		14CF1D431FF23B0B005F2D2F /* SubbViewController */ = {
+			isa = PBXGroup;
+			children = (
+				14CF1D441FF23B0B005F2D2F /* ChangePassWordController.h */,
+				14CF1D451FF23B0B005F2D2F /* ChangePassWordController.m */,
+				14CF1D461FF23B0B005F2D2F /* ChangeTeleController.h */,
+				14CF1D471FF23B0B005F2D2F /* ChangeTeleController.m */,
+				14CF1D481FF23B0B005F2D2F /* GetProfitController.h */,
+				14CF1D491FF23B0B005F2D2F /* GetProfitController.m */,
+				14CF1D4A1FF23B0B005F2D2F /* ProfitController.h */,
+				14CF1D4B1FF23B0B005F2D2F /* ProfitController.m */,
+				14CF1D4C1FF23B0B005F2D2F /* UpProfitController.h */,
+				14CF1D4D1FF23B0B005F2D2F /* UpProfitController.m */,
+			);
+			name = SubbViewController;
 			sourceTree = "<group>";
 		};
 		14D836BA1FE749D1006ECD45 /* Controller */ = {
@@ -710,9 +780,20 @@
 				14D648851FED2AEC00AD57A4 /* UpProfitCell.m */,
 				14FEFB9F1FEF8A180050E524 /* UserListCell.h */,
 				14FEFBA01FEF8A180050E524 /* UserListCell.m */,
+				14CF1D391FF1F013005F2D2F /* PresentRecordCell.h */,
+				14CF1D3A1FF1F013005F2D2F /* PresentRecordCell.m */,
 			);
 			name = View;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/View";
+			sourceTree = "<group>";
+		};
+		14F58B271FF091D100594656 /* QDSingleClass(单例) */ = {
+			isa = PBXGroup;
+			children = (
+				14F58B281FF0934500594656 /* shareDelegate.h */,
+				14F58B291FF0934500594656 /* shareDelegate.m */,
+			);
+			name = "QDSingleClass(单例)";
 			sourceTree = "<group>";
 		};
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
@@ -920,13 +1001,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14CF1D3B1FF1F014005F2D2F /* PresentRecordCell.m in Sources */,
+				14F58B2A1FF0934500594656 /* shareDelegate.m in Sources */,
 				14FEFBA11FEF8A180050E524 /* UserListCell.m in Sources */,
 				14A5FCAD1FE92381004B3E07 /* UserViewController.m in Sources */,
+				14CF1D501FF23B0B005F2D2F /* ChangeTeleController.m in Sources */,
 				14D836D31FE7C313006ECD45 /* MoreOrderController.m in Sources */,
 				14D836CF1FE7A939006ECD45 /* CustomGetCode.m in Sources */,
 				14D836E21FE7DB61006ECD45 /* ForntTabelCell.m in Sources */,
 				14A5FCAB1FE92381004B3E07 /* SecuritySetController.m in Sources */,
+				14FEFBB61FEFA87E0050E524 /* ManageMoneyController.m in Sources */,
 				14AFB74E1FE9FCDC00B0E32B /* ChannelSetingController.m in Sources */,
+				14F58B261FF08FB400594656 /* PresentRecordController.m in Sources */,
 				14A5FCA91FE92381004B3E07 /* CallViewController.m in Sources */,
 				14D648891FED2B0C00AD57A4 /* MyProfitModel.m in Sources */,
 				14D6487A1FECD59700AD57A4 /* GetProfitController.m in Sources */,
@@ -940,14 +1026,19 @@
 				14A5FCB31FE92395004B3E07 /* MyPageCell.m in Sources */,
 				14A5FCAC1FE92381004B3E07 /* UpdateController.m in Sources */,
 				14D6487D1FECD5BA00AD57A4 /* UpProfitController.m in Sources */,
+				14F58B231FF08F7200594656 /* EditAccountController.m in Sources */,
 				149E8B321FDE8C660037B996 /* customTextFieldView.m in Sources */,
+				14CF1D531FF23B0B005F2D2F /* UpProfitController.m in Sources */,
 				14D836BF1FE76AC6006ECD45 /* CustomNewsCell.m in Sources */,
 				1418F93C1FDFC87E00D3F754 /* GetPassWord.m in Sources */,
 				14D836DC1FE7C68E006ECD45 /* ThirdViewController.m in Sources */,
+				14CF1D4F1FF23B0B005F2D2F /* ChangePassWordController.m in Sources */,
 				14D836C61FE79EC8006ECD45 /* RegisterController.m in Sources */,
 				14D836CC1FE7A3FC006ECD45 /* CustomTextView.m in Sources */,
 				14AFB75D1FEA7D0200B0E32B /* CustomRequestView.m in Sources */,
+				14CF1D3E1FF1F030005F2D2F /* PresentRecordModel.m in Sources */,
 				14FEFBA41FEF90DE0050E524 /* UserListBasicController.m in Sources */,
+				14F58B2D1FF09C2600594656 /* SetPresentAccountController.m in Sources */,
 				14AFB7491FE9FB1800B0E32B /* MyLevelController.m in Sources */,
 				14FEFBA71FEF93E60050E524 /* AllLevelController.m in Sources */,
 				149A56A61FE0B8BB005AEA1C /* News.m in Sources */,
@@ -958,6 +1049,7 @@
 				14FEFBB01FEF94240050E524 /* GoldController.m in Sources */,
 				1424F6661FDE35EE00309E33 /* LoginMain.m in Sources */,
 				14A5FCAA1FE92381004B3E07 /* MydelegateViewController.m in Sources */,
+				14CF1D511FF23B0B005F2D2F /* GetProfitController.m in Sources */,
 				1405143D1FEE658600661D1B /* UserListController.m in Sources */,
 				14A0ACE81FDA1D6C0095003F /* ViewController.m in Sources */,
 				14A0ACE51FDA1D6C0095003F /* AppDelegate.m in Sources */,
@@ -970,8 +1062,10 @@
 				14A0ACE21FDA1D6C0095003F /* main.m in Sources */,
 				149A56961FE0B869005AEA1C /* MyPage.m in Sources */,
 				14A5FCB01FE9238B004B3E07 /* MyPageModel.m in Sources */,
+				14CF1D521FF23B0B005F2D2F /* ProfitController.m in Sources */,
 				1439E1D31FE8ADFC0053F829 /* RootViewController.m in Sources */,
 				14E6CA6E1FE511BE00D55DEE /* CustomLabelView.m in Sources */,
+				14F58B1D1FF08F1C00594656 /* PresentAccountController.m in Sources */,
 				14AFB7541FEA2A1E00B0E32B /* MyLevelCell.m in Sources */,
 				14B421DA1FEBDF9900CC8AE4 /* ProfitController.m in Sources */,
 				14D836D91FE7C664006ECD45 /* MiddleViewController.m in Sources */,
@@ -1124,6 +1218,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9MC53XV58;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/QianDing007/QDFirstBloodpch.pch";
 				INFOPLIST_FILE = QianDing007/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -1140,6 +1235,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = J9MC53XV58;
+				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/QianDing007/QDFirstBloodpch.pch";
 				INFOPLIST_FILE = QianDing007/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

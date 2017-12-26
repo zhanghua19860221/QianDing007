@@ -10,6 +10,7 @@
 #import "ProfitController.h"
 #import "RequestUserController.h"
 #import "UserListController.h"
+#import "ManageMoneyController.h"
 @interface MydelegateViewController (){
     UIView *topView;     //欢迎视图
     UIView * firstView;  //第一个模块视图
@@ -35,11 +36,12 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xe10000);
-    [self setStatusBarBackgroundColor:COLORFromRGB(0xe10000)];
 
 }
 - (void)createSecondView{
-
+    
+    
+    
     NSArray *iconArray = @[@"邀请商家",@"商户列表",@"资金管理",@"分润"];
     NSArray *titleArray = @[@"邀请商家",@"商户列表",@"资金管理",@"分润明细"];
     
@@ -90,7 +92,12 @@
             [self.navigationController pushViewController:userListVc animated:YES];
         }
             break;
-        case 222:
+        case 222:{
+            
+            ManageMoneyController *moneyVc = [[ManageMoneyController alloc] init];
+            [self.navigationController pushViewController:moneyVc animated:YES];
+            
+        }
             
             break;
         case 223:{
@@ -221,14 +228,6 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
 
-}
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

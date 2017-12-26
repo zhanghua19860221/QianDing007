@@ -44,43 +44,7 @@
         make.width.mas_equalTo(SC_WIDTH);
         
     }];
-    
-//    UILabel *companyName = [[UILabel alloc] init];
-//    companyName.text = @"秒银 (中国) 网络科技发展有限公司";
-//    companyName.textAlignment = NSTextAlignmentCenter;
-//    companyName.font = [UIFont systemFontOfSize:18];
-//    [companyName setTextColor:COLORFromRGB(0x333333)];
-//    [self.view addSubview:companyName];
-//    [companyName mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(logoImageView.mas_bottom).offset(30/SCALE_Y);
-//        make.centerX.equalTo(self.view.mas_centerX);
-//        make.width.equalTo(self.view.mas_width);
-//        make.height.mas_equalTo(18);
-//    }];
-//    
-//    
-//    UILabel *describeLabel = [[UILabel alloc] init];
-//    describeLabel.text = @"\t钱叮作为秒银（中国）网络科技发展有限公司主导品牌，专注于聚合支付领域，帮助商家，消费者与合伙人实现公营互通，并且有效提高商家发簪速度及知名度。秒银（中国）成立于2017年6月26日，注册资金一亿人民币。作为恒丰集团众多子公司的一员，秒银（中国）是其中实力最为雄厚，专业程度最高的一家以科技为主导的电商企业。依托雄厚的技术实力、专业的服务团队和强大的实仓资源，开发一聚合支付为基础的钱叮购物商城。";
-//    describeLabel.font = [UIFont systemFontOfSize:16];
-//    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
-//    paragraph.lineSpacing = 13; //设置行间距
-//    describeLabel.numberOfLines = 0; //设置分行显示，必须必须设置这个属性
-//    NSDictionary *attributeDict = @{
-//                                    NSFontAttributeName: [UIFont systemFontOfSize:16],
-//                                    NSForegroundColorAttributeName:COLORFromRGB(0x333333),
-//                                    NSKernAttributeName:@0, NSParagraphStyleAttributeName: paragraph};
-   
-//    CGSize contentSize = [describeLabel.text boundingRectWithSize:CGSizeMake(SC_WIDTH-40, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributeDict context:nil].size;//计算文字大小
-//    NSMutableAttributedString *attributed = [[NSMutableAttributedString alloc] initWithString:describeLabel.text attributes:attributeDict];
-//    describeLabel.attributedText = attributed;
-//    [self.view addSubview:describeLabel];
-//    [describeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(companyName.mas_bottom).offset(20/SCALE_Y);
-//        make.left.equalTo(self.view).offset(20);
-//        make.right.equalTo(self.view).offset(-20);
-//        make.height.mas_equalTo(contentSize.height);
-//        
-//    }];
+
     
 }
 /**
@@ -101,14 +65,6 @@
  */
 - (void)leftBackClick{
     [self.navigationController popViewControllerAnimated:YES];
-}
-//设置状态栏颜色
-- (void)setStatusBarBackgroundColor:(UIColor *)color {
-    
-    UIView *statusBar = [[[UIApplication sharedApplication] valueForKey:@"statusBarWindow"] valueForKey:@"statusBar"];
-    if ([statusBar respondsToSelector:@selector(setBackgroundColor:)]) {
-        statusBar.backgroundColor = color;
-    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
