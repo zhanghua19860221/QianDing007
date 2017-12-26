@@ -24,12 +24,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self createTopView];
-//    [self getDataSource];
-//    [self createStatistics];
-//    [self createMainView];
-//    [self createMaskView];
-//    [self createRequestView];
+    [self createTopView];
+    [self getDataSource];
+    [self createStatistics];
+    [self createMainView];
+    [self createMaskView];
+    [self createRequestView];
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
 }
@@ -68,7 +68,6 @@
     CustomRequestView *oldView = nil;
     for (int i = 0; i<5; i++) {
         CustomRequestView *view = [[CustomRequestView alloc] initView:dataArray[i]];
-        
         view.backgroundColor = COLORFromRGB(0xffffff);
         view.layer.cornerRadius = 3;
         view.layer.shadowOffset =  CGSizeMake(0, 0);

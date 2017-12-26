@@ -80,8 +80,7 @@
         make.height.mas_equalTo(SC_HEIGHT);
         
     }];
-    
-    
+
 }
 - (void)createTwoView{
     twoPageView = [[UIView alloc] init];
