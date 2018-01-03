@@ -31,30 +31,6 @@
         make.width.mas_equalTo(180);
     }];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = [UIColor redColor];
-    [button setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    button.titleLabel.font = [UIFont systemFontOfSize:18];
-    [button setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [self addSubview:button];
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self);
-        make.bottom.equalTo(self);
-        make.height.mas_equalTo(40/SCALE_Y);
-        make.width.mas_equalTo(120/SCALE_X);
-        
-    }];
-    
-    self.lineView = [[UIImageView alloc] init];
-    self.lineView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [self addSubview:self.lineView];
-    [self.lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self);
-        make.bottom.equalTo(self);
-        make.width.mas_equalTo(self.mas_width);
-        make.height.mas_equalTo(1);
-    }];
-    
 }
 
 /**

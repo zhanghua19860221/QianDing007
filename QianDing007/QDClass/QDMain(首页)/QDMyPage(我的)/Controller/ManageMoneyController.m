@@ -35,16 +35,12 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
-    UINavigationBar * bar = self.navigationController.navigationBar;
-    bar.barTintColor = COLORFromRGB(0xe10000);
-    
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
-    
-    
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+
+
 }
 - (void)createTopView{
+    
     topView = [[UIView alloc] init];
     topView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:topView];
@@ -268,13 +264,42 @@
  创建导航栏
  */
 - (void)createNavgation{
-    self.navigationItem.title = @"资金管理";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIView *navView = [[UIView alloc] init];
+    navView.backgroundColor = COLORFromRGB(0xe10000);
+    [self.view addSubview:navView];
+    [navView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(64);
+    }];
+    
+    UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [backBtn setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
+    [backBtn addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
+    [navView addSubview:backBtn];
+    [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(navView).offset(31);
+        make.left.equalTo(navView).offset(15);
+        make.width.mas_equalTo(12);
+        make.height.mas_equalTo(22);
+    }];
+    
+    UILabel *titleLabel = [[UILabel alloc] init];
+    titleLabel.text = @"资金管理";
+    titleLabel.font = [UIFont systemFontOfSize:18];
+    [titleLabel setTextColor:COLORFromRGB(0xffffff)];
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [navView addSubview:titleLabel];
+    
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(navView).offset(20);
+        make.centerX.equalTo(navView.mas_centerX);
+        make.width.mas_equalTo(100);
+        make.height.mas_equalTo(44);
+    }];
+    
+
     
 }
 /**

@@ -8,7 +8,7 @@
 
 #import "MyRequestController.h"
 #import "MyRequestModel.h"
-#import "CustomRequestView.h"
+#import "MyRequestCell.h"
 @interface MyRequestController (){
 
     NSMutableArray *dataArray;//数据数组
@@ -24,73 +24,128 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createTopView];
+    [self createNavgation];
     [self getDataSource];
     [self createStatistics];
-    [self createMainView];
+    [self createTabelView];
     [self createMaskView];
     [self createRequestView];
-    self.view.backgroundColor = COLORFromRGB(0xffffff);
+    self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     // Do any additional setup after loading the view.
 }
-- (void)getDataSource{
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
 
+}
+- (void)getDataSource{
+    
     dataArray = [[NSMutableArray alloc] initWithCapacity:2];
     for (int i = 0 ; i <5; i++) {
         
         MyRequestModel *model = [[MyRequestModel alloc] init];
-        model.userName = @"姓名：张三";
-        model.userTelePhone = @"手机号：1889998899";
-        model.merchantName = @"商户名称：北京南站";
-        model.address = @"地址：北京丰台";
-        model.activationTime = @"激活时间：2017-11-11";
-        model.receivables = @"收款：234";
-        model.list = @"订单：432";
+        model.userNameStr = @"张学友";
+        model.userTeleStr = @"1889998899";
+        model.merchantNameStr = @"北京南站";
+        model.addressStr = @"北京丰台";
+        model.activationTimeStr = @"2017-11-11";
+        model.receivablesStr = @"234 元";
+        model.listStr = @"432 笔";
         [dataArray addObject:model];
         
     }
-
+    
 }
-- (void)createMainView{
-    
-    
-    scrollview  = [[UIScrollView alloc] init];
-    scrollview.contentSize = CGSizeMake(0,210*dataArray.count);
-    [self.view addSubview:scrollview];
-    [scrollview mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(requestView.mas_bottom).offset(10);
-        make.left.equalTo(self.view);
-        make.right.equalTo(self.view);
-        make.height.mas_equalTo(SC_HEIGHT-170/SCALE_Y);
-
-    }];
-
-    CustomRequestView *oldView = nil;
-    for (int i = 0; i<5; i++) {
-        CustomRequestView *view = [[CustomRequestView alloc] initView:dataArray[i]];
-        view.backgroundColor = COLORFromRGB(0xffffff);
-        view.layer.cornerRadius = 3;
-        view.layer.shadowOffset =  CGSizeMake(0, 0);
-        view.layer.shadowRadius = 3;
-        view.layer.shadowOpacity = 1;
-        view.layer.shadowColor = COLORFromRGB(0xe10000).CGColor;
+-(void)createTabelView{
+    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+    _tableView.separatorStyle = NO;
+    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(74+90/SCALE_Y);
+        make.left.right.equalTo(self.view);
+        make.height.mas_offset(SC_HEIGHT-74-90/SCALE_Y);
         
-        [scrollview addSubview:view];
+    }];
+}
+#pragma *********************tabelViewDelegate*************************
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-        [view mas_makeConstraints:^(MASConstraintMaker *make) {
-            if (oldView) {
-                make.top.equalTo(oldView.mas_bottom).offset(10);
-            }else{
-                make.top.equalTo(scrollview).offset(5);
-            }
-            make.left.equalTo(self.view).offset(15);
-            make.right.equalTo(self.view).offset(-15);
-            make.height.mas_equalTo(190);
-        }];
-        oldView = view;
+    return dataArray.count;
+}
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *ID = @"tableViewCellIdentifier";
+    MyRequestCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        
+        cell = [[MyRequestCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     
+    cell.contentView.backgroundColor = COLORFromRGB(0xffffff);
+    [cell addDataSourceToCell:dataArray[indexPath.row]];
+    
+    return cell;
 }
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 220/SCALE_Y;
+}
+
+/**
+ 创建导航栏
+ */
+- (void)createNavgation{
+    
+    self.navigationItem.title = @"我的邀请";
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 20,20);
+    [leftButton setImage:[UIImage imageNamed:@"返回图标白色"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightButton.frame = CGRectMake(0, 0, 40,40);
+    [rightButton setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    [rightButton setTitle:@"邀请" forState:UIControlStateNormal];
+    [rightButton addTarget:self action:@selector(rightBackClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+}
+/**
+ 导航栏左侧按钮
+ */
+- (void)leftBackClick{
+    
+    //展示tabBar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+/**
+ 导航栏右侧按钮
+ */
+- (void)rightBackClick{
+    
+    maskView.hidden = NO;
+    
+    //修改下边距约束
+    [requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(maskView.mas_bottom).offset(-190/SCALE_Y);
+    }];
+    //更新约束
+    [UIView animateWithDuration:0.5 animations:^{
+        [maskView layoutIfNeeded];
+    }];
+    
+}
+
 /**
  顶部统计视图
  */
@@ -98,201 +153,91 @@
     
     requestView = [[UIView alloc] init];
     requestView.backgroundColor = COLORFromRGB(0xffffff);
-    requestView.layer.cornerRadius = 3;
-    requestView.layer.shadowOffset =  CGSizeMake(0, 0);
-    requestView.layer.shadowRadius = 3;
-    requestView.layer.shadowOpacity = 1;
     requestView.layer.shadowColor = COLORFromRGB(0xe10000).CGColor;
-    
     [self.view addSubview:requestView];
-    
-    UILabel *numLabel = [[UILabel alloc] init];
-    numLabel.font = [UIFont systemFontOfSize:18];
-    numLabel.text = @"234";
-    [numLabel setTextColor:COLORFromRGB(0xe10000)];
-    numLabel.textAlignment = NSTextAlignmentCenter;
-    [requestView addSubview:numLabel];
-
-    UILabel *textLabel = [[UILabel alloc] init];
-    textLabel.font = [UIFont systemFontOfSize:14];
-    textLabel.text = @"已成功邀请商家";
-    textLabel.textAlignment = NSTextAlignmentCenter;
-    [requestView addSubview:textLabel];
-
-    
     [requestView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(80/SCALE_Y);
-        make.left.equalTo(self.view).offset(15/SCALE_X);
-        make.width.mas_equalTo(135/SCALE_X);
-        make.height.mas_equalTo(81/SCALE_Y);
+        make.top.equalTo(self.view).offset(64);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(90/SCALE_Y);
+        
+    }];
+    
+    UILabel *orderLabel = [[UILabel alloc] init];
+    orderLabel.font = [UIFont systemFontOfSize:20];
+    orderLabel.text = @"234";
+    [orderLabel setTextColor:COLORFromRGB(0xe10000)];
+    orderLabel.textAlignment = NSTextAlignmentCenter;
+    [requestView addSubview:orderLabel];
+    [orderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(requestView).offset(30/SCALE_Y);
+        make.left.equalTo(requestView).offset(50/SCALE_X);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(20);
+    
+    }];
 
-    }];
-    [numLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(requestView).offset(25/SCALE_Y);
-        make.centerX.equalTo(requestView.mas_centerX);
-        make.width.equalTo(requestView.mas_width);
-        make.height.mas_equalTo(18);
-        
-    }];
-    [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(numLabel.mas_bottom).offset(10);
-        make.centerX.equalTo(requestView.mas_centerX);
-        make.width.equalTo(requestView.mas_width);
+    UILabel *orderLabelOne = [[UILabel alloc] init];
+    orderLabelOne.font = [UIFont systemFontOfSize:14];
+    orderLabelOne.text = @"成功邀请";
+    orderLabelOne.textAlignment = NSTextAlignmentCenter;
+    [requestView addSubview:orderLabelOne];
+    [orderLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(orderLabel.mas_bottom).offset(10);
+        make.left.equalTo(orderLabel);
+        make.width.equalTo(orderLabel);
         make.height.mas_equalTo(14);
-        
-    }];
-    
-    UIView *codeView = [[UIView alloc] init];
-    codeView.backgroundColor = COLORFromRGB(0xffffff);
-    codeView.layer.cornerRadius = 3;
-    codeView.layer.shadowOffset =  CGSizeMake(0, 0);
-    codeView.layer.shadowRadius = 3;
-    codeView.layer.shadowOpacity = 1;
-    codeView.layer.shadowColor = COLORFromRGB(0xe10000).CGColor;
-    
-    [self.view addSubview:codeView];
-    
-    [codeView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(requestView.mas_centerY);
-        make.left.equalTo(requestView.mas_right).offset(10/SCALE_X);
-        make.right.equalTo(self.view).offset(-15/SCALE_X);
-        make.height.equalTo(requestView.mas_height);
         
     }];
 
     UILabel *telephoneLabel = [[UILabel alloc] init];
-    telephoneLabel.font = [UIFont systemFontOfSize:18];
+    telephoneLabel.font = [UIFont systemFontOfSize:20];
     telephoneLabel.text = @"18241499999";
     [telephoneLabel setTextColor:COLORFromRGB(0xe10000)];
-    telephoneLabel.textAlignment = NSTextAlignmentCenter;
-    [codeView addSubview:telephoneLabel];
+    telephoneLabel.textAlignment = NSTextAlignmentRight;
+    [requestView addSubview:telephoneLabel];
+    [telephoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(orderLabel.mas_centerY);
+        make.right.equalTo(requestView).offset(-50/SCALE_X);
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(20);
+    
+    }];
     
     UILabel *codeLabel = [[UILabel alloc] init];
     codeLabel.font = [UIFont systemFontOfSize:14];
     codeLabel.text = @"邀请码";
     codeLabel.textAlignment = NSTextAlignmentCenter;
-    [codeView addSubview:codeLabel];
+    [requestView addSubview:codeLabel];
+    [codeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(telephoneLabel.mas_bottom).offset(10);
+        make.left.equalTo(telephoneLabel.mas_left).offset(20);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(14);
     
-    UIImageView *leftLine = [[UIImageView alloc] init];
-    leftLine.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [codeView addSubview:leftLine];
-    
+    }];
     
     UIButton *copyBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [copyBtn setTitle:@"复制" forState:UIControlStateNormal];
+    copyBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     copyBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [copyBtn setTitleColor:COLORFromRGB(0x999999) forState:UIControlStateNormal];
-    [codeView addSubview:copyBtn];
-    
-    UIImageView *bottomLine = [[UIImageView alloc] init];
-    bottomLine.backgroundColor = COLORFromRGB(0x999999);
-    [codeView addSubview:bottomLine];
-    
-    [telephoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(codeView).offset(25/SCALE_Y);
-        make.left.equalTo(codeView).offset(10/SCALE_X);
-        make.width.mas_equalTo(140/SCALE_X);
-        make.height.mas_equalTo(18);
-        
-    }];
-    [codeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(telephoneLabel.mas_bottom).offset(10);
-        make.centerX.equalTo(telephoneLabel.mas_centerX);
-        make.width.equalTo(telephoneLabel.mas_width);
-        make.height.mas_equalTo(14);
-        
-    }];
-    
-
+    [requestView addSubview:copyBtn];
     [copyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(codeView.mas_centerY);
-        make.right.equalTo(codeView).offset(-10/SCALE_X);
-        make.width.mas_equalTo(30);
+        make.centerY.equalTo(codeLabel.mas_centerY);
+        make.left.equalTo(codeLabel.mas_right);
+        make.width.mas_equalTo(35);
         make.height.mas_equalTo(14);
-        
+    
     }];
     
-    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(copyBtn.mas_bottom).offset(3) ;
-        make.right.equalTo(copyBtn);
-        make.width.mas_equalTo(copyBtn);
+    UIImageView *line = [[UIImageView alloc] init];
+    line.backgroundColor = COLORFromRGB(0x999999);
+    [requestView addSubview:line];
+    [line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(copyBtn.mas_bottom).offset(1);
+        make.left.right.equalTo(copyBtn);
         make.height.mas_equalTo(2);
-        
     }];
-    
-    [leftLine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(codeView).offset(15) ;
-        make.right.equalTo(copyBtn.mas_left).offset(-5);
-        make.width.mas_equalTo(1);
-        make.bottom.equalTo(codeView).offset(-15) ;
-
-    }];
-    
-
-}
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-
-}
-- (void)createTopView{
-    
-    UIImageView *topView = [[UIImageView alloc] init];
-    [self.view addSubview:topView];
-    topView.backgroundColor = COLORFromRGB(0xe10000);
-    topView.userInteractionEnabled = YES;
-
-    UIButton *leftbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [leftbutton setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
-    [topView addSubview:leftbutton];
-    [leftbutton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    UILabel *titleLabel = [[UILabel alloc] init];
-    titleLabel.text = @"邀请";
-    titleLabel.font = [UIFont systemFontOfSize:18];
-    [titleLabel setTextColor:COLORFromRGB(0xffffff)];
-    [topView addSubview:titleLabel];
-    
-    UIButton *rightbutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rightbutton setTitle:@"我要邀请" forState:UIControlStateNormal];
-    rightbutton.titleLabel.textAlignment =  NSTextAlignmentRight;
-    [rightbutton setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    [topView addSubview:rightbutton];
-    [rightbutton addTarget:self action:@selector(rightBackClick) forControlEvents:UIControlEventTouchUpInside];
-    
-
-    
-    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(110/SCALE_Y);
-        
-    }];
-    
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(topView.mas_centerX);
-        make.top.equalTo(topView).offset(26/SCALE_Y);
-        make.height.mas_equalTo(18/SCALE_Y);
-        make.width.mas_equalTo(44);
-    }];
-    
-    
-    [leftbutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(titleLabel.mas_centerY);
-        make.left.equalTo(topView).offset(15);
-        make.height.mas_equalTo(22);
-        make.width.mas_equalTo(22);
-
-    }];
-    
-    [rightbutton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(titleLabel.mas_centerY);
-        make.right.equalTo(topView).offset(-10);
-        make.height.mas_equalTo(14/SCALE_Y);
-        make.width.mas_equalTo(100);
-
-    }];
-    
 }
 
 /**
@@ -302,7 +247,7 @@
     
     requestIconView = [[UIView alloc] init];
     requestIconView.backgroundColor = COLORFromRGB(0xffffff);
-    [self.view addSubview:requestIconView];
+    [maskView addSubview:requestIconView];
     
     UILabel *typeLable = [[UILabel alloc] init];
     typeLable.text = @"邀请方式:";
@@ -312,8 +257,8 @@
     [requestIconView addSubview:typeLable];
     
     [requestIconView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(190/SCALE_Y);
-        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(maskView).offset(190/SCALE_Y);
+        make.left.right.equalTo(maskView);
         make.height.mas_equalTo(190/SCALE_Y);
         
     }];
@@ -330,7 +275,7 @@
     iconBJView.backgroundColor = COLORFromRGB(0xffffff);
     [requestIconView addSubview:iconBJView];
     [iconBJView mas_makeConstraints:^(MASConstraintMaker *make){
-        make.center.equalTo(requestIconView);
+        make.top.equalTo(typeLable.mas_bottom).offset(5/SCALE_Y);
         make.left.equalTo(requestIconView).offset(50/SCALE_X);
         make.right.equalTo(requestIconView).offset(-50/SCALE_X);
         make.height.mas_equalTo(95/SCALE_Y);
@@ -379,16 +324,10 @@
 }
 -(void)createMaskView{
 
-    maskView = [[UIView alloc] init];
-    maskView.backgroundColor = [UIColor blackColor];
-    maskView.alpha = 0.5 ;
+    maskView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     maskView.hidden = YES;
-    [self.view addSubview:maskView];
-    [maskView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
-        make.left.right.equalTo(self.view);
-        make.bottom.equalTo(self.view);
-    }];
+    maskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+    [[UIApplication sharedApplication].keyWindow addSubview:maskView];
     
     UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
 
@@ -403,16 +342,18 @@
 -(void)tapAction:(id)tap{
     
     [requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view).offset(190/SCALE_Y);
+        make.top.equalTo(maskView.mas_bottom).offset(190/SCALE_Y);
     }];
-    //更新约束
-
-    [UIView animateWithDuration:1 animations:^{
-        [self.view layoutIfNeeded];
+    [UIView animateWithDuration:0.5 animations:^{
+        [maskView layoutIfNeeded];
         
     } completion:^(BOOL finished) {
+        
         maskView.hidden = YES;
+
     }];
+    //更新约束
+    
     
 }
 
@@ -436,33 +377,6 @@
             break;
     }
 
-}
-/**
- 导航栏左侧返回按钮
- */
-- (void)leftBackClick{
-    //展示tabBar
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    [self.navigationController popViewControllerAnimated:YES];
-
-}
-
-/**
- 导航栏右侧按钮
- */
-- (void)rightBackClick{
-
-    maskView.hidden = NO;
-    
-    //修改下边距约束
-    [requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view);
-    }];
-    //更新约束
-    [UIView animateWithDuration:1 animations:^{
-        [self.view layoutIfNeeded];
-    }];
-   
 }
 
 - (void)didReceiveMemoryWarning {

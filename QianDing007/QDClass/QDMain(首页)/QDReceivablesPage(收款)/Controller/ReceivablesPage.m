@@ -12,6 +12,8 @@
 #import "ChannelSetingController.h"
 #import "MyLevelController.h"
 #import "MyRequestController.h"
+#import "UserViewController.h"
+
 @interface ReceivablesPage (){
     
     UIView *mebInfoView;//会员信息展示视图
@@ -34,18 +36,18 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createBasicView];
+    [self createMebInfoView];
+    [self createProfitView];
+    [self createMyView];
+    [self createCodeView];
 
-    
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self createMebInfoView];
-    [self createProfitView];
-    [self createMyView];
-    [self createCodeView];
+    
     
 }
 /**
@@ -62,6 +64,7 @@
     UIButton *verificationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     verificationBtn.frame = CGRectMake(telePhone.frame.origin.x+telePhone.frame.size.width+10, 10,56, 23);
     [verificationBtn setImage:[UIImage imageNamed:@"未认证"] forState:UIControlStateNormal];
+    [verificationBtn addTarget:self action:@selector(verificationBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [mebInfoView addSubview:verificationBtn];
     
     UILabel *mebLeveLabel = [[UILabel alloc] init];
@@ -96,13 +99,34 @@
     upGradeView.frame = CGRectMake(SC_WIDTH-95/SCALE_X,mebInfoView.frame.size.height-20/SCALE_Y-16-43, 25, 38);
     [mebInfoView addSubview:upGradeView];
 
-    UILabel *upGradeLabel = [[UILabel alloc] init];
-    upGradeLabel.font = [UIFont systemFontOfSize:16];
-    upGradeLabel.text = @"去升级";
-    upGradeLabel.frame = CGRectMake(mebInfoView.frame.size.width-55/SCALE_X-50,mebInfoView.frame.size.height-20/SCALE_Y-16,50, 16);
-    [mebInfoView addSubview:upGradeLabel];
+    UIButton *upGradeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    upGradeBtn.frame = CGRectMake(mebInfoView.frame.size.width-55/SCALE_X-50,mebInfoView.frame.size.height-20/SCALE_Y-16,50, 16);
+    upGradeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [upGradeBtn setTitleColor:COLORFromRGB(0x333333) forState:UIControlStateNormal];
+    [upGradeBtn setTitle:@"去升级" forState:UIControlStateNormal];
+    [upGradeBtn addTarget:self action:@selector(upGradeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [mebInfoView addSubview:upGradeBtn];
+
   
 }
+
+/**
+ 未认证点击事件
+ */
+- (void)verificationBtnClick{
+    
+    UserViewController *verificationVc = [[UserViewController alloc] init];
+    [self.navigationController pushViewController:verificationVc animated:YES];
+}
+/**
+ 去升级
+ */
+- (void)upGradeBtnClick{
+
+    MyLevelController *VC = [[MyLevelController alloc] init];
+    [self.navigationController pushViewController:VC animated:YES];
+}
+
 /**
  创建商户收益视图
  */
@@ -219,6 +243,11 @@
  */
 - (void)createBasicView{
     
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    imageView.backgroundColor = COLORFromRGB(0xffffff);
+    [self.view addSubview:imageView];
+    
     mebInfoView = [[UIView alloc] init];
     mebInfoView.frame =CGRectMake(0, 20, SC_WIDTH, 140.0/SCALE_Y);
     mebInfoView.backgroundColor = [UIColor whiteColor];
@@ -244,7 +273,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
 
 }
 - (void)didReceiveMemoryWarning {

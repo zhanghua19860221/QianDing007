@@ -30,16 +30,15 @@
     [self createChooseView];
     [self createSubViewController];
     [self createScrollerView];
-//    [self createOneView];
-//    [self createTwoView];
+
     
-    
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xffffff);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
@@ -54,9 +53,9 @@
     _scrollView.pagingEnabled = YES;
     [self.view addSubview:_scrollView];
     _scrollView.delegate = self ;
-    //    _scrollView.scrollEnabled = NO;
+    _scrollView.scrollEnabled = NO;
     _scrollView.bounces = NO;
-    _scrollView.contentSize = CGSizeMake(SC_WIDTH*2.0, 2000);
+    _scrollView.contentSize = CGSizeMake(SC_WIDTH*2.0, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom);
         make.left.equalTo(self.view);
@@ -81,91 +80,6 @@
     [self addChildViewController:personalVC];
 }
 
-- (void)createTwoView{
-    twoPageView = [[UIView alloc] init];
-    twoPageView.backgroundColor = COLORFromRGB(0xffffff);
-    [_scrollView addSubview:twoPageView];
-    [twoPageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_scrollView);
-        make.left.equalTo(onePageView.mas_right);
-        make.width.mas_equalTo(SC_WIDTH);
-        make.height.mas_equalTo(SC_HEIGHT);
-    }];
-    
-//    UIImageView *line = [[UIImageView alloc] init];
-//    line.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:line];
-//    [line mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(topView.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//
-//    }];
-//    UIImageView *lineOne = [[UIImageView alloc] init];
-//    lineOne.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:lineOne];
-//    [lineOne mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(line.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//        
-//    }];
-//    UIImageView *lineTwo = [[UIImageView alloc] init];
-//    lineTwo.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:lineTwo];
-//    [lineTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(lineOne.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//        
-//    }];
-//    UIImageView *lineThird = [[UIImageView alloc] init];
-//    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:lineThird];
-//    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(lineTwo.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//        
-//    }];
-//    UIImageView *lineFour = [[UIImageView alloc] init];
-//    lineFour.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:lineFour];
-//    [lineFour mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(lineThird.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//        
-//    }];
-//    UIImageView *lineFive = [[UIImageView alloc] init];
-//    lineFive.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:lineFive];
-//    [lineFive mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(lineFour.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//        
-//    }];
-//    UIImageView *lineSix = [[UIImageView alloc] init];
-//    lineSix.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [twoPageView addSubview:lineSix];
-//    [lineSix mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(lineFive.mas_bottom).offset(50);
-//        make.left.equalTo(topView);
-//        make.width.mas_equalTo(SC_WIDTH);
-//        make.height.mas_equalTo(1);
-//        
-//    }];
-    
-    
-    
-}
 - (void)createChooseView{
 
     topView = [[UIView alloc] init];
@@ -266,6 +180,7 @@
     self.navigationItem.title = @"商家认证";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
     [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];

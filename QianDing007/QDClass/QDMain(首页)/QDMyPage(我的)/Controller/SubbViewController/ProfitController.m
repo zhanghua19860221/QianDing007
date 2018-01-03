@@ -62,7 +62,10 @@
     }
 }
 - (void)createTopView{
-    
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    imageView.backgroundColor = COLORFromRGB(0xe10000);
+    [self.view addSubview:imageView];
     
     topView= [[UIView alloc] init];
     topView.backgroundColor = COLORFromRGB(0xe10000);
@@ -241,8 +244,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-
+    [super viewWillDisappear:animated];
 }
 #pragma ********************UIScrollViewDelegate**************
 // 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。

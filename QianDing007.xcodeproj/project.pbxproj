@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1444FDE31FF4781700F6D945 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1444FDE01FF4781700F6D945 /* city.plist */; };
+		1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDE21FF4781700F6D945 /* LSCityChooseView.m */; };
+		1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */; };
+		148BA9191FF38DF70091F11D /* MyRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 148BA9181FF38DF70091F11D /* MyRequestCell.m */; };
 		1495367D1FF254EF00C85C05 /* shareDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B291FF0934500594656 /* shareDelegate.m */; };
 		1495367E1FF254EF00C85C05 /* customTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 149E8B311FDE8C660037B996 /* customTextFieldView.m */; };
 		1495367F1FF254EF00C85C05 /* LoginMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1424F6651FDE35EE00309E33 /* LoginMain.m */; };
@@ -36,7 +40,6 @@
 		149536971FF2561900C85C05 /* NewsSetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B421D61FEB939800CC8AE4 /* NewsSetController.m */; };
 		149536981FF2561900C85C05 /* CustomNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836BE1FE76AC6006ECD45 /* CustomNewsCell.m */; };
 		149536991FF256BB00C85C05 /* MyLevelCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7531FEA2A1E00B0E32B /* MyLevelCell.m */; };
-		1495369A1FF256BB00C85C05 /* CustomRequestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */; };
 		1495369B1FF256BB00C85C05 /* MyLeveLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */; };
 		1495369C1FF256BB00C85C05 /* MyRequestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */; };
 		1495369D1FF256BB00C85C05 /* FrontViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D836D51FE7C652006ECD45 /* FrontViewController.m */; };
@@ -77,6 +80,7 @@
 		14A0ACFB1FDA1D6D0095003F /* QianDing007Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0ACFA1FDA1D6D0095003F /* QianDing007Tests.m */; };
 		14A0AD061FDA1D6D0095003F /* QianDing007UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */; };
 		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
+		14F973701FF5EC0800A79FD6 /* MyMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F9736F1FF5EC0800A79FD6 /* MyMD5.m */; };
 		F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */; };
 /* End PBXBuildFile section */
 
@@ -113,6 +117,13 @@
 		1439E1D11FE8ADFC0053F829 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1439E1D21FE8ADFC0053F829 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		1439E1DA1FE8D5500053F829 /* QDFirstBloodpch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDFirstBloodpch.pch; sourceTree = "<group>"; };
+		1444FDE01FF4781700F6D945 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = city.plist; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/city.plist"; sourceTree = SOURCE_ROOT; };
+		1444FDE11FF4781700F6D945 /* LSCityChooseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LSCityChooseView.h; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/LSCityChooseView.h"; sourceTree = SOURCE_ROOT; };
+		1444FDE21FF4781700F6D945 /* LSCityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSCityChooseView.m; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/LSCityChooseView.m"; sourceTree = SOURCE_ROOT; };
+		1444FDE91FF4B30A00F6D945 /* BecomeDelegateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BecomeDelegateController.h; sourceTree = "<group>"; };
+		1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BecomeDelegateController.m; sourceTree = "<group>"; };
+		148BA9171FF38DF70091F11D /* MyRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRequestCell.h; sourceTree = "<group>"; };
+		148BA9181FF38DF70091F11D /* MyRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRequestCell.m; sourceTree = "<group>"; };
 		149536BB1FF26C4200C85C05 /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		149536BC1FF26C4200C85C05 /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		149536BE1FF26C5C00C85C05 /* CompanyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyController.h; sourceTree = "<group>"; };
@@ -171,8 +182,6 @@
 		14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLeveLModel.m; sourceTree = "<group>"; };
 		14AFB7581FEA7B3F00B0E32B /* MyRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRequestModel.h; sourceTree = "<group>"; };
 		14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRequestModel.m; sourceTree = "<group>"; };
-		14AFB75B1FEA7D0200B0E32B /* CustomRequestView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRequestView.h; sourceTree = "<group>"; };
-		14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRequestView.m; sourceTree = "<group>"; };
 		14B421921FEB462F00CC8AE4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		14B421D51FEB939800CC8AE4 /* NewsSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSetController.h; sourceTree = "<group>"; };
 		14B421D61FEB939800CC8AE4 /* NewsSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSetController.m; sourceTree = "<group>"; };
@@ -234,6 +243,8 @@
 		14F58B291FF0934500594656 /* shareDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = shareDelegate.m; path = "QianDing007/QDClass/QDSingleClass(单例)/shareDelegate.m"; sourceTree = "<group>"; };
 		14F58B2B1FF09C2600594656 /* SetPresentAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPresentAccountController.h; sourceTree = "<group>"; };
 		14F58B2C1FF09C2600594656 /* SetPresentAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPresentAccountController.m; sourceTree = "<group>"; };
+		14F9736E1FF5EC0800A79FD6 /* MyMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyMD5.h; path = QianDing007/QDClass/ToolClass/MD5/MyMD5.h; sourceTree = "<group>"; };
+		14F9736F1FF5EC0800A79FD6 /* MyMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyMD5.m; path = QianDing007/QDClass/ToolClass/MD5/MyMD5.m; sourceTree = "<group>"; };
 		14FEFB9C1FEF88700050E524 /* UserListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListModel.h; sourceTree = "<group>"; };
 		14FEFB9D1FEF88700050E524 /* UserListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListModel.m; sourceTree = "<group>"; };
 		14FEFB9F1FEF8A180050E524 /* UserListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListCell.h; sourceTree = "<group>"; };
@@ -298,6 +309,8 @@
 				14FEFBB51FEFA87E0050E524 /* ManageMoneyController.m */,
 				14B421D81FEBDF9900CC8AE4 /* ProfitController.h */,
 				14B421D91FEBDF9900CC8AE4 /* ProfitController.m */,
+				1444FDE91FF4B30A00F6D945 /* BecomeDelegateController.h */,
+				1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */,
 			);
 			name = "Mydelegate(我的代理)";
 			sourceTree = "<group>";
@@ -366,8 +379,8 @@
 				14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */,
 				14AFB7521FEA2A1E00B0E32B /* MyLevelCell.h */,
 				14AFB7531FEA2A1E00B0E32B /* MyLevelCell.m */,
-				14AFB75B1FEA7D0200B0E32B /* CustomRequestView.h */,
-				14AFB75C1FEA7D0200B0E32B /* CustomRequestView.m */,
+				148BA9171FF38DF70091F11D /* MyRequestCell.h */,
+				148BA9181FF38DF70091F11D /* MyRequestCell.m */,
 			);
 			name = View;
 			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/View";
@@ -409,6 +422,16 @@
 			);
 			name = View;
 			path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/View";
+			sourceTree = "<group>";
+		};
+		1444FDDA1FF476A300F6D945 /* SelectorView */ = {
+			isa = PBXGroup;
+			children = (
+				1444FDE01FF4781700F6D945 /* city.plist */,
+				1444FDE11FF4781700F6D945 /* LSCityChooseView.h */,
+				1444FDE21FF4781700F6D945 /* LSCityChooseView.m */,
+			);
+			name = SelectorView;
 			sourceTree = "<group>";
 		};
 		149A56901FE0B71A005AEA1C /* QDMain(首页) */ = {
@@ -492,6 +515,7 @@
 		14A5FC9A1FE922F0004B3E07 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1444FDDA1FF476A300F6D945 /* SelectorView */,
 				140514341FEE552600661D1B /* Mydelegate(我的代理) */,
 				14AFB73B1FE9E89B00B0E32B /* SubbViewController */,
 				14A5FC9C1FE92381004B3E07 /* AboutWeController.h */,
@@ -569,6 +593,7 @@
 		14B4A8171FDE100600B5183C /* QDClass */ = {
 			isa = PBXGroup;
 			children = (
+				14F9736C1FF5EB9900A79FD6 /* ToolClass */,
 				14F58B271FF091D100594656 /* QDSingleClass(单例) */,
 				14B4A8181FDE102100B5183C /* QDLoginPage(登录) */,
 				149A56901FE0B71A005AEA1C /* QDMain(首页) */,
@@ -799,6 +824,23 @@
 			name = "QDSingleClass(单例)";
 			sourceTree = "<group>";
 		};
+		14F9736C1FF5EB9900A79FD6 /* ToolClass */ = {
+			isa = PBXGroup;
+			children = (
+				14F9736D1FF5EBF500A79FD6 /* MD5 */,
+			);
+			name = ToolClass;
+			sourceTree = "<group>";
+		};
+		14F9736D1FF5EBF500A79FD6 /* MD5 */ = {
+			isa = PBXGroup;
+			children = (
+				14F9736E1FF5EC0800A79FD6 /* MyMD5.h */,
+				14F9736F1FF5EC0800A79FD6 /* MyMD5.m */,
+			);
+			name = MD5;
+			sourceTree = "<group>";
+		};
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -930,6 +972,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */,
+				1444FDE31FF4781700F6D945 /* city.plist in Resources */,
 				14A0ACED1FDA1D6C0095003F /* images.xcassets in Resources */,
 				14A0ACEB1FDA1D6C0095003F /* Main.storyboard in Resources */,
 			);
@@ -1013,6 +1056,7 @@
 				149536B61FF2579400C85C05 /* PresentRecordModel.m in Sources */,
 				149536B71FF2579400C85C05 /* MyGetProfitCell.m in Sources */,
 				149536B81FF2579400C85C05 /* UpProfitCell.m in Sources */,
+				1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */,
 				149536B91FF2579400C85C05 /* UserListCell.m in Sources */,
 				149536BA1FF2579400C85C05 /* PresentRecordCell.m in Sources */,
 				149536A61FF2571700C85C05 /* ForntTabelCell.m in Sources */,
@@ -1026,7 +1070,6 @@
 				149536AE1FF2571700C85C05 /* PresentRecordController.m in Sources */,
 				149536AF1FF2571700C85C05 /* SetPresentAccountController.m in Sources */,
 				149536991FF256BB00C85C05 /* MyLevelCell.m in Sources */,
-				1495369A1FF256BB00C85C05 /* CustomRequestView.m in Sources */,
 				1495369B1FF256BB00C85C05 /* MyLeveLModel.m in Sources */,
 				1495369C1FF256BB00C85C05 /* MyRequestModel.m in Sources */,
 				1495369D1FF256BB00C85C05 /* FrontViewController.m in Sources */,
@@ -1055,6 +1098,7 @@
 				149536971FF2561900C85C05 /* NewsSetController.m in Sources */,
 				149536981FF2561900C85C05 /* CustomNewsCell.m in Sources */,
 				149536881FF2554500C85C05 /* ReceivablesPage.m in Sources */,
+				1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */,
 				149536891FF2554500C85C05 /* MyPage.m in Sources */,
 				1495368A1FF2554500C85C05 /* News.m in Sources */,
 				149536871FF2552900C85C05 /* RootViewController.m in Sources */,
@@ -1063,7 +1107,9 @@
 				149536841FF254FA00C85C05 /* CustomShowDataView.m in Sources */,
 				1495367D1FF254EF00C85C05 /* shareDelegate.m in Sources */,
 				1495367E1FF254EF00C85C05 /* customTextFieldView.m in Sources */,
+				14F973701FF5EC0800A79FD6 /* MyMD5.m in Sources */,
 				1495367F1FF254EF00C85C05 /* LoginMain.m in Sources */,
+				148BA9191FF38DF70091F11D /* MyRequestCell.m in Sources */,
 				149536801FF254EF00C85C05 /* CustomTextView.m in Sources */,
 				149536811FF254EF00C85C05 /* CustomGetCode.m in Sources */,
 				149536821FF254EF00C85C05 /* GetPassWord.m in Sources */,

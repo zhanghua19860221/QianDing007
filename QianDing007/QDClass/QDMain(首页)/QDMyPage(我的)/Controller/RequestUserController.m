@@ -20,7 +20,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createNavgation];
     [self createFirstView];
     [self createSecondView];
     [self createThirdView];
@@ -104,8 +103,8 @@
     [codeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(codeLabel.mas_bottom).offset(20/SCALE_Y);
         make.centerX.equalTo(secondView.mas_centerX);
-        make.width.mas_equalTo(172/SCALE_X);
-        make.height.mas_equalTo(172/SCALE_X);
+        make.width.mas_equalTo(172);
+        make.height.mas_equalTo(172);
         
     }];
     
@@ -140,7 +139,7 @@
     [iconBJView mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.equalTo(sendLabel.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(thirdView).offset(52.5/SCALE_X);
-        make.width.mas_equalTo(270);
+        make.right.equalTo(thirdView).offset(-52.5/SCALE_X);
         make.height.mas_equalTo(60);
         
     }];
@@ -157,12 +156,12 @@
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(iconBJView);
             if (tempBtn) {
-                make.left.equalTo(tempBtn.mas_right).offset(45);
+                make.left.equalTo(tempBtn.mas_right).offset(45/SCALE_X);
             }else{
                 
                 make.left.equalTo(iconBJView);
             }
-            make.width.height.mas_equalTo(60);
+            make.width.height.mas_equalTo(60/SCALE_Y);
             
         }];
         tempBtn = button;
@@ -194,8 +193,8 @@
     
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-    UINavigationBar * bar = self.navigationController.navigationBar;
-    bar.barTintColor = COLORFromRGB(0xffffff);
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
+    [self createNavgation];
     
     
 }
@@ -207,6 +206,7 @@
     self.navigationItem.title = @"邀请商家";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
     [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];

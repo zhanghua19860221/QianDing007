@@ -18,13 +18,12 @@
     [super viewDidLoad];
     [self createNavgation];
     [self createSubView];
-
+    
     // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
-
 
 }
 - (void)createSubView{
@@ -40,31 +39,31 @@
         
     }];
     
-    
-    
     UILabel *label = [[UILabel alloc] init];
     label.text = @"屏蔽消息";
     [view addSubview:label];
-    
-     UISwitch *switchView = [[UISwitch alloc]initWithFrame:CGRectMake(4.0f, 16.0f, 100.0f, 28.0f)];
-     switchView.on = YES;//设置初始为ON的一边
-    [view addSubview:switchView];
-    
-    [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];   // 开关事件切换通知
-    [self.view addSubview: switchView];
-    
 
-    
-    
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        
         make.centerY.equalTo(view.mas_centerY);
         make.left.equalTo(view).offset(15);
         make.height.mas_equalTo(50/SCALE_Y);
         make.width.mas_equalTo(100);
+    
         
     }];
     
+    UISwitch *switchView = [[UISwitch alloc] init];
+    switchView.on = YES;//设置初始为ON的一边
+    switchView.onTintColor = COLORFromRGB(0xe10000);
+    [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];   // 开关事件切换通知
+    [view addSubview:switchView];
+    [switchView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(label.mas_centerY);
+        make.right.equalTo(self.view).offset(-30);
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(20);
+
+    }];
     
     UIImageView *lineView = [[UIImageView alloc] init];
     [lineView setImage:[UIImage imageNamed:@"分割线"]];
@@ -108,9 +107,11 @@
  */
 - (void)createNavgation{
     self.navigationItem.title = @"消息设置";
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
+
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;

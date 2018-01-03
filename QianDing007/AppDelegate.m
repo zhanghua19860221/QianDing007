@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "UserViewController.h"
+#import "RegisterController.h"
+
 @interface AppDelegate ()
 @end
 
@@ -20,20 +21,15 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-  UserViewController *root = [[UserViewController alloc] init];
     
-//    LoginMain *root = [[LoginMain alloc] init];
-    
+    LoginMain *root = [[LoginMain alloc] init];
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
-    
     
     
 //    [[shareDelegate shareNSUserDefaults] setBool:NO forKey:@"b_account"];
 //    BOOL ool = [[shareDelegate shareNSUserDefaults] boolForKey:@"b_account"];
 
-
-    
     // Override point for customization after application launch.
     return YES;
 }

@@ -16,13 +16,17 @@
 #import "AboutWeController.h"
 #import "CallViewController.h"
 #import "UpdateController.h"
+#import "BecomeDelegateController.h"
+
 @interface MyPage (){
     
     NSMutableArray*allArray;//table分组数组
-    UIImageView *topView;//顶视图
+    UIImageView *topView ;//顶视图
+    UIButton *codeButton ;//二维码展示button
+    UIView *myMaskView;   //蒙板视图
+    UIButton *maskCodeButton; //蒙板button
 
 }
-
 @end
 
 @implementation MyPage
@@ -36,10 +40,11 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-
     [self createTopView];
     [self createTabelView];
+    [self createCodeView];
+    [self createMaskView];
+
 
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
@@ -47,7 +52,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
  
 }
 - (void)createTabelView{
@@ -97,6 +102,84 @@
     }];
 
 }
+
+- (void)createCodeView{
+    
+    codeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    codeButton.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.view addSubview:codeButton];
+    [codeButton addTarget:self action:@selector(myCodeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(20);
+        make.right.equalTo(self.view).offset(-15);
+        make.width.height.mas_equalTo(44);
+        
+        
+    }];
+    
+}
+- (void)myCodeButton:(UIButton*)btn{
+    
+    [maskCodeButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(myMaskView);
+        make.height.width.mas_equalTo(200);
+        
+    }];
+    myMaskView.hidden = NO;
+    btn.hidden = YES;
+    [UIView animateWithDuration:0.5 animations:^{
+       [myMaskView layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+       
+        
+    }];
+}
+-(void)createMaskView{
+    
+    myMaskView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    myMaskView.hidden = YES;
+    myMaskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
+    [[UIApplication sharedApplication].keyWindow addSubview:myMaskView];
+    
+    maskCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    maskCodeButton.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [myMaskView addSubview:maskCodeButton];
+    [maskCodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(myMaskView).offset(20);
+        make.right.equalTo(myMaskView).offset(-15);
+        make.width.height.mas_equalTo(44);
+        
+    }];
+
+    UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(myTapAction:)];
+    [myMaskView addGestureRecognizer:tapGesturRecognizer];
+    
+}
+/**
+ 
+ 蒙板点击事件
+ */
+-(void)myTapAction:(id)tap{
+    
+    [maskCodeButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(myMaskView).offset(20);
+        make.right.equalTo(myMaskView).offset(-15);
+        make.width.height.mas_equalTo(44);
+    }];
+    [UIView animateWithDuration:0.5 animations:^{
+        [myMaskView layoutIfNeeded];
+        
+    } completion:^(BOOL finished) {
+        
+        codeButton.hidden = NO;
+        myMaskView.hidden = YES;
+    }];
+
+}
+
+#pragma **************UITableViewDelegate**************************
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     return allArray.count;
@@ -127,12 +210,23 @@
     tempModel = allArray[indexPath.section][indexPath.row];
     NSString *tempStr = tempModel.firstStr;
     if ([tempStr isEqual:@"商户认证"]) {
-        UserViewController *tempVc = [[UserViewController alloc] init];
-        [self.navigationController pushViewController:tempVc animated:YES];
-        
+
+            UserViewController *tempVc = [[UserViewController alloc] init];
+            [self.navigationController pushViewController:tempVc animated:YES];
+
     }else if([tempStr isEqual:@"我的代理"]){
-        MydelegateViewController *tempVc1 = [[MydelegateViewController alloc] init];
-        [self.navigationController pushViewController:tempVc1 animated:YES];
+        int i = 1;
+        if (i == 10) {
+            
+            MydelegateViewController *tempVc1 = [[MydelegateViewController alloc] init];
+            [self.navigationController pushViewController:tempVc1 animated:YES];
+            
+        }else{
+            
+            BecomeDelegateController *tempVc = [[BecomeDelegateController alloc] init];
+            [self.navigationController pushViewController:tempVc animated:YES];
+            
+        }
 
     }else if([tempStr isEqual:@"安全设置"]){
         SecuritySetController *tempVc2 = [[SecuritySetController alloc] init];
@@ -174,6 +268,11 @@
  创建头视图
  */
 - (void)createTopView{
+    
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    imageView.backgroundColor = COLORFromRGB(0xe10000);
+    [self.view addSubview:imageView];
     
     topView = [[UIImageView alloc] init];
     topView.frame = CGRectMake(0,20, SC_WIDTH, 160/SCALE_Y);

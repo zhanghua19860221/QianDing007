@@ -186,7 +186,7 @@
  */
 - (void)leftBackClick:(UIButton*)btn{
     
-    //展示tabBar
+//    //展示tabBar
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
     [self.navigationController popViewControllerAnimated:YES];
 }

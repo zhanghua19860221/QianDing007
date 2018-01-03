@@ -16,11 +16,155 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor grayColor];
+    [self createNavgation];
+    [self createSubView];
+    self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
+  
+    
+}
+- (void)createSubView{
 
+    UIView *teleView = [[UIView alloc] init];
+    teleView.backgroundColor = COLORFromRGB(0xffffff);
+    [self.view addSubview:teleView];
+    [teleView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(84);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(50);
+    }];
+    
+    UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    
+    [teleView addGestureRecognizer:tapGesturRecognizer];
+
+    
+    UILabel *teleLabel = [[UILabel alloc] init];
+    teleLabel.text = @"客服电话";
+    teleLabel.textAlignment = NSTextAlignmentLeft;
+    teleLabel.font = [UIFont systemFontOfSize:16];
+    [teleLabel setTextColor:COLORFromRGB(0x333333)];
+    [teleView addSubview:teleLabel];
+    [teleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(teleView.mas_centerY);
+        make.left.equalTo(teleView).offset(15);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(16);
+
+    }];
+    
+    UIButton *teleBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [teleBtn setImage:[UIImage imageNamed:@"更多图标"] forState:UIControlStateNormal];
+    [teleView addSubview:teleBtn];
+    [teleBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(teleView.mas_centerY);
+        make.right.equalTo(teleView).offset(-15);
+        make.width.mas_equalTo(8);
+        make.height.mas_equalTo(13);
+        
+    }];
+    UILabel *teleLabelOne = [[UILabel alloc] init];
+    teleLabelOne.text = @"400-678-0180";
+    teleLabelOne.textAlignment = NSTextAlignmentRight;
+    teleLabelOne.font = [UIFont systemFontOfSize:16];
+    [teleLabelOne setTextColor:COLORFromRGB(0x999999)];
+    [teleView addSubview:teleLabelOne];
+    [teleLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(teleView.mas_centerY);
+        make.right.equalTo(teleBtn.mas_left).offset(-5);
+        make.width.mas_equalTo(150);
+        make.height.mas_equalTo(16);
+        
+    }];
+    
+    
+    
+    UIView *mailView = [[UIView alloc] init];
+    mailView.backgroundColor = COLORFromRGB(0xffffff);
+    [self.view addSubview:mailView];
+    [mailView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(teleView.mas_bottom).offset(1);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(50);
+    }];
+    
+    UILabel *mailLabel = [[UILabel alloc] init];
+    mailLabel.text = @"客服邮箱";
+    mailLabel.textAlignment = NSTextAlignmentLeft;
+    mailLabel.font = [UIFont systemFontOfSize:16];
+    [mailLabel setTextColor:COLORFromRGB(0x333333)];
+    [mailView addSubview:mailLabel];
+    [mailLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(mailView.mas_centerY);
+        make.left.equalTo(mailView).offset(15);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(16);
+        
+    }];
+    
+    UIButton *mailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mailBtn setImage:[UIImage imageNamed:@"更多图标"] forState:UIControlStateNormal];
+    [mailView addSubview:mailBtn];
+    [mailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(mailView.mas_centerY);
+        make.right.equalTo(mailView).offset(-15);
+        make.width.mas_equalTo(8);
+        make.width.mas_equalTo(13);
+        
+    }];
+    UILabel *mailLabelOne = [[UILabel alloc] init];
+    mailLabelOne.text = @"3051942353@qq.com";
+    mailLabelOne.textAlignment = NSTextAlignmentRight;
+    mailLabelOne.font = [UIFont systemFontOfSize:16];
+    [mailLabelOne setTextColor:COLORFromRGB(0x999999)];
+    [mailView addSubview:mailLabelOne];
+    [mailLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(mailView.mas_centerY);
+        make.right.equalTo(mailBtn.mas_left).offset(-5);
+        make.width.mas_equalTo(200);
+        make.height.mas_equalTo(16);
+        
+    }];
+    
+    
+}
+
+/**
+ 客服电话视图点击事件
+ */
+-(void)tapAction:(id)tap{
+    
+    NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",@"13601112349"];
+    UIWebView *callWebview = [[UIWebView alloc] init];
+    [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+    [self.view addSubview:callWebview];
+
+}
+/**
+ 创建导航栏
+ */
+- (void)createNavgation{
+    self.navigationItem.title = @"联系我们";
+    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftButton.frame = CGRectMake(0, 0, 20,20);
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
+    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
+    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+    self.navigationItem.leftBarButtonItem = leftItem;
+    
+}
+/**
+ 导航栏返回按钮
+ */
+- (void)leftBackClick{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

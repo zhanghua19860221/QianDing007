@@ -25,24 +25,31 @@
 - (void)configCell{
 
     self.iconView = [[UIImageView alloc] init];
-    //    self.iconView.backgroundColor = [UIColor redColor];
-    [self addSubview:self.iconView];
+//    self.iconView.backgroundColor = [UIColor redColor];
+    [self.contentView addSubview:self.iconView];
     
     self.directionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 
-    [self addSubview:self.directionBtn];
+    [self.contentView addSubview:self.directionBtn];
     
     self.firstLabel = [[UILabel alloc] init];
     self.firstLabel.font = [UIFont systemFontOfSize:16];
     self.secondLabel.textAlignment = NSTextAlignmentCenter;
     
-    [self addSubview:self.firstLabel];
+    [self.contentView addSubview:self.firstLabel];
 
     self.secondLabel = [[UILabel alloc] init];
     self.secondLabel.textAlignment = NSTextAlignmentCenter;
-    [self addSubview:self.secondLabel];
+    [self.contentView addSubview:self.secondLabel];
 
-
+    UIImageView *lineView = [[UIImageView alloc] init];
+    lineView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.contentView addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.contentView.mas_bottom);
+        make.left.right.equalTo(self.contentView);
+        make.height.mas_equalTo(1);
+    }];
 
 }
 
@@ -51,6 +58,8 @@
     [self.iconView setImage:[UIImage imageNamed:model.firstStr]];
     self.firstLabel.text = model.secondStr;
     self.secondLabel.text = model.thirdStr;
+    
+    
     [self.directionBtn setImage:[UIImage imageNamed:model.fourStr] forState:UIControlStateNormal];
     
     [self.iconView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -86,10 +95,8 @@
             
         }];
     }
-
-    
-
 }
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

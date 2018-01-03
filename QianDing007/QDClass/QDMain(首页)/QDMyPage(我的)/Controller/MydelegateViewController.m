@@ -168,7 +168,10 @@
     
 }
 - (void)createTopView{
-
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    imageView.backgroundColor = COLORFromRGB(0xe10000);
+    [self.view addSubview:imageView];
     
     topView= [[UIView alloc] init];
     topView.backgroundColor = COLORFromRGB(0xe10000);

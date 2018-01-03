@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyRequestController : UIViewController
+@interface MyRequestController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+
+@property (strong , nonatomic) UITableView *tableView;
 
 @end

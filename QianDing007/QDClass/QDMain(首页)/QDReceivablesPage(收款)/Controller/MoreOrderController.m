@@ -42,6 +42,9 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
+
 
 
 }
@@ -69,6 +72,7 @@
     _scrollView.delegate = self ;
     _scrollView.bounces = NO;
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, 0);
+    _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tabberView.mas_bottom).offset(20);
         make.left.equalTo(self.view);
@@ -106,14 +110,14 @@
     }];
     for (int i=0; i<3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        [button setTitleColor:COLORFromRGB(0x333333) forState:UIControlStateNormal];
+        [button setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateSelected];
         button.tag = 150+i;
         [button setTitle:textArray[i] forState:UIControlStateNormal];
         button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0,44);
         [tabberView addSubview:button];
         
-        if (0==i) {
+        if (1==i) {
             
             button.selected=YES;
             selectedButton=button;
@@ -123,7 +127,7 @@
     }
     
     tabberLineView = [[UIView alloc] init];
-    tabberLineView.frame = CGRectMake(0,42,SC_WIDTH/3.0, 2);
+    tabberLineView.frame = CGRectMake(SC_WIDTH/3.0,42,SC_WIDTH/3.0, 2);
     tabberLineView.backgroundColor = COLORFromRGB(0xffffff);
     [tabberView addSubview:tabberLineView];
     
@@ -174,9 +178,10 @@
 - (void)createNavgation{
 
     self.navigationItem.title = @"收款记录";
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"返回图标白色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;

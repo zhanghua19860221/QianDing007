@@ -33,8 +33,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UINavigationBar * bar = self.navigationController.navigationBar;
-    bar.barTintColor = COLORFromRGB(0xffffff);
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
     
 }
 - (void)createTabelView{
@@ -55,16 +54,21 @@
 }
 - (void)createTopView{
     
+    UIImageView *imageView = [[UIImageView alloc] init];
+    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    imageView.backgroundColor = COLORFromRGB(0xe10000);
+    [self.view addSubview:imageView];
+    
     topView = [[UIView alloc] init];
     topView.frame = CGRectMake(0, 20, SC_WIDTH, 44);
-    topView.backgroundColor = [UIColor redColor];
+    topView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:topView];
     
     UILabel *topLabel = [[UILabel alloc] init];
     topLabel.text = @"消息";
     topLabel.font = [UIFont systemFontOfSize:17];
-    topLabel.textColor = [UIColor whiteColor];
-    topLabel.backgroundColor = [UIColor redColor];
+    topLabel.textColor = COLORFromRGB(0xffffff);
+    topLabel.backgroundColor = COLORFromRGB(0xe10000);
     [topView addSubview:topLabel];
     
     [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PersonalController : UIViewController
+@interface PersonalController : UIViewController<UITextFieldDelegate>
 
 @end
