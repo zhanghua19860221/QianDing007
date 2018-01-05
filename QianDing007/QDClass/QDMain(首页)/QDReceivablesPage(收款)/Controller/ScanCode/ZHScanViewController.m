@@ -7,6 +7,7 @@
 //
 
 #import "ZHScanViewController.h"
+#import "SuccessScanController.h"
 
 @interface ZHScanViewController (){
     
@@ -14,6 +15,7 @@
     BOOL upOrdown;
     NSTimer * timer;
     CAShapeLayer *cropLayer;
+    NSString *Str;
 
 }
 @end
@@ -32,7 +34,7 @@
     [self zhCreateNavgation];
 
 //  可以扫描相册二维码
-//  [self createButtonForPhotoList];
+  [self createButtonForPhotoList];
     
     // Do any additional setup after loading the view.
 }
@@ -134,7 +136,17 @@
  */
 - (void)setTypeCode{
     
-    self.outPut.metadataObjectTypes =@[AVMetadataObjectTypeQRCode];
+    self.outPut.metadataObjectTypes=@[AVMetadataObjectTypeQRCode,//二维码
+                                 //以下为条形码，如果项目只需要扫描二维码，下面都不要写
+                                 AVMetadataObjectTypeEAN13Code,
+                                 AVMetadataObjectTypeEAN8Code,
+                                 AVMetadataObjectTypeUPCECode,
+                                 AVMetadataObjectTypeCode39Code,
+                                 AVMetadataObjectTypeCode39Mod43Code,
+                                 AVMetadataObjectTypeCode93Code,
+                                 AVMetadataObjectTypeCode128Code,
+                                 AVMetadataObjectTypePDF417Code];
+    
 }
 
 /**
@@ -174,16 +186,24 @@
 
     [self.session startRunning];
 }
+
+/**
+ 扫描外部二维码获取数据结果
+
+
+ */
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     
-    NSString *stringValue;
+    
     if ([metadataObjects count] >0){
         
         [_session stopRunning];
         [timer setFireDate:[NSDate distantFuture]];
 
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
-        stringValue = metadataObject.stringValue;
+        NSString *stringValue = metadataObject.stringValue;
+        [self getUrlDateSource:stringValue];
+
     }
 }
 
@@ -235,6 +255,7 @@
         make.top.equalTo(self.view).offset(20);
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(44);
+        
     }];
     UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(zhBackBtnClick)];
     
@@ -268,12 +289,12 @@
 - (void)zhBackBtnClick{
     [self.navigationController popViewControllerAnimated:YES];
     
-
 }
-#pragma ****************二维码扫描输出结果协议方法*******************************
-/**
- 二维码扫描输出结果协议方法
 
+/**
+ 扫描相册二维码获取数据结果
+ 
+ 
  */
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     //获取选中的照片
@@ -293,22 +314,64 @@
             //取第一个元素就是二维码所存放的文本信息
             CIQRCodeFeature *feature = features[0];
             NSString *scannedResult = feature.messageString;
-            //通过对话框的形式呈现
-            [self alertControllerMessage:scannedResult];
             
-            
-            
+            NSLog(@"%@",scannedResult);
+//            //通过对话框的形式呈现
+//            [self alertControllerMessage:scannedResult];
+            [self getUrlDateSource:scannedResult];
+        
         }else{
             [self alertControllerMessage:@"这不是一个二维码"];
         }
     }];
 }
+- (void)getUrlDateSource:(NSString*)urlStr{
 
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSString *moneyStr = [[shareDelegate shareNSUserDefaults] objectForKey:@"money_count"];
+    NSString *telePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *token = [NSString stringWithFormat:@"%@%@%@",urlStr,moneyStr,telePhone];
+    NSString *md5_token = [MyMD5 md5:token];
+    
+    NSDictionary *Dic =@{@"auth_session":oldSession,
+                         @"money":moneyStr,
+                         @"coupon_pwd":urlStr,
+                         @"amount_token":md5_token
+                         };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:SCANME_URL parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        if ([responseObject[@"info"] isEqualToString:@"收款成功"]) {
+            
+            SuccessScanController *successVc = [[SuccessScanController alloc] init];
+            successVc.order_num = responseObject[@"orderNo"];
+            successVc.order_time = responseObject[@"reqTime"];
+            successVc.money_count = responseObject[@"money"];
+        
+            [self.navigationController pushViewController:successVc animated:YES];
+            
+        }else{
+            [self alertControllerMessage:responseObject[@"info"]];
+            
+        }
+
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+
+}
 //由于要写两次，所以就封装了一个方法
 -(void)alertControllerMessage:(NSString *)message{
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *action = [UIAlertAction actionWithTitle:@" 确定" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@" 确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         
     }];
     [alert addAction:action];

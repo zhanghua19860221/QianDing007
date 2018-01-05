@@ -142,6 +142,7 @@
         make.size.mas_equalTo(CGSizeMake((cWidth-15)/4,5+2*(cHeight-15)/4));
         make.top.mas_equalTo(10+2*(cHeight-15)/4);
     }];
+    
 
 }
 
@@ -212,10 +213,13 @@
  
  */
 - (void)buttonOneClick:(UIButton*)btn{
-    
-    [[shareDelegate shareNSUserDefaults] setObject:sc_moneyField.text forKey:@"money_count"];
+    NSMutableString *tempMoney = [NSMutableString stringWithString:sc_moneyField.text];
+    [tempMoney deleteCharactersInRange:NSMakeRange(0, 1)];
+    [[shareDelegate shareNSUserDefaults] setObject:tempMoney forKey:@"money_count"];
     ZHScanViewController *zhVc = [[ZHScanViewController alloc] init];
     [self.navigationController pushViewController:zhVc animated:YES];
+    
+    
 }
 /**
  创建头部视图

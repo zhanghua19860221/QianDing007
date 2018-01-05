@@ -10,6 +10,7 @@
 		1444FDE31FF4781700F6D945 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1444FDE01FF4781700F6D945 /* city.plist */; };
 		1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDE21FF4781700F6D945 /* LSCityChooseView.m */; };
 		1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */; };
+		147B90B51FFF78AB00644A89 /* SuccessScanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 147B90B41FFF78AB00644A89 /* SuccessScanController.m */; };
 		14823DFE1FFCCD990064D74A /* ChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823DFD1FFCCD990064D74A /* ChangeTeleController.m */; };
 		14823E011FFCCDA90064D74A /* ChangePassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823E001FFCCDA90064D74A /* ChangePassWordController.m */; };
 		14823E041FFCCDCF0064D74A /* NextChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823E031FFCCDCF0064D74A /* NextChangeTeleController.m */; };
@@ -125,6 +126,8 @@
 		1444FDE21FF4781700F6D945 /* LSCityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSCityChooseView.m; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/LSCityChooseView.m"; sourceTree = SOURCE_ROOT; };
 		1444FDE91FF4B30A00F6D945 /* BecomeDelegateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BecomeDelegateController.h; sourceTree = "<group>"; };
 		1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BecomeDelegateController.m; sourceTree = "<group>"; };
+		147B90B31FFF78AB00644A89 /* SuccessScanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessScanController.h; path = ScanCode/SuccessScanController.h; sourceTree = "<group>"; };
+		147B90B41FFF78AB00644A89 /* SuccessScanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessScanController.m; path = ScanCode/SuccessScanController.m; sourceTree = "<group>"; };
 		14823DFC1FFCCD990064D74A /* ChangeTeleController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeTeleController.h; sourceTree = "<group>"; };
 		14823DFD1FFCCD990064D74A /* ChangeTeleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTeleController.m; sourceTree = "<group>"; };
 		14823DFF1FFCCDA90064D74A /* ChangePassWordController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePassWordController.h; sourceTree = "<group>"; };
@@ -858,6 +861,8 @@
 				14FAFB441FFF174A00A81D9C /* ScanCodeController.m */,
 				14FAFB461FFF176600A81D9C /* SweepMeController.h */,
 				14FAFB471FFF176600A81D9C /* SweepMeController.m */,
+				147B90B31FFF78AB00644A89 /* SuccessScanController.h */,
+				147B90B41FFF78AB00644A89 /* SuccessScanController.m */,
 			);
 			name = ScanCode;
 			sourceTree = "<group>";
@@ -1084,6 +1089,7 @@
 				149536B91FF2579400C85C05 /* UserListCell.m in Sources */,
 				149536BA1FF2579400C85C05 /* PresentRecordCell.m in Sources */,
 				149536A61FF2571700C85C05 /* ForntTabelCell.m in Sources */,
+				147B90B51FFF78AB00644A89 /* SuccessScanController.m in Sources */,
 				149536A71FF2571700C85C05 /* GetProfitController.m in Sources */,
 				149536A81FF2571700C85C05 /* UpProfitController.m in Sources */,
 				149536A91FF2571700C85C05 /* AllLevelController.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "ScanCodeController.h"
+#import "SuccessScanController.h"
 
 @interface AppDelegate ()
 @end
@@ -21,13 +21,12 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    
-    ScanCodeController *root = [[ScanCodeController alloc] init];
+    SuccessScanController *root = [[SuccessScanController alloc] init];
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
     
     
-//    [[shareDelegate shareNSUserDefaults] setBool:NO forKey:@"b_account"];
+//  [[shareDelegate shareNSUserDefaults] setBool:NO forKey:@"b_account"];
 //    BOOL ool = [[shareDelegate shareNSUserDefaults] boolForKey:@"b_account"];
 
     // Override point for customization after application launch.
