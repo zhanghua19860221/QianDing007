@@ -24,6 +24,9 @@
 @property (strong , nonatomic) UIButton *buyLevelBtn;  //购买等级
 @property (strong , nonatomic) UIButton *selectBtn;    //购买方式默认按钮
 @property (strong , nonatomic) UIView * maskView;      //购买支付视图
+@property (strong , nonatomic) NSString * buyPice;     //购买金额
+@property (strong , nonatomic) NSString * buyLevel;      //购买级别
+
 
 - (void)addDataToCell:(MyLeveLModel*)model;
 

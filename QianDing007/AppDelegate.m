@@ -8,7 +8,7 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "RegisterController.h"
+#import "ScanCodeController.h"
 
 @interface AppDelegate ()
 @end
@@ -22,7 +22,7 @@
     [self.window makeKeyAndVisible];
     
     
-    LoginMain *root = [[LoginMain alloc] init];
+    ScanCodeController *root = [[ScanCodeController alloc] init];
     self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     self.window.rootViewController = self.mainNav ;
     

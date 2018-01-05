@@ -7,9 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomTextView.h"
-@interface ChangePassWordController : UIViewController
-@property (strong ,nonatomic) CustomTextView *oldPassWord;
-@property (strong ,nonatomic) CustomTextView *setNewPassWord;
-@property (strong ,nonatomic) CustomTextView *confirmPassWord;
+@interface ChangePassWordController : UIViewController<UITextFieldDelegate>
+
 @end

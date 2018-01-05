@@ -115,6 +115,9 @@
  登录按钮点击事件
  */
 - (void)lgClickLoginBtn:(UIButton*)btn{
+    
+
+
     btn.backgroundColor = COLORFromRGB(0xe10000);
     
     BOOL isPhone = [shareDelegate isChinaMobile:lg_telePhoneView.textFile.text];
@@ -145,14 +148,28 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
-        NSString *loginSession = [responseObject objectForKey:@"auth_session"];
-        [[shareDelegate shareNSUserDefaults] setObject:loginSession forKey:@"auth_session"];
+        BOOL isSuccess = [[responseObject objectForKey:@"info"] isEqualToString:@"账号或密码错误"];
         
-        RootViewController *home = [[RootViewController alloc] init];
-        [self.navigationController pushViewController:home animated:NO];
-        
+        if (!isSuccess) {
+            
+            NSString *loginSession = [responseObject objectForKey:@"auth_session"];
+            NSString *logPhone     = [responseObject objectForKey:@"phone"];
+            NSString *logPassWord  = [responseObject objectForKey:@"password"];
+            [[shareDelegate shareNSUserDefaults] setObject:loginSession forKey:@"auth_session"];
+            [[shareDelegate shareNSUserDefaults] setObject:logPhone forKey:@"phone"];
+            [[shareDelegate shareNSUserDefaults] setObject:logPassWord forKey:@"password"];
+            
+            RootViewController *home = [[RootViewController alloc] init];
+            [self.navigationController pushViewController:home animated:NO];
+            
+        }else{
+            
+            [self lgShowAlert:[responseObject objectForKey:@"info"]];
+            return;
+        }
+    
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);

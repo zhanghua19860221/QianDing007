@@ -196,7 +196,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         rs_sess_id = [responseObject objectForKey:@"sess_id"];
         [[shareDelegate shareNSUserDefaults] setObject:rs_sess_id forKey:@"sess_id"];
         
@@ -253,7 +253,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
         
         

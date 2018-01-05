@@ -11,8 +11,12 @@
 #import "MyLeveLModel.h"
 @interface MyLevelController (){
 
-    NSMutableArray *tableArray;//tableView 数组
-    UILabel *upLabel;//升级提示文本
+    NSMutableArray *lv_tableArray;//tableView 数组
+    UILabel *lv_upLabel;//升级提示文本
+    NSMutableDictionary *lv_TopDic;//数据字典
+    UIImageView *lv_headView ;//头视图会员等级icon
+    UILabel *lv_levelLabel;//头视图等级
+
 }
 @end
 
@@ -20,8 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createTopView];
     [self getDataSource];
+    [self createTopView];
     [self createTableView];
     self.view.backgroundColor = COLORFromRGB(0xffffff);
 
@@ -30,30 +34,105 @@
 
 - (void)getDataSource{
     
-    tableArray = [[NSMutableArray alloc] initWithCapacity:2];
-    NSArray *imageArray = @[@"银牌会员44*44",@"金牌会员44*44",@"钻石会员44*44"];
-    NSArray *levelArray = @[@"银牌会员",@"金牌会员",@"钻石会员"];
-    NSArray *rateArray  = @[@"100%",@"200%",@"300%"];
+    lv_TopDic = [[NSMutableDictionary alloc] init];
+    lv_tableArray = [NSMutableArray arrayWithCapacity:2];
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
-    for (int i = 0; i<3 ; i++) {
-        MyLeveLModel *model = [[MyLeveLModel alloc] init];
-        NSMutableArray *tempArray = [[NSMutableArray alloc] initWithCapacity:1];
-        model.levelView  = imageArray[i];
-        model.mebLevel   = levelArray[i];
-        model.mebRate    = rateArray[i];
-        model.mebList    = @"满足下列条件后升级";
-        model.mebMoney   = @"收款1000万";
-        model.mebRequest = @"邀请一千万个会员";
-        model.mebBuyMoney= @"直接购买1000万";
-        model.listView   = @"金牌会员提示水印";
-        [tempArray addObject:model];
-        [tableArray addObject:tempArray];
+    NSDictionary *levelDic =@{@"auth_session":oldSession};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:LEVEL_URL parameters:levelDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        [lv_TopDic addEntriesFromDictionary:responseObject];
+        [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
+        NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
+        [self addDataToTabelAarry:dicArray];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+    
+}
+/**
+ 添加头视图数据
+ 
+ */
+- (void)mlGetUrlDataToSubview:(NSDictionary*)dic{
+    
+    NSString *amount = dic[@"amount"];
+    lv_upLabel.text = [NSString stringWithFormat:@"还差%@元升级",amount];
+    
+    switch ([dic[@"id"] intValue]) {
+        case 1:
+            [lv_headView setImage:[UIImage imageNamed:@"普通会员132*132"]];
+            lv_levelLabel.text = @"普通会员";
+            break;
+        case 2:
+            [lv_headView setImage:[UIImage imageNamed:@"银牌会员132*132"]];
+            lv_levelLabel.text = @"银牌会员";
+            break;
+        case 3:
+            [lv_headView setImage:[UIImage imageNamed:@"金牌会员132*132"]];
+            lv_levelLabel.text = @"金牌会员";
+            break;
+        case 4:
+            [lv_headView setImage:[UIImage imageNamed:@"钻石会员132*132"]];
+            lv_levelLabel.text = @"钻石会员";
+            break;
+            
+        default:
+            break;
     }
+    
+    // 创建Attributed
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:lv_upLabel.text];
+    // 需要改变的第一个文字的位置
+    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"差"].location+1;
+    // 需要改变的最后一个文字的位置
+    NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
+    // 需要改变的区间
+    NSRange range = NSMakeRange(firstLoc, secondLoc - firstLoc);
+    // 改变颜色
+    [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
+    // 改变字体大小及类型
+    [noteStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range];
+    // 为label添加Attributed
+    [lv_upLabel setAttributedText:noteStr];
+    
+}
+
+/**
+ 添加tabelArray数组数据
+ */
+- (void)addDataToTabelAarry:(NSArray*)array{
+
+    NSArray *imageArray = @[@"普通会员132*132",@"银牌会员44*44",@"金牌会员44*44",@"钻石会员44*44"];
+    for (NSDictionary * dic in array) {
+        MyLeveLModel *model = [[MyLeveLModel alloc] init];
+        NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:3];
+        int ID = [dic[@"id"] intValue];
+        model.levelView  = imageArray[ID-1];
+        model.mebLevel   = dic[@"level_name"];
+        model.mebRate    = dic[@"scale"];
+        model.mebMoney   = dic[@"amount"];
+        model.mebRequest = dic[@"invite_num"];
+        model.mebBuyMoney= dic[@"price"];
+        [tempArray addObject:model];
+        [lv_tableArray addObject:tempArray];
+    }
+    [_tableView reloadData];
 }
 /**
  创建tableview
  */
 - (void)createTableView{
+    
     _tableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
     _tableView.delegate = self ;
     _tableView.dataSource = self ;
@@ -61,7 +140,7 @@
     [self.view addSubview:_tableView];
     _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(upLabel.mas_bottom).offset(15);
+        make.top.equalTo(lv_upLabel.mas_bottom).offset(15);
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(SC_HEIGHT-213/SCALE_Y);
         
@@ -96,41 +175,33 @@
     [titleLabel setTextColor:COLORFromRGB(0xffffff)];
     [topView addSubview:titleLabel];
     
-    UIImageView *headView = [[UIImageView alloc] init];
-    [headView setImage:[UIImage imageNamed:@"普通会员132*132"]];
-    [self.view addSubview:headView];
-    
-    UILabel *levelLabel = [[UILabel alloc] init];
-    levelLabel.text = @"普通会员";
-    levelLabel.textAlignment = NSTextAlignmentCenter;
-    [levelLabel setTextColor:COLORFromRGB(0x333333)];
-    levelLabel.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:levelLabel];
-    
-    upLabel = [[UILabel alloc] init];
-    upLabel.text = @"还差10000元升级";
-    upLabel.textAlignment = NSTextAlignmentCenter;
-    [upLabel setTextColor:COLORFromRGB(0x333333)];
-    upLabel.font = [UIFont systemFontOfSize:12];
-    [self.view addSubview:upLabel];
-    
-// 创建Attributed
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:upLabel.text];
-// 需要改变的第一个文字的位置
-    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"差"].location+1;
-// 需要改变的最后一个文字的位置
-    NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
-// 需要改变的区间
-    NSRange range = NSMakeRange(firstLoc, secondLoc - firstLoc);
-// 改变颜色
-    [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
-// 改变字体大小及类型
-    [noteStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range];
-// 为label添加Attributed
-    [upLabel setAttributedText:noteStr];
-    
+    lv_headView = [[UIImageView alloc] init];
+    lv_headView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.view addSubview:lv_headView];
+    lv_headView.layer.masksToBounds = YES;
+    lv_headView.layer.cornerRadius  = 33;
 
+    [lv_headView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(topView.mas_bottom).offset(-33/SCALE_Y);
+        make.centerX.equalTo(topView.mas_centerX);
+        make.height.width.mas_equalTo(66/SCALE_Y);
+        
+    }];
     
+    lv_levelLabel = [[UILabel alloc] init];
+    lv_levelLabel.text = @"会员等级";
+    lv_levelLabel.textAlignment = NSTextAlignmentCenter;
+    [lv_levelLabel setTextColor:COLORFromRGB(0x333333)];
+    lv_levelLabel.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:lv_levelLabel];
+    
+    lv_upLabel = [[UILabel alloc] init];
+    lv_upLabel.text = @"还差NNNN元升级";
+    lv_upLabel.textAlignment = NSTextAlignmentCenter;
+    [lv_upLabel setTextColor:COLORFromRGB(0x333333)];
+    lv_upLabel.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:lv_upLabel];
+
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(topView.mas_centerX);
         make.top.equalTo(topView).offset(35/SCALE_Y);
@@ -156,26 +227,21 @@
         make.height.width.mas_equalTo(30/SCALE_Y);
     }];
 
-    [headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_bottom).offset(-33/SCALE_Y);
-        make.centerX.equalTo(topView.mas_centerX);
-        make.height.width.mas_equalTo(66/SCALE_Y);
-        
-    }];
 
-    [levelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(headView.mas_centerX);
-        make.top.equalTo(headView.mas_bottom).offset(10);
+
+    [lv_levelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(lv_headView.mas_centerX);
+        make.top.equalTo(lv_headView.mas_bottom).offset(10);
         make.height.mas_equalTo(16);
         make.width.mas_equalTo(70);
         
     }];
     
-    [upLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(levelLabel.mas_centerX);
-        make.top.equalTo(levelLabel.mas_bottom).offset(10);
+    [lv_upLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(lv_levelLabel.mas_centerX);
+        make.top.equalTo(lv_levelLabel.mas_bottom).offset(10);
         make.height.mas_equalTo(12);
-        make.width.mas_equalTo(100);
+        make.width.mas_equalTo(150);
         
     }];
     
@@ -190,14 +256,13 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
     [self.navigationController popViewControllerAnimated:YES];
 }
-
 #pragma ******************tabelViewDelegate*****************************
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
 
-    return  tableArray.count;
+    return  lv_tableArray.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [tableArray[section] count];;
+    return [lv_tableArray[section] count];;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *ID = @"reuseIdentifier";
@@ -207,7 +272,7 @@
         
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell addDataToCell:tableArray[indexPath.section][indexPath.row]];
+    [cell addDataToCell:lv_tableArray[indexPath.section][indexPath.row]];
     return cell;
     
 }

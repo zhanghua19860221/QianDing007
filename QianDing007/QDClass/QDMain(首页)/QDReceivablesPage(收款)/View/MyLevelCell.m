@@ -40,6 +40,7 @@
     [self.contentView addSubview:_spaceLine];
     
     _mebList = [[UILabel alloc] init];
+    _mebList.text = @"满足下列条件后升级";
     [_mebList setTextColor:COLORFromRGB(0x333333)];
     _mebList.textAlignment = NSTextAlignmentLeft;
     _mebList.font = [UIFont systemFontOfSize:16];
@@ -93,7 +94,7 @@
     _buyLevelBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     _buyLevelBtn.layer.borderColor = [COLORFromRGB(0x5c83e2) CGColor];
     _buyLevelBtn.layer.borderWidth = 1;
-    [_buyLevelBtn addTarget:self action:@selector(buyLevelBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [_buyLevelBtn addTarget:self action:@selector(buyLevelBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.contentView addSubview:_buyLevelBtn];
     
     [_levelView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -182,17 +183,19 @@
     
 }
 - (void)addDataToCell:(MyLeveLModel*)model{
+    _buyPice  = model.mebBuyMoney;
+    _buyLevel = model.mebLevel;
     _mebLevel.text = model.mebLevel;
     _mebRate.text = model.mebRate;
-    _mebList.text = model.mebList;
-    _mebMoney.text = model.mebMoney;
-    _mebRequest.text = model.mebRequest;
-    _mebBuyMoney.text = model.mebBuyMoney;
-    if ([model.mebLevel isEqualToString:@"银牌会员"]) {
+    _mebMoney.text = [NSString stringWithFormat:@"收款总额达到%@元",model.mebMoney];
+    _mebRequest.text = [NSString stringWithFormat:@"总共邀请%@名商家并成功激活后",model.mebRequest];
+    _mebBuyMoney.text = [NSString stringWithFormat:@"%@元购买",model.mebBuyMoney];
+    
+    if ([model.mebLevel isEqualToString:@"银牌商户"]) {
         [_firstView setImage:[UIImage imageNamed:@"银牌会员提示水印"]];
         [_secondView setImage:[UIImage imageNamed:@"银牌会员提示水印"]];
         [_thirdView   setImage:[UIImage imageNamed:@"银牌会员提示水印"]];
-    }else if([model.mebLevel isEqualToString:@"金牌会员"]){
+    }else if([model.mebLevel isEqualToString:@"金牌商户"]){
         [_firstView setImage:[UIImage imageNamed:@"金牌会员提示水印"]];
         [_secondView setImage:[UIImage imageNamed:@"金牌会员提示水印"]];
         [_thirdView   setImage:[UIImage imageNamed:@"金牌会员提示水印"]];
@@ -201,7 +204,7 @@
         [_buyLevelBtn setTitleColor:COLORFromRGB(0xfbaa69) forState:UIControlStateNormal];
         _buyLevelBtn.layer.borderColor = [COLORFromRGB(0xfbaa69) CGColor];
     
-    }else if([model.mebLevel isEqualToString:@"钻石会员"]){
+    }else if([model.mebLevel isEqualToString:@"钻石商户"]){
         [_firstView setImage:[UIImage imageNamed:@"钻石会员提示水印"]];
         [_secondView setImage:[UIImage imageNamed:@"钻石会员提示水印"]];
         [_thirdView   setImage:[UIImage imageNamed:@"钻石会员提示水印"]];
@@ -213,12 +216,8 @@
     }
     [_levelView setImage:[UIImage imageNamed:model.levelView]];
 
-    
-//    @property (strong , nonatomic) UIButton *requestUseBtn;//邀请商家
-//    @property (strong , nonatomic) UIButton *buyLevelBtn;  //购买等级
-
 }
--(void)buyLevelBtnClick{
+-(void)buyLevelBtnClick:(UIButton*)btn{
     
     _maskView = [[UIView alloc] init];
     UIApplication *ap = [UIApplication sharedApplication];
@@ -443,7 +442,7 @@
     }];
     
     UILabel *buyMoneyTwo = [[UILabel alloc] init];
-    buyMoneyTwo.text = @"1999.00";
+    buyMoneyTwo.text = _buyPice;
     buyMoneyTwo.font = [UIFont systemFontOfSize:14];
     buyMoneyTwo.textAlignment = NSTextAlignmentLeft;
     [buyMoneyTwo setTextColor:COLORFromRGB(0xe10000)];

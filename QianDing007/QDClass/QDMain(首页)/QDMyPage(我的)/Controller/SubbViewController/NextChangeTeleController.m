@@ -1,33 +1,39 @@
 //
-//  ChangeTeleController.m
+//  NextChangeTeleController.m
 //  QianDing007
 //
-//  Created by 张华 on 17/12/20.
-//  Copyright © 2017年 张华. All rights reserved.
+//  Created by 张华 on 18/1/3.
+//  Copyright © 2018年 张华. All rights reserved.
 //
 
-#import "ChangeTeleController.h"
 #import "NextChangeTeleController.h"
-@interface ChangeTeleController (){
+#import "SecuritySetController.h"
+@interface NextChangeTeleController (){
     
-    UITextField *ct_oldTeleField;  //输入旧手机号
-    UITextField *ct_getCodeField;  //设置验证码
-    NSString    *ct_sess_id     ;  //记录验证码接口返回的sess_id
+    UITextField *nct_newTeleField;  //验证新手机号
+    UITextField *nct_getCodeField;  //设置验证码
+    NSString    *nct_sess_id     ;  //记录验证码接口返回的sess_id
 }
 
 
 @end
 
-@implementation ChangeTeleController
+@implementation NextChangeTeleController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self ctCreateNavgation];
-    [self ctCreateSubview];
-    self.view.backgroundColor = COLORFromRGB(0xffffff);
+    [self nctCreateNavgation];
+    [self nctCreateSubview];
     // Do any additional setup after loading the view.
 }
-- (void)ctCreateSubview{
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    self.view.backgroundColor = COLORFromRGB(0xffffff);
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
+    
+    
+}
+- (void)nctCreateSubview{
     
     UIImageView *line = [[UIImageView alloc] init];
     line.backgroundColor = COLORFromRGB(0xf9f9f9);
@@ -41,13 +47,13 @@
     }];
     
     
-    ct_oldTeleField = [[UITextField alloc] init];
-    ct_oldTeleField.placeholder = @"输入旧手机号";
-    ct_oldTeleField.delegate = self;
-    ct_oldTeleField.font = [UIFont systemFontOfSize:18];
-    [ct_oldTeleField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:ct_oldTeleField];
-    [ct_oldTeleField mas_makeConstraints:^(MASConstraintMaker *make) {
+    nct_newTeleField = [[UITextField alloc] init];
+    nct_newTeleField.placeholder = @"验证新手机号";
+    nct_newTeleField.delegate = self;
+    nct_newTeleField.font = [UIFont systemFontOfSize:18];
+    [nct_newTeleField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:nct_newTeleField];
+    [nct_newTeleField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(line.mas_bottom).offset(-16/SCALE_Y);
         make.left.equalTo(line).offset(10);
         make.right.equalTo(line).offset(-10);
@@ -66,13 +72,13 @@
         
     }];
     
-    ct_getCodeField = [[UITextField alloc] init];
-    ct_getCodeField.placeholder = @"验证码";
-    ct_getCodeField.delegate = self;
-    ct_getCodeField.font = [UIFont systemFontOfSize:18];
-    [ct_getCodeField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:ct_getCodeField];
-    [ct_getCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
+    nct_getCodeField = [[UITextField alloc] init];
+    nct_getCodeField.placeholder = @"验证码";
+    nct_getCodeField.delegate = self;
+    nct_getCodeField.font = [UIFont systemFontOfSize:18];
+    [nct_getCodeField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:nct_getCodeField];
+    [nct_getCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineOne.mas_bottom).offset(-16/SCALE_Y);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
@@ -81,9 +87,9 @@
     }];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = COLORFromRGB(0xe10000);
+    button.backgroundColor = COLORFromRGB(0xf9cccc);
     [button setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(ctGetCodeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [button addTarget:self action:@selector(nctGetCodeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     button.layer.masksToBounds = YES;
     button.layer.cornerRadius  = 3;
     button.titleLabel.font = [UIFont systemFontOfSize:18];
@@ -98,16 +104,16 @@
         
     }];
     
-
-    UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-    nextBtn.backgroundColor = COLORFromRGB(0xf9cccc);
-    [nextBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    nextBtn.layer.masksToBounds = YES ;
-    nextBtn.layer.cornerRadius = 25;
-    [self.view addSubview:nextBtn];
-    [nextBtn addTarget:self action:@selector(nextBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [nextBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    UIButton *n_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [n_SubmitBtn setTitle:@"确认" forState:UIControlStateNormal];
+    n_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
+    [n_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    n_SubmitBtn.layer.masksToBounds = YES ;
+    n_SubmitBtn.layer.cornerRadius = 25;
+    [self.view addSubview:n_SubmitBtn];
+    [n_SubmitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [n_SubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineOne.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
@@ -119,16 +125,16 @@
 /**
  获取验证码
  */
-- (void)ctGetCodeBtnClick:(UIButton*)btn{
+- (void)nctGetCodeBtnClick:(UIButton*)btn{
     
-    BOOL isPhone = [shareDelegate isChinaMobile:ct_oldTeleField.text];
+    
+    BOOL isPhone = [shareDelegate isChinaMobile:nct_newTeleField.text];
     if (!isPhone) {
-        [self ctShowAlert:@"请输入正确的手机号码。"];
-        
+        [self nctShowAlert:@"请输入正确的手机号码。"];
         return;
+        
     }
-    
-    NSDictionary *dic = @{@"phone":ct_oldTeleField.text};
+    NSDictionary *dic = @{@"phone":nct_newTeleField.text};
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -140,6 +146,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        nct_sess_id = [responseObject objectForKey:@"sess_id"];
 
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -150,23 +157,67 @@
 }
 
 
-- (void)nextBtnClick:(UIButton *)btn{
+- (void)submitBtnClick:(UIButton *)btn{
     btn.backgroundColor = COLORFromRGB(0xe10000);
     
-    BOOL isPhone = [shareDelegate isChinaMobile:ct_oldTeleField.text];
+    BOOL isPhone = [shareDelegate isChinaMobile:nct_newTeleField.text];
     if (!isPhone) {
-        [self ctShowAlert:@"请输入正确的手机号码。"];
+        [self nctShowAlert:@"请输入正确的手机号码。"];
         return;
         
     }
-    NextChangeTeleController *nextVc = [[NextChangeTeleController alloc] init];
-    [self.navigationController pushViewController:nextVc animated:YES];
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+
+    NSDictionary *nctDic =@{@"phone":nct_newTeleField.text,
+                           @"captcha":nct_getCodeField.text,
+                           @"auth_session":oldSession,
+                           @"sess_id":nct_sess_id
+                           
+                           };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:MODIFY_PHONE_URL parameters:nctDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSString *auth_session = [responseObject objectForKey:@"auth_session"];
+        [[shareDelegate shareNSUserDefaults] setObject:auth_session forKey:@"auth_session"];
+        
+        BOOL isSuccess = [[responseObject objectForKey:@"info"] isEqualToString:@"修改成功"];
+        if (isSuccess) {
+            [self nctShowAlert:@"修改成功"];
+            
+            for (UIViewController *controller in self.navigationController.viewControllers) {
+                if ([controller isKindOfClass:[SecuritySetController class]]) {
+                    SecuritySetController*A = (SecuritySetController*)controller;
+                    [self.navigationController popToViewController:A animated:YES];
+                }
+            }
+
+        }else{
+            [self nctShowAlert:[responseObject objectForKey:@"info"]];
+            return;
+        }
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
     
 }
+
+
 /**
  创建导航栏
  */
-- (void)ctCreateNavgation{
+- (void)nctCreateNavgation{
     self.navigationItem.title = @"更换手机号";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
@@ -185,7 +236,7 @@
 /**
  警示 弹出框
  */
-- (void)ctShowAlert:(NSString *)warning{
+- (void)nctShowAlert:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -206,68 +257,6 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-#pragma **************UITextFieldDelegate**********************
-
-/**
- 当输入框开始时触发 ( 获得焦点触发)
- 
- */
-- (void)textFieldDidBeginEditing:( UITextField*)textField{
-    
-    
-}
-/**
- 询问输入框是否可以结束编辑 (键盘是否可以收回)
- 
- */
-- (BOOL)textFieldShouldEndEditing:( UITextField*)textField{
-    
-    return YES;
-}
-/**
- 当前输入框结束编辑时触发 (键盘收回之后触发)
- 
- */
-- (void)textFieldDidEndEditing:( UITextField *)textField{
-    
-    
-}
-/**
- 当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
- 
- */
-- (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
-    
-    return YES;
-}
-/**
- 控制当前输入框是否能被编辑
- 
- */
-- (BOOL)textFieldShouldBeginEditing:( UITextField *)textField{
-    
-    return YES;
-}
-
-/**
- 控制输入框清除按钮是否有效 (yes, 有 ;no, 没有)
- 
- */
-- (BOOL)textFieldShouldClear:( UITextField*)textField{
-    
-    return YES;
-}
-/**
- 返回按钮
- */
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    
-    
-    return YES;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

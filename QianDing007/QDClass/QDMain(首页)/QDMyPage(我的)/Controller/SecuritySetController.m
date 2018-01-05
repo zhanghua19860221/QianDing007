@@ -9,6 +9,7 @@
 #import "SecuritySetController.h"
 #import "ChangeTeleController.h"
 #import "ChangePassWordController.h"
+#import "LoginMain.h"
 @interface SecuritySetController ()
 
 @end
@@ -120,6 +121,7 @@
     exitlogonBtn.backgroundColor = COLORFromRGB(0xe10000);
     [exitlogonBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
     [self.view addSubview:exitlogonBtn];
+    [exitlogonBtn addTarget:self action:@selector(exitLogonBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [exitlogonBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.view).offset(-80/SCALE_Y);
         make.left.right.equalTo(self.view);
@@ -149,6 +151,16 @@
 
     
 }
+
+/**
+ 
+ 退出登录按钮点击事件
+ */
+-(void)exitLogonBtnClick:(UIButton*)btn{
+    LoginMain * loginVC = [[LoginMain alloc] init];
+    [self.navigationController pushViewController:loginVC animated:YES];
+    
+}
 /**
  创建导航栏
  */
@@ -158,7 +170,7 @@
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;

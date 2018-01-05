@@ -11,7 +11,6 @@
 #import "MyPage.h"
 #import "News.h"
 @interface RootViewController ()
-
 @end
 
 @implementation RootViewController

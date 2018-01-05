@@ -7,20 +7,30 @@
 //
 
 #import "ReceivablesPage.h"
-#import "CustomShowDataView.h"
 #import "MoreOrderController.h"
 #import "ChannelSetingController.h"
 #import "MyLevelController.h"
 #import "MyRequestController.h"
 #import "UserViewController.h"
-
+#import "ScanCodeController.h"
 @interface ReceivablesPage (){
     
     UIView *mebInfoView;//会员信息展示视图
     UIView *profitView;//商家收益视图
     UIView *myView;//我的等级视图
     UIView *codeView;//二维码扫描视图
+    NSMutableDictionary *rp_Dic;//数据字典
+    UILabel *rp_telePhone;//头部商户电话
+    UIButton *rp_verificationBtn;//头部认证按钮
+    UILabel *rp_mebLeveLabel;//头部会员等级
+    UIImageView *rp_mebIconView;//头部会员图标
+    UILabel *rp_scaleLabel;//费率百分比
+    UILabel *rp_orderNum;  //订单数
+    UILabel *rp_orderScale;//订单环比
+    UILabel *rp_moneyNum;  //收款数
+    UILabel *rp_moneyScale;//收款环比
 
+    
 }
 @end
 
@@ -35,6 +45,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getDateSource];
     [self createBasicView];
     [self createMebInfoView];
     [self createProfitView];
@@ -48,75 +59,189 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     
+}
+- (void)getDateSource{
+    rp_Dic = [[NSMutableDictionary alloc] init];
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
+    NSDictionary *rootDic =@{@"auth_session":oldSession};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:HOME_URL parameters:rootDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+        [rp_Dic addEntriesFromDictionary:responseObject];
+//      NSLog(@"%@",[shareDelegate logDic:rpDic]);
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            [self addDataToSubview];
+
+        }
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+    
+}
+- (void)addDataToSubview{
+    
+// 商户信息视图填充网络数据
+    rp_telePhone.text = [NSString stringWithFormat:@"您好！%@",[rp_Dic objectForKey:@"supplier_name"]];
+    
+    if ([rp_Dic[@"checked"] isEqualToString:@"0"]) {
+        [rp_verificationBtn setImage:[UIImage imageNamed:@"未认证"] forState:UIControlStateNormal];
+    }else if ([rp_Dic[@"checked"] isEqualToString:@"1"]){
+        [rp_verificationBtn setImage:[UIImage imageNamed:@"已认证"] forState:UIControlStateNormal];
+    }
+    [rp_verificationBtn addTarget:self action:@selector(verificationBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    rp_mebLeveLabel.text = [rp_Dic objectForKey:@"level_name"];
+    
+    NSString *levelName = rp_Dic[@"level_name"];
+    if ([levelName isEqualToString:@"普通商户"]) {
+        [rp_mebIconView setImage:[UIImage imageNamed:@"普通会员132*132"]];
+    }else if ([levelName isEqualToString:@"银牌商户"]){
+        [rp_mebIconView setImage:[UIImage imageNamed:@"银牌会员44*44"]];
+    }else if ([levelName isEqualToString:@"金牌商户"]){
+        [rp_mebIconView setImage:[UIImage imageNamed:@"金牌会员44*44"]];
+    }else if ([levelName isEqualToString:@"钻石商户"]){
+        [rp_mebIconView setImage:[UIImage imageNamed:@"钻石会员44*44"]];
+    }
+    rp_scaleLabel.text =  rp_Dic[@"level_scale"];
+
+    
+    int orderCount = [rp_Dic[@"count"] intValue];
+    NSString *str = [NSString stringWithFormat:@"%d",orderCount];
+    rp_orderNum.text = str;
+    
+    NSString *orderScale = [NSString stringWithFormat:@"环比%@",rp_Dic[@"relative_count"]];
+    rp_orderScale.text = orderScale;
+    rp_moneyNum.text = rp_Dic[@"sum"];
+    
+    NSString *moneyScale = [NSString stringWithFormat:@"环比%@",rp_Dic[@"relative_sum"]];
+    rp_moneyScale.text = moneyScale;
+
 }
 /**
  会员信息视图
  */
 - (void)createMebInfoView{
-    UILabel *telePhone = [[UILabel alloc] init];
-    telePhone.text = @"您好！13466358453";
-    telePhone.frame = CGRectMake(15, 15, 160, 16);
-    [telePhone setTextColor:COLORFromRGB(0x333333)];
-    telePhone.font = [UIFont systemFontOfSize:16];
-    [mebInfoView addSubview:telePhone];
     
-    UIButton *verificationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    verificationBtn.frame = CGRectMake(telePhone.frame.origin.x+telePhone.frame.size.width+10, 10,56, 23);
-    [verificationBtn setImage:[UIImage imageNamed:@"未认证"] forState:UIControlStateNormal];
-    [verificationBtn addTarget:self action:@selector(verificationBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [mebInfoView addSubview:verificationBtn];
+    rp_telePhone = [[UILabel alloc] init];
+    rp_telePhone.text = @"您好！";
+    [rp_telePhone setTextColor:COLORFromRGB(0x333333)];
+    rp_telePhone.font = [UIFont systemFontOfSize:16];
+    rp_telePhone.textAlignment = NSTextAlignmentLeft;
+    [mebInfoView addSubview:rp_telePhone];
+    [rp_telePhone mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mebInfoView).offset(15/SCALE_Y);
+        make.left.equalTo(mebInfoView).offset(15);
+        make.width.mas_equalTo(160);
+        make.height.mas_equalTo(16);
+        
+    }];
+    rp_verificationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mebInfoView addSubview:rp_verificationBtn];
+    [rp_verificationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(rp_telePhone.mas_centerY);
+        make.left.equalTo(rp_telePhone.mas_right).offset(10);
+        make.width.mas_equalTo(56);
+        make.height.mas_equalTo(23);
+        
+    }];
     
-    UILabel *mebLeveLabel = [[UILabel alloc] init];
-    mebLeveLabel.text = @"普通会员";
-    mebLeveLabel.font = [UIFont systemFontOfSize:16];
-    mebLeveLabel.frame = CGRectMake(55/SCALE_X,telePhone.frame.origin.y+telePhone.frame.size.height+30/SCALE_Y,70, 16);
-    [telePhone setTextColor:COLORFromRGB(0x333333)];
-    [mebInfoView addSubview:mebLeveLabel];
+    rp_mebLeveLabel = [[UILabel alloc] init];
+    rp_mebLeveLabel.text = @"";
+    rp_mebLeveLabel.textAlignment = NSTextAlignmentLeft;
+    rp_mebLeveLabel.font = [UIFont systemFontOfSize:16];
+    [rp_mebLeveLabel setTextColor:COLORFromRGB(0x333333)];
+    [mebInfoView addSubview:rp_mebLeveLabel];
+    [rp_mebLeveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(rp_telePhone.mas_bottom).offset(33/SCALE_Y);
+        make.left.equalTo(mebInfoView).offset(55/SCALE_X);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(16);
+        
+    }];
     
+    rp_mebIconView = [[UIImageView alloc] init];
+    [mebInfoView addSubview:rp_mebIconView];
+    [rp_mebIconView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(rp_mebLeveLabel.mas_centerY);
+        make.left.equalTo(rp_mebLeveLabel.mas_right).offset(10);
+        make.width.mas_equalTo(22);
+        make.height.mas_equalTo(22);
+        
+    }];
     
-    UIImageView *mebIconView = [[UIImageView alloc] init];
-    [mebIconView setImage:[UIImage imageNamed:@"普通会员132*132"]];
-    mebIconView.frame = CGRectMake(mebLeveLabel.frame.origin.x+mebLeveLabel.frame.size.width+10,mebLeveLabel.frame.origin.y-3, 22, 22);
-    [mebInfoView addSubview:mebIconView];
     
     UILabel *mebRateLabel = [[UILabel alloc] init];
     mebRateLabel.text = @"费        率";
-    [telePhone setTextColor:COLORFromRGB(0x333333)];
+    mebRateLabel.textAlignment = NSTextAlignmentLeft;
+    [rp_telePhone setTextColor:COLORFromRGB(0x333333)];
     mebRateLabel.font = [UIFont systemFontOfSize:16];
-    mebRateLabel.frame = CGRectMake(55/SCALE_X,mebInfoView.frame.size.height-20/SCALE_Y-16,70, 16);
     [mebInfoView addSubview:mebRateLabel];
+    [mebRateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(rp_mebLeveLabel.mas_bottom).offset(25/SCALE_Y);
+        make.left.equalTo(rp_mebLeveLabel);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(16);
+        
+    }];
 
     
-    UILabel *percentBtn = [[UILabel alloc] init];
-    percentBtn.text = @"0.4%";
-    percentBtn.font = [UIFont systemFontOfSize:21];
-    percentBtn.frame = CGRectMake(mebRateLabel.frame.origin.x+mebRateLabel.frame.size.width+10,mebInfoView.frame.size.height-20/SCALE_Y-21,50, 21);
-    [mebInfoView addSubview:percentBtn];
+    rp_scaleLabel = [[UILabel alloc] init];
+    rp_scaleLabel.text =  @"";
+    rp_scaleLabel.font = [UIFont systemFontOfSize:21];
+    [mebInfoView addSubview:rp_scaleLabel];
+    [rp_scaleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(mebRateLabel.mas_bottom);
+        make.left.equalTo(mebRateLabel.mas_right).offset(10);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(21);
+        
+    }];
     
-    UIImageView *upGradeView = [[UIImageView alloc] init];
-    [upGradeView setImage:[UIImage imageNamed:@"去升级图标"]];
-    upGradeView.frame = CGRectMake(SC_WIDTH-95/SCALE_X,mebInfoView.frame.size.height-20/SCALE_Y-16-43, 25, 38);
-    [mebInfoView addSubview:upGradeView];
-
     UIButton *upGradeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    upGradeBtn.frame = CGRectMake(mebInfoView.frame.size.width-55/SCALE_X-50,mebInfoView.frame.size.height-20/SCALE_Y-16,50, 16);
     upGradeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [upGradeBtn setTitleColor:COLORFromRGB(0x333333) forState:UIControlStateNormal];
     [upGradeBtn setTitle:@"去升级" forState:UIControlStateNormal];
     [upGradeBtn addTarget:self action:@selector(upGradeBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [mebInfoView addSubview:upGradeBtn];
+    [upGradeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(mebRateLabel.mas_centerY);
+        make.right.equalTo(mebInfoView).offset(-55/SCALE_X);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(16);
+        
+    }];
+    
+    UIImageView *upGradeView = [[UIImageView alloc] init];
+    [upGradeView setImage:[UIImage imageNamed:@"去升级图标"]];
+    [mebInfoView addSubview:upGradeView];
+    [upGradeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(upGradeBtn.mas_centerX);
+        make.bottom.equalTo(upGradeBtn.mas_top).offset(-5);
+        make.width.mas_equalTo(25);
+        make.height.mas_equalTo(38);
+        
+    }];
 
-  
 }
-
 /**
  未认证点击事件
  */
 - (void)verificationBtnClick{
     
-    UserViewController *verificationVc = [[UserViewController alloc] init];
-    [self.navigationController pushViewController:verificationVc animated:YES];
+    if ([rp_Dic[@"checked"] isEqualToString:@"0"]) {
+        UserViewController *verificationVc = [[UserViewController alloc] init];
+        [self.navigationController pushViewController:verificationVc animated:YES];
+    }
 }
 /**
  去升级
@@ -135,37 +260,126 @@
     profitView.userInteractionEnabled = YES;
     
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(15, 15, 116, 20);
     [imageView setImage:[UIImage imageNamed:@"商家收益"]];
     [profitView addSubview:imageView];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(profitView).offset(15/SCALE_Y);
+        make.left.equalTo(profitView).offset(15);
+        make.width.mas_equalTo(116);
+        make.height.mas_equalTo(20);
+        
+    }];
     
     UIButton *moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [moreBtn setTitle:@"更多..." forState:UIControlStateNormal];
     moreBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [moreBtn setTitleColor:COLORFromRGB(0x999999) forState:UIControlStateNormal];
-    moreBtn.frame = CGRectMake(SC_WIDTH-70, 18,60, 17);
     moreBtn.userInteractionEnabled = YES;
     [moreBtn addTarget:self action:@selector(showMoreBtn) forControlEvents:UIControlEventTouchUpInside];
     [profitView addSubview:moreBtn];
+    [moreBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(imageView.mas_centerY);
+        make.right.equalTo(profitView).offset(-10);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(17);
+        
+    }];
     
     UIImageView *lineView = [[UIImageView alloc] init];
     lineView.frame = CGRectMake(0, 50, SC_WIDTH, 1);
     lineView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [profitView addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageView.mas_bottom).offset(15/SCALE_Y);
+        make.left.equalTo(profitView).offset(15);
+        make.width.mas_equalTo(SC_WIDTH);
+        make.height.mas_equalTo(1);
+        
+    }];
     
-    NSArray *firstArray = @[@"25",@"353.23"];
-    NSArray *secondArray = @[@"环比－25%",@"环比+155%"];
-    NSArray *thirdArray = @[@"今日订单",@"今日收款"];
+    rp_orderNum = [[UILabel alloc] init];
+    rp_orderNum.text = @"0";
+    rp_orderNum.textAlignment = NSTextAlignmentCenter;
+    rp_orderNum.font = [UIFont systemFontOfSize:20];
+    [rp_orderNum setTextColor:COLORFromRGB(0xe10000)];
+    [profitView addSubview:rp_orderNum];
+    [rp_orderNum mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lineView.mas_bottom).offset(20/SCALE_Y);
+        make.left.equalTo(profitView);
+        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.height.mas_equalTo(20);
+        
+    }];
+    
+    rp_moneyNum = [[UILabel alloc] init];
+    rp_moneyNum.text = @"0";
+    rp_moneyNum.font = [UIFont systemFontOfSize:20];
+    [rp_moneyNum setTextColor:COLORFromRGB(0xe10000)];
+    rp_moneyNum.textAlignment = NSTextAlignmentCenter;
+    [profitView addSubview:rp_moneyNum];
+    [rp_moneyNum mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(rp_orderNum.mas_centerY);
+        make.left.equalTo(rp_orderNum.mas_right);
+        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.height.mas_equalTo(20);
+        
+    }];
+    
+    rp_orderScale = [[UILabel alloc] init];
+    rp_orderScale.text = @"0";
+    rp_orderScale.font = [UIFont systemFontOfSize:12];
+    [rp_orderScale setTextColor:COLORFromRGB(0xe10000)];
+    rp_orderScale.textAlignment = NSTextAlignmentCenter;
+    [profitView addSubview:rp_orderScale];
+    [rp_orderScale mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(rp_orderNum.mas_bottom).offset(10);
+        make.left.equalTo(profitView);
+        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.height.mas_equalTo(12);
+        
+    }];
+    rp_moneyScale = [[UILabel alloc] init];
+    rp_moneyScale.text = @"0";
+    rp_moneyScale.font = [UIFont systemFontOfSize:12];
+    [rp_moneyScale setTextColor:COLORFromRGB(0xe10000)];
+    rp_moneyScale.textAlignment = NSTextAlignmentCenter;
+    [profitView addSubview:rp_moneyScale];
+    [rp_moneyScale mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(rp_orderScale.mas_centerY);
+        make.left.equalTo(rp_orderScale.mas_right);
+        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.height.mas_equalTo(12);
+        
+    }];
+    
+    
+    UILabel *orderLabel = [[UILabel alloc] init];
+    orderLabel.text = @"今日订单";
+    orderLabel.font = [UIFont systemFontOfSize:15];
+    orderLabel.textAlignment = NSTextAlignmentCenter;
+    [orderLabel setTextColor:COLORFromRGB(0x333333)];
+    [profitView addSubview:orderLabel];
+    [orderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(rp_orderScale.mas_bottom).offset(10);
+        make.left.equalTo(profitView);
+        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.height.mas_equalTo(15);
+        
+    }];
+    UILabel *moneyLabel = [[UILabel alloc] init];
+    moneyLabel.text = @"今日收款";
+    moneyLabel.font = [UIFont systemFontOfSize:15];
+    moneyLabel.textAlignment = NSTextAlignmentCenter;
+    [moneyLabel setTextColor:COLORFromRGB(0x333333)];
+    [profitView addSubview:moneyLabel];
+    [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(orderLabel.mas_centerY);
+        make.left.equalTo(orderLabel.mas_right);
+        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.height.mas_equalTo(15);
+        
+    }];
 
-    for (int i = 0; i<2; i++) {
-        
-        CustomShowDataView *showView = [[CustomShowDataView alloc] initNumber:firstArray[i] ratioMoney:secondArray[i] nameType:thirdArray[i]];
-        showView.frame = CGRectMake(i*SC_WIDTH/2.0,lineView.frame.origin.y+1,SC_WIDTH/2.0, 52/SCALE_Y);
-        [profitView addSubview:showView];
-        
-    }
-    
-    
 }
 -(void)showMoreBtn{
 
@@ -181,20 +395,39 @@
 
     NSArray *myViewArray = @[@"我的等级图标",@"我的邀请图标",@"通道设置图标"];
     NSArray *textArray = @[@"我的等级",@"我的邀请",@"通道设置"];
+    
+    UIButton *tempBtn = nil;
+    
     for (int i=0; i<3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.tag = 100+i;
         button.frame = CGRectMake(i*SC_WIDTH/3.0,25.0/SCALE_Y,SC_WIDTH/3.0,55);
         [button setImage:[UIImage imageNamed:myViewArray[i]] forState:UIControlStateNormal];
-        [myView addSubview:button];
         [button addTarget:self action:@selector(buttonType:) forControlEvents:UIControlEventTouchUpInside];
+        [myView addSubview:button];
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(myView).offset(25/SCALE_Y);
+            if (tempBtn) {
+                make.left.equalTo(tempBtn.mas_right);
+            }else{
+                make.left.equalTo(myView);
+            }
+            make.width.mas_equalTo(SC_WIDTH/3.0);
+            make.height.mas_equalTo(55);
+        }];
         UILabel *textLabel = [[UILabel alloc] init];
         textLabel.text = textArray[i];
         textLabel.font = [UIFont systemFontOfSize:16];
-        textLabel.frame = CGRectMake(i*SC_WIDTH/3.0,myView.frame.size.height-20/SCALE_Y-16,SC_WIDTH/3.0, 16);
         textLabel.textAlignment = NSTextAlignmentCenter;
         [myView addSubview:textLabel];
-        
+        [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(button.mas_centerX);
+            make.top.equalTo(button.mas_bottom).offset(5);
+            make.width.mas_equalTo(button);
+            make.height.mas_equalTo(16);
+            
+        }];
+        tempBtn = button;
     }
 }
 -(void)buttonType:(UIButton *)btn{
@@ -228,15 +461,49 @@
  */
 - (void)createCodeView{
     
-    NSArray *codeArray = @[@"我扫吧",@"扫我吧"];
-    for (int i=0; i<codeArray.count; i++) {
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = [UIColor redColor];
-        button.frame = CGRectMake(i*SC_WIDTH/2.0, 0,SC_WIDTH/2.0,codeView.frame.size.height);
-        [button setImage:[UIImage imageNamed:codeArray[i]] forState:UIControlStateNormal];
-        button.tag = 200+i;
-        [codeView addSubview:button];
-    }
+    
+    UIButton *scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [scanBtn setImage:[UIImage imageNamed:@"我扫吧"] forState:UIControlStateNormal];
+    [codeView addSubview:scanBtn];
+    [scanBtn addTarget:self action:@selector(scanBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [scanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(codeView).offset(25/SCALE_Y);
+        make.left.equalTo(codeView).offset(75/SCALE_X);
+        make.bottom.equalTo(codeView).offset(-28/SCALE_Y);
+        make.width.mas_equalTo(55/SCALE_X);
+
+    }];
+    
+    UIButton *sweepBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sweepBtn setImage:[UIImage imageNamed:@"扫我吧"] forState:UIControlStateNormal];
+    [codeView addSubview:sweepBtn];
+    [sweepBtn addTarget:self action:@selector(sweepBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [sweepBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(codeView).offset(25/SCALE_Y);
+        make.right.equalTo(codeView).offset(-75/SCALE_X);
+        make.bottom.equalTo(codeView).offset(-28/SCALE_Y);
+        make.width.mas_equalTo(55/SCALE_X);
+        
+    }];
+    
+/**
+ 我扫吧按钮点击事件
+
+ */
+}
+
+- (void)scanBtnClick:(UIButton*)btn{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    ScanCodeController *scanVc = [[ScanCodeController alloc] init];
+    [self.navigationController pushViewController:scanVc animated:YES];
+}
+/**
+ 扫我吧按钮点击事件
+ 
+ */
+- (void)sweepBtnClick:(UIButton*)btn{
+    
+    
 }
 /**
  创建四大基础视图
@@ -249,25 +516,49 @@
     [self.view addSubview:imageView];
     
     mebInfoView = [[UIView alloc] init];
-    mebInfoView.frame =CGRectMake(0, 20, SC_WIDTH, 140.0/SCALE_Y);
     mebInfoView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:mebInfoView];
+    [mebInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(20);
+        make.left.equalTo(self.view);
+        make.width.mas_equalTo(SC_WIDTH);
+        make.height.mas_equalTo(140.0/SCALE_Y);
+
+    }];
 
     profitView = [[UIView alloc] init];
     profitView.backgroundColor = [UIColor whiteColor];
-    profitView.frame =CGRectMake(0,mebInfoView.frame.origin.y+mebInfoView.frame.size.height+20,SC_WIDTH,155.0/SCALE_Y);
     [self.view addSubview:profitView];
+    [profitView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mebInfoView.mas_bottom).offset(20);
+        make.left.equalTo(self.view);
+        make.width.mas_equalTo(SC_WIDTH);
+        make.height.mas_equalTo(155.0/SCALE_Y);
+        
+    }];
 
     myView = [[UIView alloc] init];
     myView.backgroundColor = [UIColor whiteColor];
-    myView.frame =CGRectMake(0, profitView.frame.origin.y+profitView.frame.size.height+20, SC_WIDTH,125.0/SCALE_Y);
     [self.view addSubview:myView];
+    [myView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(profitView.mas_bottom).offset(20);
+        make.left.equalTo(self.view);
+        make.width.mas_equalTo(SC_WIDTH);
+        make.height.mas_equalTo(125.0/SCALE_Y);
+        
+    }];
 
     codeView = [[UIView alloc] init];
     [self.view addSubview:myView];
-    codeView.backgroundColor = [UIColor whiteColor];
+    codeView.backgroundColor = COLORFromRGB(0xe10000);
     codeView.frame =CGRectMake(0, myView.frame.origin.y+myView.frame.size.height, SC_WIDTH,self.view.frame.size.height-myView.frame.origin.y-myView.frame.size.height-44);
     [self.view addSubview:codeView];
+    [codeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(myView.mas_bottom);
+        make.left.right.equalTo(self.view);
+        make.bottom.equalTo(self.view.mas_bottom).offset(-49);
+        
+    }];
     
 }
 

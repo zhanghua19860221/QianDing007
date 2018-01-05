@@ -23,14 +23,21 @@
 #define SMS_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=sendSms&r_type=1&i_type=1"
 //我的等级
 #define LEVEL_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myLevel&r_type=1"
-////我的邀请
-//public static final String INVITATION_URL =HTTP_+"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1&";
+//我的邀请
+#define INVITATION_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1"
+
+//获取商户信息
+#define GETINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1"
+
 ////提交商户信息
-//public static final String SUBMIT_URL= HTTP_+"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=saveSupplierInfo&r_type=1&";
-////获取提交商户信息
-//public static final String ACCESS_URL = HTTP_+"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1&";
+#define SUBMITINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=saveSupplierInfo&r_type=1&"
 
 
+//我扫吧接口
+#define SCANME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=scanPay&r_type=1"
+
+//扫我吧接口
+#define SWEEPME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getQrUrl&r_type=1"
 
 // 公用头文件
 
@@ -45,7 +52,7 @@
 
 #define SC_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define SC_HEIGHT [UIScreen mainScreen].bounds.size.height
-
+#define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
 #define SCALE_X 375.0*SC_WIDTH
 #define SCALE_Y 667.0*SC_HEIGHT
 

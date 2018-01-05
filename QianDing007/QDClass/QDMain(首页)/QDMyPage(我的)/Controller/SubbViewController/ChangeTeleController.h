@@ -7,9 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CustomTextView.h"
-#import "CustomGetCode.h"
-@interface ChangeTeleController : UIViewController
-@property (strong ,nonatomic) CustomTextView *oldTelePhone;
-@property (strong ,nonatomic) CustomGetCode  *getCode;
+@interface ChangeTeleController : UIViewController<UITextFieldDelegate>
+
 @end

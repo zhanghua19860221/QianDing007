@@ -34,10 +34,39 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = COLORFromRGB(0xffffff);
+    [self cmGetDataSource];
     [self createScrollerView];
     [self createOneView];
 
     // Do any additional setup after loading the view.
+}
+
+/**
+ 获取网络企业信息数据
+ */
+- (void)cmGetDataSource{
+
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *levelDic =@{@"auth_session":oldSession};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:GETINFOUSER_URL parameters:levelDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+    
 }
 /**
  scrollerView展示控制器

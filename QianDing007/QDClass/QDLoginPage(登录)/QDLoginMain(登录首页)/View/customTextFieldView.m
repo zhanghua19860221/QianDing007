@@ -34,7 +34,7 @@
     self.textFile = [[UITextField alloc] init];
     [self addSubview:self.textFile];
     self.textFile.delegate = self;
-    [self.textFile setTextColor:COLORFromRGB(0xd1d1d1)];
+    [self.textFile setTextColor:COLORFromRGB(0x333333)];
     self.textFile.placeholder = self.defaultText;
     [self.textFile mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self).offset(0);

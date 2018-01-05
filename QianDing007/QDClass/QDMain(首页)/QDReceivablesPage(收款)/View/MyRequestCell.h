@@ -9,13 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "MyRequestModel.h"
 @interface MyRequestCell : UITableViewCell
-@property (strong , nonatomic) UILabel *userNameLabel;   //用户姓名
-@property (strong , nonatomic) UILabel *userTeleLabele;  //手机号
-@property (strong , nonatomic) UILabel *merchantLabel;   //商户名称
-@property (strong , nonatomic) UILabel *addressLabel;    //地址
-@property (strong , nonatomic) UILabel *activationLabel; //激活时间
-@property (strong , nonatomic) UILabel *receivablesLabel;//收款
-@property (strong , nonatomic) UILabel *listLabel;       //订单
+@property (strong , nonatomic) UILabel *name;          //用户姓名
+@property (strong , nonatomic) UILabel *phone;         //手机号
+@property (strong , nonatomic) UILabel *supplier_name; //商户名称
+@property (strong , nonatomic) UILabel *address;       //地址
+@property (strong , nonatomic) UILabel *pass_date;     //激活时间
+@property (strong , nonatomic) UILabel *supplier_num;  //收款
+@property (strong , nonatomic) UILabel *supplier_count;//订单
+
+
+
 
 -(void)addDataSourceToCell:(MyRequestModel*) model;
 @end
