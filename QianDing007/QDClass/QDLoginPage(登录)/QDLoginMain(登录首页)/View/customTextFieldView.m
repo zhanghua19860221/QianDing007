@@ -53,14 +53,15 @@
         make.height.mas_equalTo(1);
     }];
 }
+
 /**
   当输入框开始时触发 ( 获得焦点触发)
 
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
-
     self.lineView.backgroundColor = [UIColor redColor];
     [self.iconView setImage:self.selectImage];
+    
 }
 /**
  询问输入框是否可以结束编辑 ( 键盘是否可以收回)

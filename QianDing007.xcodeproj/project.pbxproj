@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1423BB892003487300E42673 /* ZHProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1423BB882003487300E42673 /* ZHProgressView.m */; };
 		1444FDE31FF4781700F6D945 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1444FDE01FF4781700F6D945 /* city.plist */; };
 		1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDE21FF4781700F6D945 /* LSCityChooseView.m */; };
 		1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */; };
@@ -81,6 +82,8 @@
 		14A0ACFB1FDA1D6D0095003F /* QianDing007Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0ACFA1FDA1D6D0095003F /* QianDing007Tests.m */; };
 		14A0AD061FDA1D6D0095003F /* QianDing007UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */; };
 		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
+		14B9B7BA2005A7A5003BEBDB /* RecordMoneyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B9B7B92005A7A5003BEBDB /* RecordMoneyModel.m */; };
+		14DB586520045D33009EA1EF /* StarViewPictrue.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DB586420045D33009EA1EF /* StarViewPictrue.m */; };
 		14F973701FF5EC0800A79FD6 /* MyMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F9736F1FF5EC0800A79FD6 /* MyMD5.m */; };
 		14FAFB451FFF174A00A81D9C /* ScanCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FAFB441FFF174A00A81D9C /* ScanCodeController.m */; };
 		14FAFB481FFF176600A81D9C /* SweepMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FAFB471FFF176600A81D9C /* SweepMeController.m */; };
@@ -116,6 +119,8 @@
 		1407B4911FE1121F0028F341 /* ReceivablesPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ReceivablesPage.m; path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Controller/ReceivablesPage.m"; sourceTree = "<group>"; };
 		1418F93A1FDFC87E00D3F754 /* GetPassWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetPassWord.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/GetPassWord.h"; sourceTree = "<group>"; };
 		1418F93B1FDFC87E00D3F754 /* GetPassWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GetPassWord.m; path = "QianDing007/QDClass/QDLoginPage(登录)/QDGetPassWord(获取密码)/GetPassWord.m"; sourceTree = "<group>"; };
+		1423BB872003487300E42673 /* ZHProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZHProgressView.h; path = QianDing007/QDClass/ToolClass/Progress/ZHProgressView.h; sourceTree = "<group>"; };
+		1423BB882003487300E42673 /* ZHProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZHProgressView.m; path = QianDing007/QDClass/ToolClass/Progress/ZHProgressView.m; sourceTree = "<group>"; };
 		1424F6641FDE35EE00309E33 /* LoginMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginMain.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller/LoginMain.h"; sourceTree = "<group>"; };
 		1424F6651FDE35EE00309E33 /* LoginMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginMain.m; path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller/LoginMain.m"; sourceTree = "<group>"; };
 		1439E1D11FE8ADFC0053F829 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -195,6 +200,8 @@
 		14B421D61FEB939800CC8AE4 /* NewsSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSetController.m; sourceTree = "<group>"; };
 		14B421D81FEBDF9900CC8AE4 /* ProfitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfitController.h; path = SubbViewController/ProfitController.h; sourceTree = "<group>"; };
 		14B421D91FEBDF9900CC8AE4 /* ProfitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfitController.m; path = SubbViewController/ProfitController.m; sourceTree = "<group>"; };
+		14B9B7B82005A7A5003BEBDB /* RecordMoneyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordMoneyModel.h; sourceTree = "<group>"; };
+		14B9B7B92005A7A5003BEBDB /* RecordMoneyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordMoneyModel.m; sourceTree = "<group>"; };
 		14CF1D391FF1F013005F2D2F /* PresentRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentRecordCell.h; sourceTree = "<group>"; };
 		14CF1D3A1FF1F013005F2D2F /* PresentRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentRecordCell.m; sourceTree = "<group>"; };
 		14CF1D3C1FF1F030005F2D2F /* PresentRecordModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentRecordModel.h; sourceTree = "<group>"; };
@@ -235,6 +242,8 @@
 		14D836DB1FE7C68E006ECD45 /* ThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		14D836E01FE7DB61006ECD45 /* ForntTabelCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ForntTabelCell.h; sourceTree = "<group>"; };
 		14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForntTabelCell.m; sourceTree = "<group>"; };
+		14DB586320045D33009EA1EF /* StarViewPictrue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StarViewPictrue.h; path = QianDing007/QDClass/QDBootPage/StarViewPictrue.h; sourceTree = "<group>"; };
+		14DB586420045D33009EA1EF /* StarViewPictrue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StarViewPictrue.m; path = QianDing007/QDClass/QDBootPage/StarViewPictrue.m; sourceTree = "<group>"; };
 		14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLabelView.h; sourceTree = "<group>"; };
 		14E6CA6D1FE511BE00D55DEE /* CustomLabelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomLabelView.m; sourceTree = "<group>"; };
 		14F58B1B1FF08F1C00594656 /* PresentAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentAccountController.h; sourceTree = "<group>"; };
@@ -380,6 +389,8 @@
 				14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */,
 				14AFB7581FEA7B3F00B0E32B /* MyRequestModel.h */,
 				14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */,
+				14B9B7B82005A7A5003BEBDB /* RecordMoneyModel.h */,
+				14B9B7B92005A7A5003BEBDB /* RecordMoneyModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDReceivablesPage(收款)/Model";
@@ -409,6 +420,15 @@
 				149A56A51FE0B8BB005AEA1C /* News.m */,
 			);
 			name = "QDNews（消息）";
+			sourceTree = "<group>";
+		};
+		1423BB822003481600E42673 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				1423BB872003487300E42673 /* ZHProgressView.h */,
+				1423BB882003487300E42673 /* ZHProgressView.m */,
+			);
+			name = Progress;
 			sourceTree = "<group>";
 		};
 		1424F6611FDE319700309E33 /* Controller */ = {
@@ -602,7 +622,8 @@
 		14B4A8171FDE100600B5183C /* QDClass */ = {
 			isa = PBXGroup;
 			children = (
-				14F9736C1FF5EB9900A79FD6 /* ToolClass */,
+				14DB585F200452D3009EA1EF /* QDBootPage(引导页) */,
+				14F9736C1FF5EB9900A79FD6 /* QDToolClass(工具类) */,
 				14F58B271FF091D100594656 /* QDSingleClass(单例) */,
 				14B4A8181FDE102100B5183C /* QDLoginPage(登录) */,
 				149A56901FE0B71A005AEA1C /* QDMain(首页) */,
@@ -806,6 +827,15 @@
 			name = MoreOrderController;
 			sourceTree = "<group>";
 		};
+		14DB585F200452D3009EA1EF /* QDBootPage(引导页) */ = {
+			isa = PBXGroup;
+			children = (
+				14DB586320045D33009EA1EF /* StarViewPictrue.h */,
+				14DB586420045D33009EA1EF /* StarViewPictrue.m */,
+			);
+			name = "QDBootPage(引导页)";
+			sourceTree = "<group>";
+		};
 		14E6CA6B1FE5119000D55DEE /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,12 +865,13 @@
 			name = "QDSingleClass(单例)";
 			sourceTree = "<group>";
 		};
-		14F9736C1FF5EB9900A79FD6 /* ToolClass */ = {
+		14F9736C1FF5EB9900A79FD6 /* QDToolClass(工具类) */ = {
 			isa = PBXGroup;
 			children = (
+				1423BB822003481600E42673 /* Progress */,
 				14F9736D1FF5EBF500A79FD6 /* MD5 */,
 			);
-			name = ToolClass;
+			name = "QDToolClass(工具类)";
 			sourceTree = "<group>";
 		};
 		14F9736D1FF5EBF500A79FD6 /* MD5 */ = {
@@ -1088,6 +1119,7 @@
 				1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */,
 				149536B91FF2579400C85C05 /* UserListCell.m in Sources */,
 				149536BA1FF2579400C85C05 /* PresentRecordCell.m in Sources */,
+				1423BB892003487300E42673 /* ZHProgressView.m in Sources */,
 				149536A61FF2571700C85C05 /* ForntTabelCell.m in Sources */,
 				147B90B51FFF78AB00644A89 /* SuccessScanController.m in Sources */,
 				149536A71FF2571700C85C05 /* GetProfitController.m in Sources */,
@@ -1105,6 +1137,7 @@
 				1495369C1FF256BB00C85C05 /* MyRequestModel.m in Sources */,
 				1495369D1FF256BB00C85C05 /* FrontViewController.m in Sources */,
 				1495369E1FF256BB00C85C05 /* MiddleViewController.m in Sources */,
+				14B9B7BA2005A7A5003BEBDB /* RecordMoneyModel.m in Sources */,
 				1495369F1FF256BB00C85C05 /* ThirdViewController.m in Sources */,
 				149536A01FF256BB00C85C05 /* RequestUserController.m in Sources */,
 				14FAFB4F1FFF513300A81D9C /* ZHScanViewController.m in Sources */,
@@ -1128,6 +1161,7 @@
 				149536961FF2561900C85C05 /* MyPageCell.m in Sources */,
 				14823E041FFCCDCF0064D74A /* NextChangeTeleController.m in Sources */,
 				149536971FF2561900C85C05 /* NewsSetController.m in Sources */,
+				14DB586520045D33009EA1EF /* StarViewPictrue.m in Sources */,
 				149536981FF2561900C85C05 /* CustomNewsCell.m in Sources */,
 				14FAFB451FFF174A00A81D9C /* ScanCodeController.m in Sources */,
 				149536881FF2554500C85C05 /* ReceivablesPage.m in Sources */,

@@ -210,9 +210,8 @@
  注册提交按钮
  */
 -(void)zcSubmitBtnClick:(UIButton*)btn{
-    btn.backgroundColor = COLORFromRGB(0xe10000);
     
-
+    btn.backgroundColor = COLORFromRGB(0xe10000);
     BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
     if (!isPhone) {
         [self zcShowAlert:@"请输入正确的手机号码。"];
@@ -226,7 +225,6 @@
         return;
         
     }
-
     if (![zc_setPassWordField.text isEqualToString:zc_againPassWordField.text]) {
         [self zcShowAlert:@"两次密码输入不相同，请重新输入。"];
         return;
@@ -240,9 +238,8 @@
                          @"captcha":zc_getCodeField.text,
                          @"invite":zc_inviteField.text,
                          @"sess_id":temp_id
-                           
+                         
                          };
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -252,8 +249,8 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+    NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -299,7 +296,7 @@
     
 
     zc_promptLabel = [[UILabel alloc] init];
-    zc_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加0。";
+    zc_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加a。";
     zc_promptLabel.font = [UIFont systemFontOfSize:14];
     //文字居中显示
     zc_promptLabel.textAlignment = NSTextAlignmentCenter;
@@ -434,7 +431,10 @@
 
     return YES;
 }
-
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

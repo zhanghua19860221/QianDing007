@@ -7,9 +7,7 @@
 //
 
 #import "shareDelegate.h"
-
 @implementation shareDelegate
-
 
 /**
 
@@ -170,5 +168,20 @@
     
     return [regextestcm evaluateWithObject:phoneNum];
     
+}
+
+/**
+ 自定义进度条
+ */
++ (ZHProgressView*)shareZHProgress{
+
+    static ZHProgressView *zhprogress = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        zhprogress = [[ZHProgressView alloc] initWithFrame:CGRectZero];
+        
+    });
+    return zhprogress;
+
 }
 @end

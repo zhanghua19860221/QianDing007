@@ -13,6 +13,8 @@
 #import "MyRequestController.h"
 #import "UserViewController.h"
 #import "ScanCodeController.h"
+#import "SweepMeController.h"
+
 @interface ReceivablesPage (){
     
     UIView *mebInfoView;//会员信息展示视图
@@ -61,6 +63,12 @@
     
 }
 - (void)getDateSource{
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
     rp_Dic = [[NSMutableDictionary alloc] init];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
@@ -80,7 +88,7 @@
 //      NSLog(@"%@",[shareDelegate logDic:rpDic]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self addDataToSubview];
-
+            [[shareDelegate shareZHProgress] removeFromSuperview];
         }
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -94,7 +102,7 @@
     rp_telePhone.text = [NSString stringWithFormat:@"您好！%@",[rp_Dic objectForKey:@"supplier_name"]];
     
     if ([rp_Dic[@"checked"] isEqualToString:@"0"]) {
-        [rp_verificationBtn setImage:[UIImage imageNamed:@"未认证"] forState:UIControlStateNormal];
+        [rp_verificationBtn setImage:[UIImage imageNamed:@"去认证"] forState:UIControlStateNormal];
     }else if ([rp_Dic[@"checked"] isEqualToString:@"1"]){
         [rp_verificationBtn setImage:[UIImage imageNamed:@"已认证"] forState:UIControlStateNormal];
     }
@@ -104,7 +112,7 @@
     
     NSString *levelName = rp_Dic[@"level_name"];
     if ([levelName isEqualToString:@"普通商户"]) {
-        [rp_mebIconView setImage:[UIImage imageNamed:@"普通会员132*132"]];
+        [rp_mebIconView setImage:[UIImage imageNamed:@"普通会员"]];
     }else if ([levelName isEqualToString:@"银牌商户"]){
         [rp_mebIconView setImage:[UIImage imageNamed:@"银牌会员44*44"]];
     }else if ([levelName isEqualToString:@"金牌商户"]){
@@ -493,6 +501,7 @@
 }
 
 - (void)scanBtnClick:(UIButton*)btn{
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
     ScanCodeController *scanVc = [[ScanCodeController alloc] init];
     [self.navigationController pushViewController:scanVc animated:YES];
@@ -501,8 +510,12 @@
  扫我吧按钮点击事件
  
  */
+
 - (void)sweepBtnClick:(UIButton*)btn{
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    SweepMeController *scanVc = [[SweepMeController alloc] init];
+    [self.navigationController pushViewController:scanVc animated:YES];
     
 }
 /**

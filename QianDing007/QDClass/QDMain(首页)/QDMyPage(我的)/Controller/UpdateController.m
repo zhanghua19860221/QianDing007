@@ -17,8 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor grayColor];
-    [self createNavgation];
-    [self createSubView];
+//    [self createNavgation];
+//    [self createSubView];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     
     // Do any additional setup after loading the view.
@@ -29,8 +29,11 @@
     
     
 }
-- (void)createSubView{
-    
+///**
+// 版本号对比方法
+// */
+//- (void)createSubView{
+//    
 //    UIView *versionView = [[UIView alloc] init];
 //    versionView.backgroundColor = COLORFromRGB(0xffffff);
 //    [self.view addSubview:versionView];
@@ -56,73 +59,55 @@
 //        make.height.mas_equalTo(16);
 //        
 //    }];
-    
-    //获取AppStore上的版本号
-    
-    NSString *url = [[NSString alloc] initWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1319671449"];//后数字修改成自己项目的APPID
-    
-    [self Postpath:url];
-    
-    
-//    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-//    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
-//    [manager POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
-//        
-//    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//       NSArray *array = responseObject[@"results"];
-//       NSDictionary *dict = [array lastObject];
-//         NSLog(@"当前版本为：%@", responseObject);
-//        
-//    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//        NSLog(@"%@",error);
+//    
+////    //获取AppStore上的版本号
+//    NSString *url = [[NSString alloc] initWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1319671449"];//后数字修改成自己项目的APPID
+//    
+//    [self Postpath:url];
 //
+//    
+//}
+//-(void)Postpath:(NSString *)path
+//
+//{
+//    
+//    
+//    NSURL *url = [NSURL URLWithString:path];
+//    
+//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+//                                                        cachePolicy:NSURLRequestReloadIgnoringCacheData
+//                                                      timeoutInterval:0];
+//    
+//    [request setHTTPMethod:@"POST"];
+//    
+//    NSOperationQueue *queue = [NSOperationQueue new];
+//    
+//    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response,NSData *data,NSError *error){
+//        
+//        NSMutableDictionary *receiveStatusDic=[[NSMutableDictionary alloc]init];
+//
+//        NSDictionary *receiveDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+//        NSArray *array = receiveDic[@"results"];
+//        NSDictionary *dict = [array lastObject];
+//        NSLog(@"当前版本为：%@",dict[@"version"]);
+//        
 //    }];
-    
-}
--(void)Postpath:(NSString *)path
-
-{
-    
-    
-    NSURL *url = [NSURL URLWithString:path];
-    
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                        cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                      timeoutInterval:0];
-    
-    [request setHTTPMethod:@"POST"];
-    
-    NSOperationQueue *queue = [NSOperationQueue new];
-    
-    [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response,NSData *data,NSError *error){
-        
-        NSMutableDictionary *receiveStatusDic=[[NSMutableDictionary alloc]init];
-
-        NSDictionary *receiveDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-        NSArray *array = receiveDic[@"results"];
-        NSDictionary *dict = [array lastObject];
-        NSLog(@"当前版本为：%@",dict[@"version"]);
-        
-    }];
-    
-}
+//    
+//}
 /**
  创建导航栏
  */
-- (void)createNavgation{
-    self.navigationItem.title = @"当前版本号";
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
-}
+//- (void)createNavgation{
+//    self.navigationItem.title = @"当前版本号";
+//    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
+//    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    leftButton.frame = CGRectMake(0, 0, 20,20);
+//    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
+//    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
+//    self.navigationItem.leftBarButtonItem = leftItem;
+//    
+//}
 /**
  导航栏返回按钮
  */

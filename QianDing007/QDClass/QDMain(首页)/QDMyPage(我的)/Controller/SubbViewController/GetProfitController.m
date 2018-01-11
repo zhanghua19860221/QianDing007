@@ -19,26 +19,80 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self  getDataSource];
-    [self createTabelView];
-
+    [self  gpGetDataSource];
+    [self gpCreateTabelView];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
 
--(void)getDataSource{
+-(void)gpGetDataSource{
+    
     dataArray = [[NSMutableArray alloc] initWithCapacity:2];
-    MyGetProfitModel * model = [[MyGetProfitModel alloc] init];
-    model.timeStr = @"2017-12-21  20:23:08";
-    model.userStr = @"北京商务会所";
-    model.getMoneyStr= @"17238元";
-    model.iconStr= @"银牌会员44*44";
-    model.levelStr= @"普通会员";
-    model.profitStr= @"81.22元";
-    [dataArray addObject:model];
+
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *pcDic =@{@"auth_session":oldSession,
+                           @"type":@"1"
+                           };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:PROFIT_URL parameters:pcDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+        NSString *have_detail_list = responseObject[@"have_detail_list"];
+        NSString *status = responseObject[@"status"];
+        if ([status isEqualToString:@"1"]) {
+            
+            if ([have_detail_list isEqualToString:@"0"]) {
+                
+                UIImageView *imageView = [[UIImageView alloc] init];
+                [imageView setImage:[UIImage imageNamed:@"暂无邀请记录"]];
+                [self.view addSubview:imageView];
+                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.view).offset(150);
+                    make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
+                    make.width.height.mas_equalTo(90);
+                }];
+                return;
+                
+            }else{
+                
+                NSArray *tempArray = responseObject[@"supplier_data"];
+                
+                for (NSDictionary *allDic in tempArray) {
+                    MyGetProfitModel *model = [[MyGetProfitModel alloc]init];
+                    [model setValuesForKeysWithDictionary:allDic];
+                    [dataArray addObject:model];
+                }
+            }
+            
+        }else{
+            
+            [self gpShowAlert:responseObject[@"info"]];
+        }
+        //隐藏数据请求蒙板
+        [shareDelegate shareZHProgress].hidden = YES;
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        
+        
+    }];
     
 }
--(void)createTabelView{
+-(void)gpCreateTabelView{
     _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     _tableView.delegate = self;
     _tableView.dataSource = self;
@@ -77,7 +131,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/**
+ 警示 弹出框
+ */
+- (void)gpShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 

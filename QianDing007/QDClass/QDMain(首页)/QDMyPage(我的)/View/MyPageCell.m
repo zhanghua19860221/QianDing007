@@ -25,21 +25,20 @@
 - (void)configCell{
 
     self.iconView = [[UIImageView alloc] init];
-//    self.iconView.backgroundColor = [UIColor redColor];
     [self.contentView addSubview:self.iconView];
     
     self.directionBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-
     [self.contentView addSubview:self.directionBtn];
     
     self.firstLabel = [[UILabel alloc] init];
     self.firstLabel.font = [UIFont systemFontOfSize:16];
-    self.secondLabel.textAlignment = NSTextAlignmentCenter;
-    
+    self.firstLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:self.firstLabel];
 
     self.secondLabel = [[UILabel alloc] init];
+    self.secondLabel.font = [UIFont systemFontOfSize:14];
     self.secondLabel.textAlignment = NSTextAlignmentCenter;
+    [self.secondLabel setTextColor:COLORFromRGB(0x999999)];
     [self.contentView addSubview:self.secondLabel];
 
     UIImageView *lineView = [[UIImageView alloc] init];
@@ -58,7 +57,6 @@
     [self.iconView setImage:[UIImage imageNamed:model.firstStr]];
     self.firstLabel.text = model.secondStr;
     self.secondLabel.text = model.thirdStr;
-    
     
     [self.directionBtn setImage:[UIImage imageNamed:model.fourStr] forState:UIControlStateNormal];
     
@@ -86,7 +84,17 @@
         
     }];
     
-    if ([model.thirdStr isEqualToString:@"未认证"]){
+    if ([model.thirdStr isEqualToString:@"0"]){
+        self.secondLabel.text = @"未认证";
+        [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.contentView.mas_centerY);
+            make.right.equalTo(self.directionBtn.mas_left).offset(-10);
+            make.width.mas_offset(50);
+            make.height.mas_offset(14);
+            
+        }];
+    }else if ([model.thirdStr isEqualToString:@"1"]){
+        self.secondLabel.text = @"已认证";
         [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerY.equalTo(self.contentView.mas_centerY);
             make.right.equalTo(self.directionBtn.mas_left).offset(-15);
@@ -95,6 +103,7 @@
             
         }];
     }
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

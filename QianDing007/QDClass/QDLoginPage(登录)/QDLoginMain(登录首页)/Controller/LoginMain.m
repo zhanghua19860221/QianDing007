@@ -14,12 +14,19 @@
 @interface LoginMain (){
 
     UIImageView *lg_logoImageView;//logo图标
-    customTextFieldView *lg_telePhoneView;//账号
-    customTextFieldView *lg_passWordView;//密码
+//    customTextFieldView *lg_telePhoneView;//账号
+//    customTextFieldView *lg_passWordView;//密码
     UIButton *lg_loginBtn;//登录按钮
     UIButton *lg_getPassWordBtn;//找回密码
     UIButton *lg_registerBtn;//注册
-    
+    UIButton *lg_selectBtn  ;//记录选中的按钮
+    UIButton *lg_teleImageView;//手机视图
+    UIButton *lg_passImageView;//密码锁视图
+    UITextField *lg_teleField; //账号输入文本
+    UITextField *lg_passField; //密码输入文本
+    UIImageView *lg_line;  //第一条线
+    UIImageView *lg_lineOne; //第二条线
+
 }
 @end
 
@@ -70,22 +77,83 @@
  创建帐号密码输入时图
  */
 - (void)lgCreateLoginTextView{
-    
+    lg_line = [[UIImageView alloc] init];
+    lg_line.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.view addSubview:lg_line];
+    [lg_line mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lg_logoImageView.mas_bottom).offset(100/SCALE_Y);
+        make.left.equalTo(self.view).offset(15);
+        make.right.equalTo(self.view).offset(-15);
+        make.height.mas_equalTo(1);
 
-    lg_telePhoneView = [[customTextFieldView alloc] initView:[UIImage imageNamed:@"手机未选中"] selectImage:[UIImage imageNamed:@"手机选中"] defaultText:@"输入登录手机号"];
-    [self.view addSubview:lg_telePhoneView];
-    [lg_telePhoneView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lg_logoImageView.mas_bottom).offset(40/SCALE_Y);
-        make.left.mas_equalTo(self.view).offset(15);
-        make.right.mas_equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(50);
+    }];
+    lg_teleImageView = [UIButton buttonWithType:UIButtonTypeCustom];
+    [lg_teleImageView setImage:[UIImage imageNamed:@"手机未选中"] forState:UIControlStateNormal];
+    [lg_teleImageView setImage:[UIImage imageNamed:@"手机选中"] forState:UIControlStateSelected];
+    [self.view addSubview:lg_teleImageView];
+    [lg_teleImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(lg_line.mas_bottom).offset(-15);
+        make.left.equalTo(lg_line);
+        make.height.mas_equalTo(21);
+        make.width.mas_equalTo(14);
+
     }];
     
-    lg_passWordView = [[customTextFieldView alloc] initView:[UIImage imageNamed:@"密码未选中"] selectImage:[UIImage imageNamed:@"密码选中"] defaultText:@"密码为6到18位数字、字母组合"];
-    [self.view addSubview:lg_passWordView];
-    [lg_passWordView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lg_telePhoneView.mas_bottom);
-        make.left.right.height.mas_equalTo(lg_telePhoneView);
+    lg_teleField = [[UITextField alloc] init];
+    lg_teleField.placeholder = @"电话";
+    lg_teleField.delegate = self;
+    lg_teleField.tag = 51;
+    // lg_teleField.secureTextEntry = YES;
+    lg_teleField.textAlignment = NSTextAlignmentLeft;
+    lg_teleField.font = [UIFont systemFontOfSize:18];
+    [lg_teleField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:lg_teleField];
+    [lg_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(lg_teleImageView.mas_centerY);
+        make.left.equalTo(lg_teleImageView.mas_right).offset(10);
+        make.right.equalTo(lg_line);
+        make.height.mas_equalTo(20);
+        
+    }];
+    
+    
+    lg_lineOne = [[UIImageView alloc] init];
+    lg_lineOne.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.view addSubview:lg_lineOne];
+    [lg_lineOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lg_line.mas_bottom).offset(50/SCALE_Y);
+        make.left.equalTo(self.view).offset(15);
+        make.right.equalTo(self.view).offset(-15);
+        make.height.mas_equalTo(1);
+        
+    }];
+    lg_passImageView = [UIButton buttonWithType:UIButtonTypeCustom];
+    [lg_passImageView setImage:[UIImage imageNamed:@"密码未选中"] forState:UIControlStateNormal];
+    [lg_passImageView setImage:[UIImage imageNamed:@"密码选中"] forState:UIControlStateSelected];
+    [self.view addSubview:lg_passImageView];
+    [lg_passImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(lg_lineOne.mas_bottom).offset(-15);
+        make.left.equalTo(lg_lineOne);
+        make.height.mas_equalTo(21);
+        make.width.mas_equalTo(14);
+        
+    }];
+    
+    lg_passField = [[UITextField alloc] init];
+    lg_passField.placeholder = @"密码";
+    lg_passField.delegate = self;
+    lg_passField.tag = 61;
+    lg_passField.secureTextEntry = YES;
+    lg_passField.textAlignment = NSTextAlignmentLeft;
+    lg_passField.font = [UIFont systemFontOfSize:18];
+    [lg_passField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:lg_passField];
+    [lg_passField mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(lg_passImageView.mas_centerY);
+        make.left.equalTo(lg_passImageView.mas_right).offset(10);
+        make.right.equalTo(lg_lineOne);
+        make.height.mas_equalTo(20);
+        
     }];
     
 }
@@ -103,7 +171,7 @@
     lg_loginBtn.layer.masksToBounds = YES;
     [self.view addSubview:lg_loginBtn];
     [lg_loginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(lg_passWordView.mas_bottom).offset(50);
+        make.top.mas_equalTo(lg_lineOne.mas_bottom).offset(50);
         make.left.mas_equalTo(self.view).offset(20);
         make.right.mas_equalTo(self.view).offset(-20);
         make.height.mas_equalTo(@44);
@@ -116,28 +184,34 @@
  */
 - (void)lgClickLoginBtn:(UIButton*)btn{
     
-
-
+    
     btn.backgroundColor = COLORFromRGB(0xe10000);
     
-    BOOL isPhone = [shareDelegate isChinaMobile:lg_telePhoneView.textFile.text];
+    BOOL isPhone = [shareDelegate isChinaMobile:lg_teleField.text];
     if (!isPhone) {
         [self lgShowAlert:@"请输入正确的手机号码。"];
         return;
         
     }
-    BOOL isoK = [shareDelegate judgePassWordLegal:lg_passWordView.textFile.text];
+    BOOL isoK = [shareDelegate judgePassWordLegal:lg_passField.text];
     if (!isoK) {
         [self lgShowAlert:@"密码为6到18位数字、字母组合"];
         return;
         
     }
-
-    NSString * rsPassWord_md5 = [MyMD5 md5:lg_passWordView.textFile.text];
-    NSDictionary *lgDic =@{@"phone":lg_telePhoneView.textFile.text,
+    //数据请求蒙板
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
+    NSString * rsPassWord_md5 = [MyMD5 md5:lg_passField.text];
+    
+    NSDictionary *lgDic =@{@"phone":lg_teleField.text,
                            @"password":rsPassWord_md5,
 
                            };
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -153,23 +227,42 @@
         BOOL isSuccess = [[responseObject objectForKey:@"info"] isEqualToString:@"账号或密码错误"];
         
         if (!isSuccess) {
+            //判断商户是否认证
+            NSString *is_checked  = responseObject[@"checked"];
+            [[shareDelegate shareNSUserDefaults] setObject:is_checked forKey:@"is_checked"];
             
+            //is_agency判断是否为代理商
+            NSString *is_agency  = responseObject[@"is_agency"];
+            [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
+            
+            //本地保存用户头像NSData数据
+            NSString *logoString = [responseObject objectForKey:@"logo"];
+            NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:logoString]];
+            [[shareDelegate shareNSUserDefaults] setObject:data forKey:@"LOGO"];
+            
+            //本地保存用户 登录标志 数据
             NSString *loginSession = [responseObject objectForKey:@"auth_session"];
-            NSString *logPhone     = [responseObject objectForKey:@"phone"];
-            NSString *logPassWord  = [responseObject objectForKey:@"password"];
             [[shareDelegate shareNSUserDefaults] setObject:loginSession forKey:@"auth_session"];
+            
+            //本地保存用户 手机号 数据
+            NSString *logPhone = [responseObject objectForKey:@"phone"];
             [[shareDelegate shareNSUserDefaults] setObject:logPhone forKey:@"phone"];
+
+            //本地保存用户 登录密码 数据
+            NSString *logPassWord = [responseObject objectForKey:@"password"];
             [[shareDelegate shareNSUserDefaults] setObject:logPassWord forKey:@"password"];
             
             RootViewController *home = [[RootViewController alloc] init];
-            [self.navigationController pushViewController:home animated:NO];
+            [self.navigationController pushViewController:home animated:YES];
             
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+
         }else{
-            
             [self lgShowAlert:[responseObject objectForKey:@"info"]];
-            return;
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+
         }
-    
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);
@@ -177,7 +270,6 @@
 
 }
 - (void)lgCreateGetPassWordBtn{
-    
     lg_getPassWordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [lg_getPassWordBtn setTitle:@"找回密码？" forState:UIControlStateNormal];
     [lg_getPassWordBtn setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateNormal];
@@ -189,9 +281,7 @@
         make.height.mas_equalTo(44);
         make.width.mas_equalTo(120);
         
-        
     }];
-    
     lg_registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [lg_registerBtn setTitle:@"注册" forState:UIControlStateNormal];
     [lg_registerBtn setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateNormal];
@@ -211,7 +301,6 @@
  push 找回密码页面
  */
 -(void)getPassWord{
-    
     GetPassWord *vc = [[GetPassWord alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 
@@ -221,7 +310,6 @@
  push 注册页面
  */
 - (void)toRegister{
-
     RegisterController *vc = [[RegisterController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 
@@ -250,13 +338,94 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
-- (void)didReceiveMemoryWarning {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
     
+}
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma *******************UITextFieldDelegate*****************************
+/**
+ 当输入框开始时触发 ( 获得焦点触发)
+ 
+ */
+- (void)textFieldDidBeginEditing:( UITextField*)textField{
+    
+    switch (textField.tag) {
+        case 51:{
+            lg_teleImageView.selected = YES;
+            lg_passImageView.selected = NO;
+            lg_line.backgroundColor = COLORFromRGB(0xe10000);
+            lg_lineOne.backgroundColor = COLORFromRGB(0xf9f9f9);
+
+        }
+            break;
+        case 61:{
+            lg_teleImageView.selected = NO;
+            lg_passImageView.selected = YES;
+            lg_line.backgroundColor = COLORFromRGB(0xf9f9f9);
+            lg_lineOne.backgroundColor = COLORFromRGB(0xe10000);
+
+        }
+            break;
+        default:
+            break;
+    }
+}
+/**
+ 询问输入框是否可以结束编辑 ( 键盘是否可以收回)
+ 
+ */
+- (BOOL)textFieldShouldEndEditing:( UITextField*)textField{
+    
+    return YES;
+}
+
+/**
+ 当前输入框结束编辑时触发 (键盘收回之后触发)
+ 
+ */
+- (void)textFieldDidEndEditing:( UITextField *)textField{
+    
+    NSLog(@"当前输入框结束编辑时触发");
+}
+/**
+ 当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
+ 
+ */
+- (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
+    
+    return YES;
+}
+/**
+ 控制当前输入框是否能被编辑
+ 
+ */
+- (BOOL)textFieldShouldBeginEditing:( UITextField *)textField{
+    
+    return YES;
+}
+
+/**
+ 控制输入框清除按钮是否有效 (yes, 有 ;no, 没有)
+ 
+ */
+- (BOOL)textFieldShouldClear:( UITextField*)textField{
+    
+    return YES;
+}
+/**
+ 返回按钮
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
 /*
 #pragma mark - Navigation
 

@@ -95,7 +95,7 @@
         make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         
     }];
     cityField = [[UITextField alloc] init];
@@ -108,7 +108,7 @@
     [cityField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(line.mas_bottom);
         make.left.right.equalTo(line);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
     }];
 
     UIImageView *lineOne = [[UIImageView alloc] init];
@@ -132,7 +132,7 @@
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         
     }];
     nameField = [[UITextField alloc] init];
@@ -145,7 +145,7 @@
     [nameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.right.equalTo(line);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
     }];
     
     
@@ -171,7 +171,7 @@
         make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         
     }];
     teleField = [[UITextField alloc] init];
@@ -184,7 +184,7 @@
     [teleField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.right.equalTo(line);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
     }];
     
     
@@ -210,7 +210,7 @@
         make.bottom.equalTo(lineThree.mas_bottom);
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         
     }];
     emailField = [[UITextField alloc] init];
@@ -223,7 +223,7 @@
     [emailField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineThree.mas_bottom);
         make.left.right.equalTo(line);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
     }];
     
     
@@ -249,7 +249,7 @@
         make.bottom.equalTo(lineFour.mas_bottom);
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         
     }];
     addressField = [[UITextField alloc] init];
@@ -262,7 +262,7 @@
     [addressField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineFour.mas_bottom);
         make.left.right.equalTo(line);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
     }];
     
     
@@ -274,6 +274,7 @@
     submitBtn.layer.masksToBounds = YES;
     submitBtn.layer.cornerRadius = 5;
     [self.view addSubview:submitBtn];
+    [submitBtn addTarget:self action:@selector(bdSubmitBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineFour.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
@@ -281,6 +282,38 @@
         make.height.mas_equalTo(50/SCALE_Y);
         
     }];
+
+}
+- (void)bdSubmitBtnClick{
+
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+
+    NSDictionary *bdDic =@{@"auth_session":oldSession,
+                           @"tel":teleField.text,
+                           @"name":nameField.text,
+                           @"address":addressField.text,
+                           @"city":cityField.text,
+                           @"email":emailField.text
+                           
+                           };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:DELEGATE_URL parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+       NSLog(@"%@",[shareDelegate logDic:responseObject]);
+       
+        [self lgShowAlert:responseObject[@"info"]];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+
 
 }
 /**
@@ -360,20 +393,36 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [cityField resignFirstResponder];
-    [nameField resignFirstResponder];
-    [teleField resignFirstResponder];
-    [emailField resignFirstResponder];
-    [addressField resignFirstResponder];
+    [textField resignFirstResponder];
 
-    
     return YES;
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+/**
+ 警示 弹出框
+ */
+- (void)lgShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 

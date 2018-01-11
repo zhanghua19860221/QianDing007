@@ -52,6 +52,7 @@
  创建子控制器
  */
 - (void)createSubViewController{
+    
     frontViewVC = [[FrontViewController alloc] init];
     middleViewVC = [[MiddleViewController alloc] init];
     thirdViewVC = [[ThirdViewController alloc] init];
@@ -59,6 +60,7 @@
     [self addChildViewController:frontViewVC];
     [self addChildViewController:middleViewVC];
     [self addChildViewController:thirdViewVC];
+    
 }
 /**
  scrollerView展示控制器
@@ -94,7 +96,7 @@
  */
 - (void)createTabberView{
     
-    NSArray *textArray = @[@"处理中",@"已到账",@"退 款"];
+    NSArray *textArray = @[@"处理中",@"已处理",@"退 款"];
     tabberView = [[UIView alloc] init];
     tabberView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:tabberView];

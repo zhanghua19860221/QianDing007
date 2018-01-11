@@ -34,7 +34,7 @@
     [self zhCreateNavgation];
 
 //  可以扫描相册二维码
-  [self createButtonForPhotoList];
+//  [self createButtonForPhotoList];
     
     // Do any additional setup after loading the view.
 }

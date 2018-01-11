@@ -108,7 +108,7 @@
         make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     companyNameField = [[UITextField alloc] init];
@@ -121,7 +121,7 @@
     [companyNameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(line.mas_bottom);
         make.left.right.equalTo(line);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     
@@ -147,10 +147,9 @@
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(20);
         
     }];
-    
     UILabel *creditLabelOne = [[UILabel alloc] init];
     creditLabelOne.font = [UIFont systemFontOfSize:14];
     creditLabelOne.textAlignment = NSTextAlignmentLeft;
@@ -161,7 +160,7 @@
         make.bottom.equalTo(creditLabel.mas_top);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(20);
         
     }];
     creditField = [[UITextField alloc] init];
@@ -174,9 +173,8 @@
     [creditField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.right.equalTo(lineOne);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
-    
     
     
     UIImageView *lineTwo = [[UIImageView alloc] init];
@@ -200,7 +198,7 @@
         make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -212,10 +210,10 @@
     [scrollView addSubview:selectorBtn];
     [selectorBtn addTarget:self action:@selector(selectorBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [selectorBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom);
+        make.bottom.equalTo(lineTwo.mas_bottom).offset(-5);
         make.left.equalTo(addressLabel.mas_right).offset(5);
-        make.height.mas_equalTo(20);
-        make.width.mas_equalTo(20);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(30);
     }];
     
     companyAddressLabel = [[UILabel alloc] init];
@@ -226,7 +224,7 @@
     [companyAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(selectorBtn.mas_right).offset(10);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(40);
         make.width.mas_equalTo(SC_WIDTH-140);
         
     }];
@@ -253,7 +251,7 @@
         make.bottom.equalTo(lineThird.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -267,7 +265,7 @@
     [detailAddressField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineThird.mas_bottom);
         make.left.right.equalTo(lineThird);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     
@@ -292,7 +290,7 @@
         make.bottom.equalTo(lineFour.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -306,7 +304,7 @@
     [userNameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineFour.mas_bottom);
         make.left.right.equalTo(lineThird);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     
@@ -331,7 +329,7 @@
         make.bottom.equalTo(lineFive.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -345,7 +343,7 @@
     [cardedField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineFive.mas_bottom);
         make.left.right.equalTo(lineFive);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     
@@ -371,7 +369,7 @@
         make.bottom.equalTo(lineSix.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -385,7 +383,7 @@
     [telePhoneField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineSix.mas_bottom);
         make.left.right.equalTo(lineSix);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     UILabel *potoLabel = [[UILabel alloc] init];
@@ -592,7 +590,7 @@
         make.bottom.equalTo(lineSeven.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -606,7 +604,7 @@
     [accountField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineSeven.mas_bottom);
         make.left.right.equalTo(lineSeven);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     UIImageView *lineEight = [[UIImageView alloc] init];
@@ -629,7 +627,7 @@
         make.bottom.equalTo(lineEight.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -643,7 +641,7 @@
     [payeeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineEight.mas_bottom);
         make.left.right.equalTo(lineEight);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     UIImageView *lineNine = [[UIImageView alloc] init];
@@ -667,7 +665,7 @@
         make.bottom.equalTo(lineNine.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -681,7 +679,7 @@
     [bankField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineNine.mas_bottom);
         make.left.right.equalTo(lineNine);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     UIImageView *lineTen = [[UIImageView alloc] init];
@@ -704,7 +702,7 @@
         make.bottom.equalTo(lineTen.mas_bottom);
         make.left.equalTo(scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
         
     }];
     
@@ -718,7 +716,7 @@
     [branceBankField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineTen.mas_bottom);
         make.left.right.equalTo(lineTen);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(40);
     }];
     
     UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -729,6 +727,7 @@
     submitBtn.layer.masksToBounds = YES;
     submitBtn.layer.cornerRadius = 5;
     [scrollView addSubview:submitBtn];
+    [submitBtn addTarget:self action:@selector(ccSubmitBtnBlick) forControlEvents:UIControlEventTouchUpInside];
     [submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineTen.mas_bottom).offset(60/SCALE_Y);
         make.left.equalTo(scrollView).offset(15);
@@ -738,7 +737,11 @@
     }];
     
 }
+- (void)ccSubmitBtnBlick{
 
+
+    
+}
 /**
  城市选择按钮点击事件
  */
@@ -805,21 +808,14 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [companyNameField resignFirstResponder];
-    [creditField resignFirstResponder];
-    [addressField resignFirstResponder];
-    [detailAddressField resignFirstResponder];
-    [userNameField resignFirstResponder];
-    [cardedField resignFirstResponder];
-    [telePhoneField resignFirstResponder];
-    [accountField resignFirstResponder];
-    [payeeField resignFirstResponder];
-    [bankField resignFirstResponder];
-    [branceBankField resignFirstResponder];
+    [textField resignFirstResponder];
     
     return YES;
 }
-
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

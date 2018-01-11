@@ -12,7 +12,7 @@
 #import "MydelegateViewController.h"
 #import "AboutWeController.h"
 #import "CallViewController.h"
-#import "UpdateController.h"
+//#import "UpdateController.h"
 
 @implementation CustomLabelView
 -(id)initWithFrame:(NSString *)firstImage firstLabel:(NSString*)firstStr secondLabel:(NSString*)secondStr secondImage:(NSString*)secondImage{

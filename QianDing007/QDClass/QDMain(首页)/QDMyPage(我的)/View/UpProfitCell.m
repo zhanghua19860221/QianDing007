@@ -143,6 +143,7 @@
         make.width.height.equalTo(_payStr);
         
     }];
+    
     _profitLabelOne= [[UILabel alloc] init];
     _profitLabelOne.font = [UIFont systemFontOfSize:16];
     _profitLabelOne.textAlignment = NSTextAlignmentLeft;
@@ -157,8 +158,15 @@
 
 }
 -(void)addDataSourceView:(MyProfitModel*)model{
+    //时间戳转化成时间
+    NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    //以 1970/01/01 GMT为基准，然后过了secs秒的时间
+    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.timeStr intValue]];
+    NSString *tempTime = [stampFormatter stringFromDate:stampDate2];
 
-    _timeLabel.text = model.timeStr;
+    _timeLabel.text = tempTime;
+    
     _userLabel.text = model.userStr;
     _oldLevelLabelOne.text = model.oldLevelStr;
     _payStrOne.text = model.payStr;
@@ -190,8 +198,8 @@
     [noteStrOne addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:rangeOne];
     // 为label添加Attributed
     [_profitLabelOne setAttributedText:noteStrOne];
+    [_iconImage setImage:[UIImage imageNamed:@"椭圆1"]];
     
-    [_iconImage setImage:[UIImage imageNamed:model.iconStr ]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

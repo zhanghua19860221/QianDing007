@@ -34,6 +34,12 @@
 
 - (void)getDataSource{
     
+    //数据请求蒙板
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
     lv_TopDic = [[NSMutableDictionary alloc] init];
     lv_tableArray = [NSMutableArray arrayWithCapacity:2];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
@@ -53,6 +59,8 @@
         [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
         NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
         [self addDataToTabelAarry:dicArray];
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);
@@ -90,20 +98,20 @@
             break;
     }
     
-    // 创建Attributed
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:lv_upLabel.text];
-    // 需要改变的第一个文字的位置
-    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"差"].location+1;
-    // 需要改变的最后一个文字的位置
-    NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
-    // 需要改变的区间
-    NSRange range = NSMakeRange(firstLoc, secondLoc - firstLoc);
-    // 改变颜色
-    [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
-    // 改变字体大小及类型
-    [noteStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range];
-    // 为label添加Attributed
-    [lv_upLabel setAttributedText:noteStr];
+//    // 创建Attributed
+//    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:lv_upLabel.text];
+//    // 需要改变的第一个文字的位置
+//    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"差"].location+1;
+//    // 需要改变的最后一个文字的位置
+//    NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
+//    // 需要改变的区间
+//    NSRange range = NSMakeRange(firstLoc, secondLoc - firstLoc);
+//    // 改变颜色
+//    [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
+//    // 改变字体大小及类型
+//    [noteStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range];
+//    // 为label添加Attributed
+//    [lv_upLabel setAttributedText:noteStr];
     
 }
 

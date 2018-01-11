@@ -32,7 +32,7 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
 
-
+    
 }
 
 /**
@@ -369,7 +369,10 @@
     
     return YES;
 }
-
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

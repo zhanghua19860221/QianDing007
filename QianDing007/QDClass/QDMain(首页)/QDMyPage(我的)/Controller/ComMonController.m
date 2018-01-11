@@ -22,22 +22,95 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    dataArray = [[NSMutableArray alloc] initWithCapacity:2];
-    UserListModel * model = [[UserListModel alloc] init];
-    model.userNameStr = @"北京商务会所";
-    model.teleStr = @"13888888888";
-    model.allMoneyStr= @"17238.00元";
-    model.openTimeStr= @"2017-12-12 20：23：18";
-    model.mebIconStr= @"普通会员等级图标";
-    model.mebLevelStr= @"普通会员";
-    [dataArray addObject:model];
-    
-    self.basicDataArray = dataArray;
+    [self cmGetUrlDataSource];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
 }
-
+- (void)cmGetUrlDataSource{
+    
+    dataArray = [[NSMutableArray alloc] initWithCapacity:2];
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *ulDic =@{@"auth_session":oldSession,
+                           @"supplier_level":@"1"
+                           };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:USERLIST_URL parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+        NSString *has_data = responseObject[@"has_data"];
+        NSString *status = responseObject[@"status"];
+        if ([status isEqualToString:@"1"]) {
+            
+            if ([has_data isEqualToString:@"0"]) {
+                
+                UIImageView *imageView = [[UIImageView alloc] init];
+                [imageView setImage:[UIImage imageNamed:@"暂无邀请记录"]];
+                [self.view addSubview:imageView];
+                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(self.view).offset(150);
+                    make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
+                    make.width.height.mas_equalTo(90);
+                }];
+                return;
+                
+            }else{
+                
+                NSArray *tempArray = responseObject[@"supplier_data"];
+                
+                for (NSDictionary *allDic in tempArray) {
+                    UserListModel *model = [[UserListModel alloc]init];
+                    [model setValuesForKeysWithDictionary:allDic];
+                    [dataArray addObject:model];
+                }
+                self.basicDataArray = dataArray;
+                
+            }
+            
+        }else{
+            
+            [self allShowAlert:responseObject[@"info"]];
+        }
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        
+        
+    }];
+}
+/**
+ 警示 弹出框
+ */
+- (void)allShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

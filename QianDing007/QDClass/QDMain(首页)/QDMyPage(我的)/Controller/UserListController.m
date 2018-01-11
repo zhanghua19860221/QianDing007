@@ -26,6 +26,7 @@
 @implementation UserListController
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self createNavgation];
     [self createSubViewController];
@@ -46,7 +47,7 @@
         
     }];
     UIButton *tempBtn = nil;
-    NSArray *textBtnArray = @[@"全部",@"普通会员",@"银牌会员",@"金牌会员",@"钻石会员"];
+    NSArray *textBtnArray = @[@"全部",@"普通商户",@"银牌商户",@"金牌商户",@"钻石商户"];
     for (int i = 0; i < 5; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = COLORFromRGB(0xffffff);
@@ -78,7 +79,6 @@
     imageLine.frame = CGRectMake(0,48,SC_WIDTH/5.0 , 2);
     [tabbarView addSubview:imageLine];
 
-
 }
 - (void)changeSubView:(UIButton*)btn{
     if (_selectUserButton!=btn) {
@@ -87,11 +87,11 @@
         _selectUserButton=btn;
     }
     switch (btn.tag) {
+            
         case 260:{
             [UIView animateWithDuration:0.3 animations:^{
                 imageLine.frame = CGRectMake(0,48,SC_WIDTH/5.0, 2);
             }];
-            
             _scrollView.contentOffset = CGPointMake(0, 0);
         }
             break;
@@ -139,10 +139,15 @@
  创建子控制器
  */
 - (void)createSubViewController{
+    
     allLevel = [[AllLevelController alloc] init];
+    
     commonLevel = [[ComMonController alloc] init];
+    
     silverLevel = [[SilverController alloc] init];
+    
     goldLevel = [[GoldController alloc] init];
+    
     diamondLevel = [[DiamondsController alloc] init];
 
     [self addChildViewController:allLevel];

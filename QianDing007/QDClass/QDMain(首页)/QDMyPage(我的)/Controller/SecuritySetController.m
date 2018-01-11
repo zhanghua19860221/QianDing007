@@ -157,6 +157,10 @@
  退出登录按钮点击事件
  */
 -(void)exitLogonBtnClick:(UIButton*)btn{
+    
+    [[shareDelegate shareNSUserDefaults]  removeObjectForKey:@"auth_session"];
+    [[shareDelegate shareNSUserDefaults]  synchronize];
+    
     LoginMain * loginVC = [[LoginMain alloc] init];
     [self.navigationController pushViewController:loginVC animated:YES];
     

@@ -133,11 +133,22 @@
 }
 -(void)addDataSourceView:(MyGetProfitModel*)model{
     
-    _timeLabel.text = model.timeStr;
-    _userLabel.text = model.userStr;
-    _getMoneyLabelOne.text = model.getMoneyStr;
+    //时间戳转化成时间
+    NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    //以 1970/01/01 GMT为基准，然后过了secs秒的时间
+    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.time intValue]];
+    NSString *tempTime = [stampFormatter stringFromDate:stampDate2];
+    
+    
+    _timeLabel.text = tempTime;
+    
+    
+    
+    _userLabel.text = model.supplier_name;
+    _getMoneyLabelOne.text = model.collect;
     // 创建Attributed
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:model.getMoneyStr];
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:model.collect];
     
     // 需要改变的最后一个文字的位置
     NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
@@ -147,10 +158,10 @@
     [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
     // 为label添加Attributed
     [_getMoneyLabelOne setAttributedText:noteStr];
-    _levelLabel.text = model.levelStr;
-    _profitLabelOne.text = model.profitStr;
+    _levelLabel.text = model.supplier_level;
+    _profitLabelOne.text = model.distribute;
     // 创建Attributed
-    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.profitStr];
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.distribute];
     // 需要改变的最后一个文字的位置
     NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"元"].location;
     // 需要改变的区间
@@ -159,7 +170,20 @@
     [noteStrOne addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:rangeOne];
     // 为label添加Attributed
     [_profitLabelOne setAttributedText:noteStrOne];
-    [_iconImage setImage:[UIImage imageNamed:model.iconStr]];
+
+    if ([model.supplier_level isEqualToString:@"普通商户"]) {
+        [_iconImage setImage:[UIImage imageNamed:@"普通会员"]];
+
+    }else if ([model.supplier_level isEqualToString:@"银牌商户"]){
+        [_iconImage setImage:[UIImage imageNamed:@"银牌会员44*44"]];
+
+    }else if ([model.supplier_level isEqualToString:@"金牌商户"]){
+        [_iconImage setImage:[UIImage imageNamed:@"金牌会员44*44"]];
+
+    }else if ([model.supplier_level isEqualToString:@"钻石商户"]){
+        [_iconImage setImage:[UIImage imageNamed:@"钻石会员44*44"]];
+
+    }
     
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

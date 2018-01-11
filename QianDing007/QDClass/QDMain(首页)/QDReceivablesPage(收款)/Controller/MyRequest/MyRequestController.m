@@ -46,7 +46,15 @@
 }
 
 
+/**
+ 获取网络数据
+ */
 - (void)getDataSource{
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
     
     mr_Dic = [[NSMutableDictionary alloc] init];
     mr_dataArray = [NSMutableArray arrayWithCapacity:2];
@@ -65,6 +73,8 @@
         [mr_Dic addEntriesFromDictionary:responseObject];
         NSLog(@"%@",[shareDelegate logDic:mr_Dic]);
         [self mlGetUrlDataToSubview:mr_Dic];
+        [shareDelegate shareZHProgress].hidden = YES;
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -72,11 +82,16 @@
 }
 
 /**
- 获取网络下载数据，更新视图数据
+ 获取网络数据后更新视图数据
  
  */
 - (void)mlGetUrlDataToSubview:(NSDictionary*)dic{
-    
+
+    //数据请求蒙板
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
     
     NSString *requestStr = [NSString stringWithFormat:@"%@",dic[@"invite_count"]];
     NSString *codeStr = [NSString stringWithFormat:@"%@",dic[@"invite_code"]];
@@ -103,7 +118,10 @@
             MyRequestModel *model = [[MyRequestModel alloc]init];
             [model setValuesForKeysWithDictionary:tempDic];
             [mr_dataArray addObject:model];
+            
         }
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+
     }
     [self createTabelView];
 }
@@ -145,7 +163,7 @@
     rightButton.frame = CGRectMake(0, 0, 40,40);
     [rightButton setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
     [rightButton setTitle:@"邀请" forState:UIControlStateNormal];
-    [rightButton addTarget:self action:@selector(rightBackClick) forControlEvents:UIControlEventTouchUpInside];
+    [rightButton addTarget:self action:@selector(mrRightBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
     
@@ -163,7 +181,7 @@
 /**
  导航栏右侧按钮
  */
-- (void)rightBackClick{
+- (void)mrRightBackClick{
     
     mr_maskView.hidden = NO;
     
@@ -272,6 +290,10 @@
         make.height.mas_equalTo(2);
     }];
 }
+
+/**
+ 复制按钮点击事件
+ */
 - (void)mrCopyClickBtn:(UIButton*)btn{
     
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
@@ -360,6 +382,10 @@
     }
     
 }
+
+/**
+ 创建蒙板视图
+ */
 -(void)createMaskView{
 
     mr_maskView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
@@ -367,7 +393,7 @@
     mr_maskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     [[UIApplication sharedApplication].keyWindow addSubview:mr_maskView];
     
-    UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(mrTapAction:)];
 
     [mr_maskView addGestureRecognizer:tapGesturRecognizer];
 
@@ -377,7 +403,7 @@
 
  蒙板点击事件
  */
--(void)tapAction:(id)tap{
+-(void)mrTapAction:(id)tap{
     
     [mr_requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
@@ -391,7 +417,6 @@
 
     }];
     //更新约束
-    
     
 }
 
@@ -407,8 +432,48 @@
         case 181:
             
             break;
-        case 182:
+        case 182:{
             
+            mr_maskView.hidden = YES;
+            [mr_requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
+            }];
+            [mr_maskView layoutIfNeeded];
+            
+
+            //让用户给权限,没有的话会被拒的各位
+            CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+            if (status == CNAuthorizationStatusNotDetermined) {
+                CNContactStore *store = [[CNContactStore alloc] init];
+                [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                    if (error) {
+                        NSLog(@"没有授权, 需要去设置中心设置授权");
+                    }else
+                    {
+                        NSLog(@"用户已授权限");
+                        CNContactPickerViewController * picker = [CNContactPickerViewController new];
+                        picker.delegate = self;
+                        // 加载手机号
+                        picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+                        [self presentViewController: picker  animated:YES completion:nil];
+                    }
+                }];
+            }
+            
+            if (status == CNAuthorizationStatusAuthorized) {
+                
+                //有权限时
+                CNContactPickerViewController * picker = [CNContactPickerViewController new];
+                picker.delegate = self;
+                picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+                [self presentViewController: picker  animated:YES completion:nil];
+            }
+            else{
+                NSLog(@"您未开启通讯录权限,请前往设置中心开启");
+            }
+        
+        
+        }
             break;
             
         default:
@@ -417,35 +482,7 @@
 
 }
 
-/**
- 警示 弹出框
- */
-- (void)mrShowAlert:(NSString *)warning{
-    
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-                                                                   message:warning
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              //响应事件
-                                                              NSLog(@"action = %@", action);
-                                                          }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", action);
-                                                         }];
-    
-    [alert addAction:defaultAction];
-    [alert addAction:cancelAction];
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
 #pragma *********************tabelViewDelegate*************************
-
-
-
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -469,10 +506,52 @@
     
     return 220/SCALE_Y;
 }
+#pragma ************ 通讯录代理方法********************************
+
+-(void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty{
+    
+    CNContact *contact = contactProperty.contact;
+    
+//    NSLog(@"%@",contactProperty);
+//    NSLog(@"givenName: %@, familyName: %@", contact.givenName, contact.familyName);
+    
+    if (![contactProperty.value isKindOfClass:[CNPhoneNumber class]]) {
+        NSLog(@"提示用户选择11位的手机号");
+        return;
+    }
+    CNPhoneNumber *phoneNumber = contactProperty.value;
+    NSString * Str = phoneNumber.stringValue;
+    NSCharacterSet *setToRemove = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
+    NSString *phoneStr = [[Str componentsSeparatedByCharactersInSet:setToRemove]componentsJoinedByString:@""];
+    if (phoneStr.length != 11) {
+        
+        NSLog(@"提示用户选择11位的手机号");
+    }
+    NSString * textName = [NSString stringWithFormat:@"姓名:%@-电话:%@",contact.familyName,phoneStr];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+/**
+ 警示 弹出框
+ */
+- (void)mrShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /*

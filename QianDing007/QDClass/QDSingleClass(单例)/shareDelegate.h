@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "ZHProgressView.h"
 
 @interface shareDelegate : NSObject
 
@@ -38,18 +39,6 @@
  */
 + (NSString *)getNetWorkStates ;
 
-/**
- 
- 字符串转 base64字符串
- */
-+ (NSString *)base64StringFromText:(NSString *)text;
-
-
-/**
- 
- 字典转json字符串
- */
-+ (NSString*)dictionaryToJson:(NSDictionary *)dic;
 
 /**
  验证密码正则表达式 密码为 6-18位的 字母＋数字
@@ -72,4 +61,8 @@
  @return 是否为手机号码
  */
 + (BOOL)isChinaMobile:(NSString *)phoneNum;
+/**
+ 自定义进度条
+ */
++ (ZHProgressView *)shareZHProgress;
 @end

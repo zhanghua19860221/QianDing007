@@ -15,23 +15,20 @@
 
 @implementation RootViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
 }
--(void)viewWillAppear:(BOOL)animated
-{
+-(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.tabBar removeFromSuperview];
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
     [self  creatSubView];
     [self  creatTabBarView];
@@ -50,7 +47,6 @@
     
     _tabberView.hidden = NO;
 }
-
 - (void)creatTabBarView{
     
     NSArray *tabDafImageArray = @[@"收款2",@"消息2",@"我的2"];
@@ -82,8 +78,7 @@
         [button addTarget:self action:@selector(selectBtn:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
--(void)selectBtn:(UIButton*)btn
-{
+-(void)selectBtn:(UIButton*)btn{
     if (_selectedButton!=btn) {
         _selectedButton.selected=NO;
         btn.selected=YES;
@@ -108,8 +103,7 @@
 
 }
 
--(void)creatSubView
-{
+-(void)creatSubView{
     
     ReceivablesPage*first=[[ReceivablesPage alloc] init];
     UINavigationController*nav=[[UINavigationController alloc] initWithRootViewController:first];
@@ -130,9 +124,9 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

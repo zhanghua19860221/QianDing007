@@ -15,6 +15,9 @@
     UIImageView *imageLine;//滚动红色线条
     GetProfitController *getProfitVC;//收款分润视图
     UpProfitController *upProfitVC;//升级分润视图
+    UILabel *pc_nowLabel;  //今日分润
+    UILabel *pc_totalLabel;//总分润
+
 
 }
 
@@ -24,6 +27,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self pcGetUrlDataSource];
     [self createTopView];
     [self createSubViewController];
     [self createScrollerView];
@@ -31,8 +35,47 @@
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     // Do any additional setup after loading the view.
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+
+}
+- (void)pcGetUrlDataSource{
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *pcDic =@{@"auth_session":oldSession};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:PROFIT_URL parameters:pcDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+//       NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        if ([responseObject[@"status"]  isEqualToString:@"1"]) {
+            pc_nowLabel.text = responseObject[@"now_distribute"];
+            pc_totalLabel.text = responseObject[@"total_distribute"];
+        }else{
+        
+            [self pcShowAlert:responseObject[@"info"]];
+        }
+        //隐藏数据请求蒙板
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        
+        
+    }];
     
 
 }
@@ -102,12 +145,12 @@
         make.height.mas_equalTo(44);
     }];
     
-    UILabel *nowLabel = [[UILabel alloc] init];
-    nowLabel.text = @"245.00";
-    nowLabel.font = [UIFont systemFontOfSize:22];
-    nowLabel.textAlignment = NSTextAlignmentCenter;
-    [nowLabel setTextColor:COLORFromRGB(0xffffff)];
-    [topView addSubview:nowLabel];
+    pc_nowLabel = [[UILabel alloc] init];
+    pc_nowLabel.text = @"";
+    pc_nowLabel.font = [UIFont systemFontOfSize:22];
+    pc_nowLabel.textAlignment = NSTextAlignmentCenter;
+    [pc_nowLabel setTextColor:COLORFromRGB(0xffffff)];
+    [topView addSubview:pc_nowLabel];
     
     UILabel *nowName = [[UILabel alloc] init];
     nowName.text = @"今日分润";
@@ -116,12 +159,12 @@
     [nowName setTextColor:COLORFromRGB(0xebebeb)];
     [topView addSubview:nowName];
     
-    UILabel *allLabel = [[UILabel alloc] init];
-    allLabel.text = @"245.00";
-    allLabel.font = [UIFont systemFontOfSize:22];
-    allLabel.textAlignment = NSTextAlignmentCenter;
-    [allLabel setTextColor:COLORFromRGB(0xffffff)];
-    [topView addSubview:allLabel];
+    pc_totalLabel= [[UILabel alloc] init];
+    pc_totalLabel.text = @"";
+    pc_totalLabel.font = [UIFont systemFontOfSize:22];
+    pc_totalLabel.textAlignment = NSTextAlignmentCenter;
+    [pc_totalLabel setTextColor:COLORFromRGB(0xffffff)];
+    [topView addSubview:pc_totalLabel];
     
     UILabel *allName = [[UILabel alloc] init];
     allName.text = @"总分润";
@@ -130,7 +173,7 @@
     [allName setTextColor:COLORFromRGB(0xebebeb)];
     [topView addSubview:allName];
     
-    [nowLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [pc_nowLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(backBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(topView);
         make.width.mas_equalTo(SC_WIDTH/2.0);
@@ -138,30 +181,30 @@
 
     }];
     [nowName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(nowLabel.mas_bottom).offset(10);
-        make.centerX.equalTo(nowLabel.mas_centerX);
-        make.width.mas_equalTo(nowLabel.mas_width);
+        make.top.equalTo(pc_nowLabel.mas_bottom).offset(10);
+        make.centerX.equalTo(pc_nowLabel.mas_centerX);
+        make.width.mas_equalTo(pc_nowLabel.mas_width);
         make.height.mas_equalTo(14);
         
         
     }];
-    [allLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [pc_totalLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(backBtn.mas_bottom).offset(20/SCALE_Y);
-        make.left.equalTo(nowLabel.mas_right);
-        make.width.mas_equalTo(nowLabel.mas_width);
+        make.left.equalTo(pc_nowLabel.mas_right);
+        make.width.mas_equalTo(pc_nowLabel.mas_width);
         make.height.mas_equalTo(22);
         
     }];
     [allName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(allLabel.mas_bottom).offset(10);
-        make.centerX.equalTo(allLabel.mas_centerX);
-        make.width.mas_equalTo(allLabel.mas_width);
+        make.top.equalTo(pc_totalLabel.mas_bottom).offset(10);
+        make.centerX.equalTo(pc_totalLabel.mas_centerX);
+        make.width.mas_equalTo(pc_totalLabel.mas_width);
         make.height.mas_equalTo(14);
     
     }];
     
     UIButton *tempBtn = nil;
-    NSArray *textBtnArray = @[@"收款分润",@"总分润"];
+    NSArray *textBtnArray = @[@"收款分润",@"升级分润"];
     for (int i = 0; i < 2; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = COLORFromRGB(0xffffff);
@@ -269,6 +312,25 @@
     [super didReceiveMemoryWarning];
     
     // Dispose of any resources that can be recreated.
+}
+/**
+ 警示 弹出框
+ */
+- (void)pcShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /*

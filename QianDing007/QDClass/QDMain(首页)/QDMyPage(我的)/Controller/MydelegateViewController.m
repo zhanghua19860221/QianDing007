@@ -24,9 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createTopView];
-    [self createFirstView];
-    [self createSecondView];
+    [self mpGetUrlInfoData];
+    [self mdCreateTopView];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
@@ -38,7 +37,52 @@
     bar.barTintColor = COLORFromRGB(0xe10000);
 
 }
-- (void)createSecondView{
+- (void)mpGetUrlInfoData{
+    //数据请求蒙板
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+    }];
+
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *smDic =@{@"auth_session":oldSession};
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:MYDELEGATE_URL parameters:smDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+        
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            NSString *day =[NSString stringWithFormat:@"%@天",responseObject[@"day"]];
+            NSString *agency_distribute =[NSString stringWithFormat:@"%@元", responseObject[@"agency_distribute"]];
+            NSString *avg_distribute =[NSString stringWithFormat:@"%@元",responseObject[@"avg_distribute"]];
+
+            NSArray *array = @[day,agency_distribute,avg_distribute];
+            [self mdCreateFirstView:array];
+            [self mdCreateSecondView];
+
+            
+        }
+        //隐藏数据请求蒙板
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+    }];
+
+
+}
+/**
+ 创建九宫格视图
+ */
+- (void)mdCreateSecondView{
     
     
     
@@ -114,9 +158,12 @@
 
 
 }
-- (void)createFirstView{
+
+/**
+ 创建统计视图
+ */
+- (void)mdCreateFirstView:(NSArray*)textArray{
     
-    NSArray *redArray = @[@"365天",@"62134.16元",@"194.12元"];
     NSArray *nameArray = @[@"成为代理商",@"总共获益",@"日均获益"];
     firstView = [[UIView alloc] init];
     firstView.backgroundColor = COLORFromRGB(0xffffff);
@@ -128,9 +175,9 @@
     }];
     UILabel *tempLabel = nil;
     
-    for(int i=0;i<redArray.count;i++){
+    for(int i=0;i<textArray.count;i++){
         UILabel *redLabel = [[UILabel alloc] init];
-        redLabel.text = redArray[i];
+        redLabel.text = textArray[i];
         redLabel.font = [UIFont systemFontOfSize:16];
         [redLabel setTextColor:COLORFromRGB(0xe10000)];
         redLabel.textAlignment = NSTextAlignmentCenter;
@@ -164,10 +211,12 @@
         
         tempLabel = redLabel;
     }
-    
-    
+
 }
-- (void)createTopView{
+/**
+ 创建顶部导航栏 视图
+ */
+- (void)mdCreateTopView{
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
     imageView.backgroundColor = COLORFromRGB(0xe10000);

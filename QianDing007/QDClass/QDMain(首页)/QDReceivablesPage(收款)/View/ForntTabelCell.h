@@ -7,18 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "RecordMoneyModel.h"
 @interface ForntTabelCell : UITableViewCell
 
 @property (strong , nonatomic) UILabel *moneyLabel;//应收金额
 @property (strong , nonatomic) UILabel *centuryLabel;//实收金额
 @property (strong , nonatomic) UILabel *payLabel;//付款方式
 @property (strong , nonatomic) UILabel *stateLabel;//处理状态
-@property (strong , nonatomic) UILabel *payAccountLabel;//付款账户
+@property (strong , nonatomic) UILabel *payAccountLabel;//订单编号
 @property (strong , nonatomic) UILabel *payTimeLabel;//付款时间
 @property (strong , nonatomic) UIButton *backMoney;//退款
 @property (strong , nonatomic) NSString *stateMoney;//判断是否有退款按钮
--(void)addDataSourceToCell:(NSString*) backMoney;
+-(void)addDataSourceToCell:(RecordMoneyModel*) model;
 
 
 

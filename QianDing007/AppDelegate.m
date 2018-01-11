@@ -8,7 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LoginMain.h"
-#import "SuccessScanController.h"
+#import "RootViewController.h"
+#import "SweepMeController.h"
 
 @interface AppDelegate ()
 @end
@@ -21,18 +22,43 @@
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
-    SuccessScanController *root = [[SuccessScanController alloc] init];
-    self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
+    NSString *str = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"] ;
+    if (str == NULL){
+        LoginMain *root = [[LoginMain alloc] init];
+        self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
+    }else{
+        
+        RootViewController *root = [[RootViewController alloc] init];
+        self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
+    }
     self.window.rootViewController = self.mainNav ;
+    //是否出现引导页
+    [self IsGuidePage];
     
-    
-//  [[shareDelegate shareNSUserDefaults] setBool:NO forKey:@"b_account"];
-//    BOOL ool = [[shareDelegate shareNSUserDefaults] boolForKey:@"b_account"];
-
     // Override point for customization after application launch.
     return YES;
 }
-
+-(void)IsGuidePage{
+    
+    NSString * Version = [[shareDelegate  shareNSUserDefaults]  objectForKey:@"AppVersion"];
+    if (Version == nil) {
+        Version = @"";
+    }
+    //获取plist里面的版本号
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    //CFShow(CFBridgingRetain(infoDictionary));
+    
+    //app应用版本号
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    //版本号不想等时执行 括号内代码
+    if ( ![Version isEqualToString:app_Version]  ) {
+        
+        StarViewPictrue * star = [[StarViewPictrue alloc]init];
+        [self.window addSubview:star];
+        [[shareDelegate shareNSUserDefaults] setObject:app_Version forKey:@"AppVersion"];
+        
+    }
+}
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.

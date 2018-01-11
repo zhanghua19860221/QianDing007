@@ -17,7 +17,7 @@
 @property (strong , nonatomic) UILabel *openTimeLabel;    //开通时间
 @property (strong , nonatomic) UILabel *openTimeLabelOne; //开通时间
 @property (strong , nonatomic) UIImageView *mebIconView;  //会员头像
-@property (strong , nonatomic) UILabel *mebLevelLabel;    //会员头像
+@property (strong , nonatomic) UILabel *mebLevelLabel;    //会员等级
 -(void)addDataSourceView:(UserListModel*)model;
 
 @end

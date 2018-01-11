@@ -39,13 +39,41 @@
 //扫我吧接口
 #define SWEEPME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getQrUrl&r_type=1"
 
-// 公用头文件
+//上传商户logo
+#define PUSHLOGO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=uploadLogo&r_type=1"
 
+//获取代理状态及信息接口
+#define DELEGATEGETINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getAgencyApplyInfo&r_type=1"
+
+//成为代理
+#define DELEGATE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=addAgencyApply&r_type=1"
+
+//我的代理首页
+#define MYDELEGATE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=index&r_type=1"
+
+//我的代理商户列表
+#define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1"
+
+//我的代理资金管理
+#define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1"
+
+//我的代理分润 明细 分润类别(1 升级 分润 2 收款分润)
+#define PROFIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=agencyDistributeDetails&r_type=1"
+
+//收款界面收款记录接口
+#define RECEIVEACCOUNT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1"
+
+
+
+// 公用头文件
+#import "ZHProgressView.h"
 #import <Masonry.h>
 #import <MASConstraintMaker.h>
 #import "shareDelegate.h"
 #import "AFHTTPSessionManager.h"
 #import "MyMD5.h"
+#import "StarViewPictrue.h"
+
 
 
 // 自定义宏

@@ -34,6 +34,8 @@
     [super viewWillAppear:animated];
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xffffff);
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+
 
     
 }

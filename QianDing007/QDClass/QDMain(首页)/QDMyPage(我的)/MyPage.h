@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MyPage : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MyPage : UIViewController<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (strong , nonatomic) UITableView *tableView;
 

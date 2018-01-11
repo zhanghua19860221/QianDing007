@@ -13,6 +13,7 @@
     UIView *firstView;
     UIView *secondView;
     UIView *thirdView;
+    UILabel *ru_teleLabel;//商户邀请码
 }
 @end
 
@@ -49,11 +50,13 @@
     
     }];
     
-    UILabel *teleLabel = [[UILabel alloc] init];
-    teleLabel.text = @"13466358453";
-    teleLabel.textAlignment = NSTextAlignmentCenter;
-    [firstView addSubview:teleLabel];
-    [teleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    NSString *requestCode = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+
+    ru_teleLabel = [[UILabel alloc] init];
+    ru_teleLabel.text = requestCode;
+    ru_teleLabel.textAlignment = NSTextAlignmentCenter;
+    [firstView addSubview:ru_teleLabel];
+    [ru_teleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(nameLabel.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(firstView).offset(85/SCALE_X);
         make.width.mas_equalTo(150);
@@ -65,15 +68,45 @@
     copyBtn.backgroundColor = COLORFromRGB(0xbfbfbf);
     [copyBtn setTitle:@"复制" forState:UIControlStateNormal];
     [copyBtn setTitleColor:COLORFromRGB(0xf5f5f5) forState:UIControlStateNormal];
+    [copyBtn addTarget:self action:@selector(copyBtn) forControlEvents:UIControlEventTouchUpInside];
     [firstView addSubview:copyBtn];
     [copyBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(teleLabel.mas_centerY);
-        make.left.equalTo(teleLabel.mas_right).offset(10);
+        make.centerY.equalTo(ru_teleLabel.mas_centerY);
+        make.left.equalTo(ru_teleLabel.mas_right).offset(10);
         make.width.mas_equalTo(68);
         make.height.mas_equalTo(25);
         
     }];
     
+}
+
+/**
+ 复制按钮点击事件
+ */
+- (void)copyBtn{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = ru_teleLabel.text;
+    [self rqShowAlert:@"复制成功"];
+
+}
+/**
+ 警示 弹出框
+ */
+- (void)rqShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)createSecondView{
     secondView = [[UIView alloc] init];

@@ -136,12 +136,14 @@
 }
 -(void)addDataSourceView:(UserListModel*)model{
     
-    _userNameLabel.text = model.userNameStr;
-    _teleLabelOne.text  = model.teleStr;
-    _allMoneyLabelOne.text = model.allMoneyStr;
-
+    _userNameLabel.text = model.name;
+    _teleLabelOne.text  = model.phone;
+    
+    NSString *tempSum = [NSString stringWithFormat:@"%@",model.cash_sum];
+    _allMoneyLabelOne.text = tempSum;
+    
     // 创建Attributed
-    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.allMoneyStr];
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:tempSum];
     // 需要改变的最后一个文字的位置
     NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"元"].location;
     // 需要改变的区间
@@ -152,10 +154,25 @@
     [_allMoneyLabelOne setAttributedText:noteStrOne];
     
     
-    _openTimeLabelOne.text = model.openTimeStr;
-    _mebLevelLabel.text = model.mebLevelStr;
-    [_mebIconView setImage:[UIImage imageNamed:model.mebIconStr]];
+    _openTimeLabelOne.text = model.create_time;
+    _mebLevelLabel.text = model.supplier_level;
+    if ([model.supplier_level isEqualToString:@"普通商户"]) {
+        [_mebIconView setImage:[UIImage imageNamed:@"普通会员132*132"]];
+    }else if ([model.supplier_level isEqualToString:@"银牌商户"]){
+        [_mebIconView setImage:[UIImage imageNamed:@"银牌会员44*44"]];
+        [_mebLevelLabel setTextColor:COLORFromRGB(0x5c83e2)];
 
+    }else if ([model.supplier_level isEqualToString:@"金牌商户"]){
+        [_mebIconView setImage:[UIImage imageNamed:@"金牌会员44*44"]];
+        [_mebLevelLabel setTextColor:COLORFromRGB(0xfbaa69)];
+
+    }else if ([model.supplier_level isEqualToString:@"砖石商户"]){
+        [_mebIconView setImage:[UIImage imageNamed:@"砖石会员44*44"]];
+        [_mebLevelLabel setTextColor:COLORFromRGB(0x9b77a5)];
+
+    }
+
+    
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

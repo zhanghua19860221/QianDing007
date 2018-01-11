@@ -30,7 +30,6 @@
     [self createChooseView];
     [self createSubViewController];
     [self createScrollerView];
-
     
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
