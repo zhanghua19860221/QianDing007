@@ -84,6 +84,11 @@
 		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
 		14B9B7BA2005A7A5003BEBDB /* RecordMoneyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B9B7B92005A7A5003BEBDB /* RecordMoneyModel.m */; };
 		14DB586520045D33009EA1EF /* StarViewPictrue.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DB586420045D33009EA1EF /* StarViewPictrue.m */; };
+		14F62CAB200747DD00B0138B /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CAA200747DD00B0138B /* libicucore.tbd */; };
+		14F62CAD200747E900B0138B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CAC200747E900B0138B /* libz.tbd */; };
+		14F62CAF200747FB00B0138B /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CAE200747FB00B0138B /* libstdc++.tbd */; };
+		14F62CB12007480200B0138B /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CB02007480200B0138B /* JavaScriptCore.framework */; };
+		14F62CB32007481600B0138B /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CB22007481600B0138B /* libsqlite3.tbd */; };
 		14F973701FF5EC0800A79FD6 /* MyMD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F9736F1FF5EC0800A79FD6 /* MyMD5.m */; };
 		14FAFB451FFF174A00A81D9C /* ScanCodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FAFB441FFF174A00A81D9C /* ScanCodeController.m */; };
 		14FAFB481FFF176600A81D9C /* SweepMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FAFB471FFF176600A81D9C /* SweepMeController.m */; };
@@ -256,6 +261,11 @@
 		14F58B291FF0934500594656 /* shareDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = shareDelegate.m; path = "QianDing007/QDClass/QDSingleClass(单例)/shareDelegate.m"; sourceTree = "<group>"; };
 		14F58B2B1FF09C2600594656 /* SetPresentAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetPresentAccountController.h; sourceTree = "<group>"; };
 		14F58B2C1FF09C2600594656 /* SetPresentAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetPresentAccountController.m; sourceTree = "<group>"; };
+		14F62CAA200747DD00B0138B /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		14F62CAC200747E900B0138B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		14F62CAE200747FB00B0138B /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		14F62CB02007480200B0138B /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		14F62CB22007481600B0138B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		14F9736E1FF5EC0800A79FD6 /* MyMD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyMD5.h; path = QianDing007/QDClass/ToolClass/MD5/MyMD5.h; sourceTree = "<group>"; };
 		14F9736F1FF5EC0800A79FD6 /* MyMD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyMD5.m; path = QianDing007/QDClass/ToolClass/MD5/MyMD5.m; sourceTree = "<group>"; };
 		14FAFB431FFF174A00A81D9C /* ScanCodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScanCodeController.h; path = ScanCode/ScanCodeController.h; sourceTree = "<group>"; };
@@ -294,6 +304,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14F62CB32007481600B0138B /* libsqlite3.tbd in Frameworks */,
+				14F62CB12007480200B0138B /* JavaScriptCore.framework in Frameworks */,
+				14F62CAF200747FB00B0138B /* libstdc++.tbd in Frameworks */,
+				14F62CAD200747E900B0138B /* libz.tbd in Frameworks */,
+				14F62CAB200747DD00B0138B /* libicucore.tbd in Frameworks */,
 				14FAFB4C1FFF502900A81D9C /* MobileCoreServices.framework in Frameworks */,
 				14FAFB4A1FFF501700A81D9C /* AssetsLibrary.framework in Frameworks */,
 				14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */,
@@ -901,6 +916,11 @@
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14F62CB22007481600B0138B /* libsqlite3.tbd */,
+				14F62CB02007480200B0138B /* JavaScriptCore.framework */,
+				14F62CAE200747FB00B0138B /* libstdc++.tbd */,
+				14F62CAC200747E900B0138B /* libz.tbd */,
+				14F62CAA200747DD00B0138B /* libicucore.tbd */,
 				14FAFB4B1FFF502900A81D9C /* MobileCoreServices.framework */,
 				14FAFB491FFF501700A81D9C /* AssetsLibrary.framework */,
 				14B421921FEB462F00CC8AE4 /* QuartzCore.framework */,

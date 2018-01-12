@@ -73,6 +73,8 @@
                     [dataArray addObject:model];
                 }
                 [_tableView reloadData];
+                [[shareDelegate shareZHProgress] removeFromSuperview];
+
             }
             
         }else{

@@ -188,10 +188,10 @@
     btn.backgroundColor = COLORFromRGB(0xe10000);
     
     BOOL isPhone = [shareDelegate isChinaMobile:lg_teleField.text];
+    NSLog(@"%d",isPhone);
     if (!isPhone) {
         [self lgShowAlert:@"请输入正确的手机号码。"];
         return;
-        
     }
     BOOL isoK = [shareDelegate judgePassWordLegal:lg_passField.text];
     if (!isoK) {

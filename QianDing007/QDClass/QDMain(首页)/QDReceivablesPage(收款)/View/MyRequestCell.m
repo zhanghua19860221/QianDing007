@@ -202,9 +202,12 @@
     _phone.text = model.phone;
     _address.text = model.address;
     _pass_date.text = model.pass_date;
-    _supplier_num.text = model.supplier_num;
+    NSString *numStr = [NSString stringWithFormat:@"%@元",model.supplier_num];
+    
+    _supplier_num.text = numStr;
+    
     //创建Attributed
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:model.supplier_num];
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:numStr];
     // 需要改变的最后一个文字的位置
     NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
     // 需要改变的区间
@@ -214,10 +217,10 @@
     // 为label添加Attributed
     [_supplier_num setAttributedText:noteStr];
     
-    
-    _supplier_count.text = model.supplier_count;
+    NSString *countStr = [NSString stringWithFormat:@"%@笔",model.supplier_count];
+    _supplier_count.text = countStr;
     // 创建Attributed
-    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.supplier_count];
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:countStr];
     // 需要改变的最后一个文字的位置
     NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"笔"].location;
     // 需要改变的区间
@@ -227,9 +230,7 @@
     // 为label添加Attributed
     [_supplier_count setAttributedText:noteStrOne];
 
-    
 }
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

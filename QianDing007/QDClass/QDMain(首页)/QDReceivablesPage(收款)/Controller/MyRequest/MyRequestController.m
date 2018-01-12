@@ -20,9 +20,8 @@
     UILabel *mr_requestLabel;    //成功邀请数
     UILabel *mr_codeLabel;       //邀请码
 
-
+    
 }
-
 @end
 
 @implementation MyRequestController
@@ -50,12 +49,7 @@
  获取网络数据
  */
 - (void)getDataSource{
-    
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
-    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
-    }];
-    
+
     mr_Dic = [[NSMutableDictionary alloc] init];
     mr_dataArray = [NSMutableArray arrayWithCapacity:2];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
@@ -73,7 +67,6 @@
         [mr_Dic addEntriesFromDictionary:responseObject];
         NSLog(@"%@",[shareDelegate logDic:mr_Dic]);
         [self mlGetUrlDataToSubview:mr_Dic];
-        [shareDelegate shareZHProgress].hidden = YES;
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -110,6 +103,8 @@
             make.centerY.equalTo(self.view.mas_centerY).offset(-30);
             make.width.height.mas_equalTo(90);
         }];
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+
        return;
     }else{
     
@@ -125,26 +120,6 @@
     }
     [self createTabelView];
 }
-
-/**
- 创建tableview
- */
--(void)createTabelView{
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
-    _tableView.separatorStyle = NO;
-    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(74+90/SCALE_Y);
-        make.left.right.equalTo(self.view);
-        make.height.mas_offset(SC_HEIGHT-74-90/SCALE_Y);
-        
-    }];
-}
-
 /**
  创建导航栏
  */
@@ -322,7 +297,6 @@
         make.height.mas_equalTo(190/SCALE_Y);
         
     }];
-    
     [typeLable mas_makeConstraints:^(MASConstraintMaker *make){
         make.top.equalTo(mr_requestIconView).offset(25/SCALE_Y);
         make.left.equalTo(mr_requestIconView).offset(15);
@@ -330,7 +304,7 @@
         make.width.mas_equalTo(100);
 
     }];
-   
+    
     UIView *iconBJView = [[UIView alloc] init];
     iconBJView.backgroundColor = COLORFromRGB(0xffffff);
     [mr_requestIconView addSubview:iconBJView];
@@ -382,7 +356,6 @@
     }
     
 }
-
 /**
  创建蒙板视图
  */
@@ -426,53 +399,18 @@
 - (void)requestViewClick:(UIButton *)btn{
     
     switch (btn.tag) {
-        case 180:
-            
+        case 180:{
+            [self mrShareWeChat];
+        }
             break;
-        case 181:
-            
+        case 181:{
+            [self mrShareTencent];
+        
+        }
             break;
         case 182:{
+            [self mrShareMailList];
             
-            mr_maskView.hidden = YES;
-            [mr_requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
-            }];
-            [mr_maskView layoutIfNeeded];
-            
-
-            //让用户给权限,没有的话会被拒的各位
-            CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
-            if (status == CNAuthorizationStatusNotDetermined) {
-                CNContactStore *store = [[CNContactStore alloc] init];
-                [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
-                    if (error) {
-                        NSLog(@"没有授权, 需要去设置中心设置授权");
-                    }else
-                    {
-                        NSLog(@"用户已授权限");
-                        CNContactPickerViewController * picker = [CNContactPickerViewController new];
-                        picker.delegate = self;
-                        // 加载手机号
-                        picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
-                        [self presentViewController: picker  animated:YES completion:nil];
-                    }
-                }];
-            }
-            
-            if (status == CNAuthorizationStatusAuthorized) {
-                
-                //有权限时
-                CNContactPickerViewController * picker = [CNContactPickerViewController new];
-                picker.delegate = self;
-                picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
-                [self presentViewController: picker  animated:YES completion:nil];
-            }
-            else{
-                NSLog(@"您未开启通讯录权限,请前往设置中心开启");
-            }
-        
-        
         }
             break;
             
@@ -480,6 +418,203 @@
             break;
     }
 
+}
+//弹出 分享结果 视图初始化
+-(void)shareStataView:(NSString * ) stata{
+    //收藏时提示框 视图
+    UIView *promptBox = [[UIView alloc] init];
+    [self.view addSubview:promptBox];
+
+    [UIView animateWithDuration:1 animations:^{
+
+        promptBox.backgroundColor = [COLORFromRGB(0x000000) colorWithAlphaComponent:0.5];
+        promptBox.layer.cornerRadius=8;
+        promptBox.layer.masksToBounds=YES;
+        [promptBox mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.centerY.equalTo(self.view.mas_centerY).offset(50);
+            make.width.mas_equalTo(160);
+            make.height.mas_equalTo(40);
+            
+        }];
+        
+        UILabel*lable=[[UILabel alloc] init];
+        lable.text= stata ;
+        lable.textAlignment=NSTextAlignmentCenter;
+        [lable setTextColor:COLORFromRGB(0xffffff)];
+        lable.font=[UIFont boldSystemFontOfSize:16];
+        [promptBox addSubview:lable];
+        [lable mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(promptBox);
+            make.centerY.equalTo(promptBox.mas_centerY);
+            make.width.mas_equalTo(100);
+            make.height.mas_equalTo(16);
+            
+        }];
+        
+    } completion:^(BOOL finished) {
+        
+        [promptBox removeFromSuperview];
+        
+    }];
+}
+/**
+ 微信分享
+ */
+- (void)mrShareWeChat{
+       mr_maskView.hidden = YES;
+       [mr_requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
+         make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
+       }];
+       [mr_maskView layoutIfNeeded];
+
+        //创建分享参数
+        NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        [shareParams SSDKSetupShareParamsByText:@"钱叮"
+                                         images:[UIImage imageNamed:@"微信@2x"]
+                                            url:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/%E6%81%92%E4%B8%B0%E5%B9%BF%E7%9B%8A/id1319671449?mt=8"]
+                                          title:@"钱叮0001"
+                                           type:SSDKContentTypeWebPage
+         ];
+        //开始进行分享
+        [ShareSDK showShareEditor:SSDKPlatformTypeWechat
+               otherPlatformTypes:nil
+                      shareParams:shareParams
+              onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
+                  
+                  NSLog(@"state == %lu",(unsigned long)state);
+                  
+             
+             switch (state) {
+                     
+                 case SSDKResponseStateSuccess:{
+                     [self shareStataView:@"分享成功"];
+                     
+                     
+                 }
+                     break;
+                 case SSDKResponseStateFail:{
+                     [self shareStataView:@"分享失败"];
+                     
+                 }
+                     break;
+
+                 case SSDKResponseStateCancel:{
+                     [self shareStataView:@"取消分享"];
+    
+                 }
+                    break;
+                 default:
+                     break;
+             }
+             
+         }];
+}
+/**
+ qq分享
+ */
+- (void)mrShareTencent{
+    mr_maskView.hidden = YES;
+    [mr_requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
+    }];
+    [mr_maskView layoutIfNeeded];
+
+    //创建分享参数
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+        
+    [shareParams SSDKSetupShareParamsByText:@"钱叮"
+                                     images:[UIImage imageNamed:@"QQ"]
+                                        url:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/%E6%81%92%E4%B8%B0%E5%B9%BF%E7%9B%8A/id1319671449?mt=8"]
+                                      title:@"钱叮0001"
+                                       type:SSDKContentTypeWebPage
+     ];
+        //开始进行分享
+        [ShareSDK showShareEditor:SSDKPlatformTypeQQ
+               otherPlatformTypes:nil
+                      shareParams:shareParams
+              onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
+                  NSLog(@"(unsigned long)state==%lu",(unsigned long)state);
+             switch (state) {
+                 case SSDKResponseStateSuccess:{
+                     [self shareStataView:@"分享成功"];
+                     
+                 }
+                     break;
+                 case SSDKResponseStateFail:{
+                     [self shareStataView:@"分享失败"];
+                     
+                 }
+                     break;
+                 case SSDKResponseStateCancel:{
+                     [self shareStataView:@"取消分享"];
+                     
+                 }
+                     break;
+                 default:
+                     break;
+             }
+             
+         }];
+    
+}
+/**
+ 通讯录分享
+ */
+- (void)mrShareMailList{
+    mr_maskView.hidden = YES;
+    [mr_requestIconView mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
+    }];
+    [mr_maskView layoutIfNeeded];
+    //让用户给权限,没有的话会被拒的各位
+    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+    if (status == CNAuthorizationStatusNotDetermined) {
+        CNContactStore *store = [[CNContactStore alloc] init];
+        [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"没有授权, 需要去设置中心设置授权");
+            }else{
+                NSLog(@"用户已授权限");
+                CNContactPickerViewController * picker = [CNContactPickerViewController new];
+                picker.delegate = self;
+                // 加载手机号
+                picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+                [self presentViewController: picker  animated:YES completion:nil];
+            }
+        }];
+    }
+    if (status == CNAuthorizationStatusAuthorized) {
+        
+        //有权限时
+        CNContactPickerViewController * picker = [CNContactPickerViewController new];
+        picker.delegate = self;
+        picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+        [self presentViewController: picker  animated:YES completion:nil];
+    }
+    else{
+        NSLog(@"您未开启通讯录权限,请前往设置中心开启");
+    }
+    
+}
+
+/**
+ 创建tableview
+ */
+-(void)createTabelView{
+    
+    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+    _tableView.separatorStyle = NO;
+    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(74+90/SCALE_Y);
+        make.left.right.equalTo(self.view);
+        make.height.mas_offset(SC_HEIGHT-74-90/SCALE_Y);
+        
+    }];
 }
 
 #pragma *********************tabelViewDelegate*************************

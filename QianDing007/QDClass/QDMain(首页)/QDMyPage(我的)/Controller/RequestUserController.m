@@ -51,9 +51,9 @@
     }];
     
     NSString *requestCode = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
-
+    NSString *phoneStr = [NSString stringWithFormat:@"%@",requestCode];
     ru_teleLabel = [[UILabel alloc] init];
-    ru_teleLabel.text = requestCode;
+    ru_teleLabel.text = phoneStr;
     ru_teleLabel.textAlignment = NSTextAlignmentCenter;
     [firstView addSubview:ru_teleLabel];
     [ru_teleLabel mas_makeConstraints:^(MASConstraintMaker *make) {

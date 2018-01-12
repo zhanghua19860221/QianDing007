@@ -18,7 +18,5 @@
 @property (strong , nonatomic) UILabel *supplier_count;//订单
 
 
-
-
 -(void)addDataSourceToCell:(MyRequestModel*) model;
 @end

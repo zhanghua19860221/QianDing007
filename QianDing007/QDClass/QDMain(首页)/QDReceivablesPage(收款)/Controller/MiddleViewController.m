@@ -41,7 +41,7 @@
     NSDictionary *midDic =@{@"auth_session":oldSession,
                            @"type":@"handled"
                            };
-     
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -84,7 +84,8 @@
                 }
                 [_tableView reloadData];
          }
-            
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+
         }else{
             
             [self midShowAlert:responseObject[@"info"]];

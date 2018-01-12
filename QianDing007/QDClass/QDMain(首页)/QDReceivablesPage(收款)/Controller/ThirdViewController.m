@@ -76,8 +76,8 @@
             
             [self tvShowAlert:responseObject[@"info"]];
         }
-        
-        
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         
         
