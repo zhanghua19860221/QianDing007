@@ -59,10 +59,10 @@
     [rs_teleField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:rs_teleField];
     [rs_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(line).offset(10);
         make.right.equalTo(line).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
 
@@ -83,10 +83,10 @@
     [rs_getCodeField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:rs_getCodeField];
     [rs_getCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineOne.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
     
         }];
     
@@ -127,10 +127,10 @@
     [rs_newPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:rs_newPassWordField];
     [rs_newPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(lineTwo).offset(10);
         make.right.equalTo(lineTwo).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
 
@@ -153,10 +153,10 @@
     [rs_againPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:rs_againPassWordField];
     [rs_againPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineThird.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineThird.mas_bottom);
         make.left.equalTo(lineThird).offset(10);
         make.right.equalTo(lineThird).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
 

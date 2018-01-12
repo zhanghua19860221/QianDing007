@@ -47,6 +47,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self getDateSource];
     [self createBasicView];
     [self createMebInfoView];
     [self createProfitView];
@@ -59,7 +60,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    [self getDateSource];
+//    [self getDateSource];
 
 }
 - (void)getDateSource{

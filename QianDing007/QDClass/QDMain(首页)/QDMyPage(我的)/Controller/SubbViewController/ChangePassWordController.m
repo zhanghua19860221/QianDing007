@@ -54,10 +54,10 @@
     [cp_oldPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:cp_oldPassWordField];
     [cp_oldPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(line).offset(10);
         make.right.equalTo(line).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50);
         
     }];
 
@@ -79,10 +79,10 @@
     [cp_NewPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:cp_NewPassWordField];
     [cp_NewPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineOne.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50);
         
     }];
 
@@ -105,10 +105,10 @@
     [cp_againPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:cp_againPassWordField];
     [cp_againPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(lineTwo).offset(10);
         make.right.equalTo(lineTwo).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50);
         
     }];
 

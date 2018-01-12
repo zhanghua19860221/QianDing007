@@ -12,14 +12,14 @@
 #import "RegisterController.h"
 #import "RootViewController.h"
 @interface LoginMain (){
+    UITextField *lg_selectTextField  ;//记录当前编辑的输入框
+    UIButton *lg_selectBtn  ;//记录选中的按钮
 
+    
     UIImageView *lg_logoImageView;//logo图标
-//    customTextFieldView *lg_telePhoneView;//账号
-//    customTextFieldView *lg_passWordView;//密码
     UIButton *lg_loginBtn;//登录按钮
     UIButton *lg_getPassWordBtn;//找回密码
     UIButton *lg_registerBtn;//注册
-    UIButton *lg_selectBtn  ;//记录选中的按钮
     UIButton *lg_teleImageView;//手机视图
     UIButton *lg_passImageView;//密码锁视图
     UITextField *lg_teleField; //账号输入文本
@@ -38,7 +38,8 @@
     [self lgCreateLoginTextView];
     [self lgCreateLoginBtn];
     [self lgCreateGetPassWordBtn];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
@@ -46,13 +47,8 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
-    
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
 
-}
 /**
  创建logo视图
  */
@@ -103,16 +99,19 @@
     lg_teleField.placeholder = @"电话";
     lg_teleField.delegate = self;
     lg_teleField.tag = 51;
+    //取消输入框首字母默认大写功能
+    [lg_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+//    [lg_teleField setAutocorrectionType:UITextAutocorrectionTypeNo];
     // lg_teleField.secureTextEntry = YES;
     lg_teleField.textAlignment = NSTextAlignmentLeft;
     lg_teleField.font = [UIFont systemFontOfSize:18];
     [lg_teleField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:lg_teleField];
     [lg_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(lg_teleImageView.mas_centerY);
+        make.centerY.equalTo(lg_teleImageView.mas_centerY).offset(1);
         make.left.equalTo(lg_teleImageView.mas_right).offset(10);
         make.right.equalTo(lg_line);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25);
         
     }];
     
@@ -144,15 +143,16 @@
     lg_passField.delegate = self;
     lg_passField.tag = 61;
     lg_passField.secureTextEntry = YES;
+    [lg_passField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     lg_passField.textAlignment = NSTextAlignmentLeft;
     lg_passField.font = [UIFont systemFontOfSize:18];
     [lg_passField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:lg_passField];
     [lg_passField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(lg_passImageView.mas_centerY);
+        make.centerY.equalTo(lg_passImageView.mas_centerY).offset(1);
         make.left.equalTo(lg_passImageView.mas_right).offset(10);
         make.right.equalTo(lg_lineOne);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25);
         
     }];
     
@@ -338,15 +338,36 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    [self.view endEditing:YES];
-    
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)keyBoardshow:(NSNotification*)notification{
+    
+    NSDictionary * info = [notification userInfo];
+    NSValue *avalue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [self.view convertRect:[avalue CGRectValue] fromView:nil];
+    double keyboardHeight=keyboardRect.size.height;//键盘的高度
+    CGRect frame =  CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT);
+    frame.origin.y -= 50;
+    self.view.frame=frame;
 
+//    if ( (lg_selectTextField.frame.origin.y + keyboardHeight + 40) >= ([[UIScreen mainScreen] bounds].size.height)){
+//        //此时，编辑框被键盘盖住，则对视图做相应的位移
+//        CGRect frame =  CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT);
+//        frame.origin.y -= lg_selectTextField.frame.origin.y + 40 + 216 - [[UIScreen mainScreen] bounds].size.height;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
+//        self.view.frame=frame;
+//    }
+    
+}
+- (void)keyBoardhide:(NSNotification*)notification{
+    CGFloat  duration = [notification.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:duration animations:^{
+        self.view.frame = CGRectMake(0, 0,SC_WIDTH, SC_HEIGHT);
+    }];
+    
+}
 
 #pragma *******************UITextFieldDelegate*****************************
 /**
@@ -354,7 +375,7 @@
  
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
-    
+    lg_selectTextField = textField;
     switch (textField.tag) {
         case 51:{
             lg_teleImageView.selected = YES;
@@ -425,6 +446,26 @@
     
     [textField resignFirstResponder];
     return YES;
+}
+
+/**
+ 点击空白处隐藏键盘
+
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+    
 }
 /*
 #pragma mark - Navigation

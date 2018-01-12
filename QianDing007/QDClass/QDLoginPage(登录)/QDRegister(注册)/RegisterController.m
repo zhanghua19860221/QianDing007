@@ -9,8 +9,9 @@
 #import "RegisterController.h"
 
 @interface RegisterController (){
+    UITextField *zc_selectField;       //记录当前编辑的输入框
 
-    NSString    *zc_sess_id;              //请求验证码时获取
+    NSString    *zc_sess_id;           //请求验证码时获取
     UITextField *zc_inviteField;       //邀请码
     UITextField *zc_teleField;         //电话号码
     UITextField *zc_setPassWordField;  //设置密码
@@ -28,6 +29,8 @@
     [self createNavgation];
     [self createInfoText];
     self.view.backgroundColor = [UIColor whiteColor];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -61,10 +64,10 @@
     [zc_inviteField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:zc_inviteField];
     [zc_inviteField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(line).offset(10);
         make.right.equalTo(line).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
@@ -82,14 +85,15 @@
     zc_teleField = [[UITextField alloc] init];
     zc_teleField.placeholder = @"请输入手机号";
     zc_teleField.delegate = self;
+    [zc_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     zc_teleField.font = [UIFont systemFontOfSize:18];
     [zc_teleField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:zc_teleField];
     [zc_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineOne.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
@@ -111,10 +115,10 @@
     [zc_setPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:zc_setPassWordField];
     [zc_setPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(lineTwo).offset(10);
         make.right.equalTo(lineTwo).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
@@ -137,10 +141,10 @@
     [zc_againPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:zc_againPassWordField];
     [zc_againPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineThird.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineThird.mas_bottom);
         make.left.equalTo(lineThird).offset(10);
         make.right.equalTo(lineThird).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
@@ -162,10 +166,10 @@
     [zc_getCodeField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:zc_getCodeField];
     [zc_getCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFour.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineFour.mas_bottom);
         make.left.equalTo(lineFour).offset(10);
         make.right.equalTo(lineFour).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
@@ -346,6 +350,30 @@
     [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+- (void)keyBoardshow:(NSNotification*)notification{
+    
+    NSDictionary * info = [notification userInfo];
+    NSValue *avalue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [self.view convertRect:[avalue CGRectValue] fromView:nil];
+    double keyboardHeight=keyboardRect.size.height;//键盘的高度
+    CGRect frame =  CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT);
+    frame.origin.y -= 50;
+    self.view.frame=frame;
+    
+        if ( (zc_selectField.frame.origin.y + keyboardHeight + 100) >= ([[UIScreen mainScreen] bounds].size.height)){
+            frame.origin.y -= 50;
+            self.view.frame=frame;
+        }
+}
+- (void)keyBoardhide:(NSNotification*)notification{
+    
+    CGFloat  duration = [notification.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    [UIView animateWithDuration:duration animations:^{
+        self.view.frame = CGRectMake(0, 0,SC_WIDTH, SC_HEIGHT);
+    }];
+    
+    
+}
 #pragma **************UITextFieldDelegate**********************
 
 /**
@@ -353,7 +381,7 @@
  
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
-    
+    zc_selectField = textField;
 
     
 }
@@ -439,7 +467,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+    
+}
 /*
 #pragma mark - Navigation
 

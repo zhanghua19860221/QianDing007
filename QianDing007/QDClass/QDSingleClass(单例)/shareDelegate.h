@@ -65,4 +65,5 @@
  自定义进度条
  */
 + (ZHProgressView *)shareZHProgress;
+
 @end

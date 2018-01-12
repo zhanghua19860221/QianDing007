@@ -48,10 +48,10 @@
     [ct_oldTeleField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:ct_oldTeleField];
     [ct_oldTeleField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(line).offset(10);
         make.right.equalTo(line).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
@@ -73,10 +73,10 @@
     [ct_getCodeField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:ct_getCodeField];
     [ct_getCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineOne.mas_bottom).offset(-16/SCALE_Y);
+        make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
-        make.height.mas_equalTo(18);
+        make.height.mas_equalTo(50/SCALE_Y);
         
     }];
     
