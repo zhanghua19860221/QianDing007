@@ -7,7 +7,6 @@
 //
 
 #import "MyPage.h"
-//#import "CustomLabelView.h"
 #import "MyPageModel.h"
 #import "MyPageCell.h"
 #import "UserViewController.h"
@@ -22,16 +21,16 @@
 
 @interface MyPage (){
     
-    NSMutableArray*mp_allArray;//table分组数组
-    UIImageView *mp_topView ;//顶视图
-    UIButton *mp_codeButton ;//二维码展示button
-    UIButton *mp_maskCodeButton; //蒙板button
-    UIView *mp_myMaskView;   //蒙板视图
-    NSString *mp_codeUrl;//二维码视图地址
-    UIButton *mp_headViewBtn; //头像视图按钮
-    NSString *mp_localVersion; //记录本地版本号
-    NSString *mp_serverVersion; //记录服务器版本号
-
+    NSMutableArray*mp_allArray;  //table分组数组
+    UIImageView *mp_topView ;    //顶视图
+    UIButton *mp_codeButton ;    //二维码展示button
+    UIImageView *mp_maskCodeView;//蒙版二维码展示视图
+    UIView *mp_myMaskView;       //蒙板视图
+    UIButton *mp_headViewBtn;    //头像视图按钮
+    NSString *mp_localVersion;   //记录本地版本号
+    NSString *mp_serverVersion;  //记录服务器版本号
+    UILabel  *mp_requestLabel;   //蒙板邀请文本
+    UIView   *mp_showCodeView;   //二维码背景视图
 }
 @end
 
@@ -46,15 +45,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self mpGetCodeImage];
-    [self mpTestingVersion];
     [self mpGetAgencyStateInfo];// 获得用户是否为代理商 以及代理商信息
     [self mpCreateTopView];
     [self mpCreateTabelView];
-    [self mpCreateCodeView];
-    [self mpCreateMaskView];
-    [self mpTestingVersion];
-    
+    [self mpTestingVersion];//检查更新
+    [self mpCreateMaskView];//创建二维码弹出视图
+
 
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
@@ -65,11 +61,14 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
  
 }
+
+/**
+ 获取本地版本号 和 服务器版本号
+ */
 - (void)mpTestingVersion{
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     mp_localVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
  
-    
 //获取AppStore上的版本号
     NSString *url = [[NSString alloc] initWithFormat:@"http://itunes.apple.com/lookup?id=%@",@"1319671449"];//后数字修改成自己项目的APPID
     
@@ -91,8 +90,6 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response,NSData *data,NSError *error){
         
-        NSMutableDictionary *receiveStatusDic=[[NSMutableDictionary alloc]init];
-        
         NSDictionary *receiveDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
         NSArray *array = receiveDic[@"results"];
         NSDictionary *dict = [array lastObject];
@@ -106,6 +103,7 @@
  */
 - (void)mpGetAgencyStateInfo{
     
+    //判断是否是代理
     NSString *is_agency = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_agency"];
     if ([is_agency isEqualToString:@"0"]) {
         
@@ -137,7 +135,7 @@
                 
             }
             //隐藏数据请求蒙板
-            [shareDelegate shareZHProgress].hidden = YES;
+            [[shareDelegate shareZHProgress] removeFromSuperview];
             
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -147,47 +145,13 @@
     }
     
 }
-/**
- 获取头视图网络图片
- */
-- (void)mpGetCodeImage{
-    
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
-    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
-    }];
-    
-    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    
-    NSDictionary *smDic =@{@"auth_session":oldSession};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
-    [manager POST:SWEEPME_URL parameters:smDic progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSString *imageUrl = responseObject[@"qr_url"];
-        mp_codeUrl = imageUrl;
-        NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:imageUrl]];
-        UIImage *image = [UIImage imageWithData:data]; // 取得图片
-        [mp_maskCodeButton setImage:image forState:UIControlStateNormal];
-        [shareDelegate shareZHProgress].hidden = YES;
 
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
-}
 /**
  tableview创建 加载数据
  */
 - (void)mpCreateTabelView{
     
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-    
     NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
     NSArray *stateFirstArray = @[is_checked,@"空"];
     NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
@@ -234,52 +198,98 @@
 
 }
 
-- (void)mpCreateCodeView{
-    
-    mp_codeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [mp_codeButton setImage:[UIImage imageNamed:@"二维码"] forState:UIControlStateNormal];
-    [self.view addSubview:mp_codeButton];
-    [mp_codeButton addTarget:self action:@selector(myCodeButton:) forControlEvents:UIControlEventTouchUpInside];
-    [mp_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
-        make.right.equalTo(self.view).offset(-15);
-        make.width.height.mas_equalTo(44);
-        
-        
-    }];
-    
-}
+/**
+ 二维码按钮点击事件
+ 
+ */
 - (void)myCodeButton:(UIButton*)btn{
     
-    [mp_maskCodeButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [mp_showCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(mp_myMaskView);
-        make.height.width.mas_equalTo(200);
+        make.width.mas_equalTo(200);
+        make.height.mas_equalTo(220);
+
+    }];
+    
+    [mp_requestLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mp_showCodeView).offset(10);
+        make.left.equalTo(mp_showCodeView).offset(17);
+        make.right.equalTo(mp_showCodeView);
+        make.height.mas_equalTo(20);
         
     }];
+    
+    [mp_maskCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mp_showCodeView).offset(20);
+        make.left.right.equalTo(mp_showCodeView);
+        make.height.mas_equalTo(200);
+        
+    }];
+    [UIView animateWithDuration:0.5 animations:^{
+        [mp_myMaskView layoutIfNeeded];
+
+    } completion:^(BOOL finished) {
+        mp_requestLabel.hidden = NO;
+        [UIView animateWithDuration:0.5 animations:^{
+            mp_requestLabel.alpha = 1;
+        }];
+    }];
+
     mp_myMaskView.hidden = NO;
     btn.hidden = YES;
-    [UIView animateWithDuration:0.5 animations:^{
-       [mp_myMaskView layoutIfNeeded];
-        
-    } completion:^(BOOL finished) {
-       
-        
-    }];
+
 }
+
+/**
+ 创建二维码点击事件 弹出的蒙板视图
+ 
+ */
 -(void)mpCreateMaskView{
     
-    mp_myMaskView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    
+    
+    mp_myMaskView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     mp_myMaskView.hidden = YES;
     mp_myMaskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
     [[UIApplication sharedApplication].keyWindow addSubview:mp_myMaskView];
     
-    mp_maskCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    mp_maskCodeButton.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [mp_myMaskView addSubview:mp_maskCodeButton];
-    [mp_maskCodeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+    mp_showCodeView  = [[UIView alloc] init];
+    mp_showCodeView.backgroundColor = COLORFromRGB(0xffffff);
+    [mp_myMaskView addSubview:mp_showCodeView];
+    [mp_showCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mp_myMaskView).offset(20);
         make.right.equalTo(mp_myMaskView).offset(-15);
+        make.width.height.mas_equalTo(45);
+    
+    }];
+    
+    
+    mp_maskCodeView = [[UIImageView alloc] init];
+    mp_maskCodeView.backgroundColor = COLORFromRGB(0xe10000);
+    [mp_showCodeView addSubview:mp_maskCodeView];
+    [mp_maskCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mp_showCodeView).offset(1);
+        make.left.right.equalTo(mp_showCodeView);
         make.width.height.mas_equalTo(44);
+        
+    }];
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&auth_session=%@",REQUESTCODE_URL,oldSession,@"supplier"];
+    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+
+    mp_requestLabel = [[UILabel alloc] init];
+    mp_requestLabel.text = @"扫我吧 ！";
+    mp_requestLabel.alpha = 0;
+    mp_requestLabel.hidden = YES;
+    mp_requestLabel.backgroundColor = COLORFromRGB(0xffffff);
+    mp_requestLabel.textAlignment = NSTextAlignmentLeft;
+    [mp_requestLabel setTextColor:COLORFromRGB(0x333333)];
+    mp_requestLabel.font = [UIFont systemFontOfSize:18];
+    [mp_showCodeView addSubview:mp_requestLabel];
+    [mp_requestLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mp_showCodeView);
+        make.left.right.equalTo(mp_showCodeView);
+        make.height.mas_equalTo(1);
         
     }];
     
@@ -293,18 +303,31 @@
  */
 -(void)myTapAction:(id)tap{
     
-    [mp_maskCodeButton mas_remakeConstraints:^(MASConstraintMaker *make) {
+    [mp_showCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mp_myMaskView).offset(20);
         make.right.equalTo(mp_myMaskView).offset(-15);
-        make.width.height.mas_equalTo(44);
+        make.width.height.mas_equalTo(45);
     }];
+    [mp_requestLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mp_showCodeView);
+        make.left.right.equalTo(mp_showCodeView);
+        make.height.mas_equalTo(1);
+        
+    }];
+    [mp_maskCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mp_showCodeView).offset(1);
+        make.left.right.equalTo(mp_showCodeView);
+        make.width.height.mas_equalTo(44);
+        
+    }];
+    mp_requestLabel.hidden = YES;
     [UIView animateWithDuration:0.5 animations:^{
         [mp_myMaskView layoutIfNeeded];
         
     } completion:^(BOOL finished) {
-        
         mp_codeButton.hidden = NO;
         mp_myMaskView.hidden = YES;
+
     }];
 
 }
@@ -317,6 +340,19 @@
     mp_topView.frame = CGRectMake(0,0, SC_WIDTH, 160/SCALE_Y);
     [mp_topView setImage:[UIImage imageNamed:@"红色背景"]];
     [self.view addSubview:mp_topView];
+    
+    
+    mp_codeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [mp_codeButton setImage:[UIImage imageNamed:@"二维码"] forState:UIControlStateNormal];
+    [self.view addSubview:mp_codeButton];
+    [mp_codeButton addTarget:self action:@selector(myCodeButton:) forControlEvents:UIControlEventTouchUpInside];
+    [mp_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view).offset(20);
+        make.right.equalTo(self.view).offset(-15);
+        make.width.height.mas_equalTo(44);
+        
+        
+    }];
     
     
     mp_headViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];

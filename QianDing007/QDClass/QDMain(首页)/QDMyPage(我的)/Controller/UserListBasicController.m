@@ -8,6 +8,7 @@
 
 #import "UserListBasicController.h"
 #import "UserListCell.h"
+#import "UserListModel.h"
 @interface UserListBasicController ()
 
 @end
@@ -19,6 +20,8 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = COLORFromRGB(0xffffff);
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,7 +33,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return _basicDataArray.count;
+    return self.basicDataArray.count;
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

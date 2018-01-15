@@ -124,28 +124,30 @@
     BOOL isPhone = [shareDelegate isChinaMobile:ct_oldTeleField.text];
     if (!isPhone) {
         [self ctShowAlert:@"请输入正确的手机号码。"];
-        
+
         return;
     }
-    
-    NSDictionary *dic = @{@"phone":ct_oldTeleField.text};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
-    [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [btn startCountDownTime:60 withCountDownBlock:^{
+        NSDictionary *dic = @{@"phone":ct_oldTeleField.text};
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        NSLog(@"%@",error);
+        [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            NSLog(@"%@",error);
+        }];
     }];
+
     
 }
 

@@ -55,6 +55,7 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         [lv_TopDic addEntriesFromDictionary:responseObject];
         [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
         NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
@@ -75,6 +76,10 @@
     
     NSString *amount = dic[@"amount"];
     lv_upLabel.text = [NSString stringWithFormat:@"还差%@元升级",amount];
+    
+    if ([dic[@"id"] isEqualToString:@"4"]) {
+        lv_upLabel.text = @"您已是最高等级会员";
+    }
     
     switch ([dic[@"id"] intValue]) {
         case 1:
@@ -97,21 +102,7 @@
         default:
             break;
     }
-    
-//    // 创建Attributed
-//    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:lv_upLabel.text];
-//    // 需要改变的第一个文字的位置
-//    NSUInteger firstLoc = [[noteStr string] rangeOfString:@"差"].location+1;
-//    // 需要改变的最后一个文字的位置
-//    NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
-//    // 需要改变的区间
-//    NSRange range = NSMakeRange(firstLoc, secondLoc - firstLoc);
-//    // 改变颜色
-//    [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
-//    // 改变字体大小及类型
-//    [noteStr addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:13] range:range];
-//    // 为label添加Attributed
-//    [lv_upLabel setAttributedText:noteStr];
+
     
 }
 
@@ -204,7 +195,7 @@
     [self.view addSubview:lv_levelLabel];
     
     lv_upLabel = [[UILabel alloc] init];
-    lv_upLabel.text = @"还差NNNN元升级";
+    lv_upLabel.text = @"还差000元升级";
     lv_upLabel.textAlignment = NSTextAlignmentCenter;
     [lv_upLabel setTextColor:COLORFromRGB(0x333333)];
     lv_upLabel.font = [UIFont systemFontOfSize:12];

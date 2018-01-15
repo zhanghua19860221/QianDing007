@@ -10,7 +10,6 @@
 #import "CompanyController.h"
 #import "PersonalController.h"
 @interface UserViewController (){
-    
     UIView *topView;    //创建顶部选择按钮
     UIButton *selectBtn;//记录选中的按钮
     UIView *onePageView;//第一页展示视图

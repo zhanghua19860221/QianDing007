@@ -47,7 +47,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getDateSource];
     [self createBasicView];
     [self createMebInfoView];
     [self createProfitView];
@@ -60,7 +59,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-//    [self getDateSource];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    [self getDateSource];
 
 }
 - (void)getDateSource{
@@ -202,7 +202,6 @@
         make.height.mas_equalTo(16);
         
     }];
-
     
     rp_scaleLabel = [[UILabel alloc] init];
     rp_scaleLabel.text =  @"";
@@ -211,7 +210,7 @@
     [rp_scaleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(mebRateLabel.mas_bottom);
         make.left.equalTo(mebRateLabel.mas_right).offset(10);
-        make.width.mas_equalTo(50);
+        make.width.mas_equalTo(100);
         make.height.mas_equalTo(21);
         
     }];
@@ -246,7 +245,7 @@
  未认证点击事件
  */
 - (void)verificationBtnClick{
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
     if ([rp_Dic[@"checked"] isEqualToString:@"0"]) {
         UserViewController *verificationVc = [[UserViewController alloc] init];
         [self.navigationController pushViewController:verificationVc animated:YES];
@@ -256,7 +255,8 @@
  去升级
  */
 - (void)upGradeBtnClick{
-
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    
     MyLevelController *VC = [[MyLevelController alloc] init];
     [self.navigationController pushViewController:VC animated:YES];
 }

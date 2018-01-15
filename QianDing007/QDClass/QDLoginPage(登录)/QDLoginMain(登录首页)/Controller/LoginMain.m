@@ -188,7 +188,6 @@
     btn.backgroundColor = COLORFromRGB(0xe10000);
     
     BOOL isPhone = [shareDelegate isChinaMobile:lg_teleField.text];
-    NSLog(@"%d",isPhone);
     if (!isPhone) {
         [self lgShowAlert:@"请输入正确的手机号码。"];
         return;
@@ -222,11 +221,10 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+
         
-        BOOL isSuccess = [[responseObject objectForKey:@"info"] isEqualToString:@"账号或密码错误"];
-        
-        if (!isSuccess) {
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //判断商户是否认证
             NSString *is_checked  = responseObject[@"checked"];
             [[shareDelegate shareNSUserDefaults] setObject:is_checked forKey:@"is_checked"];
@@ -255,13 +253,12 @@
             RootViewController *home = [[RootViewController alloc] init];
             [self.navigationController pushViewController:home animated:YES];
             
-            [[shareDelegate shareZHProgress] removeFromSuperview];
 
         }else{
-            [self lgShowAlert:[responseObject objectForKey:@"info"]];
-            [[shareDelegate shareZHProgress] removeFromSuperview];
+            [self lgShowAlert:responseObject[@"info"]];
 
         }
+        [[shareDelegate shareZHProgress] removeFromSuperview];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -328,14 +325,9 @@
                                                               //响应事件
                                                               NSLog(@"action = %@", action);
                                                           }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", action);
-                                                         }];
+
     
     [alert addAction:defaultAction];
-    [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 

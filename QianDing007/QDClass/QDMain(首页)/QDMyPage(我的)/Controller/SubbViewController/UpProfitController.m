@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self  upGetDataSource];
+//    [self  upGetDataSource];
 //    [self createTabelView];
     self.view.backgroundColor = [UIColor whiteColor];
 
@@ -29,7 +29,6 @@
 -(void)upGetDataSource{
     
     dataArray = [[NSMutableArray alloc] initWithCapacity:2];
-    
     
     [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -51,7 +50,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *have_detail_list = responseObject[@"have_detail_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
@@ -70,7 +69,7 @@
                 
             }else{
                 
-                NSArray *tempArray = responseObject[@"supplier_data"];
+                NSArray *tempArray = responseObject[@"detail_list"];
                 
                 for (NSDictionary *allDic in tempArray) {
                     MyProfitModel *model = [[MyProfitModel alloc]init];

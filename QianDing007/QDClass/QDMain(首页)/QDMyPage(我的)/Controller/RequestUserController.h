@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RequestUserController : UIViewController
+@interface RequestUserController : UIViewController<CNContactPickerDelegate>
 
 @end

@@ -10,8 +10,12 @@
 #import "LSCityChooseView.h"
 
 @interface CompanyController (){
-    UITextField *cp_selectField;       //记录当前编辑的输入框
+    UITextField *cp_selectField;    //记录当前编辑的输入框
+    CGFloat   cp_keyBoardHeight;    //记录键盘高度
+    CGFloat   cp_keyBoardDuration;  //记录键盘弹出需要的时间
+    CGFloat   cp_scrollViewOldoffSet;//记录scrollView旧的偏移量
 
+    
     UITextField *companyNameField;  //企业名称
     UITextField *creditField;       //信用代码
     UITextField *addressField;      //企业地址
@@ -26,7 +30,6 @@
     UILabel *companyAddressLabel;   //公司地址
     UIScrollView *scrollView;//展示视图
     
-
 }
 
 @end
@@ -39,11 +42,115 @@
     [self cmGetDataSource];
     [self createScrollerView];
     [self createOneView];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
-    // Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
+//     Do any additional setup after loading the view.
+}
+- (void)keyBoardshow:(NSNotification*)notification{
+    
+    NSDictionary * info = [notification userInfo];
+    NSValue *avalue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [self.view convertRect:[avalue CGRectValue] fromView:nil];
+    //键盘的高度
+    cp_keyBoardHeight = keyboardRect.size.height;
+    //键盘调起的时间长度
+    cp_keyBoardDuration = [notification.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    cp_scrollViewOldoffSet = scrollView.contentOffset.y;
+    if ( (cp_selectField.frame.origin.y + cp_keyBoardHeight + 150) >= ([[UIScreen mainScreen] bounds].size.height-114 + cp_scrollViewOldoffSet)){
+        //此时，编辑框被键盘盖住，则对视图做相应的位移
+        CGFloat offSetY = cp_selectField.frame.origin.y + 150 + cp_keyBoardHeight - [[UIScreen mainScreen] bounds].size.height + 114;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
+        [UIView animateWithDuration:cp_keyBoardDuration animations:^{
+            [scrollView setContentOffset:CGPointMake(0, offSetY) animated:YES];
+            
+        }];
+        
+    }
+    
+}
+- (void)keyBoardhide:(NSNotification*)notification{
+        [UIView animateWithDuration:cp_keyBoardDuration animations:^{
+            [scrollView setContentOffset:CGPointMake(0,cp_scrollViewOldoffSet) animated:YES];
+        }];
+    
+    
 }
 
+#pragma ********************UITextFieldDelegate**************
+/**
+ 当输入框开始时触发 ( 获得焦点触发)
+ 
+ */
+- (void)textFieldDidBeginEditing:( UITextField*)textField{
+    cp_selectField = textField;
+    //scrollview便宜量
+    cp_scrollViewOldoffSet = scrollView.contentOffset.y;
+    if ( (textField.frame.origin.y + cp_keyBoardHeight + 150) >= ([[UIScreen mainScreen] bounds].size.height-114 + cp_scrollViewOldoffSet)){
+        //此时，编辑框被键盘盖住，则对视图做相应的位移
+        CGFloat offSetY = textField.frame.origin.y + 150 + cp_keyBoardHeight - [[UIScreen mainScreen] bounds].size.height + 114;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
+        [UIView animateWithDuration:cp_keyBoardDuration animations:^{
+            [scrollView setContentOffset:CGPointMake(0, offSetY) animated:YES];
+
+        }];
+        
+    }
+}
+/**
+ 询问输入框是否可以结束编辑 ( 键盘是否可以收回)
+ 
+ */
+- (BOOL)textFieldShouldEndEditing:( UITextField*)textField{
+    
+    return YES;
+}
+
+/**
+ 当前输入框结束编辑时触发 (键盘收回之后触发)
+ 
+ */
+- (void)textFieldDidEndEditing:( UITextField *)textField{
+    
+    [UIView animateWithDuration:cp_keyBoardDuration animations:^{
+        [scrollView setContentOffset:CGPointMake(0,cp_scrollViewOldoffSet) animated:YES];
+    }];
+}
+/**
+ 当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
+ 
+ */
+- (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
+    
+    return YES;
+}
+/**
+ 控制当前输入框是否能被编辑
+ 
+ */
+- (BOOL)textFieldShouldBeginEditing:( UITextField *)textField{
+    
+    return YES;
+}
+
+/**
+ 控制输入框清除按钮是否有效 (yes, 有 ;no, 没有)
+ 
+ */
+- (BOOL)textFieldShouldClear:( UITextField*)textField{
+    
+    return YES;
+}
+/**
+ 返回按钮
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
+}
 /**
  获取网络企业信息数据
  */
@@ -63,7 +170,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -78,7 +185,7 @@
     
     scrollView = [[UIScrollView alloc] init];
     [self.view addSubview:scrollView];
-    scrollView.bounces = NO;
+    scrollView.alwaysBounceVertical  = YES ;
     scrollView.contentSize = CGSizeMake(0, 1400/SCALE_Y);
     [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
@@ -756,110 +863,14 @@
     [self.view addSubview:view];
 
 }
-//- (void)keyBoardshow:(NSNotification*)notification{
-//    
-//    NSDictionary * info = [notification userInfo];
-//    NSValue *avalue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-//    CGRect keyboardRect = [self.view convertRect:[avalue CGRectValue] fromView:nil];
-//    double keyboardHeight=keyboardRect.size.height;//键盘的高度
-//    CGRect frame =  CGRectMake(0, 0, SC_WIDTH, 1400/SCALE_Y);
-//
-//    NSLog(@"%f",cp_selectField.frame.origin.y );
-//        if ( (cp_selectField.frame.origin.y + keyboardHeight +100) >= ([[UIScreen mainScreen] bounds].size.height-120)){
-//            //此时，编辑框被键盘盖住，则对视图做相应的位移
-//            frame.origin.y -= cp_selectField.frame.origin.y +100 + keyboardHeight - [[UIScreen mainScreen] bounds].size.height+120;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
-//            scrollView.frame = frame;
-//        }
-////    [scrollView setContentOffset:CGPointMake(0, frame.origin.y) animated:YES];
-//
-//}
-//- (void)keyBoardhide:(NSNotification*)notification{
-//    
-//    CGFloat  duration = [notification.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-//    [UIView animateWithDuration:duration animations:^{
-////        scrollView.frame = CGRectMake(0, 0,SC_WIDTH, 1400/SCALE_Y);
-//    }];
-//    
-//    
-//}
-//#pragma ********************UIScrollViewDelegate**************
-//// 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。
-//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-//    
-//
-//}
-#pragma ********************UITextFieldDelegate**************
-/**
- 当输入框开始时触发 ( 获得焦点触发)
- 
- */
-- (void)textFieldDidBeginEditing:( UITextField*)textField{
-    
-//    cp_selectField = textField;
-}
-/**
- 询问输入框是否可以结束编辑 ( 键盘是否可以收回)
- 
- */
-- (BOOL)textFieldShouldEndEditing:( UITextField*)textField{
-    
-    return YES;
-}
-
-/**
- 当前输入框结束编辑时触发 (键盘收回之后触发)
- 
- */
-- (void)textFieldDidEndEditing:( UITextField *)textField{
-    
-    NSLog(@"当前输入框结束编辑时触发");
-}
-/**
- 当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
- 
- */
-- (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
-    
-    return YES;
-}
-/**
- 控制当前输入框是否能被编辑
- 
- */
-- (BOOL)textFieldShouldBeginEditing:( UITextField *)textField{
-    
-    return YES;
-}
-
-/**
- 控制输入框清除按钮是否有效 (yes, 有 ;no, 没有)
- 
- */
-- (BOOL)textFieldShouldClear:( UITextField*)textField{
-    
-    return YES;
-}
-/**
- 返回按钮
- */
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    
-    return YES;
-}
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    
-    [self.view endEditing:YES];
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-//    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
-//    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
 
 
 }

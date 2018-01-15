@@ -142,13 +142,14 @@
     
     
     _timeLabel.text = tempTime;
-    
-    
-    
     _userLabel.text = model.supplier_name;
-    _getMoneyLabelOne.text = model.collect;
+    
+    
+    
+    NSString *moneyLabelOne = [NSString stringWithFormat:@"%@元",model.collect];
+    _getMoneyLabelOne.text = moneyLabelOne;
     // 创建Attributed
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:model.collect];
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:moneyLabelOne];
     
     // 需要改变的最后一个文字的位置
     NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
@@ -158,10 +159,16 @@
     [noteStr addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0xe10000) range:range];
     // 为label添加Attributed
     [_getMoneyLabelOne setAttributedText:noteStr];
-    _levelLabel.text = model.supplier_level;
-    _profitLabelOne.text = model.distribute;
+    
+    
+    
+    _levelLabel.text = model.supplier_level_name;
+    
+    NSString *distribute = [NSString stringWithFormat:@"%@元",model.distribute];
+
+    _profitLabelOne.text = distribute;
     // 创建Attributed
-    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.distribute];
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:distribute];
     // 需要改变的最后一个文字的位置
     NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"元"].location;
     // 需要改变的区间
@@ -171,16 +178,16 @@
     // 为label添加Attributed
     [_profitLabelOne setAttributedText:noteStrOne];
 
-    if ([model.supplier_level isEqualToString:@"普通商户"]) {
+    if ([model.supplier_level isEqualToString:@"1"]) {
         [_iconImage setImage:[UIImage imageNamed:@"普通会员"]];
 
-    }else if ([model.supplier_level isEqualToString:@"银牌商户"]){
+    }else if ([model.supplier_level isEqualToString:@"2"]){
         [_iconImage setImage:[UIImage imageNamed:@"银牌会员44*44"]];
 
-    }else if ([model.supplier_level isEqualToString:@"金牌商户"]){
+    }else if ([model.supplier_level isEqualToString:@"3"]){
         [_iconImage setImage:[UIImage imageNamed:@"金牌会员44*44"]];
 
-    }else if ([model.supplier_level isEqualToString:@"钻石商户"]){
+    }else if ([model.supplier_level isEqualToString:@"4"]){
         [_iconImage setImage:[UIImage imageNamed:@"钻石会员44*44"]];
 
     }

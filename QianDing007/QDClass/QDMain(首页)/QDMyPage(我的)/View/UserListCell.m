@@ -139,7 +139,7 @@
     _userNameLabel.text = model.name;
     _teleLabelOne.text  = model.phone;
     
-    NSString *tempSum = [NSString stringWithFormat:@"%@",model.cash_sum];
+    NSString *tempSum = [NSString stringWithFormat:@"%@元",model.cash_sum];
     _allMoneyLabelOne.text = tempSum;
     
     // 创建Attributed
@@ -154,19 +154,28 @@
     [_allMoneyLabelOne setAttributedText:noteStrOne];
     
     
-    _openTimeLabelOne.text = model.create_time;
-    _mebLevelLabel.text = model.supplier_level;
-    if ([model.supplier_level isEqualToString:@"普通商户"]) {
+    
+    //时间戳转化成时间
+    NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    //以 1970/01/01 GMT为基准，然后过了secs秒的时间
+    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.create_time intValue]];
+    NSString *tempTime = [stampFormatter stringFromDate:stampDate2];
+    
+    _openTimeLabelOne.text = tempTime;
+    _mebLevelLabel.text = model.level_name;
+    
+    if ([model.supplier_level isEqualToString:@"1"]) {
         [_mebIconView setImage:[UIImage imageNamed:@"普通会员132*132"]];
-    }else if ([model.supplier_level isEqualToString:@"银牌商户"]){
+    }else if ([model.supplier_level isEqualToString:@"2"]){
         [_mebIconView setImage:[UIImage imageNamed:@"银牌会员44*44"]];
         [_mebLevelLabel setTextColor:COLORFromRGB(0x5c83e2)];
 
-    }else if ([model.supplier_level isEqualToString:@"金牌商户"]){
+    }else if ([model.supplier_level isEqualToString:@"3"]){
         [_mebIconView setImage:[UIImage imageNamed:@"金牌会员44*44"]];
         [_mebLevelLabel setTextColor:COLORFromRGB(0xfbaa69)];
 
-    }else if ([model.supplier_level isEqualToString:@"砖石商户"]){
+    }else if ([model.supplier_level isEqualToString:@"4"]){
         [_mebIconView setImage:[UIImage imageNamed:@"砖石会员44*44"]];
         [_mebLevelLabel setTextColor:COLORFromRGB(0x9b77a5)];
 

@@ -7,7 +7,6 @@
 //
 
 #import "SweepMeController.h"
-#import "UIImageView+WebCache.h"
 
 @interface SweepMeController (){
     UIImageView *sm_codeView;//二维码展示视图
@@ -21,8 +20,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self smCreateNavgation];
-    [self smGetImageCode];
     [self smCreateSubView];
+    [self smGetImageCode];
+
+
     
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
@@ -91,6 +92,7 @@
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
     UIImage *image = [UIImage imageWithData:data]; // 取得图片
     UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
 }
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     
@@ -109,25 +111,11 @@
 - (void)smGetImageCode{
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-
-    NSDictionary *smDic =@{@"auth_session":oldSession};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
-    [manager POST:SWEEPME_URL parameters:smDic progress:^(NSProgress * _Nonnull uploadProgress) {
-        
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSString *imageUrl = responseObject[@"qr_url"];
-        sm_url = imageUrl;
-        [sm_codeView sd_setImageWithURL:[NSURL  URLWithString:imageUrl]];
-        
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-    }];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
+    sm_url = imageUrl;
+//    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+ 
 
 }
 /**

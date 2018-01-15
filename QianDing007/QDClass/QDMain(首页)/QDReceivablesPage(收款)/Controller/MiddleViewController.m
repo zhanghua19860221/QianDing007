@@ -71,6 +71,7 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                [[shareDelegate shareZHProgress] removeFromSuperview];
                 return;
                 
             }else{
@@ -84,13 +85,12 @@
                 }
                 [_tableView reloadData];
          }
-            [[shareDelegate shareZHProgress] removeFromSuperview];
-
         }else{
             
             [self midShowAlert:responseObject[@"info"]];
         }
-        
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         

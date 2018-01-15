@@ -62,6 +62,7 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                [[shareDelegate shareZHProgress] removeFromSuperview];
                 return;
                 
             }else{
@@ -73,10 +74,9 @@
                     [dataArray addObject:model];
                 }
                 [_tableView reloadData];
-                [[shareDelegate shareZHProgress] removeFromSuperview];
-
             }
-            
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+
         }else{
             
             [self pvShowAlert:responseObject[@"info"]];

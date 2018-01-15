@@ -15,7 +15,7 @@
     UIView *topView;     //欢迎视图
     UIView * firstView;  //第一个模块视图
     UIView * secondView; //第er个模块视图
-
+    UILabel *labelName ;//代理商名字
 }
 
 @end
@@ -66,8 +66,13 @@
             NSArray *array = @[day,agency_distribute,avg_distribute];
             [self mdCreateFirstView:array];
             [self mdCreateSecondView];
-
-            
+            //商户名称
+            labelName.text = [NSString stringWithFormat:@"您好!%@",responseObject[@"name"]];
+        }else{
+        
+            [self mdShowAlert:responseObject[@"info"]];
+        
+        
         }
         //隐藏数据请求蒙板
         [[shareDelegate shareZHProgress] removeFromSuperview];
@@ -257,13 +262,13 @@
         make.height.mas_equalTo(44);
     }];
     
-    UILabel *label = [[UILabel alloc] init];
-    label.text = @"您好！代理商全时便利店";
-    label.font = [UIFont systemFontOfSize:16];
-    label.textAlignment = NSTextAlignmentLeft;
-    [label setTextColor:COLORFromRGB(0xffffff)];
-    [topView addSubview:label];
-    [label mas_makeConstraints:^(MASConstraintMaker *make) {
+    labelName = [[UILabel alloc] init];
+    labelName.text = @"您好! ";
+    labelName.font = [UIFont systemFontOfSize:16];
+    labelName.textAlignment = NSTextAlignmentLeft;
+    [labelName setTextColor:COLORFromRGB(0xffffff)];
+    [topView addSubview:labelName];
+    [labelName mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(backBtn.mas_bottom);
         make.left.equalTo(topView).offset(21);
         make.width.mas_equalTo(200);
@@ -285,7 +290,25 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+/**
+ 警示 弹出框
+ */
+- (void)mdShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
 
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 

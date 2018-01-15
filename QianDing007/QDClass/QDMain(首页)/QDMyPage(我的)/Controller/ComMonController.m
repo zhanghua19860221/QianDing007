@@ -41,7 +41,8 @@
     NSDictionary *ulDic =@{@"auth_session":oldSession,
                            @"supplier_level":@"1"
                            };
-    
+    NSLog(@"%@",[shareDelegate logDic:ulDic]);
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -51,8 +52,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *has_data = responseObject[@"has_data"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
@@ -67,6 +67,7 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                [[shareDelegate shareZHProgress] removeFromSuperview];
                 return;
                 
             }else{
@@ -79,14 +80,16 @@
                     [dataArray addObject:model];
                 }
                 self.basicDataArray = dataArray;
-                
+                [self.tableView reloadData];
+
             }
             
         }else{
             
             [self allShowAlert:responseObject[@"info"]];
         }
-        
+        //隐藏数据请求蒙板
+        [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         

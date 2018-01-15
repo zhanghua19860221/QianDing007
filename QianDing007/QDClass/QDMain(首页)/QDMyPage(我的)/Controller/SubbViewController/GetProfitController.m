@@ -38,7 +38,7 @@
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
     NSDictionary *pcDic =@{@"auth_session":oldSession,
-                           @"type":@"1"
+                           @"type":@"2"
                            };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -50,7 +50,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
         NSString *have_detail_list = responseObject[@"have_detail_list"];
         NSString *status = responseObject[@"status"];
@@ -66,17 +66,20 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                [[shareDelegate shareZHProgress] removeFromSuperview];
+
                 return;
                 
             }else{
                 
-                NSArray *tempArray = responseObject[@"supplier_data"];
+                NSArray *tempArray = responseObject[@"detail_list"];
                 
                 for (NSDictionary *allDic in tempArray) {
                     MyGetProfitModel *model = [[MyGetProfitModel alloc]init];
                     [model setValuesForKeysWithDictionary:allDic];
                     [dataArray addObject:model];
                 }
+                [self.tableView reloadData];
             }
             
         }else{
@@ -84,7 +87,7 @@
             [self gpShowAlert:responseObject[@"info"]];
         }
         //隐藏数据请求蒙板
-        [shareDelegate shareZHProgress].hidden = YES;
+        [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         
@@ -102,7 +105,7 @@
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
         make.left.right.equalTo(self.view);
-        make.height.mas_offset(SC_HEIGHT-124);
+        make.height.mas_offset(SC_HEIGHT-200);
         
     }];
 }

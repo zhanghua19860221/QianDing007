@@ -11,6 +11,12 @@
 
 
 @interface PersonalController (){
+    UITextField *ps_selectField;    //记录当前编辑的输入框
+    CGFloat   ps_keyBoardHeight;    //记录键盘高度
+    CGFloat   ps_keyBoardDuration;  //记录键盘弹出需要的时间
+    CGFloat   ps_scrollViewOldoffSet;//记录scrollView旧的偏移量
+    
+    
     UITextField *businessField;     //商家名称
     UITextField *detailAddressField;//详细地址
     UITextField *userNameField;     //姓名
@@ -36,9 +42,40 @@
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     [self createScrollerView];
     [self createOneView];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
     // Do any additional setup after loading the view.
 }
+- (void)keyBoardshow:(NSNotification*)notification{
+    
+    NSDictionary * info = [notification userInfo];
+    NSValue *avalue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    CGRect keyboardRect = [self.view convertRect:[avalue CGRectValue] fromView:nil];
+    //键盘的高度
+    ps_keyBoardHeight = keyboardRect.size.height;
+    //键盘调起的时间长度
+    ps_keyBoardDuration = [notification.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+    ps_scrollViewOldoffSet = scrollView.contentOffset.y;
+    if ( (ps_selectField.frame.origin.y + ps_keyBoardHeight + 150) >= ([[UIScreen mainScreen] bounds].size.height-114 + ps_scrollViewOldoffSet)){
+        //此时，编辑框被键盘盖住，则对视图做相应的位移
+        CGFloat offSetY = ps_selectField.frame.origin.y + 150 + ps_keyBoardHeight - [[UIScreen mainScreen] bounds].size.height + 114;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
+        [UIView animateWithDuration:ps_keyBoardDuration animations:^{
+            [scrollView setContentOffset:CGPointMake(0, offSetY) animated:YES];
+            
+        }];
+        
+    }
+    
+}
+- (void)keyBoardhide:(NSNotification*)notification{
+    
+    [UIView animateWithDuration:ps_keyBoardDuration animations:^{
+        [scrollView setContentOffset:CGPointMake(0,ps_scrollViewOldoffSet) animated:YES];
+    }];
+    
+    
+}
+
 /**
  scrollerView展示控制器
  */
@@ -46,7 +83,7 @@
     
     scrollView = [[UIScrollView alloc] init];
     [self.view addSubview:scrollView];
-    scrollView.bounces = NO;
+    scrollView.alwaysBounceVertical  = YES ;
     scrollView.contentSize = CGSizeMake(0, 1350/SCALE_Y);
     [scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
@@ -696,7 +733,18 @@
  
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
-    
+    ps_selectField = textField;
+    //scrollview便宜量
+    ps_scrollViewOldoffSet = scrollView.contentOffset.y;
+    if ( (textField.frame.origin.y + ps_keyBoardHeight + 150) >= ([[UIScreen mainScreen] bounds].size.height-114 + ps_scrollViewOldoffSet)){
+        //此时，编辑框被键盘盖住，则对视图做相应的位移
+        CGFloat offSetY = textField.frame.origin.y + 150 + ps_keyBoardHeight - [[UIScreen mainScreen] bounds].size.height + 114;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
+        [UIView animateWithDuration:ps_keyBoardDuration animations:^{
+            [scrollView setContentOffset:CGPointMake(0, offSetY) animated:YES];
+            
+        }];
+        
+    }
 }
 /**
  询问输入框是否可以结束编辑 ( 键盘是否可以收回)
@@ -713,6 +761,9 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
+    [UIView animateWithDuration:ps_keyBoardDuration animations:^{
+        [scrollView setContentOffset:CGPointMake(0,ps_scrollViewOldoffSet) animated:YES];
+    }];
     NSLog(@"当前输入框结束编辑时触发");
 }
 /**
@@ -757,7 +808,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+    
+    
+}
 /*
 #pragma mark - Navigation
 

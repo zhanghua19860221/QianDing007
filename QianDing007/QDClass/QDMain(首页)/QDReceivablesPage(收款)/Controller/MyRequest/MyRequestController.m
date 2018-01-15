@@ -467,12 +467,17 @@
          make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
        }];
        [mr_maskView layoutIfNeeded];
+    
+    //本地保存用户 手机号 数据
+    NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
+    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
         //创建分享参数
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
         [shareParams SSDKSetupShareParamsByText:@"钱叮"
-                                         images:[UIImage imageNamed:@"微信@2x"]
-                                            url:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/%E6%81%92%E4%B8%B0%E5%B9%BF%E7%9B%8A/id1319671449?mt=8"]
+                                         images:[UIImage imageNamed:@"图层1"]
+                                            url:[NSURL URLWithString:inviteUrl]
                                           title:@"钱叮0001"
                                            type:SSDKContentTypeWebPage
          ];
@@ -500,7 +505,7 @@
                      break;
 
                  case SSDKResponseStateCancel:{
-                     [self shareStataView:@"取消分享"];
+//                     [self shareStataView:@"取消分享"];
     
                  }
                     break;
@@ -519,13 +524,17 @@
         make.top.equalTo(mr_maskView.mas_bottom).offset(190/SCALE_Y);
     }];
     [mr_maskView layoutIfNeeded];
+    
+    //本地保存用户 手机号 数据
+    NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
+    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        
     [shareParams SSDKSetupShareParamsByText:@"钱叮"
                                      images:[UIImage imageNamed:@"QQ"]
-                                        url:[NSURL URLWithString:@"itms-apps://itunes.apple.com/us/app/%E6%81%92%E4%B8%B0%E5%B9%BF%E7%9B%8A/id1319671449?mt=8"]
+                                        url:[NSURL URLWithString:inviteUrl]
                                       title:@"钱叮0001"
                                        type:SSDKContentTypeWebPage
      ];

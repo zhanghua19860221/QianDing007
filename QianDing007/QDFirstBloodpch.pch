@@ -26,6 +26,9 @@
 //我的邀请
 #define INVITATION_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1"
 
+//我的邀请 二维码图片 url
+#define REQUESTCODE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=getPersonalQR&r_type=1&i_type=1"
+
 //获取商户信息
 #define GETINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1"
 
@@ -36,8 +39,8 @@
 //我扫吧接口
 #define SCANME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=scanPay&r_type=1"
 
-//扫我吧接口
-#define SWEEPME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getQrUrl&r_type=1"
+//扫我图片url地址
+#define SWEEPME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getQrUrl&r_type=1&auth_session="
 
 //上传商户logo
 #define PUSHLOGO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=uploadLogo&r_type=1"
@@ -89,6 +92,19 @@
 #import <TencentOpenAPI/QQApiInterface.h>
 //微信SDK头文件
 #import <WXApi.h>
+//支付宝
+#import <AlipaySDK/AlipaySDK.h>
+//获取验证码 倒计时按钮
+#import "UIButton+ZHCountDown.h"
+//获取导航栏
+#import "AppDelegate.h"
+//SDWebimage头文件
+#import "UIImageView+WebCache.h"
+//通讯录分享
+#import <ContactsUI/ContactsUI.h>
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
 
 
 // 自定义宏

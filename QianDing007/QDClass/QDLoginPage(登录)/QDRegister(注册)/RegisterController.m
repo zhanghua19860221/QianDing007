@@ -266,24 +266,32 @@
  */
 - (void)zcGetCodeBtnClick:(UIButton*)btn{
     
-    NSDictionary *dic = @{@"phone":zc_teleField.text};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
+    BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
+    if (!isPhone) {
+        [self zcShowAlert:@"请输入正确的手机号码。"];
+        return;
+        
+    }
+    [btn startCountDownTime:60 withCountDownBlock:^{
+        NSDictionary *dic = @{@"phone":zc_teleField.text};
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+        
         [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-         
             
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-        zc_sess_id = [responseObject objectForKey:@"sess_id"];
-        [[shareDelegate shareNSUserDefaults] setObject:zc_sess_id forKey:@"sess_id"];
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        NSLog(@"%@",error);
-        
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+            zc_sess_id = [responseObject objectForKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:zc_sess_id forKey:@"sess_id"];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+            
+        }];
     }];
-    
+
 }
 /**
  创建导航栏
@@ -340,14 +348,9 @@
                                                               //响应事件
                                                               NSLog(@"action = %@", action);
                                                           }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", action);
-                                                         }];
+
     
     [alert addAction:defaultAction];
-    [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)keyBoardshow:(NSNotification*)notification{

@@ -7,6 +7,8 @@
 //
 
 #import "MyLevelCell.h"
+#import "BuyLevelController.h"
+#import "MyRequestController.h"
 
 @implementation MyLevelCell
 - (void)awakeFromNib {
@@ -81,6 +83,7 @@
     [_requestUseBtn setTitleColor:COLORFromRGB(0x5c83e2) forState:UIControlStateNormal];
     _requestUseBtn.layer.masksToBounds = YES;
     _requestUseBtn.layer.cornerRadius = 5;
+    [_requestUseBtn addTarget:self action:@selector(requestUseBtn:) forControlEvents:UIControlEventTouchUpInside];
     _requestUseBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     _requestUseBtn.layer.borderColor = [COLORFromRGB(0x5c83e2) CGColor];
     _requestUseBtn.layer.borderWidth = 1;
@@ -182,6 +185,7 @@
     }];
     
 }
+
 - (void)addDataToCell:(MyLeveLModel*)model{
     _buyPice  = model.mebBuyMoney;
     _buyLevel = model.mebLevel;
@@ -217,6 +221,16 @@
     [_levelView setImage:[UIImage imageNamed:model.levelView]];
 
 }
+- (void)requestUseBtn:(UIButton*)btn{
+    AppDelegate *tempAppDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+    MyRequestController *VC = [[MyRequestController alloc] init];
+    [tempAppDelegate.mainNav pushViewController:VC animated:YES];
+}
+/**
+ 购买按钮点击事件
+
+ */
 -(void)buyLevelBtnClick:(UIButton*)btn{
     
     _maskView = [[UIView alloc] init];
@@ -259,15 +273,14 @@
     topLabel.textAlignment = NSTextAlignmentLeft;
     [topLabel setTextColor:COLORFromRGB(0x333333)];
     [secondView addSubview:topLabel];
-    
     [topLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(secondView).offset(16);
         make.left.equalTo(secondView).offset(130/SCALE_X);
         make.width.mas_equalTo(180/SCALE_X);
         make.height.mas_equalTo(18);
         
+        
     }];
-    
     UIButton *closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [closeBtn setImage:[UIImage imageNamed:@"关闭"] forState:UIControlStateNormal];
     [closeBtn addTarget:self action:@selector(closeMaskView) forControlEvents:UIControlEventTouchUpInside];
@@ -278,8 +291,8 @@
         make.right.equalTo(secondView).offset(-15);
         make.width.height.mas_equalTo(25/SCALE_Y);
         
+        
     }];
-    
     UIImageView *firstLine = [[UIImageView alloc] init];
     firstLine.backgroundColor = COLORFromRGB(0xf9f9f9);
     [secondView addSubview:firstLine];
@@ -290,7 +303,6 @@
         make.height.mas_equalTo(1);
         
     }];
-    
     UILabel *buyModeLabel = [[UILabel alloc] init];
     buyModeLabel.text = @"购买方式";
     buyModeLabel.font = [UIFont systemFontOfSize:16];
@@ -352,8 +364,7 @@
         make.height.mas_equalTo(14);
         
     }];
-    
-    
+
     UIButton * aliPayBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [aliPayBtn setImage:[UIImage imageNamed:@"支付未选中"] forState:UIControlStateNormal];
     [aliPayBtn setImage:[UIImage imageNamed:@"支付选中"] forState:UIControlStateSelected];
@@ -432,7 +443,6 @@
     buyMoneyOne.textAlignment = NSTextAlignmentLeft;
     [buyMoneyOne setTextColor:COLORFromRGB(0x333333)];
     [secondView addSubview:buyMoneyOne];
-    
     [buyMoneyOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(secondLine.mas_bottom).offset(30);
         make.left.equalTo(buyInfoLabel.mas_right).offset(25/SCALE_X);
@@ -440,14 +450,13 @@
         make.height.mas_equalTo(14);
         
     }];
-    
+
     UILabel *buyMoneyTwo = [[UILabel alloc] init];
     buyMoneyTwo.text = _buyPice;
     buyMoneyTwo.font = [UIFont systemFontOfSize:14];
     buyMoneyTwo.textAlignment = NSTextAlignmentLeft;
     [buyMoneyTwo setTextColor:COLORFromRGB(0xe10000)];
     [secondView addSubview:buyMoneyTwo];
-    
     [buyMoneyTwo mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(buyMoneyOne.mas_centerY);
         make.left.equalTo(buyMoneyOne.mas_right).offset(5/SCALE_X);
@@ -494,7 +503,7 @@
     [comitBtn setTitle:@"确认购买" forState:UIControlStateNormal];
     [comitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
     [secondView addSubview:comitBtn];
-    
+    [comitBtn addTarget:self action:@selector(comitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [comitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(buyLevelTwo.mas_bottom).offset(30);
         make.left.equalTo(secondView).offset(15);
@@ -502,15 +511,55 @@
         make.height.mas_equalTo(50/SCALE_Y);
         
     }];
+    
 }
+- (void)comitBtnClick:(UIButton *)button{
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSString *level = nil;
+    if ([_buyLevel isEqualToString:@"银牌商户"]) {
+        level = @"2";
+    }else if ([_buyLevel isEqualToString:@"金牌商户"]){
+        level = @"3";
+    }else if ([_buyLevel isEqualToString:@"钻石商户"]){
+        level = @"4";
 
+    }
+    NSDictionary *buyDic =@{@"auth_session":oldSession,
+                              @"level":level
+                              };
+    NSString *url = @"http://101.201.117.15/qd_api/index.php?ctl=qd_panyment&act=orderForm&r_type=1";
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:url parameters:buyDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"responseObject === %@",[shareDelegate logDic:responseObject]);
+        NSString *signedString = responseObject[@"response"];
+        NSString *appScheme = @"alisdkdemo";
+
+        [[AlipaySDK defaultService] payOrder:signedString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+            NSLog(@"reslut = %@",resultDic);
+        }];
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+    
+}
 /**
  选择支付方式按钮点击事件
  */
 - (void)payTypeClick:(UIButton*)btn{
-    
-    NSLog(@"21231");
-    
+        
     if (_selectBtn!=btn) {
         _selectBtn.selected=NO;
         btn.selected=YES;

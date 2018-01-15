@@ -49,6 +49,8 @@
     cp_oldPassWordField = [[UITextField alloc] init];
     cp_oldPassWordField.placeholder = @"输入旧密码";
     cp_oldPassWordField.delegate = self;
+    //取消输入框首字母默认大写功能
+    [cp_oldPassWordField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     cp_NewPassWordField.secureTextEntry = YES;
     cp_oldPassWordField.font = [UIFont systemFontOfSize:18];
     [cp_oldPassWordField setTextColor:COLORFromRGB(0x333333)];

@@ -51,7 +51,7 @@
     }];
     
     NSString *requestCode = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
-    NSString *phoneStr = [NSString stringWithFormat:@"%@",requestCode];
+    NSString *phoneStr = [NSString stringWithFormat:@"a%@",requestCode];
     ru_teleLabel = [[UILabel alloc] init];
     ru_teleLabel.text = phoneStr;
     ru_teleLabel.textAlignment = NSTextAlignmentCenter;
@@ -131,7 +131,6 @@
     }];
     
     UIImageView *codeView = [[UIImageView alloc] init];
-    [codeView setImage:[UIImage imageNamed:@"邀请商家"]];
     [secondView addSubview:codeView];
     [codeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(codeLabel.mas_bottom).offset(20/SCALE_Y);
@@ -140,6 +139,10 @@
         make.height.mas_equalTo(172);
         
     }];
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&auth_session=%@",REQUESTCODE_URL,oldSession,@"agency"];
+    [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    
     
 }
 
@@ -207,14 +210,19 @@
 - (void)requestViewClick:(UIButton *)btn{
     
     switch (btn.tag) {
-        case 260:
-            
+        case 260:{
+            [self ruShareWeChat];
+        }
             break;
-        case 261:
+        case 261:{
+            [self ruShareTencent];
             
+        }
             break;
-        case 262:
+        case 262:{
+            [self ruShareMailList];
             
+        }
             break;
             
         default:
@@ -256,7 +264,202 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+//弹出 分享结果 视图初始化
+-(void)ruShareStataView:(NSString * ) stata{
+    //收藏时提示框 视图
+    UIView *promptBox = [[UIView alloc] init];
+    [self.view addSubview:promptBox];
+    
+    [UIView animateWithDuration:1 animations:^{
+        
+        promptBox.backgroundColor = [COLORFromRGB(0x000000) colorWithAlphaComponent:0.5];
+        promptBox.layer.cornerRadius=8;
+        promptBox.layer.masksToBounds=YES;
+        [promptBox mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view);
+            make.centerY.equalTo(self.view.mas_centerY).offset(50);
+            make.width.mas_equalTo(160);
+            make.height.mas_equalTo(40);
+            
+        }];
+        
+        UILabel*lable=[[UILabel alloc] init];
+        lable.text= stata ;
+        lable.textAlignment=NSTextAlignmentCenter;
+        [lable setTextColor:COLORFromRGB(0xffffff)];
+        lable.font=[UIFont boldSystemFontOfSize:16];
+        [promptBox addSubview:lable];
+        [lable mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(promptBox);
+            make.centerY.equalTo(promptBox.mas_centerY);
+            make.width.mas_equalTo(100);
+            make.height.mas_equalTo(16);
+            
+        }];
+        
+    } completion:^(BOOL finished) {
+        
+        [promptBox removeFromSuperview];
+        
+    }];
+}
+/**
+ 微信分享
+ */
+- (void)ruShareWeChat{
 
+    //本地保存用户 手机号 数据
+    NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
+    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
+    //创建分享参数
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:@"钱叮"
+                                     images:[UIImage imageNamed:@"图层1"]
+                                        url:[NSURL URLWithString:inviteUrl]
+                                      title:@"钱叮0001"
+                                       type:SSDKContentTypeWebPage
+     ];
+    //开始进行分享
+    [ShareSDK showShareEditor:SSDKPlatformTypeWechat
+           otherPlatformTypes:nil
+                  shareParams:shareParams
+          onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
+              
+              NSLog(@"state == %lu",(unsigned long)state);
+              
+              
+              switch (state) {
+                      
+                  case SSDKResponseStateSuccess:{
+                      [self ruShareStataView:@"分享成功"];
+                      
+                      
+                  }
+                      break;
+                  case SSDKResponseStateFail:{
+                      [self ruShareStataView:@"分享失败"];
+                      
+                  }
+                      break;
+                      
+                  case SSDKResponseStateCancel:{
+                      //                     [self shareStataView:@"取消分享"];
+                      
+                  }
+                      break;
+                  default:
+                      break;
+              }
+              
+          }];
+}
+/**
+ qq分享
+ */
+- (void)ruShareTencent{
+    
+    //本地保存用户 手机号 数据
+    NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
+    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
+
+    //创建分享参数
+    NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
+    [shareParams SSDKSetupShareParamsByText:@"钱叮"
+                                     images:[UIImage imageNamed:@"QQ"]
+                                        url:[NSURL URLWithString:inviteUrl]
+                                      title:@"钱叮0001"
+                                       type:SSDKContentTypeWebPage
+     ];
+    //开始进行分享
+    [ShareSDK showShareEditor:SSDKPlatformTypeQQ
+           otherPlatformTypes:nil
+                  shareParams:shareParams
+          onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
+              NSLog(@"(unsigned long)state==%lu",(unsigned long)state);
+              switch (state) {
+                  case SSDKResponseStateSuccess:{
+                      [self ruShareStataView:@"分享成功"];
+                      
+                  }
+                      break;
+                  case SSDKResponseStateFail:{
+                      [self ruShareStataView:@"分享失败"];
+                      
+                  }
+                      break;
+                  case SSDKResponseStateCancel:{
+//                      [self shareStataView:@"取消分享"];
+                      
+                  }
+                      break;
+                  default:
+                      break;
+              }
+              
+          }];
+    
+}
+/**
+ 通讯录分享
+ */
+- (void)ruShareMailList{
+
+    //让用户给权限,没有的话会被拒的各位
+    CNAuthorizationStatus status = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];
+    if (status == CNAuthorizationStatusNotDetermined) {
+        CNContactStore *store = [[CNContactStore alloc] init];
+        [store requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"没有授权, 需要去设置中心设置授权");
+            }else{
+                NSLog(@"用户已授权限");
+                CNContactPickerViewController * picker = [CNContactPickerViewController new];
+                picker.delegate = self;
+                // 加载手机号
+                picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+                [self presentViewController: picker  animated:YES completion:nil];
+            }
+        }];
+    }
+    if (status == CNAuthorizationStatusAuthorized) {
+        
+        //有权限时
+        CNContactPickerViewController * picker = [CNContactPickerViewController new];
+        picker.delegate = self;
+        picker.displayedPropertyKeys = @[CNContactPhoneNumbersKey];
+        [self presentViewController: picker  animated:YES completion:nil];
+    }
+    else{
+        NSLog(@"您未开启通讯录权限,请前往设置中心开启");
+    }
+    
+}
+#pragma ************ 通讯录代理方法********************************
+
+-(void)contactPicker:(CNContactPickerViewController *)picker didSelectContactProperty:(CNContactProperty *)contactProperty{
+    
+    CNContact *contact = contactProperty.contact;
+    
+    //    NSLog(@"%@",contactProperty);
+    //    NSLog(@"givenName: %@, familyName: %@", contact.givenName, contact.familyName);
+    
+    if (![contactProperty.value isKindOfClass:[CNPhoneNumber class]]) {
+        NSLog(@"提示用户选择11位的手机号");
+        return;
+    }
+    CNPhoneNumber *phoneNumber = contactProperty.value;
+    NSString * Str = phoneNumber.stringValue;
+    NSCharacterSet *setToRemove = [[ NSCharacterSet characterSetWithCharactersInString:@"0123456789"]invertedSet];
+    NSString *phoneStr = [[Str componentsSeparatedByCharactersInSet:setToRemove]componentsJoinedByString:@""];
+    if (phoneStr.length != 11) {
+        
+        NSLog(@"提示用户选择11位的手机号");
+    }
+    NSString * textName = [NSString stringWithFormat:@"姓名:%@-电话:%@",contact.familyName,phoneStr];
+    
+}
 /*
 #pragma mark - Navigation
 

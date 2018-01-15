@@ -13,7 +13,7 @@
     UITextField *rs_newPassWordField;  //设置新密码
     UITextField *rs_againPassWordField;//确认新密码
     UITextField *rs_getCodeField;      //验证码
-
+    
 }
 
 @end
@@ -107,6 +107,7 @@
             
             
     }];
+
     
     UIImageView *lineTwo = [[UIImageView alloc] init];
     lineTwo.backgroundColor = COLORFromRGB(0xf9f9f9);
@@ -184,27 +185,38 @@
  */
 - (void)rsGetCodeBtnClick:(UIButton*)btn{
     
-    NSDictionary *dic = @{@"phone":rs_teleField.text};
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
-    [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
-     
+    BOOL isPhone = [shareDelegate isChinaMobile:rs_teleField.text];
+    if (!isPhone) {
+        [self rsShowAlert:@"请输入正确的手机号码。"];
+        return;
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+    }
+    [btn startCountDownTime:60 withCountDownBlock:^{
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        rs_sess_id = [responseObject objectForKey:@"sess_id"];
-        [[shareDelegate shareNSUserDefaults] setObject:rs_sess_id forKey:@"sess_id"];
+        NSDictionary *dic = @{@"phone":rs_teleField.text};
         
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-          NSLog(@"%@",error);
+        [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            rs_sess_id = [responseObject objectForKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:rs_sess_id forKey:@"sess_id"];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            NSLog(@"%@",error);
+        }];
+        
+        
+        
     }];
-    
 }
 
 /**
@@ -220,9 +232,9 @@
         return;
         
     }
-    
     BOOL isoK = [shareDelegate judgePassWordLegal:rs_newPassWordField.text];
     if (!isoK) {
+        
         [self rsShowAlert:@"请设置6至18位数字、字母组合密码."];
         return;
         
@@ -254,8 +266,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
-        
+    
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -298,14 +309,9 @@
                                                               //响应事件
                                                               NSLog(@"action = %@", action);
                                                           }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", action);
-                                                         }];
+
     
     [alert addAction:defaultAction];
-    [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma **************UITextFieldDelegate**********************

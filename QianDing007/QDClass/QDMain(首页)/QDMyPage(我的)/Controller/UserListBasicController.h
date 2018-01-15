@@ -11,7 +11,6 @@
 @interface UserListBasicController : UITableViewController
 /**
  <#Description#> List - 目录列表
- 
  */
 @property (strong, nonatomic) NSArray *basicDataArray;
 @end

@@ -46,7 +46,6 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
         NSString *has_data = responseObject[@"has_data"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
@@ -61,26 +60,26 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                [[shareDelegate shareZHProgress] removeFromSuperview];
                 return;
                 
             }else{
-                
                 NSArray *tempArray = responseObject[@"supplier_data"];
-                
                 for (NSDictionary *allDic in tempArray) {
                     UserListModel *model = [[UserListModel alloc]init];
                     [model setValuesForKeysWithDictionary:allDic];
                     [dataArray addObject:model];
                 }
                 self.basicDataArray = dataArray;
+                [self.tableView reloadData];
 
             }
-
         }else{
             
             [self allShowAlert:responseObject[@"info"]];
         }
-        
+        //隐藏数据请求蒙板
+        [[shareDelegate shareZHProgress] removeFromSuperview];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         

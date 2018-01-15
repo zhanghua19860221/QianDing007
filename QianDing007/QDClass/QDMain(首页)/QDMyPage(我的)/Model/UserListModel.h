@@ -14,5 +14,7 @@
 @property (strong , nonatomic) NSString *cash_sum;      //总收款
 @property (strong , nonatomic) NSString *create_time;   //开通时间
 @property (strong , nonatomic) NSString *supplier_level;//会员等级
+@property (strong , nonatomic) NSString *level_name;   //开通时间
+
 
 @end
