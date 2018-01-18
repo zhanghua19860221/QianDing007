@@ -101,7 +101,7 @@
     lg_teleField.tag = 51;
     //取消输入框首字母默认大写功能
     [lg_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-//    [lg_teleField setAutocorrectionType:UITextAutocorrectionTypeNo];
+    [lg_teleField setAutocorrectionType:UITextAutocorrectionTypeNo];
     // lg_teleField.secureTextEntry = YES;
     lg_teleField.textAlignment = NSTextAlignmentLeft;
     lg_teleField.font = [UIFont systemFontOfSize:18];
@@ -144,6 +144,7 @@
     lg_passField.tag = 61;
     lg_passField.secureTextEntry = YES;
     [lg_passField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [lg_passField setAutocorrectionType:UITextAutocorrectionTypeNo];
     lg_passField.textAlignment = NSTextAlignmentLeft;
     lg_passField.font = [UIFont systemFontOfSize:18];
     [lg_passField setTextColor:COLORFromRGB(0x333333)];
@@ -177,16 +178,20 @@
         make.height.mas_equalTo(@44);
     }];
 }
-
+//防止重复点击
+- (void)changeButtonStatus{
+    lg_loginBtn.enabled = YES;
+    
+}
 /**
  
  登录按钮点击事件
  */
 - (void)lgClickLoginBtn:(UIButton*)btn{
-    
+    lg_loginBtn.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
     
     btn.backgroundColor = COLORFromRGB(0xe10000);
-    
     BOOL isPhone = [shareDelegate isChinaMobile:lg_teleField.text];
     if (!isPhone) {
         [self lgShowAlert:@"请输入正确的手机号码。"];
@@ -198,11 +203,15 @@
         return;
         
     }
-    //数据请求蒙板
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
     }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+
     
     NSString * rsPassWord_md5 = [MyMD5 md5:lg_passField.text];
     
@@ -221,7 +230,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
 
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
@@ -258,8 +267,8 @@
             [self lgShowAlert:responseObject[@"info"]];
 
         }
+        //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
-
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);
@@ -344,13 +353,6 @@
     CGRect frame =  CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT);
     frame.origin.y -= 50;
     self.view.frame=frame;
-
-//    if ( (lg_selectTextField.frame.origin.y + keyboardHeight + 40) >= ([[UIScreen mainScreen] bounds].size.height)){
-//        //此时，编辑框被键盘盖住，则对视图做相应的位移
-//        CGRect frame =  CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT);
-//        frame.origin.y -= lg_selectTextField.frame.origin.y + 40 + 216 - [[UIScreen mainScreen] bounds].size.height;//偏移量=编辑框原点Y值+键盘高度+编辑框高度-屏幕高度
-//        self.view.frame=frame;
-//    }
     
 }
 - (void)keyBoardhide:(NSNotification*)notification{
@@ -451,13 +453,15 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    //移除请求菊花条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
     
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
-    
+
 }
 /*
 #pragma mark - Navigation

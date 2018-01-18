@@ -10,10 +10,18 @@
 #import "CompanyController.h"
 #import "PersonalController.h"
 @interface UserViewController (){
-    UIView *topView;    //创建顶部选择按钮
-    UIButton *selectBtn;//记录选中的按钮
-    UIView *onePageView;//第一页展示视图
-    UIView *twoPageView;//第二页展示视图
+    UIView      *topView;   //创建顶部选择按钮
+    UIButton  *selectBtn;   //记录选中的按钮
+    UILabel *selectLabel;   //选中labelOne
+    UILabel *selectLabelOne;//选中labelOne
+    UIView  *onePageView;   //第一页展示视图
+    UIView  *twoPageView;   //第二页展示视图
+    
+    UILabel *lableOne;
+    UILabel *lableTwo;
+    UILabel *lableThree;
+    UILabel *lableFour;
+    UIImageView *scrollLine;//滚动线条
     
     CompanyController *companyVC;   //企业认证
     PersonalController *personalVC; //个人认证
@@ -51,8 +59,6 @@
     _scrollView.pagingEnabled = YES;
     [self.view addSubview:_scrollView];
     _scrollView.delegate = self ;
-    _scrollView.scrollEnabled = NO;
-    _scrollView.bounces = NO;
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*2.0, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom);
@@ -85,26 +91,18 @@
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(64);
         make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(60/SCALE_Y);
+        make.height.mas_equalTo(60);
         
     }];
 
-    NSArray *oneArray = @[@"企业认证",@"个人认证"];
-    NSArray *twoArray = @[@"(有营业执照)",@"(无营业执照)"];
-    
     UIButton *tempBtn = nil;
     for (int i = 0; i < 2; i++) {
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        button.backgroundColor = COLORFromRGB(0xebebeb);
+        button.backgroundColor = COLORFromRGB(0xffffff);
         button.tag = 300+i;
         [topView addSubview:button];
         [button addTarget:self action:@selector(changeClick:) forControlEvents:UIControlEventTouchUpInside];
-        if (i == 0) {
-            button.selected = YES;
-            button.backgroundColor = COLORFromRGB(0xe10000);
-            selectBtn = button;
-        }
         [button mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(topView);
             if (tempBtn) {
@@ -114,56 +112,151 @@
             }
             make.height.mas_equalTo(60);
             make.width.mas_equalTo(SC_WIDTH/2.0);
-        }];
-        
-        UILabel *lableOne = [[UILabel alloc] init];
-        lableOne.text = oneArray[i];
-        lableOne.textAlignment = NSTextAlignmentCenter;
-        [lableOne setTextColor:COLORFromRGB(0xffffff)];
-        lableOne.font = [UIFont systemFontOfSize:16];
-        [button addSubview:lableOne];
-        [lableOne mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(button).offset(15);
-            make.left.right.equalTo(button);
-            make.height.mas_equalTo(16);
-    
-        }];
-        UILabel *lableTwo = [[UILabel alloc] init];
-        lableTwo.text = twoArray[i];
-        lableTwo.textAlignment = NSTextAlignmentCenter;
-        [lableTwo setTextColor:COLORFromRGB(0xffffff)];
-        lableTwo.font = [UIFont systemFontOfSize:14];
-        [button addSubview:lableTwo];
-        [lableTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(lableOne.mas_bottom);
-            make.left.right.equalTo(button);
-            make.height.mas_equalTo(14);
             
         }];
         
         tempBtn = button;
     }
-}
+    
+        lableOne = [[UILabel alloc] init];
+        lableOne.text = @"企业认证";
+        lableOne.textAlignment = NSTextAlignmentRight;
+        [lableOne setTextColor:COLORFromRGB(0xe10000)];
+        lableOne.font = [UIFont systemFontOfSize:16];
+        [self.view addSubview:lableOne];
+        [lableOne mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(64);
+            make.left.equalTo(self.view).offset(-5);
+            make.width.mas_equalTo(SC_WIDTH/4.0);
+            make.height.mas_equalTo(60);
+    
+        }];
+    
+        lableTwo = [[UILabel alloc] init];
+        lableTwo.text = @"(有营业执照)";
+        lableTwo.textAlignment = NSTextAlignmentLeft;
+        [lableTwo setTextColor:COLORFromRGB(0xe10000)];
+        lableTwo.font = [UIFont systemFontOfSize:14];
+        [self.view addSubview:lableTwo];
+        [lableTwo mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(64);
+            make.left.equalTo(lableOne.mas_right);
+            make.height.mas_equalTo(60);
+            make.width.mas_equalTo(SC_WIDTH/4.0);
+    
+        }];
 
+    
+        lableThree = [[UILabel alloc] init];
+        lableThree.text = @"个人认证";
+        lableThree.textAlignment = NSTextAlignmentRight;
+        [lableThree setTextColor:COLORFromRGB(0x999999)];
+        lableThree.font = [UIFont systemFontOfSize:16];
+        [self.view addSubview:lableThree];
+        [lableThree mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(64);
+            make.left.equalTo(lableTwo.mas_right).offset(-5);
+            make.width.mas_equalTo(SC_WIDTH/4.0);
+            make.height.mas_equalTo(60);
+        
+        }];
+    
+        lableFour = [[UILabel alloc] init];
+        lableFour.text = @"(无营业执照)";
+        lableFour.textAlignment = NSTextAlignmentLeft;
+        [lableFour setTextColor:COLORFromRGB(0x999999)];
+        lableFour.font = [UIFont systemFontOfSize:14];
+        [self.view addSubview:lableFour];
+        [lableFour mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(64);
+            make.left.equalTo(lableThree.mas_right);
+            make.height.mas_equalTo(60);
+            make.width.mas_equalTo(SC_WIDTH/4.0);
+        
+        }];
+    //滚动线条
+    scrollLine = [[UIImageView alloc] init];
+    scrollLine.backgroundColor = COLORFromRGB(0xe10000);
+    scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0 , 2);
+    [self.view addSubview:scrollLine];
+    
+    NSString *is_Checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    if ([is_Checked isEqualToString:@"0"]) {
+        [self createShowView:@"未认证"];
+    
+    }else if ([is_Checked isEqualToString:@"1"]){
+        [self createShowView:@"认证已通过"];
+
+    }else if ([is_Checked isEqualToString:@"2"]){
+        [self createShowView:@"认证被拒绝"];
+
+    }
+    
+}
+- (void)createShowView:(NSString *)str{
+    
+    UIView *promptBox = [[UIView alloc] init];
+    
+    [[UIApplication sharedApplication].keyWindow addSubview:promptBox];
+    [UIView animateWithDuration:1 animations:^{
+        
+        promptBox.backgroundColor = [COLORFromRGB(0x000000) colorWithAlphaComponent:0.5];
+        promptBox.layer.cornerRadius = 8;
+        promptBox.layer.masksToBounds = YES;
+        [promptBox mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo([UIApplication sharedApplication].keyWindow.mas_centerX);
+            make.centerY.equalTo([UIApplication sharedApplication].keyWindow.mas_centerY).offset(50);
+            make.width.mas_equalTo(160);
+            make.height.mas_equalTo(40);
+            
+        }];
+        UILabel*lable = [[UILabel alloc] init];
+        lable.textAlignment = NSTextAlignmentCenter;
+        lable.text = str;
+        [lable setTextColor:COLORFromRGB(0xffffff)];
+        lable.font = [UIFont boldSystemFontOfSize:16];
+        [promptBox addSubview:lable];
+        [lable mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(promptBox);
+            make.centerY.equalTo(promptBox.mas_centerY);
+            make.width.mas_equalTo(200);
+            make.height.mas_equalTo(16);
+            
+        }];
+        
+    } completion:^(BOOL finished) {
+        
+        [promptBox removeFromSuperview];
+        
+    }];
+
+}
 /**
   选择框导航栏
  */
 - (void)changeClick:(UIButton*)btn{
-    
-    if (selectBtn!=btn) {
-        selectBtn.selected=NO;
-        selectBtn.backgroundColor = COLORFromRGB(0xebebeb);
-        btn.selected=YES;
-        btn.backgroundColor = COLORFromRGB(0xe10000);
-        selectBtn=btn;
-    }
-    
     switch (btn.tag) {
-        case 300:
+        case 300:{
+            [lableOne setTextColor:COLORFromRGB(0xe10000)];
+            [lableTwo setTextColor:COLORFromRGB(0xe10000)];
+            [lableThree setTextColor:COLORFromRGB(0x999999)];
+            [lableFour  setTextColor:COLORFromRGB(0x999999)];
             _scrollView.contentOffset = CGPointMake(0, 0);
+            [UIView animateWithDuration:0.3 animations:^{
+                scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+            }];
+           }
             break;
-        case 301:
+        case 301:{
+            [lableThree setTextColor:COLORFromRGB(0xe10000)];
+            [lableFour  setTextColor:COLORFromRGB(0xe10000)];
+            [lableOne setTextColor:COLORFromRGB(0x999999)];
+            [lableTwo setTextColor:COLORFromRGB(0x999999)];
             _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
+            [UIView animateWithDuration:0.3 animations:^{
+                scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+            }];
+        }
             break;
         default:
             break;
@@ -174,7 +267,6 @@
  创建导航栏
  */
 - (void)createNavgation{
-    
     self.navigationItem.title = @"商家认证";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
@@ -189,7 +281,6 @@
  导航栏左侧按钮点击事件
  */
 - (void)leftBackClick{
-    
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -198,17 +289,28 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     
     int x = scrollView.contentOffset.x/SC_WIDTH;
-    
-    UIButton *tempButton = (UIButton *)[self.view viewWithTag:300+x];
-    if (selectBtn != tempButton) {
-        selectBtn.selected=NO;
-        selectBtn.backgroundColor = COLORFromRGB(0xebebeb);
-        tempButton.selected = YES;
-        tempButton.backgroundColor = COLORFromRGB(0xe10000);
-        selectBtn = tempButton;
+    //滚动线条处理
+    if (x == 0) {
+        [lableOne setTextColor:COLORFromRGB(0xe10000)];
+        [lableTwo setTextColor:COLORFromRGB(0xe10000)];
+        [lableThree setTextColor:COLORFromRGB(0x999999)];
+        [lableFour  setTextColor:COLORFromRGB(0x999999)];
+        [UIView animateWithDuration:0.3 animations:^{
+            scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+        }];
+
+    }else if (x == 1){
+        [lableThree setTextColor:COLORFromRGB(0xe10000)];
+        [lableFour  setTextColor:COLORFromRGB(0xe10000)];
+        [lableOne setTextColor:COLORFromRGB(0x999999)];
+        [lableTwo setTextColor:COLORFromRGB(0x999999)];
+        [UIView animateWithDuration:0.3 animations:^{
+            scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+        }];
+
     }
-    [_scrollView setContentOffset:CGPointMake(x*SC_WIDTH, 0) animated:YES];
     
+    [_scrollView setContentOffset:CGPointMake(x*SC_WIDTH, 0) animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

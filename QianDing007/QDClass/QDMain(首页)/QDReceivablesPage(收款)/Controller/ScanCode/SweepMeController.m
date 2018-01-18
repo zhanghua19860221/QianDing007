@@ -11,6 +11,7 @@
 @interface SweepMeController (){
     UIImageView *sm_codeView;//二维码展示视图
     NSString *sm_url;//网络图片地址
+    UIButton *sm_saveCode;//保存二维码图片按钮
 
 }
 @end
@@ -69,15 +70,15 @@
         
     }];
     
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"保存二维码" forState:UIControlStateNormal];
-    [button setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    button.layer.masksToBounds = YES;
-    button.layer.cornerRadius = 5;
-    button.backgroundColor = COLORFromRGB(0xe10000);
-    [self.view addSubview:button];
-    [button addTarget:self action:@selector(savePictureToAlbum) forControlEvents:UIControlEventTouchUpInside];
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+    sm_saveCode = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sm_saveCode setTitle:@"保存二维码" forState:UIControlStateNormal];
+    [sm_saveCode setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    sm_saveCode.layer.masksToBounds = YES;
+    sm_saveCode.layer.cornerRadius = 5;
+    sm_saveCode.backgroundColor = COLORFromRGB(0xe10000);
+    [self.view addSubview:sm_saveCode];
+    [sm_saveCode addTarget:self action:@selector(savePictureToAlbum) forControlEvents:UIControlEventTouchUpInside];
+    [sm_saveCode mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(label.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
@@ -86,8 +87,21 @@
     }];
     
 }
+//防止重复点击
+- (void)changeButtonStatus{
+    sm_saveCode.enabled = YES;
+    
+}
+
+/**
+ 保存二维码图片到相册
+ */
 - (void)savePictureToAlbum{
 
+    //防止重复点击
+    sm_saveCode.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
+    
     NSString *urlString = sm_url;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
     UIImage *image = [UIImage imageWithData:data]; // 取得图片
@@ -108,6 +122,10 @@
     }
     
 }
+
+/**
+ 添加二维码图片
+ */
 - (void)smGetImageCode{
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];

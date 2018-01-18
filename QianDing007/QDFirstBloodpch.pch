@@ -17,8 +17,13 @@
 #define REGISTER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=register&r_type=1&i_type=1"
 //重置密码和找回密码接口
 #define RESET_PWD_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=restPassword&r_type=1"
+
+//修改手机号下一步接口
+#define CHANGE_PHONE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=modifyPhoneOne&r_type=1"
+
 //修改手机号接口
 #define MODIFY_PHONE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=modifyPhone&r_type=1"
+
 //发送短信
 #define SMS_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=sendSms&r_type=1&i_type=1"
 //我的等级
@@ -33,7 +38,7 @@
 #define GETINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1"
 
 ////提交商户信息
-#define SUBMITINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=saveSupplierInfo&r_type=1&"
+#define SAVEINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=saveSupplierInfo&r_type=1&"
 
 
 //我扫吧接口
@@ -100,10 +105,13 @@
 #import "AppDelegate.h"
 //SDWebimage头文件
 #import "UIImageView+WebCache.h"
+#import <SDWebImage/UIButton+WebCache.h>
 //通讯录分享
 #import <ContactsUI/ContactsUI.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+//语音播报
+#import<AVFoundation/AVSpeechSynthesis.h>
 
 
 

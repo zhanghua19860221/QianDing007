@@ -43,10 +43,14 @@
 }
 - (void)pcGetUrlDataSource{
     
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
     }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
@@ -69,7 +73,7 @@
         
             [self pcShowAlert:responseObject[@"info"]];
         }
-        //隐藏数据请求蒙板
+        //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
@@ -234,8 +238,8 @@
     imageLine.backgroundColor = COLORFromRGB(0xe10000);
     imageLine.frame = CGRectMake(0,190,SC_WIDTH/2.0 , 2);
     [self.view addSubview:imageLine];
+    
 }
-
 -(void)changeView:(UIButton*)btn{
     if (selectBtn!=btn) {
         selectBtn.selected=NO;
@@ -288,6 +292,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 }
 #pragma ********************UIScrollViewDelegate**************
 // 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。

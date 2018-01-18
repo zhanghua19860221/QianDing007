@@ -16,7 +16,6 @@
     NSTimer * timer;
     CAShapeLayer *cropLayer;
     NSString *Str;
-
 }
 @end
 
@@ -34,7 +33,7 @@
     [self zhCreateNavgation];
 
 //  可以扫描相册二维码
-//  [self createButtonForPhotoList];
+  [self createButtonForPhotoList];
     
     // Do any additional setup after loading the view.
 }
@@ -337,6 +336,7 @@
                          @"money":moneyStr,
                          @"coupon_pwd":urlStr,
                          @"amount_token":md5_token
+                         
                          };
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -346,15 +346,15 @@
     [manager POST:SCANME_URL parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"info"] isEqualToString:@"收款成功"]) {
             
             SuccessScanController *successVc = [[SuccessScanController alloc] init];
             successVc.order_num = responseObject[@"orderNo"];
             successVc.order_time = responseObject[@"reqTime"];
             successVc.money_count = responseObject[@"money"];
-        
             [self.navigationController pushViewController:successVc animated:YES];
+            
             
         }else{
             [self alertControllerMessage:responseObject[@"info"]];
@@ -382,7 +382,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 /*
 #pragma mark - Navigation
 

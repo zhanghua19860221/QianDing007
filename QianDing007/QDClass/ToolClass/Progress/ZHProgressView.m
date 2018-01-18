@@ -10,16 +10,14 @@
 #import <Masonry.h>
 #import <MASConstraintMaker.h>
 @implementation ZHProgressView
-- (id)initWithFrame:(CGRect)frame
-
-{
-    
+- (id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     
     if (self) {
         
-    self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.7];
-
+    self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+        self.layer.masksToBounds = YES ;
+        self.layer.cornerRadius = 5 ;
         _progressView = [[UIActivityIndicatorView alloc]
                       initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         _progressView.color = [UIColor whiteColor];

@@ -269,9 +269,8 @@
     //收藏时提示框 视图
     UIView *promptBox = [[UIView alloc] init];
     [self.view addSubview:promptBox];
-    
+
     [UIView animateWithDuration:1 animations:^{
-        
         promptBox.backgroundColor = [COLORFromRGB(0x000000) colorWithAlphaComponent:0.5];
         promptBox.layer.cornerRadius=8;
         promptBox.layer.masksToBounds=YES;
@@ -377,7 +376,7 @@
            otherPlatformTypes:nil
                   shareParams:shareParams
           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
-              NSLog(@"(unsigned long)state==%lu",(unsigned long)state);
+//              NSLog(@"(unsigned long)state==%lu",(unsigned long)state);
               switch (state) {
                   case SSDKResponseStateSuccess:{
                       [self ruShareStataView:@"分享成功"];

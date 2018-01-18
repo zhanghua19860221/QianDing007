@@ -160,19 +160,20 @@
 -(void)addDataSourceView:(MyProfitModel*)model{
     //时间戳转化成时间
     NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
-    [stampFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd  HH:mm:ss"];
     //以 1970/01/01 GMT为基准，然后过了secs秒的时间
-    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.timeStr intValue]];
+    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.time intValue]];
     NSString *tempTime = [stampFormatter stringFromDate:stampDate2];
 
     _timeLabel.text = tempTime;
     
-    _userLabel.text = model.userStr;
-    _oldLevelLabelOne.text = model.oldLevelStr;
-    _payStrOne.text = model.payStr;
+    _userLabel.text = model.supplier_name;
+    _oldLevelLabelOne.text = model.level_name_old;
+    _payStrOne.text = model.collect;
     
+    NSString *payTemp = [NSString stringWithFormat:@"%@元",model.collect];
     // 创建Attributed
-    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:model.payStr];
+    NSMutableAttributedString *noteStr = [[NSMutableAttributedString alloc] initWithString:payTemp];
     
     // 需要改变的最后一个文字的位置
         NSUInteger secondLoc = [[noteStr string] rangeOfString:@"元"].location;
@@ -184,12 +185,13 @@
     [_payStrOne setAttributedText:noteStr];
     
     
-    _upStrLabelOne.text = model.upStr;
-    _profitLabelOne.text = model.profitStr;
-
+    _upStrLabelOne.text = model.level_name_new;
     
+    _profitLabelOne.text = model.distribute;
+    NSString *payTempOne = [NSString stringWithFormat:@"%@元",model.distribute];
+
     // 创建Attributed
-    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.profitStr];
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:payTempOne];
     // 需要改变的最后一个文字的位置
     NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"元"].location;
     // 需要改变的区间

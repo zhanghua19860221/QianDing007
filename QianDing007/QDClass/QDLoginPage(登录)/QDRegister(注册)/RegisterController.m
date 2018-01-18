@@ -18,6 +18,7 @@
     UITextField *zc_againPassWordField;//确认密码
     UITextField *zc_getCodeField;      //验证码
     UILabel     *zc_promptLabel;       //提示文本
+    UIButton    *zc_SubmitBtn;         //提交按钮
 }
 
 @end
@@ -191,16 +192,16 @@
         
         }];
 
-    UIButton *zcSubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [zcSubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [zcSubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    zcSubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
-    zcSubmitBtn.layer.masksToBounds = YES;
-    zcSubmitBtn.layer.cornerRadius = 22/SCALE_Y;
-    zcSubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    [zcSubmitBtn addTarget:self action:@selector(zcSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:zcSubmitBtn];
-    [zcSubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    zc_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [zc_SubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
+    [zc_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    zc_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
+    zc_SubmitBtn.layer.masksToBounds = YES;
+    zc_SubmitBtn.layer.cornerRadius = 22/SCALE_Y;
+    zc_SubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [zc_SubmitBtn addTarget:self action:@selector(zcSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:zc_SubmitBtn];
+    [zc_SubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineFour.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
@@ -209,11 +210,19 @@
     }];
     
 }
-
+//防止重复点击
+- (void)changeButtonStatus{
+    zc_SubmitBtn.enabled = YES;
+    
+}
 /**
  注册提交按钮
  */
 -(void)zcSubmitBtnClick:(UIButton*)btn{
+    
+    zc_SubmitBtn.enabled = NO;
+    //防止重复点击
+    [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
     
     btn.backgroundColor = COLORFromRGB(0xe10000);
     BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
@@ -234,6 +243,14 @@
         return;
         
         }
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
 
     NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"sess_id"];
     NSString * passWord_md5 = [MyMD5 md5:zc_againPassWordField.text];
@@ -253,9 +270,10 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-    NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//    NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
-        
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);
@@ -402,30 +420,7 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
-//    if (textField.tag == 379) {
-//        BOOL isPhone = [shareDelegate isChinaMobile:textField.text];
-//        if (!isPhone) {
-//            [self showAlert:@"请输入正确的手机号码。"];
-//        }
-//    }
-//    
-//    if (textField.tag == 380) {
-//        
-//        BOOL isoK = [shareDelegate judgePassWordLegal:textField.text];
-//        if (!isoK) {
-//            [self showAlert:@"请设置6至18位数字、字母组合密码."];
-//        }else{
-//            oldPassWordStr = textField.text;
-//        }
-//    }
-//    
-//    if (textField.tag == 381) {
-//        
-//        if (![oldPassWordStr isEqualToString:textField.text]) {
-//            [self showAlert:@"两次密码输入不相同，请重新输入。"];
-//            
-//        }
-//    }
+
 }
 /**
  当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
@@ -474,6 +469,8 @@
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
     
 }
 /*

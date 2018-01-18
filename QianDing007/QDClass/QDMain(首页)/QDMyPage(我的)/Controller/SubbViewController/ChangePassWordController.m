@@ -153,6 +153,17 @@
         return;
         
     }
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    
     NSString * cpNewPassWord_md5 = [MyMD5 md5:cp_NewPassWordField.text];
     NSDictionary *cpDic =@{@"phone":telePhone,
                            @"old_password":oldPassWord,
@@ -177,6 +188,8 @@
             [self cpShowAlert:[responseObject objectForKey:@"info"]];
             return;
         }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -220,14 +233,10 @@
                     [self.navigationController popViewControllerAnimated:YES];
 
                                                           }];
-//  UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-//                                                         handler:^(UIAlertAction * action) {
-//                                                             //响应事件
-//                                                             NSLog(@"action = %@", action);
-//                                                         }];
+
     
     [alert addAction:defaultAction];
-//    [alert addAction:cancelAction];
+
     [self presentViewController:alert animated:YES completion:nil];
 
 }
@@ -300,7 +309,12 @@
 
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 
+}
 /*
 #pragma mark - Navigation
 

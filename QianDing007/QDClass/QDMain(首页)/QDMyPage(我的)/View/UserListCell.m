@@ -157,7 +157,7 @@
     
     //时间戳转化成时间
     NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
-    [stampFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd  HH:mm:ss"];
     //以 1970/01/01 GMT为基准，然后过了secs秒的时间
     NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.create_time intValue]];
     NSString *tempTime = [stampFormatter stringFromDate:stampDate2];

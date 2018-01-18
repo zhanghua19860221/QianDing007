@@ -12,7 +12,7 @@
     
     UITextField *nct_newTeleField;  //验证新手机号
     UITextField *nct_getCodeField;  //设置验证码
-    NSString    *nct_sess_id     ;  //记录验证码接口返回的sess_id
+    
 }
 
 
@@ -87,7 +87,7 @@
     }];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = COLORFromRGB(0xf9cccc);
+    button.backgroundColor = COLORFromRGB(0xe10000);
     [button setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
     [button addTarget:self action:@selector(nctGetCodeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     button.layer.masksToBounds = YES;
@@ -107,7 +107,7 @@
     
     UIButton *n_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [n_SubmitBtn setTitle:@"确认" forState:UIControlStateNormal];
-    n_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
+    n_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
     [n_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
     n_SubmitBtn.layer.masksToBounds = YES ;
     n_SubmitBtn.layer.cornerRadius = 25;
@@ -134,26 +134,34 @@
         return;
         
     }
-    NSDictionary *dic = @{@"phone":nct_newTeleField.text};
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    //获取用户 sess_id 数据
+    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"sess_id"];
     
-    [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [btn startCountDownTime:60 withCountDownBlock:^{
         
+        NSDictionary *dic = @{@"phone":nct_newTeleField.text,
+                              @"sess_id":sess_id
+                              };
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        nct_sess_id = [responseObject objectForKey:@"sess_id"];
-
-        
-    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-        
-        NSLog(@"%@",error);
+        [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            NSLog(@"%@",error);
+        }];
+    
     }];
-    
+ 
 }
 
 
@@ -166,15 +174,29 @@
         return;
         
     }
+    //获取用户 sess_id 数据
+    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"sess_id"];
+    
+    NSString *tokenSend = [[shareDelegate shareNSUserDefaults] objectForKey:@"tokenSMS"];
+    
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
-
     NSDictionary *nctDic =@{@"phone":nct_newTeleField.text,
                            @"captcha":nct_getCodeField.text,
                            @"auth_session":oldSession,
-                           @"sess_id":nct_sess_id
+                           @"sess_id":sess_id,
+                           @"token":tokenSend
                            
                            };
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -186,13 +208,12 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *auth_session = [responseObject objectForKey:@"auth_session"];
         [[shareDelegate shareNSUserDefaults] setObject:auth_session forKey:@"auth_session"];
-        
-        BOOL isSuccess = [[responseObject objectForKey:@"info"] isEqualToString:@"修改成功"];
-        if (isSuccess) {
-            [self nctShowAlert:@"修改成功"];
+    
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            [self nctShowAlert:responseObject[@"info"]];
             
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 if ([controller isKindOfClass:[SecuritySetController class]]) {
@@ -200,11 +221,12 @@
                     [self.navigationController popToViewController:A animated:YES];
                 }
             }
-
+            
         }else{
             [self nctShowAlert:[responseObject objectForKey:@"info"]];
-            return;
         }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -213,11 +235,11 @@
     
 }
 
-
 /**
  创建导航栏
  */
 - (void)nctCreateNavgation{
+    
     self.navigationItem.title = @"更换手机号";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
@@ -247,21 +269,88 @@
                                                               //响应事件
                                                               NSLog(@"action = %@", action);
                                                           }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", action);
-                                                         }];
     
     [alert addAction:defaultAction];
-    [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
+}
+#pragma *******************UITextFieldDelegate*****************************
+/**
+ 当输入框开始时触发 ( 获得焦点触发)
+ 
+ */
+- (void)textFieldDidBeginEditing:( UITextField*)textField{
+ 
+}
+/**
+ 询问输入框是否可以结束编辑 ( 键盘是否可以收回)
+ 
+ */
+- (BOOL)textFieldShouldEndEditing:( UITextField*)textField{
+    
+    return YES;
+}
+
+/**
+ 当前输入框结束编辑时触发 (键盘收回之后触发)
+ 
+ */
+- (void)textFieldDidEndEditing:( UITextField *)textField{
+    
+    NSLog(@"当前输入框结束编辑时触发");
+}
+/**
+ 当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
+ 
+ */
+- (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
+    
+    return YES;
+}
+/**
+ 控制当前输入框是否能被编辑
+ 
+ */
+- (BOOL)textFieldShouldBeginEditing:( UITextField *)textField{
+    
+    return YES;
+}
+
+/**
+ 控制输入框清除按钮是否有效 (yes, 有 ;no, 没有)
+ 
+ */
+- (BOOL)textFieldShouldClear:( UITextField*)textField{
+    
+    return YES;
+}
+
+/**
+ 返回按钮
+ */
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    
+    [textField resignFirstResponder];
+    return YES;
+}
+
+/**
+ 点击空白处隐藏键盘
+ 
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 
+}
 /*
 #pragma mark - Navigation
 

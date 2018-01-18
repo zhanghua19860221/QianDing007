@@ -9,13 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface MyProfitModel : NSObject
-@property (strong , nonatomic) NSString *timeStr;        //时间
-@property (strong , nonatomic) NSString *userStr;        //商家名称
-@property (strong , nonatomic) NSString *oldLevelStr;    //原级别
-@property (strong , nonatomic) NSString *payStr;         //支 付
-@property (strong , nonatomic) NSString *upStr;          //升级为
-@property (strong , nonatomic) NSString *profitStr;      //分润
-@property (strong , nonatomic) NSString *iconStr;        //升级头像
+@property (strong , nonatomic) NSString *time;        //时间
+@property (strong , nonatomic) NSString *supplier_name;        //商家名称
+@property (strong , nonatomic) NSString *level_name_old; //原级别
+@property (strong , nonatomic) NSString *collect;         //支 付
+@property (strong , nonatomic) NSString *level_name_new;  //升级为
+@property (strong , nonatomic) NSString *distribute;      //分润
 
 
 @end

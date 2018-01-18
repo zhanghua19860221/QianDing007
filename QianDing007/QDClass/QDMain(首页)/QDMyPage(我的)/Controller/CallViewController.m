@@ -8,7 +8,12 @@
 
 #import "CallViewController.h"
 
-@interface CallViewController ()
+@interface CallViewController (){
+    UIView *teleView;//客服电话视图
+    UIView *mailView;//客服邮箱
+
+
+}
 
 @end
 
@@ -30,7 +35,7 @@
 }
 - (void)createSubView{
 
-    UIView *teleView = [[UIView alloc] init];
+    teleView = [[UIView alloc] init];
     teleView.backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:teleView];
     [teleView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -84,7 +89,7 @@
     
     
     
-    UIView *mailView = [[UIView alloc] init];
+    mailView = [[UIView alloc] init];
     mailView.backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:mailView];
     [mailView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -133,11 +138,18 @@
     
     
 }
-
+- (void)changeButtonStatus{
+    teleView.userInteractionEnabled = YES;
+    
+}
 /**
  客服电话视图点击事件
  */
 -(void)tapAction:(id)tap{
+    
+    //防止重复点击
+    teleView.userInteractionEnabled = NO;
+    [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
     
     NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",@"13601112349"];
     UIWebView *callWebview = [[UIWebView alloc] init];

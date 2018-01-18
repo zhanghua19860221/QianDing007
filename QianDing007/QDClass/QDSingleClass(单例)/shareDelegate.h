@@ -61,9 +61,9 @@
  @return 是否为手机号码
  */
 + (BOOL)isChinaMobile:(NSString *)phoneNum;
+
 /**
  自定义进度条
  */
-+ (ZHProgressView *)shareZHProgress;
-
++ (ZHProgressView*)shareZHProgress;
 @end

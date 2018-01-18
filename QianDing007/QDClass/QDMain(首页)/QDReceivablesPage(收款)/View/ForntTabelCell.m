@@ -68,15 +68,42 @@
         
     }];
     
+    UILabel * accountLabel = [[UILabel alloc] init];
+    accountLabel.font = [UIFont systemFontOfSize:12];
+    accountLabel.text = @"订单编号";
+    [self.contentView addSubview:accountLabel];
+    [accountLabel setTextColor:COLORFromRGB(0x999999)];
+    [accountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_payLabel.mas_bottom).offset(20/SCALE_Y);
+        make.left.equalTo(self.contentView).offset(15/SCALE_X);
+        make.height.mas_equalTo(12);
+        make.width.mas_equalTo(63);
+        
+    }];
+    
     _payAccountLabel = [[UILabel alloc] init];
     _payAccountLabel.frame = CGRectZero;
     _payAccountLabel.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_payAccountLabel];
+    [_payAccountLabel setTextColor:COLORFromRGB(0x333333)];
     [_payAccountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_payLabel.mas_bottom).offset(20/SCALE_Y);
+        make.centerY.equalTo(accountLabel.mas_centerY);
+        make.left.equalTo(accountLabel.mas_right);
+        make.height.mas_equalTo(12);
+        make.width.mas_equalTo(SC_WIDTH-100);
+        
+    }];
+
+    _payLabelone = [[UILabel alloc] init];
+    _payLabelone.frame = CGRectZero;
+    _payLabelone.font = [UIFont systemFontOfSize:12];
+    [self.contentView addSubview:_payLabelone];
+    [_payLabelone setTextColor:COLORFromRGB(0x999999)];
+    [_payLabelone mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(_payAccountLabel.mas_bottom).offset(10);
         make.left.equalTo(self.contentView).offset(15/SCALE_X);
         make.height.mas_equalTo(12);
-        make.width.mas_equalTo(SC_WIDTH-30/SCALE_X);
+        make.width.mas_equalTo(63);
         
     }];
     
@@ -84,11 +111,12 @@
     _payTimeLabel.frame = CGRectZero;
     _payTimeLabel.font = [UIFont systemFontOfSize:12];
     [self.contentView addSubview:_payTimeLabel];
+    [_payTimeLabel setTextColor:COLORFromRGB(0x333333)];
     [_payTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_payAccountLabel.mas_bottom).offset(10);
-        make.left.equalTo(self.contentView).offset(15/SCALE_X);
+        make.centerY.equalTo(_payLabelone.mas_centerY);
+        make.left.equalTo(_payLabelone.mas_right);
         make.height.mas_equalTo(12);
-        make.width.mas_equalTo(SC_WIDTH-30/SCALE_X);
+        make.width.mas_equalTo(SC_WIDTH-100);
         
     }];
     
@@ -125,36 +153,43 @@
     _centuryLabel.text = effective;
     NSString *channel_flag = [NSString stringWithFormat:@"付款方式：%@",model.channel_flag];
     _payLabel.text = channel_flag;
-    if ([model.tran_result isEqualToString:@"1"]) {
-        _stateLabel.text = @"状态：处理成功";
-
-    }else if ([model.tran_result isEqualToString:@"0"]){
-        _stateLabel.text = @"状态：处理中";
-
-    }else if ([model.tran_result isEqualToString:@"3"]){
-        _stateLabel.text = @"状态：收款账号为null";
-        
-    }else if ([model.tran_result isEqualToString:@"4"]){
-        _stateLabel.text = @"状态：退票";
-        
-    }else if ([model.tran_result isEqualToString:@"5"]){
-        _stateLabel.text = @"状态：失败";
-        
-    }
-    NSString *order_no = [NSString stringWithFormat:@"订单编号：%@",model.order_no];
-    _payAccountLabel.text = order_no;
     
     //时间戳转化成时间
     NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
-    [stampFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd  HH:mm:ss"];
     //以 1970/01/01 GMT为基准，然后过了secs秒的时间
     NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.pay_time intValue]];
     NSString *orderTime = [stampFormatter stringFromDate:stampDate2];
     
-    
-    NSString *pay_time = [NSString stringWithFormat:@"付款时间：%@",orderTime];
-    _payTimeLabel.text = pay_time;
+    if ([model.tran_result isEqualToString:@"1"]) {
+        _stateLabel.text = @"状态：处理成功";
+        _payLabelone.text = @"到账时间";
+        _payTimeLabel.text = orderTime;
 
+    }else if ([model.tran_result isEqualToString:@"0"]){
+        _stateLabel.text = @"状态：处理中";
+        _payLabelone.text = @"付款时间";
+        _payTimeLabel.text = orderTime;
+
+    }else if ([model.tran_result isEqualToString:@"3"]){
+        _stateLabel.text = @"状态：收款账号为null";
+        _payLabelone.text = @"到账时间";
+        _payTimeLabel.text = orderTime;
+        
+    }else if ([model.tran_result isEqualToString:@"4"]){
+        _stateLabel.text = @"状态：退票";
+        _payLabelone.text = @"退款时间";
+        _payTimeLabel.text = orderTime;
+        
+    }else if ([model.tran_result isEqualToString:@"5"]){
+        _stateLabel.text = @"状态：失败";
+        _payLabelone.text = @"到账时间";
+        _payTimeLabel.text = orderTime;
+    }
+    _payAccountLabel.text = model.order_no;
+    
+
+    
     if ([model.tran_result isEqualToString:@"0"]) {
         [_backMoney mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).offset(SC_WIDTH-95);

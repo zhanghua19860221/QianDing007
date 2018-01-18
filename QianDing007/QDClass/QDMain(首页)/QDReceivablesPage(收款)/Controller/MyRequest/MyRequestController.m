@@ -49,6 +49,16 @@
  获取网络数据
  */
 - (void)getDataSource{
+    
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
 
     mr_Dic = [[NSMutableDictionary alloc] init];
     mr_dataArray = [NSMutableArray arrayWithCapacity:2];
@@ -67,7 +77,9 @@
         [mr_Dic addEntriesFromDictionary:responseObject];
         NSLog(@"%@",[shareDelegate logDic:mr_Dic]);
         [self mlGetUrlDataToSubview:mr_Dic];
-
+        
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];
@@ -80,12 +92,6 @@
  */
 - (void)mlGetUrlDataToSubview:(NSDictionary*)dic{
 
-    //数据请求蒙板
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
-    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
-    }];
-    
     NSString *requestStr = [NSString stringWithFormat:@"%@",dic[@"invite_count"]];
     NSString *codeStr = [NSString stringWithFormat:@"%@",dic[@"invite_code"]];
     mr_requestLabel.text = requestStr;
@@ -697,7 +703,15 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 
+
+
+}
 /*
 #pragma mark - Navigation
 

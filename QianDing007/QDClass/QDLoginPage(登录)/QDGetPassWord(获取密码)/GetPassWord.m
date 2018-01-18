@@ -13,6 +13,7 @@
     UITextField *rs_newPassWordField;  //设置新密码
     UITextField *rs_againPassWordField;//确认新密码
     UITextField *rs_getCodeField;      //验证码
+    UIButton *rs_SubmitBtn;             //提交按钮
     
 }
 
@@ -161,16 +162,16 @@
         
     }];
 
-    UIButton *rsSubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [rsSubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [rsSubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    rsSubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
-    rsSubmitBtn.layer.masksToBounds = YES;
-    rsSubmitBtn.layer.cornerRadius = 22/SCALE_Y;
-    rsSubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    [rsSubmitBtn addTarget:self action:@selector(rsSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:rsSubmitBtn];
-    [rsSubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    rs_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rs_SubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
+    [rs_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    rs_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
+    rs_SubmitBtn.layer.masksToBounds = YES;
+    rs_SubmitBtn.layer.cornerRadius = 22/SCALE_Y;
+    rs_SubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [rs_SubmitBtn addTarget:self action:@selector(rsSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:rs_SubmitBtn];
+    [rs_SubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineThird.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
@@ -218,14 +219,21 @@
         
     }];
 }
-
+//防止按钮重复点击
+- (void)changeButtonStatus{
+    rs_SubmitBtn.enabled = YES;
+    
+}
 /**
   提交按钮
  */
 - (void)rsSubmitBtnClick:(UIButton*)btn{
     
-    btn.backgroundColor = COLORFromRGB(0xe10000);
+    rs_SubmitBtn.enabled = NO;
+    [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
     
+    
+    btn.backgroundColor = COLORFromRGB(0xe10000);
     BOOL isPhone = [shareDelegate isChinaMobile:rs_teleField.text];
     if (!isPhone) {
         [self rsShowAlert:@"请输入正确的手机号码。"];
@@ -245,6 +253,14 @@
         return;
         
     }
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"sess_id"];
     NSString * rsPassWord_md5 = [MyMD5 md5:rs_againPassWordField.text];
@@ -254,7 +270,7 @@
                            @"sess_id":temp_id
             
                            };
-    
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -266,8 +282,9 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-    
         
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);
@@ -379,6 +396,14 @@
     
     [self.view endEditing:YES];
 }
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

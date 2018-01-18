@@ -15,6 +15,7 @@
 @property (strong , nonatomic) UILabel *payLabel;//付款方式
 @property (strong , nonatomic) UILabel *stateLabel;//处理状态
 @property (strong , nonatomic) UILabel *payAccountLabel;//订单编号
+@property (strong , nonatomic) UILabel *payLabelone;//付款时间文本
 @property (strong , nonatomic) UILabel *payTimeLabel;//付款时间
 @property (strong , nonatomic) UIButton *backMoney;//退款
 @property (strong , nonatomic) NSString *stateMoney;//判断是否有退款按钮

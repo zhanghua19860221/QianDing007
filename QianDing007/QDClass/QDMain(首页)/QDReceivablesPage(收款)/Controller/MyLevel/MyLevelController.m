@@ -34,11 +34,14 @@
 
 - (void)getDataSource{
     
-    //数据请求蒙板
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
     }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     lv_TopDic = [[NSMutableDictionary alloc] init];
     lv_tableArray = [NSMutableArray arrayWithCapacity:2];
@@ -54,12 +57,36 @@
     [manager POST:LEVEL_URL parameters:levelDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
-    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        [lv_TopDic addEntriesFromDictionary:responseObject];
-        [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
-        NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
-        [self addDataToTabelAarry:dicArray];
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
+        
+        
+        
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            
+//            NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            [lv_TopDic addEntriesFromDictionary:responseObject];
+            [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
+            NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
+            [self addDataToTabelAarry:dicArray];
+            if ([lv_TopDic[@"my_level_info"][@"id"] isEqualToString:@"4"]) {
+                
+                UIImageView *imageView = [[UIImageView alloc] init];
+                [imageView setImage:[UIImage imageNamed:@"组3"]];
+                [self.view addSubview:imageView];
+                [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.center.equalTo(self.view);
+                    make.width.mas_equalTo(143);
+                    make.height.mas_equalTo(100);
+
+                }];
+                
+            }
+            
+        }else{
+            
+            [self mlShowAlert:responseObject[@"info"]];
+        }
+        //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -83,20 +110,20 @@
     
     switch ([dic[@"id"] intValue]) {
         case 1:
-            [lv_headView setImage:[UIImage imageNamed:@"普通会员132*132"]];
-            lv_levelLabel.text = @"普通会员";
+            [lv_headView setImage:[UIImage imageNamed:@"普通会员110*110"]];
+            lv_levelLabel.text = @"普通商户";
             break;
         case 2:
-            [lv_headView setImage:[UIImage imageNamed:@"银牌会员132*132"]];
-            lv_levelLabel.text = @"银牌会员";
+            [lv_headView setImage:[UIImage imageNamed:@"银牌会员110*110"]];
+            lv_levelLabel.text = @"银牌商户";
             break;
         case 3:
-            [lv_headView setImage:[UIImage imageNamed:@"金牌会员132*132"]];
-            lv_levelLabel.text = @"金牌会员";
+            [lv_headView setImage:[UIImage imageNamed:@"金牌会员110*110"]];
+            lv_levelLabel.text = @"金牌商户";
             break;
         case 4:
-            [lv_headView setImage:[UIImage imageNamed:@"钻石会员132*132"]];
-            lv_levelLabel.text = @"钻石会员";
+            [lv_headView setImage:[UIImage imageNamed:@"钻石会员110*110"]];
+            lv_levelLabel.text = @"钻石商户";
             break;
             
         default:
@@ -111,7 +138,7 @@
  */
 - (void)addDataToTabelAarry:(NSArray*)array{
 
-    NSArray *imageArray = @[@"普通会员132*132",@"银牌会员44*44",@"金牌会员44*44",@"钻石会员44*44"];
+    NSArray *imageArray = @[@"普通会员44*44",@"银牌会员44*44",@"金牌会员44*44",@"钻石会员44*44"];
     for (NSDictionary * dic in array) {
         MyLeveLModel *model = [[MyLeveLModel alloc] init];
         NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:3];
@@ -144,7 +171,7 @@
         make.height.mas_equalTo(SC_HEIGHT-213/SCALE_Y);
         
     }];
-
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -178,12 +205,11 @@
     lv_headView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:lv_headView];
     lv_headView.layer.masksToBounds = YES;
-    lv_headView.layer.cornerRadius  = 33;
-
+    lv_headView.layer.cornerRadius  = 27.5;
     [lv_headView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom).offset(-33/SCALE_Y);
         make.centerX.equalTo(topView.mas_centerX);
-        make.height.width.mas_equalTo(66/SCALE_Y);
+        make.height.width.mas_equalTo(55);
         
     }];
     
@@ -292,12 +318,36 @@
     
     return CGFLOAT_MIN;
 }
-
+/**
+ 警示 弹出框
+ */
+- (void)mlShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 
+
+}
 /*
 #pragma mark - Navigation
 

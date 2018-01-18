@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "LoginMain.h"
 #import "RootViewController.h"
+#import "NextChangeTeleController.h"
 
 @interface AppDelegate ()
 @end
@@ -71,8 +72,8 @@
          switch (platformType){
 
              case SSDKPlatformTypeWechat:
-                 [appInfo SSDKSetupWeChatByAppId:@"wx4868b35061f87885"
-                          appSecret:@"64020361b8ec4c99936c0e3999a9f249"];
+                 [appInfo SSDKSetupWeChatByAppId:@"wx88ba0f01d568ba1c"
+                          appSecret:@"9c441187acc8e59a5763b3f1ab8338ac"];
                  break;
              case SSDKPlatformTypeQQ:
                  [appInfo SSDKSetupQQByAppId:@"100371282"

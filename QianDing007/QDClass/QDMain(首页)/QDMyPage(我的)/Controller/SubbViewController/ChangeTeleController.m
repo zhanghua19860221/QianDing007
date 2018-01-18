@@ -95,10 +95,8 @@
         make.height.mas_equalTo(40/SCALE_Y);
         make.width.mas_equalTo(140/SCALE_X);
         
-        
     }];
     
-
     UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
     nextBtn.backgroundColor = COLORFromRGB(0xf9cccc);
@@ -127,7 +125,18 @@
 
         return;
     }
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
     [btn startCountDownTime:60 withCountDownBlock:^{
+        
         NSDictionary *dic = @{@"phone":ct_oldTeleField.text};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -139,9 +148,15 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            NSLog(@"%@",[shareDelegate logDic:responseObject]);
             
             
+           //本地保存用户 sess_id 数据
+            NSString *sess_id = [responseObject objectForKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:sess_id forKey:@"sess_id"];
+            
+            //移除菊花进度条
+            [[shareDelegate shareZHProgress] removeFromSuperview];
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             NSLog(@"%@",error);
@@ -161,8 +176,68 @@
         return;
         
     }
-    NextChangeTeleController *nextVc = [[NextChangeTeleController alloc] init];
-    [self.navigationController pushViewController:nextVc animated:YES];
+    //获取用户 登录标志 数据
+    NSString *loginSession = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    //获取用户 sess_id 数据
+    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"sess_id"];
+
+    
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    
+    [btn startCountDownTime:60 withCountDownBlock:^{
+        
+        NSDictionary *dic = @{@"phone":ct_oldTeleField.text,
+                              @"auth_session":loginSession,
+                              @"captcha":ct_getCodeField.text,
+                              @"sess_id":sess_id,
+                              
+                              };
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+        
+        [manager POST:CHANGE_PHONE_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+            NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            
+            if ([responseObject[@"status"] isEqualToString:@"1"]) {
+                //本地保存用户 sess_id 数据
+                NSString *tokenSMS = [responseObject objectForKey:@"token"];
+                [[shareDelegate shareNSUserDefaults] setObject:tokenSMS forKey:@"tokenSMS"];
+                
+                NextChangeTeleController *nextVc = [[NextChangeTeleController alloc] init];
+                [self.navigationController pushViewController:nextVc animated:YES];
+                
+            }else{
+            
+                [self ctShowAlert:responseObject[@"info"]];
+            }
+            //移除菊花进度条
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            
+            NSLog(@"%@",error);
+        }];
+    }];
+
+    
+    
+
     
 }
 /**
@@ -198,14 +273,9 @@
                                                               //响应事件
                                                               NSLog(@"action = %@", action);
                                                           }];
-    UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * action) {
-                                                             //响应事件
-                                                             NSLog(@"action = %@", action);
-                                                         }];
+
     
     [alert addAction:defaultAction];
-    [alert addAction:cancelAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma **************UITextFieldDelegate**********************
@@ -274,7 +344,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 
+}
 /*
 #pragma mark - Navigation
 

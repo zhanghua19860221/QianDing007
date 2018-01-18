@@ -20,8 +20,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-//    [self  upGetDataSource];
-//    [self createTabelView];
+    [self  upGetDataSource];
+    [self createTabelView];
     self.view.backgroundColor = [UIColor whiteColor];
 
     // Do any additional setup after loading the view.
@@ -30,15 +30,19 @@
     
     dataArray = [[NSMutableArray alloc] initWithCapacity:2];
     
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
     }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
     NSDictionary *pcDic =@{@"auth_session":oldSession,
-                           @"type":@"2"
+                           @"type":@"1"
                            };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -50,7 +54,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *have_detail_list = responseObject[@"have_detail_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
@@ -65,6 +69,9 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                //移除菊花进度条
+                [[shareDelegate shareZHProgress] removeFromSuperview];
+
                 return;
                 
             }else{
@@ -76,14 +83,16 @@
                     [model setValuesForKeysWithDictionary:allDic];
                     [dataArray addObject:model];
                 }
+                [self.tableView reloadData];
+
             }
             
         }else{
             
             [self upShowAlert:responseObject[@"info"]];
         }
-        //隐藏数据请求蒙板
-        [shareDelegate shareZHProgress].hidden = YES;
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         
@@ -106,6 +115,7 @@
     }];
 }
 #pragma *********************tabelViewDelegate*************************
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
     return dataArray.count;
@@ -129,6 +139,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
+
 }
 /**
  警示 弹出框

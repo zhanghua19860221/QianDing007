@@ -540,7 +540,7 @@
         
     }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"responseObject === %@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"responseObject === %@",[shareDelegate logDic:responseObject]);
         NSString *signedString = responseObject[@"response"];
         NSString *appScheme = @"alisdkdemo";
 

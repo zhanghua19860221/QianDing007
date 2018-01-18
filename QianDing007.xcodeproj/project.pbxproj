@@ -94,6 +94,7 @@
 		14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14A0ACEE1FDA1D6C0095003F /* LaunchScreen.storyboard */; };
 		14A0ACFB1FDA1D6D0095003F /* QianDing007Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0ACFA1FDA1D6D0095003F /* QianDing007Tests.m */; };
 		14A0AD061FDA1D6D0095003F /* QianDing007UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 14A0AD051FDA1D6D0095003F /* QianDing007UITests.m */; };
+		14AFF203200D87F700E9AE59 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14AFF202200D87F700E9AE59 /* AVFoundation.framework */; };
 		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
 		14B9B7BA2005A7A5003BEBDB /* RecordMoneyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B9B7B92005A7A5003BEBDB /* RecordMoneyModel.m */; };
 		14DB586520045D33009EA1EF /* StarViewPictrue.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DB586420045D33009EA1EF /* StarViewPictrue.m */; };
@@ -229,6 +230,7 @@
 		14AFB7561FEA300A00B0E32B /* MyLeveLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyLeveLModel.m; sourceTree = "<group>"; };
 		14AFB7581FEA7B3F00B0E32B /* MyRequestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRequestModel.h; sourceTree = "<group>"; };
 		14AFB7591FEA7B3F00B0E32B /* MyRequestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRequestModel.m; sourceTree = "<group>"; };
+		14AFF202200D87F700E9AE59 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		14B421921FEB462F00CC8AE4 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		14B421D51FEB939800CC8AE4 /* NewsSetController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsSetController.h; sourceTree = "<group>"; };
 		14B421D61FEB939800CC8AE4 /* NewsSetController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsSetController.m; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AFF203200D87F700E9AE59 /* AVFoundation.framework in Frameworks */,
 				1403902F2008B48100B96A9C /* CoreMotion.framework in Frameworks */,
 				1403902D2008B47900B96A9C /* CFNetwork.framework in Frameworks */,
 				1403902B2008B47200B96A9C /* Foundation.framework in Frameworks */,
@@ -982,6 +985,7 @@
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14AFF202200D87F700E9AE59 /* AVFoundation.framework */,
 				1403902E2008B48100B96A9C /* CoreMotion.framework */,
 				1403902C2008B47900B96A9C /* CFNetwork.framework */,
 				1403902A2008B47200B96A9C /* Foundation.framework */,
@@ -1434,7 +1438,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/QianDing007/QDFirstBloodpch.pch";
 				INFOPLIST_FILE = QianDing007/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.zhanghua.mac.QianDing007;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1455,7 +1459,7 @@
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/QianDing007/QDFirstBloodpch.pch";
 				INFOPLIST_FILE = QianDing007/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.zhanghua.mac.QianDing007;
 				PRODUCT_NAME = "$(TARGET_NAME)";

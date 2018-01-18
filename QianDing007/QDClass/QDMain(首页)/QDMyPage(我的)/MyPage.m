@@ -107,11 +107,14 @@
     NSString *is_agency = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_agency"];
     if ([is_agency isEqualToString:@"0"]) {
         
-        //数据请求蒙板
-        [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+        //创建请求菊花进度条
+        [self.view addSubview:[shareDelegate shareZHProgress]];
+        [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
         [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+            make.center.equalTo(self.view);
+            make.height.width.mas_equalTo(100);
         }];
+        [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
         
         NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
         
@@ -134,7 +137,7 @@
                 [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
                 
             }
-            //隐藏数据请求蒙板
+            //移除菊花进度条
             [[shareDelegate shareZHProgress] removeFromSuperview];
             
             
@@ -337,7 +340,7 @@
 - (void)mpCreateTopView{
     
     mp_topView = [[UIImageView alloc] init];
-    mp_topView.frame = CGRectMake(0,0, SC_WIDTH, 160/SCALE_Y);
+    mp_topView.frame = CGRectMake(0,0, SC_WIDTH, 210/SCALE_Y);
     [mp_topView setImage:[UIImage imageNamed:@"红色背景"]];
     [self.view addSubview:mp_topView];
     
@@ -354,14 +357,12 @@
         
     }];
     
-    
     mp_headViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [mp_headViewBtn setImage:[UIImage imageNamed:@"图层1"] forState:UIControlStateNormal];
     mp_headViewBtn.layer.cornerRadius = 35;
     mp_headViewBtn.layer.masksToBounds = YES;
     
     NSData *dataImage = [[shareDelegate shareNSUserDefaults] objectForKey:@"LOGO"];
-    
     UIImage *image = [UIImage imageWithData:dataImage]; // 取得图片
     if (dataImage == NULL) {
         [mp_headViewBtn setImage:[UIImage imageNamed:@"头像水印"] forState:UIControlStateNormal];
@@ -693,7 +694,8 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 }
 /**
  

@@ -31,17 +31,21 @@
     
     dataArray = [[NSMutableArray alloc] initWithCapacity:2];
     
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
     }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
     NSDictionary *ulDic =@{@"auth_session":oldSession,
                            @"supplier_level":@"1"
                            };
-    NSLog(@"%@",[shareDelegate logDic:ulDic]);
+//    NSLog(@"%@",[shareDelegate logDic:ulDic]);
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -67,6 +71,7 @@
                     make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
                     make.width.height.mas_equalTo(90);
                 }];
+                //移除菊花进度条
                 [[shareDelegate shareZHProgress] removeFromSuperview];
                 return;
                 
@@ -88,7 +93,7 @@
             
             [self allShowAlert:responseObject[@"info"]];
         }
-        //隐藏数据请求蒙板
+        //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
@@ -117,6 +122,13 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
+
+
 }
 
 /*

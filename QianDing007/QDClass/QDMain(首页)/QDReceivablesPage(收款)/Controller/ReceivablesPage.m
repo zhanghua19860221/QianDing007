@@ -65,10 +65,14 @@
 }
 - (void)getDateSource{
     
-    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo([UIApplication sharedApplication].keyWindow);
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
     }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     rp_Dic = [[NSMutableDictionary alloc] init];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
@@ -82,15 +86,23 @@
     
     [manager POST:HOME_URL parameters:rootDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
-        
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
+        //本地保存用户 登录标志 数据
+        NSString *checked = [responseObject objectForKey:@"checked"];
+        [[shareDelegate shareNSUserDefaults] setObject:checked forKey:@"is_checked"];
+        
         [rp_Dic addEntriesFromDictionary:responseObject];
-//      NSLog(@"%@",[shareDelegate logDic:rpDic]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self addDataToSubview];
-            [[shareDelegate shareZHProgress] removeFromSuperview];
+            
+        }else{
+            [self rvShowAlert:responseObject[@"info"]];
         }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
         NSLog(@"%@",error);
@@ -245,8 +257,11 @@
  未认证点击事件
  */
 - (void)verificationBtnClick{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    if ([rp_Dic[@"checked"] isEqualToString:@"0"]) {
+
+    if (![rp_Dic[@"checked"] isEqualToString:@"1"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+        
         UserViewController *verificationVc = [[UserViewController alloc] init];
         [self.navigationController pushViewController:verificationVc animated:YES];
     }
@@ -256,7 +271,6 @@
  */
 - (void)upGradeBtnClick{
     [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    
     MyLevelController *VC = [[MyLevelController alloc] init];
     [self.navigationController pushViewController:VC animated:YES];
 }
@@ -402,7 +416,7 @@
 - (void)createMyView{
     
 
-    NSArray *myViewArray = @[@"我的等级图标",@"我的邀请图标",@"通道设置图标"];
+    NSArray *myViewArray = @[@"我的等级图标",@"我的邀请图标",@"通道设置"];
     NSArray *textArray = @[@"我的等级",@"我的邀请",@"通道设置"];
     
     UIButton *tempBtn = nil;
@@ -503,9 +517,17 @@
 
 - (void)scanBtnClick:(UIButton*)btn{
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    ScanCodeController *scanVc = [[ScanCodeController alloc] init];
-    [self.navigationController pushViewController:scanVc animated:YES];
+    NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    if ([checkedState isEqualToString:@"1"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+        ScanCodeController *scanVc = [[ScanCodeController alloc] init];
+        [self.navigationController pushViewController:scanVc animated:YES];
+    }else{
+    
+        [self rvShowAlert:@"前往－>我的－>商户认证"];
+    }
+
 }
 /**
  扫我吧按钮点击事件
@@ -514,9 +536,16 @@
 
 - (void)sweepBtnClick:(UIButton*)btn{
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    SweepMeController *scanVc = [[SweepMeController alloc] init];
-    [self.navigationController pushViewController:scanVc animated:YES];
+    NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    if ([checkedState isEqualToString:@"1"]) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+        SweepMeController *scanVc = [[SweepMeController alloc] init];
+        [self.navigationController pushViewController:scanVc animated:YES];
+    }else{
+        
+        [self rvShowAlert:@"前往－>我的－>商户认证"];
+    }
     
 }
 /**
@@ -578,8 +607,30 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    //移除菊花进度条
+    [[shareDelegate shareZHProgress] removeFromSuperview];
 
 }
+/**
+ 警示 弹出框
+ */
+- (void)rvShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

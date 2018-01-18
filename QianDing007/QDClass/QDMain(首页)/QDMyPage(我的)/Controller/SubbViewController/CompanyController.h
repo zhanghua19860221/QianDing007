@@ -8,6 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CompanyController : UIViewController<UITextFieldDelegate>
-
+@interface CompanyController : UIViewController<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @end
