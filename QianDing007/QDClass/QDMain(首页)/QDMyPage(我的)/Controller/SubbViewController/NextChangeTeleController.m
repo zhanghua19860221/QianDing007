@@ -217,8 +217,7 @@
             
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 if ([controller isKindOfClass:[SecuritySetController class]]) {
-                    SecuritySetController*A = (SecuritySetController*)controller;
-                    [self.navigationController popToViewController:A animated:YES];
+                    [self.navigationController popToViewController:controller animated:YES];
                 }
             }
             

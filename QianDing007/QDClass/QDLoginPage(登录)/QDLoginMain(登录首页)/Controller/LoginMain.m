@@ -96,7 +96,7 @@
     }];
     
     lg_teleField = [[UITextField alloc] init];
-    lg_teleField.placeholder = @"电话";
+    lg_teleField.placeholder = @"输入登陆手机号";
     lg_teleField.delegate = self;
     lg_teleField.tag = 51;
     //取消输入框首字母默认大写功能
@@ -139,7 +139,7 @@
     }];
     
     lg_passField = [[UITextField alloc] init];
-    lg_passField.placeholder = @"密码";
+    lg_passField.placeholder = @"密码为6到18位数字、字母组合";
     lg_passField.delegate = self;
     lg_passField.tag = 61;
     lg_passField.secureTextEntry = YES;

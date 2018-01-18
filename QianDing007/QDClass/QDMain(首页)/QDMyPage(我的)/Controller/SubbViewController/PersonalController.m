@@ -98,10 +98,10 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //判断认证类型
-            if ([responseObject[@"account_type"] isEqualToString:@"0"]) {
+            if ([responseObject[@"account_type"] isEqualToString:@"1"]) {
                 [self fillDataToSubView:responseObject];
                 
             }
@@ -158,7 +158,7 @@
                                 @"shop_img_three":@"收银台.png",
                                 @"contract_img_one":@"租赁合同一.png",
                                 @"contract_img_two":@"租赁合同二.png",
-                                @"account_type":@"0"
+                                @"account_type":@"1"
                                  
                                 };
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -191,7 +191,7 @@
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self psShowAlert:@"上传成功"];
         }else{

@@ -33,7 +33,7 @@
     [self zhCreateNavgation];
 
 //  可以扫描相册二维码
-  [self createButtonForPhotoList];
+//  [self createButtonForPhotoList];
     
     // Do any additional setup after loading the view.
 }
@@ -248,6 +248,7 @@
   导航栏返回按钮
  */
 - (void)zhCreateNavgation{
+    
     UIView *view = [[UIView alloc] init];
     [self.view addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -346,15 +347,14 @@
     [manager POST:SCANME_URL parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//      NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        if ([responseObject[@"info"] isEqualToString:@"收款成功"]) {
+      NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
             
             SuccessScanController *successVc = [[SuccessScanController alloc] init];
             successVc.order_num = responseObject[@"orderNo"];
             successVc.order_time = responseObject[@"reqTime"];
             successVc.money_count = responseObject[@"money"];
             [self.navigationController pushViewController:successVc animated:YES];
-            
             
         }else{
             [self alertControllerMessage:responseObject[@"info"]];

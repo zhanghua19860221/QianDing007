@@ -111,8 +111,7 @@
     
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[ReceivablesPage class]]) {
-            ReceivablesPage *A = (ReceivablesPage*)controller;
-            [self.navigationController popToViewController:A animated:YES];
+            [self.navigationController popToViewController:controller animated:YES];
         }
     }
     
@@ -135,7 +134,12 @@
  导航栏返回按钮
  */
 - (void)leftBackClick{
-    [self.navigationController popViewControllerAnimated:YES];
+    
+    for (UIViewController *controller in self.navigationController.viewControllers) {
+        if ([controller isKindOfClass:[ReceivablesPage class]]) {
+            [self.navigationController popToViewController:controller animated:YES];
+        }
+    }
     
 }
 

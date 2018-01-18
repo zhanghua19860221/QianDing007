@@ -109,7 +109,7 @@
                              @"shop_img_one":@"门头照.png",
                              @"shop_img_two":@"经营场所.png",
                              @"shop_img_three":@"收银台.png",
-                             @"account_type":@"1"
+                             @"account_type":@"2"
                              };
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -185,7 +185,7 @@
 
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
-            if ([responseObject[@"account_type"] isEqualToString:@"1"]) {
+            if ([responseObject[@"account_type"] isEqualToString:@"2"]) {
                 [self fillDataToSubView:responseObject];
                 
             }
