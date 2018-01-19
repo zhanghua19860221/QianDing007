@@ -34,6 +34,9 @@
 //我的邀请 二维码图片 url
 #define REQUESTCODE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=getPersonalQR&r_type=1&i_type=1"
 
+//我通讯录邀请接口
+#define REQUESTESMS_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=sharePersonSms&r_type=1"
+
 //获取商户信息
 #define GETINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1"
 

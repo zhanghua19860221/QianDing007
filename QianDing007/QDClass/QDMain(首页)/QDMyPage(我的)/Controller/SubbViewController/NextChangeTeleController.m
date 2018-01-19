@@ -220,7 +220,6 @@
                     [self.navigationController popToViewController:controller animated:YES];
                 }
             }
-            
         }else{
             [self nctShowAlert:[responseObject objectForKey:@"info"]];
         }

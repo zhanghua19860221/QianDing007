@@ -277,7 +277,7 @@
         
     }];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&auth_session=%@",REQUESTCODE_URL,oldSession,@"supplier"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
     [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
 
     mp_requestLabel = [[UILabel alloc] init];

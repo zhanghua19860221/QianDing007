@@ -49,14 +49,15 @@
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(160/SCALE_Y);
     }];
+    
     UIImageView *moneyIconView = [[UIImageView alloc] init];
     [moneyIconView setImage:[UIImage imageNamed:@"余额图标"]];
     [topView addSubview:moneyIconView];
     [moneyIconView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView).offset(20/SCALE_Y);
         make.left.equalTo(topView).offset(50/SCALE_X);
-        make.width.mas_equalTo(77);
-        make.height.mas_equalTo(82.5);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(75);
     }];
 
     
@@ -67,7 +68,7 @@
         make.top.equalTo(topView).offset(20/SCALE_Y);
         make.right.equalTo(topView).offset(-50/SCALE_X);
         make.width.mas_equalTo(60);
-        make.height.mas_equalTo(73);
+        make.height.mas_equalTo(75);
     }];
     
     UILabel *moneyLabel = [[UILabel alloc] init];
@@ -82,7 +83,6 @@
         make.right.equalTo(bankIconView.mas_left);
         make.height.mas_equalTo(16);
 
-        
     }];
     
     UIImageView *directionImage = [[UIImageView alloc] init];

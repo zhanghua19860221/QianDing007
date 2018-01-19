@@ -140,7 +140,7 @@
         
     }];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&auth_session=%@",REQUESTCODE_URL,oldSession,@"agency"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"agency"];
     [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
     
     

@@ -27,15 +27,15 @@
     UITextField *com_branceTeleField;   //银行预留手机号
     UILabel *com_panyAddressLabel;      //公司地址
     UIScrollView *com_scrollView;       //展示视图
-    UIButton *com_submitBtn;                //提交数据按钮
-    
-    UIButton *com_potoBtn;        //身份证正面
-    UIButton *com_potoBtnOne;     //身份证反面
-    UIButton *com_handPotoBtn;    //手持身份证正面
-    UIButton *com_licenseBtn;     //营业执照
-    UIButton *com_doorFhotoBtn;   //门头照
-    UIButton *com_placeBtn;       //经营场所
-    UIButton *com_cashierBtn;     //收银台
+    UIButton *com_submitBtn;            //提交数据按钮
+
+    UIImageView *com_potoImageView;     //身份证正面视图
+    UIImageView *com_potoImageViewOne;  //身份证反面视图
+    UIImageView *com_handPotoImageView; //手持身份证正面视图
+    UIImageView *com_licenseImageView;  //营业执照视图
+    UIImageView *com_doorFhotoImageView;//门头照视图
+    UIImageView *com_placeImageView;    //经营场所视图
+    UIImageView *com_cashierImageView;  //收银台视图
     
     UIImage *com_potoImage;        //身份证正面
     UIImage *com_potoImageOne;     //身份证反面
@@ -223,43 +223,44 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         //身份证正面
         if (![comPanyDic[@"idcard_img_one"] isEqualToString:@""]) {
-            [com_potoBtn sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"idcard_img_one"]] forState:UIControlStateNormal];
+            [com_potoImageView sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"idcard_img_one"]]];
+
+
             com_potoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"idcard_img_one"]]]];
         }
         
         
         //身份证反面
         if (![comPanyDic[@"idcard_img_two"] isEqualToString:@""]) {
-            [com_potoBtnOne sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"idcard_img_two"]] forState:UIControlStateNormal];
+            [com_potoImageViewOne sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"idcard_img_two"]]];
             com_potoImageOne = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"idcard_img_two"]]]];
         }
         
-        //手持身份证
+        //法人手持身份证
         if (![comPanyDic[@"idcard_img_three"] isEqualToString:@""]) {
-            [com_handPotoBtn sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"idcard_img_three"]] forState:UIControlStateNormal];
+            [com_handPotoImageView sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"idcard_img_three"]]];
             com_handImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"idcard_img_three"]]]];
         }
         //营业执照
         if (![comPanyDic[@"h_license"] isEqualToString:@""]) {
-            [com_licenseBtn sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"h_license"]] forState:UIControlStateNormal];
+            [com_licenseImageView sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"h_license"]] ];
             com_licenseImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"h_license"]]]];
         }
-        
         //门头照
         if (![comPanyDic[@"shop_img_one"] isEqualToString:@""]) {
-            [com_doorFhotoBtn sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"shop_img_one"]] forState:UIControlStateNormal];
+            [com_doorFhotoImageView sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"shop_img_one"]]];
             com_doorFhotoImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"shop_img_one"]]]];
         }
         
         //经营场所
         if (![comPanyDic[@"shop_img_two"] isEqualToString:@""]) {
-            [com_placeBtn sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"shop_img_two"]] forState:UIControlStateNormal];
+            [com_placeImageView sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"shop_img_two"]]];
             com_placeImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"shop_img_two"]]]];
             
         }
         //收银台
         if (![comPanyDic[@"shop_img_three"] isEqualToString:@""]) {
-            [com_cashierBtn sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"shop_img_three"]] forState:UIControlStateNormal];
+            [com_cashierImageView sd_setImageWithURL:[NSURL URLWithString:comPanyDic[@"shop_img_three"]] ];
             com_cashierImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:comPanyDic[@"shop_img_three"]]]];
             
         }
@@ -597,13 +598,12 @@
         make.height.mas_equalTo(16);
         
     }];
-    com_potoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_potoBtn setImage:[UIImage imageNamed:@"身份证正面"] forState:UIControlStateNormal];
-    com_potoBtn.tag = 100;
-    com_potoBtn.backgroundColor = COLORFromRGB(0xffffff);
-    [com_scrollView addSubview:com_potoBtn];
-    [com_potoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    [com_potoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *potoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    potoBtn.tag = 100;
+    potoBtn.backgroundColor = COLORFromRGB(0xffffff);
+    [com_scrollView addSubview:potoBtn];
+    [potoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [potoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(potoLabel.mas_bottom).offset(10);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo((SC_WIDTH-45)/2.0);
@@ -611,17 +611,37 @@
         
     }];
     
-    com_potoBtnOne = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_potoBtnOne setImage:[UIImage imageNamed:@"身份证背面"] forState:UIControlStateNormal];
-    com_potoBtnOne.tag = 101;
-
-    [com_potoBtnOne addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    com_potoBtnOne.backgroundColor = COLORFromRGB(0xffffff);
-    [com_scrollView addSubview:com_potoBtnOne];
-    [com_potoBtnOne mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(com_potoBtn.mas_centerY);
-        make.left.equalTo(com_potoBtn.mas_right).offset(15);
-        make.width.height.equalTo(com_potoBtn);
+    com_potoImageView = [[UIImageView alloc] init];
+    [com_potoImageView setImage:[UIImage imageNamed:@"身份证正面"]];
+    com_potoImageView.backgroundColor = COLORFromRGB(0xffffff);
+    com_potoImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [potoBtn addSubview:com_potoImageView];
+    [com_potoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(potoBtn);
+        
+    }];
+    
+    
+    UIButton *potoBtnOne = [UIButton buttonWithType:UIButtonTypeCustom];
+    potoBtnOne.tag = 101;
+    [potoBtnOne addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    potoBtnOne.backgroundColor = COLORFromRGB(0xffffff);
+    [com_scrollView addSubview:potoBtnOne];
+    [potoBtnOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(potoBtn.mas_centerY);
+        make.left.equalTo(potoBtn.mas_right).offset(15);
+        make.width.height.equalTo(potoBtn);
+        
+    }];
+    
+    
+    com_potoImageViewOne = [[UIImageView alloc] init];
+    [com_potoImageViewOne setImage:[UIImage imageNamed:@"身份证背面"]];
+    com_potoImageViewOne.backgroundColor = COLORFromRGB(0xffffff);
+    com_potoImageViewOne.contentMode = UIViewContentModeScaleAspectFit;
+    [potoBtnOne addSubview:com_potoImageViewOne];
+    [com_potoImageViewOne mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(potoBtnOne);
         
     }];
 
@@ -632,21 +652,19 @@
     [handPotoLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:handPotoLabel];
     [handPotoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(com_potoBtn.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(potoBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(200);
         make.height.mas_equalTo(16);
         
     }];
     
-    com_handPotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_handPotoBtn setImage:[UIImage imageNamed:@"手持身份证"] forState:UIControlStateNormal];
-    com_handPotoBtn.tag = 102;
-
-    com_handPotoBtn.backgroundColor = COLORFromRGB(0xffffff);
-    [com_handPotoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    [com_scrollView addSubview:com_handPotoBtn];
-    [com_handPotoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *handPotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    handPotoBtn.tag = 102;
+    handPotoBtn.backgroundColor = COLORFromRGB(0xffffff);
+    [handPotoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    [com_scrollView addSubview:handPotoBtn];
+    [handPotoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(handPotoLabel.mas_bottom).offset(10);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo((SC_WIDTH-45)/2.0);
@@ -654,14 +672,24 @@
         
     }];
     
+    com_handPotoImageView = [[UIImageView alloc] init];
+    [com_handPotoImageView setImage:[UIImage imageNamed:@"手持身份证"]];
+    com_handPotoImageView.backgroundColor = COLORFromRGB(0xffffff);
+    com_handPotoImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [handPotoBtn addSubview:com_handPotoImageView];
+    [com_handPotoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(handPotoBtn);
+    }];
+    
+    
     UIImageView *handPotoView = [[UIImageView alloc] init];
     [handPotoView setImage:[UIImage imageNamed:@"组3"]];
     handPotoView.backgroundColor = COLORFromRGB(0xffffff);
     [com_scrollView addSubview:handPotoView];
     [handPotoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(com_handPotoBtn.mas_centerY);
-        make.left.equalTo(com_handPotoBtn.mas_right).offset(15);
-        make.width.height.equalTo(com_handPotoBtn);
+        make.centerY.equalTo(handPotoBtn.mas_centerY);
+        make.left.equalTo(handPotoBtn.mas_right).offset(15);
+        make.width.height.equalTo(handPotoBtn);
         
     }];
 
@@ -672,7 +700,7 @@
     [licenseLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:licenseLabel];
     [licenseLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(com_handPotoBtn.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(handPotoBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo((SC_WIDTH-45)/2.0);
         make.height.mas_equalTo(16);
@@ -692,32 +720,50 @@
         
     }];
     
-    com_licenseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_licenseBtn setImage:[UIImage imageNamed:@"营业执照"] forState:UIControlStateNormal];
-    com_licenseBtn.tag = 103;
-
-    [com_licenseBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    com_licenseBtn.backgroundColor = COLORFromRGB(0xffffff);
-    [com_scrollView addSubview:com_licenseBtn];
-    [com_licenseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *licenseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [licenseBtn setImage:[UIImage imageNamed:@"营业执照"] forState:UIControlStateNormal];
+    licenseBtn.tag = 103;
+    
+    [licenseBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    licenseBtn.backgroundColor = COLORFromRGB(0xffffff);
+    [com_scrollView addSubview:licenseBtn];
+    [licenseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(licenseLabel.mas_bottom).offset(10);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo((SC_WIDTH-45)/2.0);
         make.height.mas_equalTo(100/SCALE_Y);
         
     }];
-    com_doorFhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_doorFhotoBtn setImage:[UIImage imageNamed:@"门头照"] forState:UIControlStateNormal];
-    com_doorFhotoBtn.tag = 104;
-
-    [com_doorFhotoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    com_doorFhotoBtn.backgroundColor = COLORFromRGB(0xffffff);
-    [com_scrollView addSubview:com_doorFhotoBtn];
-    [com_doorFhotoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(com_licenseBtn.mas_centerY);
-        make.left.equalTo(com_licenseBtn.mas_right).offset(15);
-        make.width.height.equalTo(com_licenseBtn);
+    com_licenseImageView = [[UIImageView alloc] init];
+    [com_licenseImageView setImage:[UIImage imageNamed:@"营业执照"]];
+    com_licenseImageView.backgroundColor = COLORFromRGB(0xffffff);
+    com_licenseImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [licenseBtn addSubview:com_licenseImageView];
+    [com_licenseImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(licenseBtn);
+    }];
+    
+    
+    UIButton *doorFhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [doorFhotoBtn setImage:[UIImage imageNamed:@"门头照"] forState:UIControlStateNormal];
+    doorFhotoBtn.tag = 104;
+    [doorFhotoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    doorFhotoBtn.backgroundColor = COLORFromRGB(0xffffff);
+    [com_scrollView addSubview:doorFhotoBtn];
+    [doorFhotoBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(licenseBtn.mas_centerY);
+        make.left.equalTo(licenseBtn.mas_right).offset(15);
+        make.width.height.equalTo(licenseBtn);
         
+    }];
+    
+    com_doorFhotoImageView = [[UIImageView alloc] init];
+    [com_doorFhotoImageView setImage:[UIImage imageNamed:@"门头照"]];
+    com_doorFhotoImageView.backgroundColor = COLORFromRGB(0xffffff);
+    com_doorFhotoImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [doorFhotoBtn addSubview:com_doorFhotoImageView];
+    [com_doorFhotoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(doorFhotoBtn);
     }];
     
     
@@ -728,7 +774,7 @@
     [placeLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:placeLabel];
     [placeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(com_licenseBtn.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(licenseBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo((SC_WIDTH-45)/2.0);
         make.height.mas_equalTo(16);
@@ -748,31 +794,49 @@
         make.width.height.equalTo(placeLabel);
         
     }];
-    com_placeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_placeBtn setImage:[UIImage imageNamed:@"经营场所"] forState:UIControlStateNormal];
-    com_placeBtn.tag = 105;
-
-    [com_placeBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    com_placeBtn.backgroundColor = COLORFromRGB(0xffffff);
-    [com_scrollView addSubview:com_placeBtn];
-    [com_placeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    UIButton *placeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [placeBtn setImage:[UIImage imageNamed:@"经营场所"] forState:UIControlStateNormal];
+    placeBtn.tag = 105;
+    [placeBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    placeBtn.backgroundColor = COLORFromRGB(0xffffff);
+    [com_scrollView addSubview:placeBtn];
+    [placeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(placeLabel.mas_bottom).offset(10);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo((SC_WIDTH-45)/2.0);
         make.height.mas_equalTo(100/SCALE_Y);
         
     }];
-    com_cashierBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [com_cashierBtn setImage:[UIImage imageNamed:@"收银台"] forState:UIControlStateNormal];
-    com_cashierBtn.tag = 106;
-    [com_cashierBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
-    com_cashierBtn.backgroundColor = COLORFromRGB(0xffffff);
-    [com_scrollView addSubview:com_cashierBtn];
-    [com_cashierBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(com_placeBtn.mas_centerY);
-        make.left.equalTo(com_placeBtn.mas_right).offset(15);
-        make.width.height.equalTo(com_placeBtn);
+    com_placeImageView = [[UIImageView alloc] init];
+    [com_placeImageView setImage:[UIImage imageNamed:@"经营场所"]];
+    com_placeImageView.backgroundColor = COLORFromRGB(0xffffff);
+    com_placeImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [placeBtn addSubview:com_placeImageView];
+    [com_placeImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(placeBtn);
+    }];
+    
+    
+    UIButton *cashierBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cashierBtn setImage:[UIImage imageNamed:@"收银台"] forState:UIControlStateNormal];
+    cashierBtn.tag = 106;
+    [cashierBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
+    cashierBtn.backgroundColor = COLORFromRGB(0xffffff);
+    [com_scrollView addSubview:cashierBtn];
+    [cashierBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(placeBtn.mas_centerY);
+        make.left.equalTo(placeBtn.mas_right).offset(15);
+        make.width.height.equalTo(placeBtn);
         
+    }];
+    
+    com_cashierImageView = [[UIImageView alloc] init];
+    [com_cashierImageView setImage:[UIImage imageNamed:@"收银台"]];
+    com_cashierImageView.backgroundColor = COLORFromRGB(0xffffff);
+    com_cashierImageView.contentMode = UIViewContentModeScaleAspectFit;
+    [cashierBtn addSubview:com_cashierImageView];
+    [com_cashierImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(cashierBtn);
     }];
     
     UIImageView *imageView = [[UIImageView alloc] init];
@@ -780,7 +844,7 @@
     [imageView setImage:[UIImage imageNamed:@"组4"]];
     [com_scrollView addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(com_placeBtn.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(placeBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(com_scrollView);
         make.width.mas_equalTo(187);
         make.height.mas_equalTo(30);
@@ -1011,42 +1075,42 @@
         switch (cp_selectBtnImage.tag) {
             case 100:{
                 com_potoImage = image;
-                [com_potoBtn setImage:image forState:UIControlStateNormal];
+                [com_potoImageView setImage:image];
             }
                 break;
             case 101:{
                 com_potoImageOne = image;
-                [com_potoBtnOne setImage:image forState:UIControlStateNormal];
+                [com_potoImageViewOne setImage:image];
 
             }
                 break;
             case 102:{
                 com_handImage = image;
-                [com_handPotoBtn setImage:image forState:UIControlStateNormal];
+                [com_handPotoImageView setImage:image];
 
             }
                 break;
             case 103:{
                 com_licenseImage = image;
-                [com_licenseBtn setImage:image forState:UIControlStateNormal];
+                [com_licenseImageView setImage:image];
 
             }
                 break;
             case 104:{
                 com_doorFhotoImage = image;
-                [com_doorFhotoBtn setImage:image forState:UIControlStateNormal];
+                [com_doorFhotoImageView setImage:image];
 
             }
                 break;
             case 105:{
                 com_placeImage = image;
-                [com_placeBtn setImage:image forState:UIControlStateNormal];
+                [com_placeImageView setImage:image];
 
             }
                 break;
             case 106:{
                 com_cashierImage = image;
-                [com_cashierBtn setImage:image forState:UIControlStateNormal];
+                [com_cashierImageView setImage:image];
 
             }
                 break;

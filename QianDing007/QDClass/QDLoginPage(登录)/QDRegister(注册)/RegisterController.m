@@ -326,7 +326,7 @@
     
 
     zc_promptLabel = [[UILabel alloc] init];
-    zc_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加a。";
+    zc_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加\“ a \”。";
     zc_promptLabel.font = [UIFont systemFontOfSize:14];
     //文字居中显示
     zc_promptLabel.textAlignment = NSTextAlignmentCenter;
