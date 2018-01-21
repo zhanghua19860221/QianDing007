@@ -21,6 +21,7 @@
 		1403902F2008B48100B96A9C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1403902E2008B48100B96A9C /* CoreMotion.framework */; };
 		1403903C2008BA1200B96A9C /* APOrderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 1403903B2008BA1200B96A9C /* APOrderInfo.m */; };
 		1423BB892003487300E42673 /* ZHProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1423BB882003487300E42673 /* ZHProgressView.m */; };
+		142D260920146E380016BD97 /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 142D260820146E380016BD97 /* NewsModel.m */; };
 		1444FDE31FF4781700F6D945 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1444FDE01FF4781700F6D945 /* city.plist */; };
 		1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDE21FF4781700F6D945 /* LSCityChooseView.m */; };
 		1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */; };
@@ -158,6 +159,8 @@
 		1423BB882003487300E42673 /* ZHProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ZHProgressView.m; path = QianDing007/QDClass/ToolClass/Progress/ZHProgressView.m; sourceTree = "<group>"; };
 		1424F6641FDE35EE00309E33 /* LoginMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginMain.h; path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller/LoginMain.h"; sourceTree = "<group>"; };
 		1424F6651FDE35EE00309E33 /* LoginMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginMain.m; path = "QianDing007/QDClass/QDLoginPage(登录)/QDLoginMain(登录首页)/Controller/LoginMain.m"; sourceTree = "<group>"; };
+		142D260720146E380016BD97 /* NewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsModel.h; sourceTree = "<group>"; };
+		142D260820146E380016BD97 /* NewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsModel.m; sourceTree = "<group>"; };
 		1439E1D11FE8ADFC0053F829 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		1439E1D21FE8ADFC0053F829 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		1439E1DA1FE8D5500053F829 /* QDFirstBloodpch.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QDFirstBloodpch.pch; sourceTree = "<group>"; };
@@ -817,6 +820,8 @@
 		14D836BB1FE749D1006ECD45 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				142D260720146E380016BD97 /* NewsModel.h */,
+				142D260820146E380016BD97 /* NewsModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDNews(消息)/Model";
@@ -1228,6 +1233,7 @@
 				149536A91FF2571700C85C05 /* AllLevelController.m in Sources */,
 				149536AA1FF2571700C85C05 /* ComMonController.m in Sources */,
 				14823DFE1FFCCD990064D74A /* ChangeTeleController.m in Sources */,
+				142D260920146E380016BD97 /* NewsModel.m in Sources */,
 				149536AB1FF2571700C85C05 /* GoldController.m in Sources */,
 				149536AC1FF2571700C85C05 /* DiamondsController.m in Sources */,
 				149536AD1FF2571700C85C05 /* PresentAccountController.m in Sources */,

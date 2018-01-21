@@ -7,16 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "NewsModel.h"
 @interface CustomNewsCell : UITableViewCell
 @property (strong , nonatomic) UILabel *timeDay;
 @property (strong , nonatomic) UILabel *timeMonth;
-@property (strong , nonatomic) UILabel *statePay;
+@property (strong , nonatomic) UILabel *stateCollect;
 @property (strong , nonatomic) UILabel *reasonFail;
 @property (strong , nonatomic) UILabel *timeHour;
 @property (strong , nonatomic) UIView  *basicView;
--(void)addDataSourceToCell:(NSString*)timeDay timeMonth:(NSString*)timeMonth
-                  statePay:(NSString*)statePay reasonFail:(NSString*)reasonFail
-                  timeHour:(NSString*)timeHour;
+-(void)addDataSourceToCell:(NewsModel *)model;
 
 @end

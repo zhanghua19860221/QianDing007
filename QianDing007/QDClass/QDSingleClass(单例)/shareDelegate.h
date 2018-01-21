@@ -30,9 +30,9 @@
 
 /**
  
- 获取字符串高度   来调整label的 高度  system
+ 根据字符串 获取控件高度
  */
-+ (CGFloat) labelHeight:(NSString * ) text Font:(float) font;
++ (CGFloat)labelHeightText:(NSString * ) text Font:(float) font Width:(float)wid;
 /**
  
  获得 当前网络状态

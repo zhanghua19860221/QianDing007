@@ -141,8 +141,7 @@
     }];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"agency"];
-    [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
-    
+    [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"图片验证码"]];
     
 }
 
@@ -181,6 +180,8 @@
     }];
     
     NSArray *loginViewArray = @[@"微信@2x",@"QQ",@"通讯录"];
+    NSArray *loginLabelArray = @[@"微信邀请",@"QQ邀请",@"通讯录邀请"];
+
     UIButton *tempBtn = nil;
     for (int i = 0; i<3 ; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -198,6 +199,20 @@
                 make.left.equalTo(iconBJView);
             }
             make.width.height.mas_equalTo(60/SCALE_Y);
+            
+        }];
+        UILabel *label = [[UILabel alloc] init];
+        label.text = loginLabelArray[i];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = [UIFont systemFontOfSize:15];
+        [label setTextColor:COLORFromRGB(0x333333)];
+        [iconBJView addSubview:label];
+        
+        [label mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(button.mas_centerX);
+            make.top.equalTo(button.mas_bottom).offset(10);
+            make.height.mas_equalTo(15);
+            make.width.mas_equalTo(80);
             
         }];
         tempBtn = button;

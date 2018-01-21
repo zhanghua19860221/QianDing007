@@ -360,7 +360,7 @@
     rp_orderScale = [[UILabel alloc] init];
     rp_orderScale.text = @"0";
     rp_orderScale.font = [UIFont systemFontOfSize:12];
-    [rp_orderScale setTextColor:COLORFromRGB(0xe10000)];
+    [rp_orderScale setTextColor:COLORFromRGB(0x999999)];
     rp_orderScale.textAlignment = NSTextAlignmentCenter;
     [profitView addSubview:rp_orderScale];
     [rp_orderScale mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -373,7 +373,7 @@
     rp_moneyScale = [[UILabel alloc] init];
     rp_moneyScale.text = @"0";
     rp_moneyScale.font = [UIFont systemFontOfSize:12];
-    [rp_moneyScale setTextColor:COLORFromRGB(0xe10000)];
+    [rp_moneyScale setTextColor:COLORFromRGB(0x999999)];
     rp_moneyScale.textAlignment = NSTextAlignmentCenter;
     [profitView addSubview:rp_moneyScale];
     [rp_moneyScale mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -425,7 +425,7 @@
 - (void)createMyView{
     
 
-    NSArray *myViewArray = @[@"我的等级图标",@"我的邀请图标",@"通道设置"];
+    NSArray *myViewArray = @[@"我的等级图标",@"我的邀请图标",@"设置@2x"];
     NSArray *textArray = @[@"我的等级",@"我的邀请",@"通道设置"];
     
     UIButton *tempBtn = nil;

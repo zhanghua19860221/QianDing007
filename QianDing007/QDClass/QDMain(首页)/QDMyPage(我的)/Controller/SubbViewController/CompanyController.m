@@ -275,7 +275,7 @@
     com_scrollView = [[UIScrollView alloc] init];
     [self.view addSubview:com_scrollView];
     com_scrollView.alwaysBounceVertical  = YES ;
-    com_scrollView.contentSize = CGSizeMake(0, 1400/SCALE_Y);
+    com_scrollView.contentSize = CGSizeMake(0, 1520/SCALE_Y);
     [com_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
         make.left.equalTo(self.view);
@@ -304,7 +304,7 @@
     [companyNameLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:companyNameLabel];
     [companyNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom);
+        make.centerY.equalTo(line.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -318,7 +318,7 @@
     [com_companyNameField setTextColor:COLORFromRGB(0x333333)];
     com_companyNameField.placeholder = @"名称";
     [com_companyNameField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom);
+        make.centerY.equalTo(line.mas_centerY).offset(-25);
         make.left.right.equalTo(line);
         make.height.mas_equalTo(40);
     }];
@@ -329,7 +329,7 @@
     lineOne.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineOne];
     [lineOne mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(line.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(line.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -346,7 +346,7 @@
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25);
         
     }];
     UILabel *creditLabelOne = [[UILabel alloc] init];
@@ -359,7 +359,7 @@
         make.bottom.equalTo(creditLabel.mas_top);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
-        make.height.mas_equalTo(20);
+        make.height.mas_equalTo(25);
         
     }];
     com_creditField = [[UITextField alloc] init];
@@ -370,7 +370,7 @@
     [com_creditField setTextColor:COLORFromRGB(0x333333)];
     com_creditField.placeholder = @"信用";
     [com_creditField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineOne.mas_bottom);
+        make.centerY.equalTo(lineOne.mas_centerY).offset(-25);
         make.left.right.equalTo(lineOne);
         make.height.mas_equalTo(40);
     }];
@@ -380,7 +380,7 @@
     lineTwo.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineTwo];
     [lineTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineOne.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineOne.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -394,7 +394,7 @@
     [addressLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:addressLabel];
     [addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom);
+        make.centerY.equalTo(lineTwo.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -409,7 +409,7 @@
     [com_scrollView addSubview:selectorBtn];
     [selectorBtn addTarget:self action:@selector(selectorBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [selectorBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom).offset(-5);
+        make.centerY.equalTo(lineTwo.mas_centerY).offset(-25);
         make.left.equalTo(addressLabel.mas_right).offset(5);
         make.height.mas_equalTo(30);
         make.width.mas_equalTo(30);
@@ -421,7 +421,7 @@
     [com_panyAddressLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:com_panyAddressLabel];
     [com_panyAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTwo.mas_bottom);
+        make.centerY.equalTo(lineTwo.mas_centerY).offset(-25);
         make.left.equalTo(selectorBtn.mas_right).offset(10);
         make.height.mas_equalTo(40);
         make.width.mas_equalTo(SC_WIDTH-140);
@@ -433,7 +433,7 @@
     lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineThird];
     [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineTwo.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineTwo.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -447,7 +447,7 @@
     [detailAddressLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:detailAddressLabel];
     [detailAddressLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineThird.mas_bottom);
+        make.centerY.equalTo(lineThird.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -462,7 +462,7 @@
     [com_detailAddressField setTextColor:COLORFromRGB(0x333333)];
     com_detailAddressField.placeholder = @"详细地址";
     [com_detailAddressField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineThird.mas_bottom);
+        make.centerY.equalTo(lineThird.mas_centerY).offset(-25);
         make.left.right.equalTo(lineThird);
         make.height.mas_equalTo(40);
     }];
@@ -472,7 +472,7 @@
     lineFour.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineFour];
     [lineFour mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineThird.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineThird.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -486,7 +486,7 @@
     [userNameLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:userNameLabel];
     [userNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFour.mas_bottom);
+        make.centerY.equalTo(lineFour.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -501,7 +501,7 @@
     [com_userNameField setTextColor:COLORFromRGB(0x333333)];
     com_userNameField.placeholder = @"姓名";
     [com_userNameField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFour.mas_bottom);
+        make.centerY.equalTo(lineFour.mas_centerY).offset(-25);
         make.left.right.equalTo(lineThird);
         make.height.mas_equalTo(40);
     }];
@@ -511,7 +511,7 @@
     lineFive.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineFive];
     [lineFive mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineFour.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineFour.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -525,7 +525,7 @@
     [cardedLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:cardedLabel];
     [cardedLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFive.mas_bottom);
+        make.centerY.equalTo(lineFive.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -540,7 +540,7 @@
     [com_cardedField setTextColor:COLORFromRGB(0x333333)];
     com_cardedField.placeholder = @"身份证号：";
     [com_cardedField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFive.mas_bottom);
+        make.centerY.equalTo(lineFive.mas_centerY).offset(-25);
         make.left.right.equalTo(lineFive);
         make.height.mas_equalTo(40);
     }];
@@ -551,7 +551,7 @@
     lineSix.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineSix];
     [lineSix mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineFive.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineFive.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -565,7 +565,7 @@
     [telePhoneLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:telePhoneLabel];
     [telePhoneLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineSix.mas_bottom);
+        make.centerY.equalTo(lineSix.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -580,7 +580,7 @@
     [com_telePhoneField setTextColor:COLORFromRGB(0x333333)];
     com_telePhoneField.placeholder = @"联系电话";
     [com_telePhoneField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineSix.mas_bottom);
+        make.centerY.equalTo(lineSix.mas_centerY).offset(-25);
         make.left.right.equalTo(lineSix);
         make.height.mas_equalTo(40);
     }];
@@ -855,7 +855,7 @@
     lineSeven.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineSeven];
     [lineSeven mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageView.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(imageView.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -868,7 +868,7 @@
     [accountLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:accountLabel];
     [accountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineSeven.mas_bottom);
+        make.centerY.equalTo(lineSeven.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -883,7 +883,7 @@
     [com_accountField setTextColor:COLORFromRGB(0x333333)];
     com_accountField.placeholder = @"账户";
     [com_accountField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineSeven.mas_bottom);
+        make.centerY.equalTo(lineSeven.mas_centerY).offset(-25);
         make.left.right.equalTo(lineSeven);
         make.height.mas_equalTo(40);
     }];
@@ -892,7 +892,7 @@
     lineEight.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineEight];
     [lineEight mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineSeven.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineSeven.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -905,7 +905,7 @@
     [payeeLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:payeeLabel];
     [payeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineEight.mas_bottom);
+        make.centerY.equalTo(lineEight.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -920,7 +920,7 @@
     [com_payeeField setTextColor:COLORFromRGB(0x333333)];
     com_payeeField.placeholder = @"收款人";
     [com_payeeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineEight.mas_bottom);
+        make.centerY.equalTo(lineEight.mas_centerY).offset(-25);
         make.left.right.equalTo(lineEight);
         make.height.mas_equalTo(40);
     }];
@@ -929,7 +929,7 @@
     lineNine.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineNine];
     [lineNine mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineEight.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineEight.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -943,7 +943,7 @@
     [bankLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:bankLabel];
     [bankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineNine.mas_bottom);
+        make.centerY.equalTo(lineNine.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -958,7 +958,7 @@
     [com_bankField setTextColor:COLORFromRGB(0x333333)];
     com_bankField.placeholder = @"开户行";
     [com_bankField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineNine.mas_bottom);
+        make.centerY.equalTo(lineNine.mas_centerY).offset(-25);
         make.left.right.equalTo(lineNine);
         make.height.mas_equalTo(40);
     }];
@@ -967,7 +967,7 @@
     lineTen.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineTen];
     [lineTen mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineNine.mas_bottom).offset(40/SCALE_Y);
+        make.top.equalTo(lineNine.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -981,7 +981,7 @@
     [branceTeleLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:branceTeleLabel];
     [branceTeleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTen.mas_bottom);
+        make.centerY.equalTo(lineTen.mas_centerY).offset(-25);
         make.left.equalTo(com_scrollView).offset(15);
         make.width.mas_equalTo(80);
         make.height.mas_equalTo(40);
@@ -996,7 +996,7 @@
     [com_branceTeleField setTextColor:COLORFromRGB(0x333333)];
     com_branceTeleField.placeholder = @"银行预留手机号";
     [com_branceTeleField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineTen.mas_bottom);
+        make.centerY.equalTo(lineTen.mas_centerY).offset(-25);
         make.left.right.equalTo(lineTen);
         make.height.mas_equalTo(40);
     }];

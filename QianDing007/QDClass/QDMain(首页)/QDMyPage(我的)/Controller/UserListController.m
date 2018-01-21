@@ -47,7 +47,7 @@
         
     }];
     UIButton *tempBtn = nil;
-    NSArray *textBtnArray = @[@"全部",@"普通商户",@"银牌商户",@"金牌商户",@"钻石商户"];
+    NSArray *textBtnArray = @[@"全部商户",@"普通商户",@"银牌商户",@"金牌商户",@"钻石商户"];
     for (int i = 0; i < 5; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.backgroundColor = COLORFromRGB(0xffffff);

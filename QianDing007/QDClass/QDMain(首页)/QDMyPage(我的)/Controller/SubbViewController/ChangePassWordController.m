@@ -10,9 +10,10 @@
 
 @interface ChangePassWordController (){
     
-    UITextField *cp_oldPassWordField;      //输入旧密码
+    UITextField *cp_oldPassWordField;  //输入旧密码
     UITextField *cp_NewPassWordField;  //设置新密码
     UITextField *cp_againPassWordField;//确认新密码
+    UIButton    *cp_SubmitBtn;         //提交按钮
 
 }
 
@@ -114,16 +115,16 @@
         
     }];
 
-    UIButton *cpSubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [cpSubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [cpSubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    cpSubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
-    cpSubmitBtn.layer.masksToBounds = YES;
-    cpSubmitBtn.layer.cornerRadius = 22/SCALE_Y;
-    cpSubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    [cpSubmitBtn addTarget:self action:@selector(cpSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:cpSubmitBtn];
-    [cpSubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    cp_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [cp_SubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
+    [cp_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    cp_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
+    cp_SubmitBtn.layer.masksToBounds = YES;
+    cp_SubmitBtn.layer.cornerRadius = 22/SCALE_Y;
+    cp_SubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [cp_SubmitBtn addTarget:self action:@selector(cpSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:cp_SubmitBtn];
+    [cp_SubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineTwo.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
@@ -137,7 +138,6 @@
  */
 - (void)cpSubmitBtnClick:(UIButton*)btn{
     
-    btn.backgroundColor = COLORFromRGB(0xe10000);
     NSString *oldPassWord  = [[shareDelegate shareNSUserDefaults] objectForKey:@"password"];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *telePhone  = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
@@ -264,7 +264,16 @@
  
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
+
+
+    NSString *one = cp_oldPassWordField.text;
+    NSString *two = cp_NewPassWordField.text;
+    NSString *three = cp_againPassWordField.text;
+
     
+    if (![one isEqualToString:@""]&&![two isEqualToString:@""]&&![three isEqualToString:@""]) {
+        cp_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
+    };
     
 }
 /**

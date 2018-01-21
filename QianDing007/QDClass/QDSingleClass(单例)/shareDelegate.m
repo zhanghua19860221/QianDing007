@@ -56,20 +56,18 @@
 }
 
 /**
- 获取字符串高度
+ 根据字符串 获取控件高度
 
  @param text 字符串
  @param font 字符串字号
- @return 字符串高度
+ @param wid  承载字符串控件宽度
+ @return控件高度
  */
-+ (CGFloat) labelHeight:(NSString * ) text Font:(float) font
-{
-
-    CGRect rect = [text boundingRectWithSize:CGSizeMake(MAXFLOAT, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]} context:nil];
-    
++ (CGFloat)labelHeightText:(NSString * )text  Font:(float)font Width:(float)wid{
+    CGRect rect = [text boundingRectWithSize:CGSizeMake(wid, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:font]} context:nil];
     return rect.size.height;
-
 }
+
 
 /**
  

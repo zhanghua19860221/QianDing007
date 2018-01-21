@@ -39,7 +39,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
-
+    
 }
 - (void)pcGetUrlDataSource{
     
@@ -81,7 +81,6 @@
         
     }];
     
-
 }
 /**
  scrollerView展示控制器
@@ -236,8 +235,9 @@
     }
     imageLine = [[UIImageView alloc] init];
     imageLine.backgroundColor = COLORFromRGB(0xe10000);
-    imageLine.frame = CGRectMake(0,190,SC_WIDTH/2.0 , 2);
+    imageLine.frame = CGRectMake(0,120/SCALE_Y+70,SC_WIDTH/2.0 , 2);
     [self.view addSubview:imageLine];
+
     
 }
 -(void)changeView:(UIButton*)btn{
@@ -249,7 +249,7 @@
     switch (btn.tag) {
         case 230:{
             [UIView animateWithDuration:0.3 animations:^{
-                imageLine.frame = CGRectMake(0,190,SC_WIDTH/2.0, 2);
+                imageLine.frame = CGRectMake(0,120/SCALE_Y+70,SC_WIDTH/2.0, 2);
             }];
     
             _scrollView.contentOffset = CGPointMake(0, 0);
@@ -259,7 +259,7 @@
         case 231:{
         
             [UIView animateWithDuration:0.3 animations:^{
-                imageLine.frame = CGRectMake(SC_WIDTH/2.0,190,SC_WIDTH/2.0, 2);
+                imageLine.frame = CGRectMake(SC_WIDTH/2.0,120/SCALE_Y+70,SC_WIDTH/2.0, 2);
             }];
             _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
 
@@ -307,7 +307,7 @@
         selectBtn = tempButton;
     }
     [UIView animateWithDuration:0.3 animations:^{
-        imageLine.frame = CGRectMake(x*SC_WIDTH/2.0,190,SC_WIDTH/2.0, 2);
+        imageLine.frame = CGRectMake(x*SC_WIDTH/2.0,120/SCALE_Y+70,SC_WIDTH/2.0, 2);
     }];
     
     
