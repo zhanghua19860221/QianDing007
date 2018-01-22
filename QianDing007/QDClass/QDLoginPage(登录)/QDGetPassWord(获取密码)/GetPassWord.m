@@ -201,14 +201,14 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress){
             
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            //NSLog(@"%@",[shareDelegate logDic:responseObject]);
             rs_sess_id = [responseObject objectForKey:@"sess_id"];
-            [[shareDelegate shareNSUserDefaults] setObject:rs_sess_id forKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:rs_sess_id forKey:@"getPassWord_sess_id"];
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
@@ -262,7 +262,14 @@
     }];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
-    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"sess_id"];
+    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"getPassWord_sess_id"];
+    if (temp_id == NULL) {
+        [self rsShowAlert:@"请获取正确的验证码"];
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+        return;
+    }
+    NSLog(@"%@",temp_id);
     NSString * rsPassWord_md5 = [MyMD5 md5:rs_againPassWordField.text];
     NSDictionary *rsDic =@{@"phone":rs_teleField.text,
                            @"password":rsPassWord_md5,
@@ -270,7 +277,6 @@
                            @"sess_id":temp_id
             
                            };
-
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -282,7 +288,12 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            [self gpShowAlert:@"修改成功"];
+        }else{
+            [self rsShowAlert:responseObject[@"info"]];
+            
+        }
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -324,9 +335,28 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
-                                                              NSLog(@"action = %@", action);
+                    [self.navigationController popViewControllerAnimated:YES];
+
                                                           }];
 
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+/**
+ 提交成功 提示框
+ */
+- (void)gpShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                [self.navigationController popViewControllerAnimated:YES];
+                                                              
+                                                          }];
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];

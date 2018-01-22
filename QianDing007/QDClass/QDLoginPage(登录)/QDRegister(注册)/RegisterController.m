@@ -252,7 +252,15 @@
     }];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
 
-    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"sess_id"];
+    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"register_sess_id"];
+    if (temp_id == NULL) {
+        [self zcShowAlert:@"请获取正确的验证码"];
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+        return;
+    }
+    
+    
     NSString * passWord_md5 = [MyMD5 md5:zc_againPassWordField.text];
     NSDictionary *zcDic =@{@"phone":zc_teleField.text,
                          @"password":passWord_md5,
@@ -272,6 +280,13 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //    NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            [self zcShowAlert:@"注册成功"];
+            
+        }else{
+            [self zcShowAlert:responseObject[@"info"]];
+            
+        }
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -299,17 +314,16 @@
         
         [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
-            
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
             zc_sess_id = [responseObject objectForKey:@"sess_id"];
-            [[shareDelegate shareNSUserDefaults] setObject:zc_sess_id forKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:zc_sess_id forKey:@"register_sess_id"];
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
             
         }];
     }];
-
+    
 }
 /**
  创建导航栏
@@ -351,7 +365,6 @@
     [self.navigationController popViewControllerAnimated:YES];
     
 }
-
 /**
  警示 弹出框
  */
@@ -364,7 +377,8 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
-                                                              NSLog(@"action = %@", action);
+                    [self.navigationController popViewControllerAnimated:YES];
+
                                                           }];
 
     

@@ -260,7 +260,6 @@
         make.height.mas_equalTo(38);
         
     }];
-
 }
 /**
  未认证点击事件
@@ -279,9 +278,17 @@
  去升级
  */
 - (void)upGradeBtnClick{
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    MyLevelController *VC = [[MyLevelController alloc] init];
-    [self.navigationController pushViewController:VC animated:YES];
+
+    NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    if ([checkedState isEqualToString:@"1"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+        MyLevelController *VC = [[MyLevelController alloc] init];
+        [self.navigationController pushViewController:VC animated:YES];
+        
+    }else{
+        [self rvShowAlert:@"前往－>我的－>商户认证"];
+        
+    }
 }
 
 /**
@@ -415,9 +422,19 @@
 }
 -(void)showMoreBtn{
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-    MoreOrderController *orderVc = [[MoreOrderController alloc] init];
-    [self.navigationController pushViewController:orderVc animated:YES];
+    NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    if ([checkedState isEqualToString:@"1"]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+        MoreOrderController *orderVc = [[MoreOrderController alloc] init];
+        [self.navigationController pushViewController:orderVc animated:YES];
+        
+    }else{
+        [self rvShowAlert:@"前往－>我的－>商户认证"];
+        
+    }
+    
+    
+    
 }
 /**
  创建我的等级
@@ -465,15 +482,38 @@
 -(void)buttonType:(UIButton *)btn{
     switch (btn.tag) {
         case 100:{
-            MyLevelController *levelVc = [[MyLevelController alloc] init];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-            [self.navigationController pushViewController:levelVc animated:YES];
+            NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+            if ([checkedState isEqualToString:@"1"]) {
+                
+                MyLevelController *levelVc = [[MyLevelController alloc] init];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+                [self.navigationController pushViewController:levelVc animated:YES];
+            }else{
+                [self rvShowAlert:@"前往－>我的－>商户认证"];
+                
+            }
+
         }
             break;
         case 101:{
-            MyRequestController *requestVc = [[MyRequestController alloc] init];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-            [self.navigationController pushViewController:requestVc animated:YES];
+
+            
+            NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+            if ([checkedState isEqualToString:@"1"]) {
+                
+                MyRequestController *requestVc = [[MyRequestController alloc] init];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+                [self.navigationController pushViewController:requestVc animated:YES];
+                
+            }else{
+                [self rvShowAlert:@"前往－>我的－>商户认证"];
+                
+            }
+
+            
+            
+            
+            
         }
             break;
         case 102:{
