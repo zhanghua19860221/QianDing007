@@ -112,16 +112,6 @@
         
     }];
     
-    UIButton *mailBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [mailBtn setImage:[UIImage imageNamed:@"更多图标"] forState:UIControlStateNormal];
-    [mailView addSubview:mailBtn];
-    [mailBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(mailView.mas_centerY);
-        make.right.equalTo(mailView).offset(-15);
-        make.width.mas_equalTo(8);
-        make.width.mas_equalTo(13);
-        
-    }];
     UILabel *mailLabelOne = [[UILabel alloc] init];
     mailLabelOne.text = @"3051942353@qq.com";
     mailLabelOne.textAlignment = NSTextAlignmentRight;
@@ -130,7 +120,7 @@
     [mailView addSubview:mailLabelOne];
     [mailLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(mailView.mas_centerY);
-        make.right.equalTo(mailBtn.mas_left).offset(-5);
+        make.right.equalTo(mailView).offset(-15);
         make.width.mas_equalTo(200);
         make.height.mas_equalTo(16);
         

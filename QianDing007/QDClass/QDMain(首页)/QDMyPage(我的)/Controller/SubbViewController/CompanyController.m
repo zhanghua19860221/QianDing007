@@ -538,7 +538,7 @@
     com_cardedField.textAlignment = NSTextAlignmentLeft;
     com_cardedField.font = [UIFont systemFontOfSize:14];
     [com_cardedField setTextColor:COLORFromRGB(0x333333)];
-    com_cardedField.placeholder = @"身份证号：";
+    com_cardedField.placeholder = @"身份证号";
     [com_cardedField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineFive.mas_centerY).offset(-25);
         make.left.right.equalTo(lineFive);
@@ -1023,6 +1023,10 @@
  城市选择按钮点击事件
  */
 - (void)selectorBtnClick{
+    
+    [self.view endEditing:YES];
+
+    
     LSCityChooseView * view = [[LSCityChooseView alloc] initWithFrame:CGRectMake(0, -124, SC_WIDTH, SC_HEIGHT)];
     view.selectedBlock = ^(NSString * province, NSString * city, NSString * area){
         com_panyAddressLabel.text = [NSString stringWithFormat:@"%@ %@ %@",province,city,area];

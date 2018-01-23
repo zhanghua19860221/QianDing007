@@ -142,7 +142,7 @@
     lg_passField.placeholder = @"密码为6到18位数字、字母组合";
     lg_passField.delegate = self;
     lg_passField.tag = 61;
-//    lg_passField.secureTextEntry = YES;
+    lg_passField.secureTextEntry = YES;
     [lg_passField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [lg_passField setAutocorrectionType:UITextAutocorrectionTypeNo];
     lg_passField.textAlignment = NSTextAlignmentLeft;

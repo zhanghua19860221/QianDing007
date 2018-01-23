@@ -207,39 +207,49 @@
  */
 - (void)myCodeButton:(UIButton*)btn{
     
-    [mp_showCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(mp_myMaskView);
-        make.width.mas_equalTo(200);
-        make.height.mas_equalTo(220);
-
-    }];
-    
-    [mp_requestLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mp_showCodeView).offset(10);
-        make.left.equalTo(mp_showCodeView).offset(17);
-        make.right.equalTo(mp_showCodeView);
-        make.height.mas_equalTo(20);
-        
-    }];
-    
-    [mp_maskCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mp_showCodeView).offset(20);
-        make.left.right.equalTo(mp_showCodeView);
-        make.height.mas_equalTo(200);
-        
-    }];
-    [UIView animateWithDuration:0.5 animations:^{
-        [mp_myMaskView layoutIfNeeded];
-
-    } completion:^(BOOL finished) {
-        mp_requestLabel.hidden = NO;
-        [UIView animateWithDuration:0.5 animations:^{
-            mp_requestLabel.alpha = 1;
+    NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    if ([checkedState isEqualToString:@"1"]) {
+        [mp_showCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(mp_myMaskView);
+            make.width.mas_equalTo(200);
+            make.height.mas_equalTo(220);
+            
         }];
-    }];
+        
+        [mp_requestLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(mp_showCodeView).offset(10);
+            make.left.equalTo(mp_showCodeView).offset(17);
+            make.right.equalTo(mp_showCodeView);
+            make.height.mas_equalTo(20);
+            
+        }];
+        
+        [mp_maskCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(mp_showCodeView).offset(20);
+            make.left.right.equalTo(mp_showCodeView);
+            make.height.mas_equalTo(200);
+            
+        }];
+        [UIView animateWithDuration:0.5 animations:^{
+            [mp_myMaskView layoutIfNeeded];
+            
+        } completion:^(BOOL finished) {
+            mp_requestLabel.hidden = NO;
+            [UIView animateWithDuration:0.5 animations:^{
+                mp_requestLabel.alpha = 1;
+            }];
+        }];
+        
+        mp_myMaskView.hidden = NO;
+        btn.hidden = YES;
 
-    mp_myMaskView.hidden = NO;
-    btn.hidden = YES;
+    }else{
+        
+        [self mpShowAlert:@"点击－>商户认证"];
+    }
+    
+    
+    
 
 }
 
@@ -358,14 +368,13 @@
     }];
     
     mp_headViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [mp_headViewBtn setImage:[UIImage imageNamed:@"图层1"] forState:UIControlStateNormal];
     mp_headViewBtn.layer.cornerRadius = 35;
     mp_headViewBtn.layer.masksToBounds = YES;
     
     NSData *dataImage = [[shareDelegate shareNSUserDefaults] objectForKey:@"LOGO"];
     UIImage *image = [UIImage imageWithData:dataImage]; // 取得图片
     if (dataImage == NULL) {
-        [mp_headViewBtn setImage:[UIImage imageNamed:@"头像水印"] forState:UIControlStateNormal];
+        [mp_headViewBtn setImage:[UIImage imageNamed:@"图层1"] forState:UIControlStateNormal];
         
     }else{
         [mp_headViewBtn setImage:image forState:UIControlStateNormal];
@@ -496,17 +505,17 @@
     }else if([tempStr isEqual:@"检查更新"]){
         
         if ([mp_localVersion isEqualToString:mp_serverVersion]) {
-            [self mpShowAlertOne:@"当前已是最新版本！"];
+            [self mpShowAlert:@"当前已是最新版本！"];
             
         }else{
-            [self mpShowAlertTwo:@"发现新的应用版本，是否立即更新！"];
+            [self mpShowAlertUPdata:@"发现新的应用版本，是否立即更新！"];
         }
     }
 }
 /**
  提示 弹出框
  */
-- (void)mpShowAlertOne:(NSString *)warning{
+- (void)mpShowAlert:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示"
                                                                    message:warning
@@ -522,9 +531,9 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 /**
- 提示 弹出框
+ 提示更新 弹出框
  */
-- (void)mpShowAlertTwo:(NSString *)warning{
+- (void)mpShowAlertUPdata:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"提示"
                                                                    message:warning

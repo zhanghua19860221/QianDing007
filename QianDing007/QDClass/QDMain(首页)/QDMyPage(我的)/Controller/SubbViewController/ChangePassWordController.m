@@ -138,21 +138,25 @@
  */
 - (void)cpSubmitBtnClick:(UIButton*)btn{
     
-    NSString *oldPassWord  = [[shareDelegate shareNSUserDefaults] objectForKey:@"password"];
-    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *telePhone  = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+
     
     BOOL isoK = [shareDelegate judgePassWordLegal:cp_NewPassWordField.text];
     if (!isoK) {
-        [self cpShowAlert:@"请设置6至18位数字、字母组合密码."];
+        [self cpShowAlertFail:@"请设置6至18位数字、字母组合密码."];
         return;
         
     }
     if (![cp_NewPassWordField.text isEqualToString:cp_againPassWordField.text]) {
-        [self cpShowAlert:@"两次密码输入不相同，请重新输入。"];
+        [self cpShowAlertFail:@"两次密码输入不相同，请重新输入。"];
         return;
         
     }
+    
+        NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+        NSString *telePhone  = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    
+        NSString *oldPassWord = [MyMD5 md5:cp_oldPassWordField.text];
     
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
@@ -180,13 +184,12 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-        BOOL isSuccess = [[responseObject objectForKey:@"info"] isEqualToString:@"修改成功"];
-        if (isSuccess) {
-            [self cpShowAlert:@"修改成功"];
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            [self cpShowAlertSuccess:@"修改成功"];
             
         }else{
-            [self cpShowAlert:[responseObject objectForKey:@"info"]];
-            return;
+            [self cpShowAlertFail:[responseObject objectForKey:@"info"]];
+            
         }
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
@@ -222,7 +225,7 @@
 /**
  警示 弹出框
  */
-- (void)cpShowAlert:(NSString *)warning{
+- (void)cpShowAlertFail:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -230,7 +233,6 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
-                    [self.navigationController popViewControllerAnimated:YES];
 
                                                           }];
 
@@ -239,6 +241,27 @@
 
     [self presentViewController:alert animated:YES completion:nil];
 
+}
+/**
+ 警示 弹出框
+ */
+- (void)cpShowAlertSuccess:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                [self.navigationController popViewControllerAnimated:YES];
+                                                              
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+    
 }
 
 #pragma **************UITextFieldDelegate**********************

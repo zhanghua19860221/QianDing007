@@ -188,9 +188,9 @@
     
     BOOL isPhone = [shareDelegate isChinaMobile:rs_teleField.text];
     if (!isPhone) {
-        [self rsShowAlert:@"请输入正确的手机号码。"];
-        return;
+        [self gpShowAlertFail:@"请输入正确的手机号码。"];
         
+        return;
     }
     [btn startCountDownTime:60 withCountDownBlock:^{
         
@@ -236,20 +236,28 @@
     btn.backgroundColor = COLORFromRGB(0xe10000);
     BOOL isPhone = [shareDelegate isChinaMobile:rs_teleField.text];
     if (!isPhone) {
-        [self rsShowAlert:@"请输入正确的手机号码。"];
+        [self gpShowAlertFail:@"请输入正确的手机号码。"];
         return;
         
     }
+    
+    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"getPassWord_sess_id"];
+    if (temp_id == NULL) {
+        [self gpShowAlertFail:@"请获取正确的验证码"];
+        
+        return;
+    }
+    
     BOOL isoK = [shareDelegate judgePassWordLegal:rs_newPassWordField.text];
     if (!isoK) {
         
-        [self rsShowAlert:@"请设置6至18位数字、字母组合密码."];
+        [self gpShowAlertFail:@"请设置6至18位数字、字母组合密码."];
         return;
         
     }
     
     if (![rs_newPassWordField.text isEqualToString:rs_againPassWordField.text]) {
-        [self rsShowAlert:@"两次密码输入不相同，请重新输入。"];
+        [self gpShowAlertFail:@"两次密码输入不相同，请重新输入。"];
         return;
         
     }
@@ -262,13 +270,6 @@
     }];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
-    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"getPassWord_sess_id"];
-    if (temp_id == NULL) {
-        [self rsShowAlert:@"请获取正确的验证码"];
-        //移除菊花进度条
-        [[shareDelegate shareZHProgress] removeFromSuperview];
-        return;
-    }
     NSLog(@"%@",temp_id);
     NSString * rsPassWord_md5 = [MyMD5 md5:rs_againPassWordField.text];
     NSDictionary *rsDic =@{@"phone":rs_teleField.text,
@@ -287,11 +288,11 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
-            [self gpShowAlert:@"修改成功"];
+            [self gpShowAlertSuccess:@"修改成功"];
         }else{
-            [self rsShowAlert:responseObject[@"info"]];
+            [self gpShowAlertFail:responseObject[@"info"]];
             
         }
         //移除菊花进度条
@@ -324,9 +325,9 @@
     
 }
 /**
- 警示 弹出框
+ 警示 提示框
  */
-- (void)rsShowAlert:(NSString *)warning{
+- (void)gpShowAlertFail:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -335,7 +336,6 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
-                    [self.navigationController popViewControllerAnimated:YES];
 
                                                           }];
 
@@ -345,7 +345,7 @@
 /**
  提交成功 提示框
  */
-- (void)gpShowAlert:(NSString *)warning{
+- (void)gpShowAlertSuccess:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -385,6 +385,16 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
 
+    
+    NSString *one = rs_teleField.text;
+    NSString *two = rs_getCodeField.text;
+    NSString *three = rs_newPassWordField.text;
+    NSString *four = rs_againPassWordField.text;
+
+    if (![one isEqualToString:@""]&&![two isEqualToString:@""]&&![three isEqualToString:@""]&&![four isEqualToString:@""]) {
+        rs_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
+        
+    };
     
 }
 /**

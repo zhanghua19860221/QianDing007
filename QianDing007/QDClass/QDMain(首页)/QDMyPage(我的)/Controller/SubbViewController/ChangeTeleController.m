@@ -153,7 +153,7 @@
             
            //本地保存用户 sess_id 数据
             NSString *sess_id = [responseObject objectForKey:@"sess_id"];
-            [[shareDelegate shareNSUserDefaults] setObject:sess_id forKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:sess_id forKey:@"change_sess_id"];
             
             //移除菊花进度条
             [[shareDelegate shareZHProgress] removeFromSuperview];
@@ -180,7 +180,7 @@
     NSString *loginSession = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
     //获取用户 sess_id 数据
-    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"sess_id"];
+    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"change_sess_id"];
 
     
     
@@ -193,9 +193,7 @@
     }];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
-    
-    [btn startCountDownTime:60 withCountDownBlock:^{
-        
+
         NSDictionary *dic = @{@"phone":ct_oldTeleField.text,
                               @"auth_session":loginSession,
                               @"captcha":ct_getCodeField.text,
@@ -233,10 +231,6 @@
             
             NSLog(@"%@",error);
         }];
-    }];
-
-    
-    
 
     
 }

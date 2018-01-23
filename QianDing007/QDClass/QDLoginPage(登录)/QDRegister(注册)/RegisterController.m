@@ -227,19 +227,19 @@
     btn.backgroundColor = COLORFromRGB(0xe10000);
     BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
     if (!isPhone) {
-        [self zcShowAlert:@"请输入正确的手机号码。"];
+        [self zcShowAlertFail:@"请输入正确的手机号码。"];
         return;
         
     }
 
     BOOL isoK = [shareDelegate judgePassWordLegal:zc_setPassWordField.text];
     if (!isoK) {
-        [self zcShowAlert:@"请设置6至18位数字、字母组合密码."];
+        [self zcShowAlertFail:@"请设置6至18位数字、字母组合密码."];
         return;
         
     }
     if (![zc_setPassWordField.text isEqualToString:zc_againPassWordField.text]) {
-        [self zcShowAlert:@"两次密码输入不相同，请重新输入。"];
+        [self zcShowAlertFail:@"两次密码输入不相同，请重新输入。"];
         return;
         
         }
@@ -254,7 +254,7 @@
 
     NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"register_sess_id"];
     if (temp_id == NULL) {
-        [self zcShowAlert:@"请获取正确的验证码"];
+        [self zcShowAlertFail:@"请获取正确的验证码"];
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
         return;
@@ -281,10 +281,10 @@
 //    NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
-            [self zcShowAlert:@"注册成功"];
+            [self zcShowAlertSuccess:@"注册成功"];
             
         }else{
-            [self zcShowAlert:responseObject[@"info"]];
+            [self zcShowAlertFail:responseObject[@"info"]];
             
         }
         //移除菊花进度条
@@ -301,7 +301,7 @@
     
     BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
     if (!isPhone) {
-        [self zcShowAlert:@"请输入正确的手机号码。"];
+        [self zcShowAlertFail:@"请输入正确的手机号码。"];
         return;
         
     }
@@ -366,9 +366,9 @@
     
 }
 /**
- 警示 弹出框
+ 警示 提示框
  */
-- (void)zcShowAlert:(NSString *)warning{
+- (void)zcShowAlertFail:(NSString *)warning{
 
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -377,10 +377,29 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
-                    [self.navigationController popViewControllerAnimated:YES];
 
                                                           }];
 
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+/**
+ 成功 提示框
+ */
+- (void)zcShowAlertSuccess:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                    [self.navigationController popViewControllerAnimated:YES];
+                                                              
+                                                          }];
+    
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
@@ -434,6 +453,14 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
+    NSString *one = zc_teleField.text;
+    NSString *two = zc_setPassWordField.text;
+    NSString *three = zc_againPassWordField.text;
+    NSString *four = zc_getCodeField.text;
+    if (![one isEqualToString:@""]&&![two isEqualToString:@""]&&![three isEqualToString:@""]&&![four isEqualToString:@""]) {
+        zc_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
+        
+    };
 
 }
 /**

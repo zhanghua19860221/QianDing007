@@ -546,7 +546,7 @@
     ps_cardedField.textAlignment = NSTextAlignmentLeft;
     ps_cardedField.font = [UIFont systemFontOfSize:14];
     [ps_cardedField setTextColor:COLORFromRGB(0x333333)];
-    ps_cardedField.placeholder = @"身份证号：";
+    ps_cardedField.placeholder = @"身份证号";
     [ps_cardedField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineFour.mas_centerY).offset(-25);
         make.left.right.equalTo(lineFour);
@@ -628,7 +628,6 @@
         
     }];
     
-    
     UIButton *photoBtnOne = [UIButton buttonWithType:UIButtonTypeCustom];
     photoBtnOne.tag = 111;
     [photoBtnOne addTarget:self action:@selector(psButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -661,8 +660,8 @@
     [handPhotoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(photoBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(ps_scrollView).offset(15);
-        make.width.mas_equalTo(200);
-        make.height.mas_equalTo(16);
+        make.width.mas_equalTo((SC_WIDTH-45)/2.0);
+        make.height.mas_equalTo(14);
         
     }];
     
@@ -1066,6 +1065,9 @@
  城市选择按钮点击事件
  */
 - (void)selectorBtnClick{
+    
+    [self.view endEditing:YES];
+
     
     LSCityChooseView * view = [[LSCityChooseView alloc] initWithFrame:CGRectMake(0, -124, SC_WIDTH, SC_HEIGHT)];
     view.selectedBlock = ^(NSString * province, NSString * city, NSString * area){
