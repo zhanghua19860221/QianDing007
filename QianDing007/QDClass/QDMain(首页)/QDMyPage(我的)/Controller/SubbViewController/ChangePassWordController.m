@@ -52,7 +52,7 @@
     cp_oldPassWordField.delegate = self;
     //取消输入框首字母默认大写功能
     [cp_oldPassWordField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-    cp_NewPassWordField.secureTextEntry = YES;
+    cp_oldPassWordField.secureTextEntry = YES;
     cp_oldPassWordField.font = [UIFont systemFontOfSize:18];
     [cp_oldPassWordField setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:cp_oldPassWordField];
@@ -346,6 +346,14 @@
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
 
+}
+
+/**
+ 点击空白收回弹出框
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
 }
 /*
 #pragma mark - Navigation

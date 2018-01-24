@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		140390182008AACF00B96A9C /* BuyLevelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 140390172008AACF00B96A9C /* BuyLevelController.m */; };
 		1403901C2008B32000B96A9C /* AlipaySDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1403901A2008B32000B96A9C /* AlipaySDK.bundle */; };
 		1403901D2008B32000B96A9C /* AlipaySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1403901B2008B32000B96A9C /* AlipaySDK.framework */; };
 		1403901F2008B42400B96A9C /* libc.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1403901E2008B42400B96A9C /* libc.tbd */; };
@@ -132,8 +131,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		140390162008AACF00B96A9C /* BuyLevelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BuyLevelController.h; path = MyLevel/BuyLevelController.h; sourceTree = "<group>"; };
-		140390172008AACF00B96A9C /* BuyLevelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BuyLevelController.m; path = MyLevel/BuyLevelController.m; sourceTree = "<group>"; };
 		1403901A2008B32000B96A9C /* AlipaySDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AlipaySDK.bundle; path = QianDing007/QDClass/ToolClass/AliPay/AlipaySDK.bundle; sourceTree = "<group>"; };
 		1403901B2008B32000B96A9C /* AlipaySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlipaySDK.framework; path = QianDing007/QDClass/ToolClass/AliPay/AlipaySDK.framework; sourceTree = "<group>"; };
 		1403901E2008B42400B96A9C /* libc.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libc.tbd; path = usr/lib/libc.tbd; sourceTree = SDKROOT; };
@@ -670,8 +667,6 @@
 				1403903B2008BA1200B96A9C /* APOrderInfo.m */,
 				14AFB7471FE9FB1800B0E32B /* MyLevelController.h */,
 				14AFB7481FE9FB1800B0E32B /* MyLevelController.m */,
-				140390162008AACF00B96A9C /* BuyLevelController.h */,
-				140390172008AACF00B96A9C /* BuyLevelController.m */,
 			);
 			name = MyLevel;
 			sourceTree = "<group>";
@@ -1245,7 +1240,6 @@
 				1495369D1FF256BB00C85C05 /* FrontViewController.m in Sources */,
 				1495369E1FF256BB00C85C05 /* MiddleViewController.m in Sources */,
 				14B9B7BA2005A7A5003BEBDB /* RecordMoneyModel.m in Sources */,
-				140390182008AACF00B96A9C /* BuyLevelController.m in Sources */,
 				1495369F1FF256BB00C85C05 /* ThirdViewController.m in Sources */,
 				149536A01FF256BB00C85C05 /* RequestUserController.m in Sources */,
 				14FAFB4F1FFF513300A81D9C /* ZHScanViewController.m in Sources */,

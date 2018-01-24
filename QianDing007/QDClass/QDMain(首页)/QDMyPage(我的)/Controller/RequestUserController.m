@@ -471,9 +471,53 @@
         
         NSLog(@"提示用户选择11位的手机号");
     }
-    NSString * textName = [NSString stringWithFormat:@"姓名:%@-电话:%@",contact.familyName,phoneStr];
+//    NSString * textName = [NSString stringWithFormat:@"姓名:%@-电话:%@",contact.familyName,phoneStr];
+    NSString * requestPhone = [NSString stringWithFormat:@"%@",phoneStr];
+    
+    NSString * authSession = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    NSDictionary *mrDic =@{@"phone":requestPhone,
+                           @"auth_session":authSession,
+                           @"type":@"agency"
+                           
+                           };
+    NSLog(@"mrDic == %@",mrDic);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:REQUESTESMS_URL parameters:mrDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            [self rqShowAlert:@"邀请成功"];
+        }else{
+            
+            [self rqShowAlert:responseObject[@"info"]];
+            
+        }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
     
 }
+
+
 /*
 #pragma mark - Navigation
 

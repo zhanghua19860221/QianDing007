@@ -150,7 +150,6 @@
             
             NSLog(@"%@",[shareDelegate logDic:responseObject]);
             
-            
            //本地保存用户 sess_id 数据
             NSString *sess_id = [responseObject objectForKey:@"sess_id"];
             [[shareDelegate shareNSUserDefaults] setObject:sess_id forKey:@"change_sess_id"];
@@ -167,6 +166,11 @@
 }
 
 
+/**
+ 点击下一步按钮点击事件
+
+
+ */
 - (void)nextBtnClick:(UIButton *)btn{
     btn.backgroundColor = COLORFromRGB(0xe10000);
     
@@ -181,8 +185,9 @@
     
     //获取用户 sess_id 数据
     NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"change_sess_id"];
-
-    
+        if (sess_id == NULL) {
+        sess_id = @"";
+    }
     
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
@@ -197,7 +202,7 @@
         NSDictionary *dic = @{@"phone":ct_oldTeleField.text,
                               @"auth_session":loginSession,
                               @"captcha":ct_getCodeField.text,
-                              @"sess_id":sess_id,
+                              @"sess_id":sess_id
                               
                               };
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -343,6 +348,14 @@
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
 
+}
+
+/**
+ 点击空白收回弹出框
+ */
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
 }
 /*
 #pragma mark - Navigation

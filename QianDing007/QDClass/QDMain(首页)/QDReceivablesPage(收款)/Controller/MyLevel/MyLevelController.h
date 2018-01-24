@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MyLevelCell.h"
 
 @interface MyLevelController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong , nonatomic) UITableView *tableView;

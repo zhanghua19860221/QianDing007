@@ -398,8 +398,7 @@
                                                               //响应事件
                     [self.navigationController popViewControllerAnimated:YES];
                                                               
-                                                          }];
-    
+                                                                 }];
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];

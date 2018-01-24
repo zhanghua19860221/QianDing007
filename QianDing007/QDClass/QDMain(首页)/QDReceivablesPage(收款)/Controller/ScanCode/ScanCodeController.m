@@ -216,6 +216,7 @@
     NSMutableString *tempMoney = [NSMutableString stringWithString:sc_moneyField.text];
     [tempMoney deleteCharactersInRange:NSMakeRange(0, 1)];
     [[shareDelegate shareNSUserDefaults] setObject:tempMoney forKey:@"money_count"];
+    
     ZHScanViewController *zhVc = [[ZHScanViewController alloc] init];
     [self.navigationController pushViewController:zhVc animated:YES];
     

@@ -7,6 +7,7 @@
 //
 
 #import "BecomeDelegateController.h"
+#import "MyPage.h"
 
 @interface BecomeDelegateController (){
 
@@ -15,6 +16,7 @@
     UITextField *teleField;   //联系电话
     UITextField *emailField;  //邮箱
     UITextField *addressField;//地址
+    UIButton    *bd_submitBtn;   //提交按钮
 
 }
 
@@ -266,16 +268,16 @@
     }];
     
     
-    UIButton *submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [submitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    submitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    [submitBtn.titleLabel setTextColor:COLORFromRGB(0xffffff)];
-    submitBtn.backgroundColor = COLORFromRGB(0xe10000);
-    submitBtn.layer.masksToBounds = YES;
-    submitBtn.layer.cornerRadius = 5;
-    [self.view addSubview:submitBtn];
-    [submitBtn addTarget:self action:@selector(bdSubmitBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    [submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    bd_submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [bd_submitBtn setTitle:@"提交" forState:UIControlStateNormal];
+    bd_submitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [bd_submitBtn.titleLabel setTextColor:COLORFromRGB(0xffffff)];
+    bd_submitBtn.backgroundColor = COLORFromRGB(0xe10000);
+    bd_submitBtn.layer.masksToBounds = YES;
+    bd_submitBtn.layer.cornerRadius = 5;
+    [self.view addSubview:bd_submitBtn];
+    [bd_submitBtn addTarget:self action:@selector(bdSubmitBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [bd_submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineFour.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(SC_WIDTH-30);
@@ -284,7 +286,43 @@
     }];
 
 }
+//防止重复点击
+- (void)changeButtonStatus{
+    bd_submitBtn.enabled = YES;
+    
+}
+/**
+ 提交按钮点击事件
+ */
 - (void)bdSubmitBtnClick{
+    
+    bd_submitBtn.enabled = NO;
+    //防止重复点击
+    [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
+    
+    if (![shareDelegate deptNameInputShouldChinese:cityField.text]) {
+        [self bdShowAlertFail:@"城市必须为汉字。"];
+        
+        return;
+    }
+
+    if (![shareDelegate deptNameInputShouldChinese:nameField.text]) {
+        [self bdShowAlertFail:@"名字必须为汉字。"];
+        
+        return;
+    }
+
+    if (![shareDelegate isChinaMobile:teleField.text]) {
+        [self bdShowAlertFail:@"请输入正确的手机号。"];
+        
+        return;
+    }
+
+    if (![shareDelegate IsEmailAdress:emailField.text]) {
+        [self bdShowAlertFail:@"请输入正确的邮箱。"];
+        
+        return;
+    }
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
 
@@ -316,8 +354,14 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //       NSLog(@"%@",[shareDelegate logDic:responseObject]);
-       
-        [self lgShowAlert:responseObject[@"info"]];
+        if ([responseObject[@"status"]  isEqualToString:@"1"]) {
+            NSString *is_agency  = responseObject[@"is_agency"];
+            [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
+            [self bdShowAlertSuccess:@"信息提交成功。"];
+        }else{
+            [self bdShowAlertFail:responseObject[@"info"]];
+
+        }      
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -424,7 +468,7 @@
 /**
  警示 弹出框
  */
-- (void)lgShowAlert:(NSString *)warning{
+- (void)bdShowAlertFail:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -434,6 +478,30 @@
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
                                                               NSLog(@"action = %@", action);
+                                                          }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+/**
+  提交成功 弹出框
+ */
+- (void)bdShowAlertSuccess:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                      //响应事件
+                                                              //返回到我的界面
+                                                              for (UIViewController *controller in self.navigationController.viewControllers) {
+                                                                  if ([controller isKindOfClass:[MyPage class]]) {
+                                                                      [self.navigationController popToViewController:controller animated:YES];
+                                                                  }
+                                                              }
+
                                                           }];
     
     [alert addAction:defaultAction];

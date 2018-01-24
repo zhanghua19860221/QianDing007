@@ -102,7 +102,6 @@
     //取消输入框首字母默认大写功能
     [lg_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [lg_teleField setAutocorrectionType:UITextAutocorrectionTypeNo];
-    // lg_teleField.secureTextEntry = YES;
     lg_teleField.textAlignment = NSTextAlignmentLeft;
     lg_teleField.font = [UIFont systemFontOfSize:18];
     [lg_teleField setTextColor:COLORFromRGB(0x333333)];
@@ -230,7 +229,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
 
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
@@ -238,6 +237,10 @@
             NSString *is_checked  = responseObject[@"checked"];
             [[shareDelegate shareNSUserDefaults] setObject:is_checked forKey:@"is_checked"];
             
+            //判断商户认证类型
+            NSString *temp_Account = responseObject[@"account_type"];
+            [[shareDelegate shareNSUserDefaults] setObject:temp_Account forKey:@"account_type"];
+     
             //is_agency判断是否为代理商
             NSString *is_agency  = responseObject[@"is_agency"];
             [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
@@ -258,7 +261,6 @@
             //本地保存用户 登录密码 数据
             NSString *logPassWord = [responseObject objectForKey:@"password"];
             [[shareDelegate shareNSUserDefaults] setObject:logPassWord forKey:@"password"];
-            
             RootViewController *home = [[RootViewController alloc] init];
             [self.navigationController pushViewController:home animated:YES];
             
@@ -454,7 +456,7 @@
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     //移除请求菊花条
-    [[shareDelegate shareZHProgress] removeFromSuperview];
+//    [[shareDelegate shareZHProgress] removeFromSuperview];
     
 }
 - (void)viewDidDisappear:(BOOL)animated{

@@ -8,7 +8,7 @@
 
 #import "ZHScanViewController.h"
 #import "SuccessScanController.h"
-
+#import "ReceivablesPage.h"
 @interface ZHScanViewController (){
     
     int num;
@@ -32,8 +32,6 @@
     [self startScan];
     [self zhCreateNavgation];
 
-//  可以扫描相册二维码
-//  [self createButtonForPhotoList];
     
     // Do any additional setup after loading the view.
 }
@@ -109,7 +107,6 @@
     CGFloat height = 220/SCALE_X;
     ///top 与 left 互换  width 与 height 互换
     [self.outPut setRectOfInterest:CGRectMake(top,left, height, width)];
-    
     self.session = [[AVCaptureSession alloc]init];
     [self.session setSessionPreset:AVCaptureSessionPresetHigh];
 }
@@ -147,7 +144,6 @@
                                  AVMetadataObjectTypePDF417Code];
     
 }
-
 /**
  创建透明度蒙板
  */
@@ -188,11 +184,9 @@
 
 /**
  扫描外部二维码获取数据结果
-
-
+ 
  */
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
-    
     
     if ([metadataObjects count] >0){
         
@@ -200,48 +194,20 @@
         [timer setFireDate:[NSDate distantFuture]];
 
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
-        NSString *stringValue = metadataObject.stringValue;
+        NSString *stringValue = [NSString stringWithFormat:@"%@",metadataObject.stringValue];
+        
+        NSLog(@"stringValue = %@",stringValue);
+        
+        if([shareDelegate deptNumInputShouldNumber:stringValue]){
+            [self backController:@"无法识别的二维码。"];
+            
+            return;
+        }
         [self getUrlDateSource:stringValue];
-
+ 
     }
-}
+    
 
-
-/**
- 调用系统相册列表按钮
- */
--(void)createButtonForPhotoList{
-    
-    self.butPhotoList = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.butPhotoList.frame = CGRectMake(LEFT,TOP+220,200,50);
-    self.butPhotoList.backgroundColor = [UIColor grayColor];
-    [self.butPhotoList setTitle:@"相册列表操作按钮" forState:UIControlStateNormal];
-    [self.butPhotoList addTarget:self action:@selector(butPhotoListClick) forControlEvents:UIControlEventTouchUpInside];
-    self.butPhotoList.layer.cornerRadius = 20;
-    self.butPhotoList.layer.masksToBounds = YES;
-    [self.view addSubview:self.butPhotoList];
-    
-}
-/**
- 相册列表操作按钮点击事件
- */
--(void)butPhotoListClick{
-    
-    // 初始化图片选择控制器
-    UIImagePickerController *controller = [[UIImagePickerController alloc] init];
-    /*设置媒体来源，即调用出来的UIImagePickerController所显示出来的界面，有一下三种来源
-     typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) { UIImagePickerControllerSourceTypePhotoLibrary, UIImagePickerControllerSourceTypeCamera, UIImagePickerControllerSourceTypeSavedPhotosAlbum };分别表示：图片列表，摄像头，相机相册*/
-    [controller setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
-    // 设置所支持的媒体功能，即只能拍照，或则只能录像，或者两者都可以
-    NSString *requiredMediaType = ( NSString *)kUTTypeImage;
-    NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType,nil];
-    [controller setMediaTypes:arrMediaTypes];
-    
-    // 设置是否可以管理已经存在的图片或者视频
-    [controller setAllowsEditing:YES];
-    // 设置代理
-    [controller setDelegate:self];
-    [self presentViewController:controller animated:YES completion:nil];
 }
 
 /**
@@ -292,39 +258,8 @@
 }
 
 /**
- 扫描相册二维码获取数据结果
- 
- 
+ 获取完二维码数据之后 ，调取支付接口
  */
--(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    //获取选中的照片
-    UIImage *image = info[UIImagePickerControllerEditedImage];
-    
-    if (!image) {
-        image = info[UIImagePickerControllerOriginalImage];
-    }
-    //初始化  将类型设置为二维码
-    CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil];
-    
-    [picker dismissViewControllerAnimated:YES completion:^{
-        //设置数组，放置识别完之后的数据
-        NSArray *features = [detector featuresInImage:[CIImage imageWithData:UIImagePNGRepresentation(image)]];
-        //判断是否有数据（即是否是二维码）
-        if (features.count >= 1) {
-            //取第一个元素就是二维码所存放的文本信息
-            CIQRCodeFeature *feature = features[0];
-            NSString *scannedResult = feature.messageString;
-            
-            NSLog(@"%@",scannedResult);
-//            //通过对话框的形式呈现
-//            [self alertControllerMessage:scannedResult];
-            [self getUrlDateSource:scannedResult];
-        
-        }else{
-            [self alertControllerMessage:@"这不是一个二维码"];
-        }
-    }];
-}
 - (void)getUrlDateSource:(NSString*)urlStr{
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
@@ -354,10 +289,21 @@
             successVc.order_num = responseObject[@"orderNo"];
             successVc.order_time = responseObject[@"reqTime"];
             successVc.money_count = responseObject[@"money"];
+            successVc.order_status = responseObject[@"status"];
             [self.navigationController pushViewController:successVc animated:YES];
             
         }else{
             [self alertControllerMessage:responseObject[@"info"]];
+//            if ([responseObject[@"info"] isKindOfClass:@"等待密码"]) {
+//                
+                SuccessScanController *successVc = [[SuccessScanController alloc] init];
+                successVc.order_num = responseObject[@"orderNo"];
+                successVc.order_time = responseObject[@"reqTime"];
+                successVc.money_count = responseObject[@"money"];
+                successVc.order_status = responseObject[@"status"];
+
+                [self.navigationController pushViewController:successVc animated:YES];
+//            }
             
         }
 
@@ -372,12 +318,25 @@
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@" 确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
+
     }];
     [alert addAction:action];
     [self presentViewController:alert animated:YES completion:nil];
 }
-
+//二维码不正确的时候 调取次弹出框
+-(void)backController:(NSString *)message{
+    
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"" message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@" 确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        for (UIViewController *controller in self.navigationController.viewControllers) {
+            if ([controller isKindOfClass:[ReceivablesPage class]]) {
+                [self.navigationController popToViewController:controller animated:YES];
+            }
+        }
+    }];
+    [alert addAction:action];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

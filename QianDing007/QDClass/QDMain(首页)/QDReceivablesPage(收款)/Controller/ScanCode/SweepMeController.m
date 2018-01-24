@@ -24,8 +24,6 @@
     [self smCreateSubView];
     [self smGetImageCode];
 
-
-    
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
 }
@@ -131,8 +129,11 @@
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
     sm_url = imageUrl;
-//    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    
+    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSLog(@"tempUrlStr == %@",tempUrlStr);
+    
+    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
  
 
 }
@@ -148,6 +149,7 @@
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
+    
     
 }
 /**

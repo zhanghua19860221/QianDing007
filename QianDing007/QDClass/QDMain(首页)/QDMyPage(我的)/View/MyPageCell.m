@@ -37,7 +37,7 @@
 
     self.secondLabel = [[UILabel alloc] init];
     self.secondLabel.font = [UIFont systemFontOfSize:14];
-    self.secondLabel.textAlignment = NSTextAlignmentCenter;
+    self.secondLabel.textAlignment = NSTextAlignmentRight;
     [self.secondLabel setTextColor:COLORFromRGB(0x999999)];
     [self.contentView addSubview:self.secondLabel];
 
@@ -84,25 +84,33 @@
         
     }];
     
-    if ([model.thirdStr isEqualToString:@"0"]){
-        self.secondLabel.text = @"未认证";
-        [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self.contentView.mas_centerY);
-            make.right.equalTo(self.directionBtn.mas_left).offset(-10);
-            make.width.mas_offset(50);
-            make.height.mas_offset(14);
+    //判断我的界面 cell认证状态，及是否显示
+    if ([self.firstLabel.text isEqualToString:@"商户认证"]) {
+        
+        if ([model.thirdStr isEqualToString:@"1"]){
+            self.secondLabel.text = @"已认证";
+            [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView.mas_centerY);
+                make.right.equalTo(self.directionBtn.mas_left).offset(-5);
+                make.width.mas_offset(50);
+                make.height.mas_offset(14);
+                
+            }];
             
-        }];
-    }else if ([model.thirdStr isEqualToString:@"1"]){
-        self.secondLabel.text = @"已认证";
-        [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerY.equalTo(self.contentView.mas_centerY);
-            make.right.equalTo(self.directionBtn.mas_left).offset(-15);
-            make.width.mas_offset(90);
-            make.height.mas_offset(22);
-            
-        }];
+        }else {
+            self.secondLabel.text = @"未认证";
+            [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerY.equalTo(self.contentView.mas_centerY);
+                make.right.equalTo(self.directionBtn.mas_left).offset(-5);
+                make.width.mas_offset(50);
+                make.height.mas_offset(14);
+                
+            }];
+        }
+        
     }
+    
+
     
 }
 

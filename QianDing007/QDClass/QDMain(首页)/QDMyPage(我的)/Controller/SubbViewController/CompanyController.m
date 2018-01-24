@@ -61,9 +61,6 @@
     [self cmGetDataSource];
     [self createScrollerView];
     [self createOneView];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
 //     Do any additional setup after loading the view.
 }
 //防止重复点击
@@ -76,15 +73,88 @@
     //防止重复点击
     com_submitBtn.enabled = NO;
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
+
+    if ([com_companyNameField.text isEqualToString:@""]||[shareDelegate isAllCharacterString:com_companyNameField.text]) {
+        
+        [self cpShowAlert:@"企业名称不可为空，并且不可全为特殊符号。"];
+        return;
+    }
+    if ([com_creditField.text isEqualToString:@""]) {
+        [self cpShowAlert:@"统一社会信用代码不可为空。"];
+        
+        return;
+    }
+    if (com_panyAddressLabel.text == NULL) {
+        [self cpShowAlert:@"企业地址不可为空。"];
+        return;
+    }
+
+    if ([com_detailAddressField.text isEqualToString:@""]) {
+        
+        [self cpShowAlert:@"详细地址不可为空。"];
+        return;
+    }
+
+    if ([com_userNameField.text isEqualToString:@""]||![shareDelegate deptNameInputShouldChinese:com_userNameField.text]||![shareDelegate isStringLengthName:com_userNameField.text]) {
+        
+        [self cpShowAlert:@"请输不可为空的、11个字以内的纯中文姓名。"];
+        return;
+        
+    }
+  if ([com_cardedField.text isEqualToString:@""]||![shareDelegate isLenghtCard:com_cardedField.text]) {
+        
+        [self cpShowAlert:@"请输入15到18位，正确的身份证号码。"];
+        return;
+        
+    }
+    
+    if ([com_telePhoneField.text isEqualToString:@""]||![shareDelegate isChinaMobile:com_telePhoneField.text]) {
+        
+        [self cpShowAlert:@"请输入正确的手机号码。"];
+        return;
+        
+    }
+    
+    if (com_potoImage == NULL||com_potoImageOne == NULL||com_handImage == NULL||com_licenseImage == NULL||com_doorFhotoImage == NULL||com_placeImage == NULL||com_cashierImage == NULL){
+        
+        [self cpShowAlert:@"图片不可为空。"];
+        return;
+    }
+    
+    if ([com_accountField.text isEqualToString:@""]||![shareDelegate checkCardNo:com_accountField.text]) {
+        
+        [self cpShowAlert:@"请输入正确的收款账户。"];
+        return;
+        
+    }
+    if ([com_payeeField.text isEqualToString:@""]||![shareDelegate deptNameInputShouldChinese:com_payeeField.text]||![shareDelegate isStringLengthName:com_payeeField.text]) {
+        
+        [self cpShowAlert:@"请输不可为空的、11个字以内的纯中文收款人名称。"];
+        return;
+        
+    }
+    if ([com_bankField.text isEqualToString:@""]) {
+        
+        [self cpShowAlert:@"开户行不可为空。"];
+        return;
+        
+    }
+
+    if ([com_branceTeleField.text isEqualToString:@""]||![shareDelegate isChinaMobile:com_branceTeleField.text]) {
+        
+        [self cpShowAlert:@"请输入正确的银行预留手机号。"];
+        return;
+        
+    }
+    
     
     //创建请求菊花进度条
-    [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
+        make.center.equalTo([UIApplication sharedApplication].keyWindow);
         make.height.width.mas_equalTo(100);
     }];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
     
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
 
@@ -142,9 +212,12 @@
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            //上传成功后禁止scrollview滚动
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeScrollEnabled" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
             [self cpShowAlert:@"上传成功"];
+
         }else{
             [self cpShowAlert:responseObject[@"info"]];
         }
@@ -160,14 +233,12 @@
  */
 - (void)cmGetDataSource{
     
-    //创建请求菊花进度条
-    [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+//    //创建请求菊花进度条
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
+        make.center.equalTo([UIApplication sharedApplication].keyWindow);
         make.height.width.mas_equalTo(100);
     }];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
@@ -183,14 +254,16 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             if ([responseObject[@"account_type"] isEqualToString:@"2"]) {
                 [self fillDataToSubView:responseObject];
                 
+                NSString *temp_Account = responseObject[@"account_type"];
+                [[shareDelegate shareNSUserDefaults] setObject:temp_Account forKey:@"account_type"];
             }
         }else{
-            [self cpShowAlert:responseObject[@"info"]];
+                [self cpShowAlert:responseObject[@"info"]];
             
         }
         //移除菊花进度条
@@ -313,6 +386,9 @@
     com_companyNameField = [[UITextField alloc] init];
     [com_scrollView addSubview:com_companyNameField];
     com_companyNameField.delegate = self;
+    //取消输入框首字母默认大写功能
+    [com_companyNameField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [com_companyNameField setAutocorrectionType:UITextAutocorrectionTypeNo];
     com_companyNameField.textAlignment = NSTextAlignmentLeft;
     com_companyNameField.font = [UIFont systemFontOfSize:14];
     [com_companyNameField setTextColor:COLORFromRGB(0x333333)];
@@ -648,13 +724,13 @@
     UILabel *handPotoLabel = [[UILabel alloc] init];
     handPotoLabel.font = [UIFont systemFontOfSize:14];
     handPotoLabel.textAlignment = NSTextAlignmentLeft;
-    handPotoLabel.text = @"法人手持身份证照片";
+    handPotoLabel.text = @"法人手持身份证照片(请参考示例)";
     [handPotoLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:handPotoLabel];
     [handPotoLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(potoBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(15);
-        make.width.mas_equalTo(200);
+        make.width.mas_equalTo((SC_WIDTH-100));
         make.height.mas_equalTo(16);
         
     }];
@@ -683,7 +759,7 @@
     
     
     UIImageView *handPotoView = [[UIImageView alloc] init];
-    [handPotoView setImage:[UIImage imageNamed:@"组3"]];
+    [handPotoView setImage:[UIImage imageNamed:@"示例"]];
     handPotoView.backgroundColor = COLORFromRGB(0xffffff);
     [com_scrollView addSubview:handPotoView];
     [handPotoView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1144,7 +1220,6 @@
             [com_scrollView setContentOffset:CGPointMake(0, offSetY) animated:YES];
             
         }];
-        
     }
     
 }
@@ -1248,11 +1323,9 @@
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
-                                                              //响应事件
-                                                              NSLog(@"action = %@", action);
+
                                                           }];
     
     

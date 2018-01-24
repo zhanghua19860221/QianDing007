@@ -39,7 +39,13 @@
 }
 - (void)scCreateSubView{
     UIImageView *imageView = [[UIImageView alloc] init];
-    [imageView setImage:[UIImage imageNamed:@"成功收款图标"]];
+    if ([_order_status isEqualToString:@"0"]) {
+        [imageView setImage:[UIImage imageNamed:@"图标"]];
+        
+    }else{
+        [imageView setImage:[UIImage imageNamed:@"成功收款图标"]];
+
+    }
     [self.view addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
@@ -48,24 +54,38 @@
     }];
     
     UILabel *moneyLabel = [[UILabel alloc] init];
-    moneyLabel.text = [NSString stringWithFormat:@"成功收款：%@元",_money_count];
+    if ([_order_status isEqualToString:@"0"]) {
+        moneyLabel.text = [NSString stringWithFormat:@"资金通道处理失败%@元",_money_count];
+    }else{
+        moneyLabel.text = [NSString stringWithFormat:@"成功收款：%@元",_money_count];
+        
+    }
     [self.view addSubview:moneyLabel];
     moneyLabel.font = [UIFont systemFontOfSize:16];
-    moneyLabel.textAlignment = NSTextAlignmentCenter;
+    moneyLabel.textAlignment = NSTextAlignmentLeft;
     [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(imageView.mas_bottom).offset(30);
-        make.left.right.equalTo(self.view);
+        make.left.equalTo(self.view).offset(65);
+        make.right.equalTo(self.view);
         make.height.mas_equalTo(16);
  
     }];
     UILabel *orderLabel = [[UILabel alloc] init];
-    orderLabel.text = [NSString stringWithFormat:@"订单号：%@",_order_num];
+    if ([_order_status isEqualToString:@"0"]) {
+        orderLabel.text = @"订单处理失败。";
+
+    }else{
+    
+        orderLabel.text = [NSString stringWithFormat:@"订单号：%@",_order_num];
+    }
     [self.view addSubview:orderLabel];
-    orderLabel.textAlignment = NSTextAlignmentCenter;
+    [orderLabel setTextColor:COLORFromRGB(0x666666)];
+    orderLabel.textAlignment = NSTextAlignmentLeft;
     orderLabel.font = [UIFont systemFontOfSize:14];
     [orderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(moneyLabel.mas_bottom).offset(15);
-        make.left.right.equalTo(self.view);
+        make.left.equalTo(self.view).offset(65);
+        make.right.equalTo(self.view);
         make.height.mas_equalTo(14);
         
     }];
@@ -80,10 +100,11 @@
     timeLabel.font = [UIFont systemFontOfSize:16];
     timeLabel.text = [NSString stringWithFormat:@"收款时间：%@",orderTime];
     [self.view addSubview:timeLabel];
-    timeLabel.textAlignment = NSTextAlignmentCenter;
+    timeLabel.textAlignment = NSTextAlignmentLeft;
     [timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(orderLabel.mas_bottom).offset(15);
-        make.left.right.equalTo(self.view);
+        make.left.equalTo(self.view).offset(65);
+        make.right.equalTo(self.view);
         make.height.mas_equalTo(16);
         
     }];
@@ -105,7 +126,7 @@
 
     }];
     NSString *voiceStr = [NSString stringWithFormat:@"收款到账：%@元。",_money_count];
-    [self zhPlayVoice:voiceStr];
+//    [self zhPlayVoice:voiceStr];
 }
 - (void)buttonBackClick{
     

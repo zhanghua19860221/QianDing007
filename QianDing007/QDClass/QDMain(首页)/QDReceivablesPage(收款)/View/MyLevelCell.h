@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MyLeveLModel.h"
+
 @interface MyLevelCell : UITableViewCell
 @property (strong , nonatomic) UILabel *mebLevel;      //会员等级
 @property (strong , nonatomic) UILabel *mebRate;       //会员费率

@@ -17,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView.frame = CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT-130);
     self.tableView.tableFooterView = [UIView new];
     self.tableView.backgroundColor = [UIColor groupTableViewBackgroundColor];
     self.view.backgroundColor = COLORFromRGB(0xffffff);

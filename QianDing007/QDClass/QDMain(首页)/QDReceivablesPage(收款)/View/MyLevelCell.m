@@ -7,7 +7,6 @@
 //
 
 #import "MyLevelCell.h"
-#import "BuyLevelController.h"
 #import "MyRequestController.h"
 
 @implementation MyLevelCell
@@ -15,12 +14,11 @@
     [super awakeFromNib];
     // Initialization code
 }
--(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
-    
+-(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         [self configCell];
     }
+    
     return self;
 }
 - (void)configCell{
@@ -515,6 +513,13 @@
 }
 - (void)comitBtnClick:(UIButton *)button{
     
+    //创建请求菊花进度条
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo([UIApplication sharedApplication].keyWindow);
+        make.height.width.mas_equalTo(100);
+    }];
+    
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *level = nil;
     if ([_buyLevel isEqualToString:@"银牌商户"]) {
@@ -540,14 +545,19 @@
         
     }success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"responseObject === %@",[shareDelegate logDic:responseObject]);
-        NSString *signedString = responseObject[@"response"];
-        NSString *appScheme = @"alisdkdemo";
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            
+            NSString *signedString = responseObject[@"response"];
+            NSString *appScheme = @"alisdkdemo";
+            
+            [[AlipaySDK defaultService] payOrder:signedString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
+                
+                NSLog(@"reslut = %@",resultDic);
+            }];
+            _maskView.hidden = YES;
+            [[shareDelegate shareZHProgress] removeFromSuperview];
 
-        [[AlipaySDK defaultService] payOrder:signedString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
-            NSLog(@"reslut = %@",resultDic);
-        }];
-        
+        }
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
@@ -581,6 +591,7 @@
     _maskView.hidden = YES;
     
 }
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 

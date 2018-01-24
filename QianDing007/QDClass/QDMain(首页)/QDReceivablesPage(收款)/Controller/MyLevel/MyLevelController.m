@@ -7,7 +7,6 @@
 //
 
 #import "MyLevelController.h"
-#import "MyLevelCell.h"
 #import "MyLeveLModel.h"
 @interface MyLevelController (){
 
@@ -24,14 +23,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self getDataSource];
     [self createTopView];
     [self createTableView];
-    self.view.backgroundColor = COLORFromRGB(0xffffff);
+    [self getDataSource];
 
+    self.view.backgroundColor = COLORFromRGB(0xffffff);
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMyLevel:) name:@"refreshMyLevel" object:nil];
     // Do any additional setup after loading the view.
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    
+}
+- (void)refreshMyLevel:(NSNotification *)noti{
+    [self getDataSource];
 
+
+}
 - (void)getDataSource{
     
     //创建请求菊花进度条
@@ -173,11 +183,7 @@
     }];
     
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
 
-}
 - (void)createTopView{
 
     UIImageView *topView = [[UIImageView alloc] init];
@@ -296,6 +302,9 @@
         cell= [[MyLevelCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         
     }
+
+    
+    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell addDataToCell:lv_tableArray[indexPath.section][indexPath.row]];
     return cell;
@@ -345,7 +354,8 @@
     [super viewDidDisappear:animated];
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
-
+    //移除通知
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"refreshMyLevel"  object:nil];
 
 }
 /*

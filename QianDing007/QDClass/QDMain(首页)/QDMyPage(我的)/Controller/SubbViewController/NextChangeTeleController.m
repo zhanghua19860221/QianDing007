@@ -135,7 +135,7 @@
         
     }
     //获取用户 sess_id 数据
-    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"sess_id"];
+    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"change_sess_id"];
     
     [btn startCountDownTime:60 withCountDownBlock:^{
         
@@ -152,9 +152,7 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            NSLog(@"%@",[shareDelegate logDic:responseObject]);
-            
-            
+//            NSLog(@"%@",[shareDelegate logDic:responseObject]);
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             
             NSLog(@"%@",error);
@@ -175,19 +173,25 @@
         
     }
     //获取用户 sess_id 数据
-    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"sess_id"];
+    NSString *sess_id = [[shareDelegate shareNSUserDefaults] objectForKey:@"change_sess_id"];
+    if (sess_id == NULL) {
+        sess_id = @"";
+    }
     
     NSString *tokenSend = [[shareDelegate shareNSUserDefaults] objectForKey:@"tokenSMS"];
-    
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+
     
     NSDictionary *nctDic =@{@"phone":nct_newTeleField.text,
                            @"captcha":nct_getCodeField.text,
                            @"auth_session":oldSession,
                            @"sess_id":sess_id,
                            @"token":tokenSend
-                           
+                            
                            };
+    
+    NSLog(@"nctDic   === %@",nctDic);
+
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
@@ -209,11 +213,12 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
 //      NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        NSString *auth_session = [responseObject objectForKey:@"auth_session"];
-        [[shareDelegate shareNSUserDefaults] setObject:auth_session forKey:@"auth_session"];
-    
+
+
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self nctShowAlert:responseObject[@"info"]];
+            NSString *auth_session = [responseObject objectForKey:@"auth_session"];
+            [[shareDelegate shareNSUserDefaults] setObject:auth_session forKey:@"auth_session"];
             
             for (UIViewController *controller in self.navigationController.viewControllers) {
                 if ([controller isKindOfClass:[SecuritySetController class]]) {

@@ -31,6 +31,7 @@
     NSString *mp_serverVersion;  //记录服务器版本号
     UILabel  *mp_requestLabel;   //蒙板邀请文本
     UIView   *mp_showCodeView;   //二维码背景视图
+    UIView   *mp_typeView;       //头像上传方式选择视图
 }
 @end
 
@@ -45,7 +46,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self mpGetAgencyStateInfo];// 获得用户是否为代理商 以及代理商信息
     [self mpCreateTopView];
     [self mpCreateTabelView];
     [self mpTestingVersion];//检查更新
@@ -98,63 +98,15 @@
     }];
     
 }
-/**
- 获得用户是否为代理商 以及代理商信息
- */
-- (void)mpGetAgencyStateInfo{
-    
-    //判断是否是代理
-    NSString *is_agency = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_agency"];
-    if ([is_agency isEqualToString:@"0"]) {
-        
-        //创建请求菊花进度条
-        [self.view addSubview:[shareDelegate shareZHProgress]];
-        [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
-        [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.center.equalTo(self.view);
-            make.height.width.mas_equalTo(100);
-        }];
-        [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
-        
-        NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-        
-        NSDictionary *smDic =@{@"auth_session":oldSession};
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-        
-        [manager POST:DELEGATEGETINFO_URL parameters:smDic progress:^(NSProgress * _Nonnull uploadProgress) {
-            
-        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-            
-//            NSLog(@"%@",[shareDelegate logDic:responseObject]);
-            
-            if ([responseObject[@"status"] isEqualToString:@"1"]) {
-                
-                //is_agency判断是否为代理商
-                NSString *is_agency  = responseObject[@"is_agency"];
-                [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
-                
-            }
-            //移除菊花进度条
-            [[shareDelegate shareZHProgress] removeFromSuperview];
-            
-            
-        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-            
-        }];
-        
-    }
-    
-}
 
 /**
  tableview创建 加载数据
  */
 - (void)mpCreateTabelView{
     
+
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    
     NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
     NSArray *stateFirstArray = @[is_checked,@"空"];
     NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
@@ -207,8 +159,9 @@
  */
 - (void)myCodeButton:(UIButton*)btn{
     
-    NSString *checkedState = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-    if ([checkedState isEqualToString:@"1"]) {
+    NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    
+    if ([is_checked isEqualToString:@"1"]) {
         [mp_showCodeView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.center.equalTo(mp_myMaskView);
             make.width.mas_equalTo(200);
@@ -288,7 +241,8 @@
     }];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
-    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:imageUrl]];
+    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
 
     mp_requestLabel = [[UILabel alloc] init];
     mp_requestLabel.text = @"扫我吧 ！";
@@ -370,7 +324,8 @@
     mp_headViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     mp_headViewBtn.layer.cornerRadius = 35;
     mp_headViewBtn.layer.masksToBounds = YES;
-    
+    mp_headViewBtn.layer.borderWidth = 1;
+    mp_headViewBtn.layer.borderColor = [COLORFromRGB(0xf39f34)CGColor];
     NSData *dataImage = [[shareDelegate shareNSUserDefaults] objectForKey:@"LOGO"];
     UIImage *image = [UIImage imageWithData:dataImage]; // 取得图片
     if (dataImage == NULL) {
@@ -380,34 +335,38 @@
         [mp_headViewBtn setImage:image forState:UIControlStateNormal];
         
     }
-    [mp_headViewBtn addTarget:self action:@selector(changeHeadView) forControlEvents:UIControlEventTouchUpInside];
+    [mp_headViewBtn addTarget:self action:@selector(choseGetType) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:mp_headViewBtn];
     
     
     
     
-    
     UILabel *stateLabel = [[UILabel alloc] init];
+    
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-    if ([is_checked isEqualToString:@"0"]) {
-        stateLabel.text = @"未认证";
+    
+    //判断是否认证
+    if ([is_checked isEqualToString:@"1"]) {
+        
+        stateLabel.text = @"已认证";
+
     }else{
     
-        stateLabel.text = @"已认证";
+        stateLabel.text = @"未认证";
+        
     }
-    
     stateLabel.backgroundColor = [UIColor clearColor];
     stateLabel.textColor = COLORFromRGB(0xffffff);
     stateLabel.textAlignment = NSTextAlignmentCenter;
     stateLabel.font = [UIFont systemFontOfSize:16];
     [mp_topView addSubview:stateLabel];
     
-      [mp_headViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+    [mp_headViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(70, 70));
         make.center.equalTo(mp_topView);
         
     }];
-    
+
     [stateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mp_headViewBtn.mas_bottom).offset(10);
         make.width.mas_equalTo(70);
@@ -416,10 +375,103 @@
     }];
     
 }
+
 /**
- 头像按钮点击事件
+ 选择头像上传类型
+ 
  */
-- (void)changeHeadView{
+- (void)choseGetType{
+
+        mp_typeView = [[UIView alloc] init];
+        mp_typeView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.01];
+        [self.view addSubview:mp_typeView];
+        mp_typeView.alpha = 1;
+        [self.view bringSubviewToFront:mp_typeView];
+        [mp_typeView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(mp_headViewBtn);
+            make.center.equalTo(mp_headViewBtn);
+            make.size.mas_equalTo(CGSizeMake(200, 100));
+            
+        }];
+    
+        UIButton *cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [mp_typeView addSubview:cameraButton];
+        cameraButton.backgroundColor = COLORFromRGB(0xffffff);
+        [cameraButton addTarget:self action:@selector(cameraButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [cameraButton setTitle:@"打开相机" forState:UIControlStateNormal];
+        [cameraButton setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateNormal];
+        cameraButton.layer.masksToBounds = YES ;
+        cameraButton.layer.cornerRadius = 15;
+        [cameraButton mas_makeConstraints:^(MASConstraintMaker *make){
+            make.top.equalTo(mp_typeView);
+            make.left.equalTo(mp_typeView);
+            make.right.equalTo(mp_typeView);
+            make.height.mas_equalTo(30);
+            
+        }];
+        UIButton *albumButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [mp_typeView addSubview:albumButton];
+        [albumButton addTarget:self action:@selector(albumButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [albumButton setTitle:@"打开相册" forState:UIControlStateNormal];
+        [albumButton setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateNormal];
+        albumButton.backgroundColor = COLORFromRGB(0xffffff);
+        albumButton.layer.masksToBounds = YES ;
+        albumButton.layer.cornerRadius = 15;
+        [albumButton mas_makeConstraints:^(MASConstraintMaker *make){
+            make.bottom.equalTo(mp_typeView.mas_bottom);
+            make.left.equalTo(mp_typeView);
+            make.right.equalTo(mp_typeView);
+            make.height.mas_equalTo(30);
+            
+        }];
+}
+
+/**
+ 打开相机
+ */
+- (void)cameraButtonClick:(UIButton*)btn{
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        mp_typeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [mp_typeView removeFromSuperview];
+    }];
+    
+    // 判断有摄像头，并且支持拍照功能
+    if([self isCameraAvailable] && [self doesCameraSupportTakingPhotos]){
+        // 初始化图片选择控制器
+        UIImagePickerController *controller = [[UIImagePickerController alloc] init];
+        /*设置媒体来源，即调用出来的UIImagePickerController所显示出来的界面，有一下三种来源
+         typedef NS_ENUM(NSInteger, UIImagePickerControllerSourceType) { UIImagePickerControllerSourceTypePhotoLibrary, UIImagePickerControllerSourceTypeCamera, UIImagePickerControllerSourceTypeSavedPhotosAlbum };分别表示：图片列表，摄像头，相机相册*/
+        [controller setSourceType:UIImagePickerControllerSourceTypeCamera];
+        // 设置所支持的媒体功能，即只能拍照，或则只能录像，或者两者都可以
+        NSString *requiredMediaType = ( NSString *)kUTTypeImage;
+        NSString *requiredMediaType1 = ( NSString *)kUTTypeMovie;
+        NSArray *arrMediaTypes=[NSArray arrayWithObjects:requiredMediaType, requiredMediaType1,nil];
+        [controller setMediaTypes:arrMediaTypes];
+        // 设置录制视频的质量
+        [controller setVideoQuality:UIImagePickerControllerQualityTypeHigh];
+        //设置最长摄像时间
+        [controller setVideoMaximumDuration:10.f];
+        // 设置是否可以管理已经存在的图片或者视频
+        [controller setAllowsEditing:YES];
+        // 设置代理
+        [controller setDelegate:self];
+        [self presentViewController:controller animated:YES completion:nil];
+    }else {
+        NSLog(@"Camera is not available.");
+    }
+
+}
+/**
+ 打开相册
+ */
+- (void)albumButtonClick:(UIButton*)btn{
+    [UIView animateWithDuration:0.5 animations:^{
+        mp_typeView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [mp_typeView removeFromSuperview];
+    }];
     
     // 初始化图片选择控制器
     UIImagePickerController *controller = [[UIImagePickerController alloc] init];
@@ -437,9 +489,8 @@
     [controller setDelegate:self];
     [self presentViewController:controller animated:YES completion:nil];
     
-    
-
 }
+
 #pragma **************UITableViewDelegate**************************
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -478,15 +529,14 @@
 
     }else if([tempStr isEqual:@"我的代理"]){
     NSString *is_agency = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_agency"];
-        if (![is_agency isEqualToString:@"0"]) {
-        
-            MydelegateViewController *tempVc1 = [[MydelegateViewController alloc] init];
-            [self.navigationController pushViewController:tempVc1 animated:YES];
+        if ([is_agency isEqualToString:@"0"]) {
+            BecomeDelegateController *tempVc = [[BecomeDelegateController alloc] init];
+            [self.navigationController pushViewController:tempVc animated:YES];
             
         }else{
             
-            BecomeDelegateController *tempVc = [[BecomeDelegateController alloc] init];
-            [self.navigationController pushViewController:tempVc animated:YES];
+            MydelegateViewController *tempVc1 = [[MydelegateViewController alloc] init];
+            [self.navigationController pushViewController:tempVc1 animated:YES];
             
         }
     

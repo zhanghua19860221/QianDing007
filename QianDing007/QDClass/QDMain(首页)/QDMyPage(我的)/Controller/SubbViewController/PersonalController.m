@@ -82,13 +82,11 @@
     NSDictionary *levelDic =@{@"auth_session":oldSession};
     
     //创建请求菊花进度条
-    [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
+        make.center.equalTo([UIApplication sharedApplication].keyWindow);
         make.height.width.mas_equalTo(100);
     }];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
@@ -106,6 +104,8 @@
             if ([responseObject[@"account_type"] isEqualToString:@"1"]) {
                 [self fillDataToSubView:responseObject];
                 
+                NSString *temp_Account = responseObject[@"account_type"];
+                [[shareDelegate shareNSUserDefaults] setObject:temp_Account forKey:@"account_type"];
             }
         }else{
             [self psShowAlert:responseObject[@"info"]];
@@ -124,18 +124,98 @@
     ps_submitBtn.enabled = YES;
     
 }
-- (void)submitBtnClick:(UIButton *)btn{
+
+/**
+ 点击提交按钮点击事件
+
+ */
+- (void)psSubmitBtnClick:(UIButton *)btn{
     
     ps_submitBtn.enabled = NO;
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
+    
+    if ([ps_businessField.text isEqualToString:@""]||[shareDelegate isAllCharacterString:ps_businessField.text]) {
+        
+        [self psShowAlert:@"商家名称不可为空，并且不可全为特殊符号。"];
+        return;
+    }
+
+    if (ps_businessAddressLabel.text == NULL) {
+        [self psShowAlert:@"经营地址不可为空。"];
+        return;
+    }
+
+    if ([ps_detailAddressField.text isEqualToString:@""]) {
+        
+        [self psShowAlert:@"详细地址不可为空。"];
+        return;
+    }
+
+    if ([ps_userNameField.text isEqualToString:@""]||![shareDelegate deptNameInputShouldChinese:ps_userNameField.text]||![shareDelegate isStringLengthName:ps_userNameField.text]) {
+        
+        [self psShowAlert:@"请输不可为空的、11个字以内的纯中文姓名。"];
+        return;
+        
+    }
+
+    
+    if ([ps_cardedField.text isEqualToString:@""]||![shareDelegate isLenghtCard:ps_cardedField.text]) {
+        
+        [self psShowAlert:@"请输入15到18位，正确的身份证号码。"];
+        return;
+        
+    }
+
+    if ([ps_telePhoneField.text isEqualToString:@""]||![shareDelegate isChinaMobile:ps_telePhoneField.text]) {
+        
+        [self psShowAlert:@"请输入正确的手机号码。"];
+        return;
+        
+    }
+
+    if (ps_photoImage == NULL||ps_photoImageOne == NULL||ps_handPhotoImage == NULL||ps_doorPhotoImage == NULL||ps_placeImage == NULL||ps_cashierImage == NULL||ps_leaseImage == NULL||ps_leaseImageOne == NULL){
+        
+        [self psShowAlert:@"图片不可为空。"];
+        return;
+    }
+
+    if ([ps_accountField.text isEqualToString:@""]||![shareDelegate checkCardNo:ps_accountField.text]) {
+        
+        [self psShowAlert:@"请输入正确的收款账户。"];
+        return;
+        
+    }
+
+    if ([ps_payeeField.text isEqualToString:@""]||![shareDelegate deptNameInputShouldChinese:ps_payeeField.text]||![shareDelegate isStringLengthName:ps_payeeField.text]) {
+        
+        [self psShowAlert:@"请输不可为空的、11个字以内的纯中文收款人名称。"];
+        return;
+        
+    }
+    if ([ps_bankField.text isEqualToString:@""]) {
+        
+        [self psShowAlert:@"开户行不可为空。"];
+        return;
+        
+    }
+
+    if ([ps_branceTelField.text isEqualToString:@""]||![shareDelegate isChinaMobile:ps_branceTelField.text]) {
+        
+        [self psShowAlert:@"请输入正确的银行预留手机号。"];
+        return;
+        
+    }
+    
+    
+    
+    
+    
     //创建请求菊花进度条
-    [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(self.view);
+        make.center.equalTo([UIApplication sharedApplication].keyWindow);
         make.height.width.mas_equalTo(100);
     }];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
@@ -195,6 +275,8 @@
         //上传成功
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            //上传成功后禁止scrollview滚动
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeScrollEnabled" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
             [self psShowAlert:@"上传成功"];
         }else{
             [self psShowAlert:responseObject[@"info"]];
@@ -1050,7 +1132,7 @@
     ps_submitBtn.backgroundColor = COLORFromRGB(0xe10000);
     ps_submitBtn.layer.masksToBounds = YES;
     ps_submitBtn.layer.cornerRadius = 5;
-    [ps_submitBtn addTarget:self action:@selector(submitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [ps_submitBtn addTarget:self action:@selector(psSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [ps_scrollView addSubview:ps_submitBtn];
     [ps_submitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineNine.mas_bottom).offset(60/SCALE_Y);

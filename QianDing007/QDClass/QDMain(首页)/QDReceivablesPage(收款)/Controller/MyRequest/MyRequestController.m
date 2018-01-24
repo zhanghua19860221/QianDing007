@@ -699,7 +699,7 @@
                            @"type":@"supplier"
 
                            };
-    
+    NSLog(@"mrDic == %@",mrDic);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];

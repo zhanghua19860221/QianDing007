@@ -119,6 +119,8 @@
     
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
 
 }
 

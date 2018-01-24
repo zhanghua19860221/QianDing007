@@ -159,8 +159,9 @@
  */
 -(void)exitLogonBtnClick:(UIButton*)btn{
     
-    [[shareDelegate shareNSUserDefaults]  removeObjectForKey:@"auth_session"];
-    [[shareDelegate shareNSUserDefaults]  synchronize];
+    //清空本地数据
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     LoginMain * loginVC = [[LoginMain alloc] init];
     [self.navigationController pushViewController:loginVC animated:YES];

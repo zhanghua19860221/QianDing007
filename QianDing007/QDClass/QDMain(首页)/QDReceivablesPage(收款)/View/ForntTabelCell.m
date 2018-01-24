@@ -172,7 +172,7 @@
         _payTimeLabel.text = orderTime;
 
     }else if ([model.tran_result isEqualToString:@"3"]){
-        _stateLabel.text = @"状态：收款账号为null";
+        _stateLabel.text = @"状态：未到账";
         _payLabelone.text = @"到账时间";
         _payTimeLabel.text = orderTime;
         

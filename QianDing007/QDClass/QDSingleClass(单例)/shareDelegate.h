@@ -62,8 +62,49 @@
  */
 + (BOOL)isChinaMobile:(NSString *)phoneNum;
 
+
+/**
+ 纯中文正则判断
+ */
++ (BOOL)deptNameInputShouldChinese:(NSString *)text;
+
+/**
+ 邮箱正则验证
+ */
++ (BOOL)IsEmailAdress:(NSString *)Email;
 /**
  自定义进度条
  */
 + (ZHProgressView*)shareZHProgress;
+
+/**
+ 
+ 特殊字符正则表达式
+ */
++ (BOOL)isAllCharacterString:(NSString *)string;
+
+/**
+ 身份证验证
+ 
+ */
++ (BOOL)isLenghtCard:(NSString *)value;
+
+
+/**
+ 判断中文字符串的长度 不高于11个字
+ */
++ (BOOL)isStringLengthName:(NSString *)name;
+
+
+/**
+ 判断是否为银行卡号
+ 
+ */
++ (BOOL)checkCardNo:(NSString*) cardNo;
+
+/**
+ 是否是纯数字
+ 
+ */
++ (BOOL)deptNumInputShouldNumber:(NSString *)text;
 @end

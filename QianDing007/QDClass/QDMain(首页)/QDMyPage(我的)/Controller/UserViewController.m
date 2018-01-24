@@ -38,9 +38,20 @@
     [self createSubViewController];
     [self createScrollerView];
     
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeScrollEnabled:) name:@"changeScrollEnabled" object:nil];
+
+    // Do any additional setup after loading the view.
+    
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
 }
+- (void)changeScrollEnabled:(NSNotification *)noti{
+    _scrollView.scrollEnabled = NO;
+
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -59,6 +70,7 @@
     _scrollView.pagingEnabled = YES;
     [self.view addSubview:_scrollView];
     _scrollView.delegate = self ;
+     _scrollView.scrollEnabled = NO;
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*2.0, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(topView.mas_bottom);
@@ -72,6 +84,38 @@
         vc.view.frame= CGRectMake(SC_WIDTH*i, 0, SC_WIDTH, SC_HEIGHT);
         [_scrollView addSubview:vc.view];
     }
+    
+    NSString *type = [[shareDelegate shareNSUserDefaults] objectForKey:@"account_type"];
+    
+    if ([type isEqualToString:@"1"]) {
+        //个人认证
+        [_scrollView setContentOffset:CGPointMake(SC_WIDTH, 0) animated:YES];
+        scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+        [lableOne setTextColor:COLORFromRGB(0x999999)];
+        [lableTwo setTextColor:COLORFromRGB(0x999999)];
+        [lableThree setTextColor:COLORFromRGB(0xe10000)];
+        [lableFour  setTextColor:COLORFromRGB(0xe10000)];
+        
+        
+    }else if ([type isEqualToString:@"2"]){
+        //商户认证
+        [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+        [lableOne setTextColor:COLORFromRGB(0xe10000)];
+        [lableTwo setTextColor:COLORFromRGB(0xe10000)];
+        [lableThree setTextColor:COLORFromRGB(0x999999)];
+        [lableFour  setTextColor:COLORFromRGB(0x999999)];
+
+ 
+    }else if ([type isEqualToString:@"3"]){
+        //未认证
+        [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+        _scrollView.scrollEnabled = YES;
+
+
+    }
+    
 }
 /**
  创建子控制器
@@ -235,33 +279,55 @@
   选择框导航栏
  */
 - (void)changeClick:(UIButton*)btn{
-    switch (btn.tag) {
-        case 300:{
-            [lableOne setTextColor:COLORFromRGB(0xe10000)];
-            [lableTwo setTextColor:COLORFromRGB(0xe10000)];
-            [lableThree setTextColor:COLORFromRGB(0x999999)];
-            [lableFour  setTextColor:COLORFromRGB(0x999999)];
-            _scrollView.contentOffset = CGPointMake(0, 0);
-            [UIView animateWithDuration:0.3 animations:^{
-                scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
-            }];
-           }
-            break;
-        case 301:{
-            [lableThree setTextColor:COLORFromRGB(0xe10000)];
-            [lableFour  setTextColor:COLORFromRGB(0xe10000)];
-            [lableOne setTextColor:COLORFromRGB(0x999999)];
-            [lableTwo setTextColor:COLORFromRGB(0x999999)];
-            _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
-            [UIView animateWithDuration:0.3 animations:^{
-                scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
-            }];
-        }
-            break;
-        default:
-            break;
-    }
+    
+    NSString *type = [[shareDelegate shareNSUserDefaults] objectForKey:@"account_type"];
 
+    //未认证情况下可以点击出现效果
+
+    if ([type isEqualToString:@"3"]){
+        
+        switch (btn.tag) {
+            case 300:{
+                [lableOne setTextColor:COLORFromRGB(0xe10000)];
+                [lableTwo setTextColor:COLORFromRGB(0xe10000)];
+                [lableThree setTextColor:COLORFromRGB(0x999999)];
+                [lableFour  setTextColor:COLORFromRGB(0x999999)];
+                _scrollView.contentOffset = CGPointMake(0, 0);
+                [UIView animateWithDuration:0.3 animations:^{
+                    scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+                }];
+            }
+                break;
+            case 301:{
+                [lableThree setTextColor:COLORFromRGB(0xe10000)];
+                [lableFour  setTextColor:COLORFromRGB(0xe10000)];
+                [lableOne setTextColor:COLORFromRGB(0x999999)];
+                [lableTwo setTextColor:COLORFromRGB(0x999999)];
+                _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
+                [UIView animateWithDuration:0.3 animations:^{
+                    scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+                }];
+            }
+                break;
+            default:
+                break;
+        }
+
+    }else if([type isEqualToString:@"2"]){
+    
+        if (btn.tag == 301) {
+            [self uvShowAlert:@"您已提交商户认证，请勿重复提交个人认证"];
+
+        }
+
+    }else if([type isEqualToString:@"1"]){
+        
+        if (btn.tag == 300) {
+            [self uvShowAlert:@"您已提交个人认证，请勿重复提交商户认证"];
+            
+        }
+        
+    }
 }
 /**
  创建导航栏
@@ -288,36 +354,67 @@
 // 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     
-    int x = scrollView.contentOffset.x/SC_WIDTH;
-    //滚动线条处理
-    if (x == 0) {
-        [lableOne setTextColor:COLORFromRGB(0xe10000)];
-        [lableTwo setTextColor:COLORFromRGB(0xe10000)];
-        [lableThree setTextColor:COLORFromRGB(0x999999)];
-        [lableFour  setTextColor:COLORFromRGB(0x999999)];
-        [UIView animateWithDuration:0.3 animations:^{
-            scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
-        }];
-
-    }else if (x == 1){
-        [lableThree setTextColor:COLORFromRGB(0xe10000)];
-        [lableFour  setTextColor:COLORFromRGB(0xe10000)];
-        [lableOne setTextColor:COLORFromRGB(0x999999)];
-        [lableTwo setTextColor:COLORFromRGB(0x999999)];
-        [UIView animateWithDuration:0.3 animations:^{
-            scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
-        }];
-
+    NSString *type = [[shareDelegate shareNSUserDefaults] objectForKey:@"account_type"];
+    
+    //未认证情况下可以点击出现效果
+    if ([type isEqualToString:@"3"]){
+        int x = scrollView.contentOffset.x/SC_WIDTH;
+        //滚动线条处理
+        if (x == 0) {
+            [lableOne setTextColor:COLORFromRGB(0xe10000)];
+            [lableTwo setTextColor:COLORFromRGB(0xe10000)];
+            [lableThree setTextColor:COLORFromRGB(0x999999)];
+            [lableFour  setTextColor:COLORFromRGB(0x999999)];
+            [UIView animateWithDuration:0.3 animations:^{
+                scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+            }];
+            
+        }else if (x == 1){
+            [lableThree setTextColor:COLORFromRGB(0xe10000)];
+            [lableFour  setTextColor:COLORFromRGB(0xe10000)];
+            [lableOne setTextColor:COLORFromRGB(0x999999)];
+            [lableTwo setTextColor:COLORFromRGB(0x999999)];
+            [UIView animateWithDuration:0.3 animations:^{
+                scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+            }];
+            
+        }
+        
+        [_scrollView setContentOffset:CGPointMake(x*SC_WIDTH, 0) animated:YES];
+        
     }
     
-    [_scrollView setContentOffset:CGPointMake(x*SC_WIDTH, 0) animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+/**
+ 警示 弹出框
+ */
+- (void)uvShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+-(void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:animated ];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"changeScrollEnabled"  object:nil];
 
+}
 /*
 #pragma mark - Navigation
 
