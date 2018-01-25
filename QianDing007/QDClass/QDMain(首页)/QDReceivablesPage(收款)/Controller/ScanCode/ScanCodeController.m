@@ -32,7 +32,12 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
-    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
 }
 /**
  创建计算器视图
@@ -346,11 +351,6 @@
     
     
     return YES;
-}
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-
-    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

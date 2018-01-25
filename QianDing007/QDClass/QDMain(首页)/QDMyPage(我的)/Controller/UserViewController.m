@@ -347,6 +347,8 @@
  导航栏左侧按钮点击事件
  */
 - (void)leftBackClick{
+    //展示tabBar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
     [self.navigationController popViewControllerAnimated:YES];
     
 }
@@ -411,7 +413,7 @@
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated ];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"changeScrollEnabled"  object:nil];
 
 }

@@ -24,7 +24,7 @@
     [super viewDidLoad];
     [self allGetUrlDataSource];
     [self createTabelView];
-
+    self.view.backgroundColor = [UIColor redColor];
     // Do any additional setup after loading the view.
 }
 - (void)allGetUrlDataSource{
@@ -135,7 +135,7 @@
 
     }];
     UILabel *yesterdayLabel = [[UILabel alloc] init];
-    yesterdayLabel.text = @"昨日收益";
+    yesterdayLabel.text = @"昨日收款";
     yesterdayLabel.textAlignment = NSTextAlignmentCenter;
     [yesterdayLabel setTextColor:COLORFromRGB(0x999999)];
     yesterdayLabel.font = [UIFont systemFontOfSize:14];
@@ -161,7 +161,7 @@
 
     }];
     UILabel *totalLabel = [[UILabel alloc] init];
-    totalLabel.text = @"历史收益";
+    totalLabel.text = @"历史收款";
     totalLabel.textAlignment = NSTextAlignmentCenter;
     [totalLabel setTextColor:COLORFromRGB(0x999999)];
     totalLabel.font = [UIFont systemFontOfSize:14];

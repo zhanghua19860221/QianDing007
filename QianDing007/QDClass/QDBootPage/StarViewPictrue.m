@@ -33,7 +33,7 @@
 }
 //获取数据
 -(void)createData{
-    self.dataArray = [NSMutableArray arrayWithObjects:@"启动页1", nil];
+    self.dataArray = [NSMutableArray arrayWithObjects:@"启动页3", nil];
 }
 //创建PageContorl
 -(void)createPageContorl{

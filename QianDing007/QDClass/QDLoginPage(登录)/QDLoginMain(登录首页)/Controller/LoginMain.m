@@ -7,7 +7,6 @@
 //
 
 #import "LoginMain.h"
-#import "customTextFieldView.h"
 #import "GetPassWord.h"
 #import "RegisterController.h"
 #import "RootViewController.h"
@@ -38,14 +37,16 @@
     [self lgCreateLoginTextView];
     [self lgCreateLoginBtn];
     [self lgCreateGetPassWordBtn];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
-    self.view.backgroundColor = [UIColor whiteColor];
+
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
+    self.view.backgroundColor = [UIColor whiteColor];
     
 }
 
@@ -62,9 +63,9 @@
     [lg_logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.centerX.mas_equalTo(self.view.mas_centerX);
-        make.top.mas_equalTo(self.view).offset(40/SCALE_Y);
-        make.height.mas_equalTo(170/SCALE_Y);
-        make.width.mas_equalTo(125/SCALE_X);
+        make.top.mas_equalTo(self.view).offset(100/SCALE_Y);
+        make.height.mas_equalTo(110/SCALE_Y);
+        make.width.mas_equalTo(110/SCALE_X);
         
     }];
 }
@@ -77,7 +78,7 @@
     lg_line.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:lg_line];
     [lg_line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lg_logoImageView.mas_bottom).offset(100/SCALE_Y);
+        make.top.equalTo(lg_logoImageView.mas_bottom).offset(120/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_equalTo(1);
@@ -281,10 +282,11 @@
     lg_getPassWordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [lg_getPassWordBtn setTitle:@"找回密码？" forState:UIControlStateNormal];
     [lg_getPassWordBtn setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateNormal];
+    lg_getPassWordBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [self.view addSubview:lg_getPassWordBtn];
     [lg_getPassWordBtn addTarget:self action:@selector(getPassWord) forControlEvents:UIControlEventTouchUpInside];
     [lg_getPassWordBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.mas_equalTo(self.view).offset(20);
+        make.left.mas_equalTo(self.view).offset(10);
         make.top.mas_equalTo(lg_loginBtn.mas_bottom).offset(10);
         make.height.mas_equalTo(44);
         make.width.mas_equalTo(120);
@@ -292,6 +294,7 @@
     }];
     lg_registerBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [lg_registerBtn setTitle:@"注册" forState:UIControlStateNormal];
+    lg_registerBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [lg_registerBtn setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateNormal];
     [self.view addSubview:lg_registerBtn];
     [lg_registerBtn addTarget:self action:@selector(toRegister) forControlEvents:UIControlEventTouchUpInside];

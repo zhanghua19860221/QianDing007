@@ -28,13 +28,14 @@
     [self getDataSource];
 
     self.view.backgroundColor = COLORFromRGB(0xffffff);
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMyLevel:) name:@"refreshMyLevel" object:nil];
+
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMyLevel:) name:@"refreshMyLevel" object:nil];
     
 }
 - (void)refreshMyLevel:(NSNotification *)noti{
@@ -73,7 +74,7 @@
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             
-//            NSLog(@"%@",[shareDelegate logDic:responseObject]);
+           NSLog(@"%@",[shareDelegate logDic:responseObject]);
             [lv_TopDic addEntriesFromDictionary:responseObject];
             [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
             NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
@@ -148,12 +149,12 @@
  */
 - (void)addDataToTabelAarry:(NSArray*)array{
 
-    NSArray *imageArray = @[@"普通会员44*44",@"银牌会员44*44",@"金牌会员44*44",@"钻石会员44*44"];
+    
+    
     for (NSDictionary * dic in array) {
         MyLeveLModel *model = [[MyLeveLModel alloc] init];
         NSMutableArray *tempArray = [NSMutableArray arrayWithCapacity:3];
-        int ID = [dic[@"id"] intValue];
-        model.levelView  = imageArray[ID-1];
+        model.mebID      = dic[@"id"];
         model.mebLevel   = dic[@"level_name"];
         model.mebRate    = dic[@"scale"];
         model.mebMoney   = dic[@"amount"];

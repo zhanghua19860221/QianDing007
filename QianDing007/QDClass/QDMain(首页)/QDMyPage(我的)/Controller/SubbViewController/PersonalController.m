@@ -69,11 +69,16 @@
     [self psGetDataSource];
     [self createScrollerView];
     [self createOneView];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
+
     // Do any additional setup after loading the view.
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
 
+}
 /**
  获取网络数据 填充默认数据
  */
@@ -1333,6 +1338,7 @@
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
+    //移除通知
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
     //移除菊花进度条

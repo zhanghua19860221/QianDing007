@@ -216,7 +216,30 @@
         _buyLevelBtn.layer.borderColor = [COLORFromRGB(0x9b77a5) CGColor];
         
     }
-    [_levelView setImage:[UIImage imageNamed:model.levelView]];
+      int ID = [model.mebID intValue];
+    switch (ID) {
+        case 1:
+            [_levelView setImage:[UIImage imageNamed:@"普通会员"]];
+
+            break;
+        case 2:
+            [_levelView setImage:[UIImage imageNamed:@"银牌会员44*44"]];
+
+            break;
+        case 3:
+            [_levelView setImage:[UIImage imageNamed:@"金牌会员44*44"]];
+ 
+            break;
+        case 4:
+            [_levelView setImage:[UIImage imageNamed:@"钻石会员44*44"]];
+
+            break;
+
+        default:
+            [_levelView setImage:[UIImage imageNamed:@"普通会员"]];
+
+            break;
+    }
 
 }
 - (void)requestUseBtn:(UIButton*)btn{

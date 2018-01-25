@@ -26,6 +26,10 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     [self.tabBar removeFromSuperview];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar:) name:@"showTabBar" object:nil];
 }
 
 - (void)viewDidLoad{
@@ -33,10 +37,6 @@
     [self  creatSubView];
     [self  creatTabBarView];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar:) name:@"showTabBar" object:nil];
     // Do any additional setup after loading the view.
 }
 - (void)removeTabBar:(NSNotification *)noti{
@@ -119,8 +119,10 @@
     
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:NO];
-    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
-    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
+//  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
+//  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
+    
+
 
 }
 

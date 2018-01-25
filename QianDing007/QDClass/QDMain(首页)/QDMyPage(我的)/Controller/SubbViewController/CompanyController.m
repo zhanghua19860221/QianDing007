@@ -61,7 +61,15 @@
     [self cmGetDataSource];
     [self createScrollerView];
     [self createOneView];
+
 //     Do any additional setup after loading the view.
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
+    
 }
 //防止重复点击
 - (void)changeButtonStatus{
@@ -1227,7 +1235,6 @@
     [UIView animateWithDuration:cp_keyBoardDuration animations:^{
         [com_scrollView setContentOffset:CGPointMake(0,cp_scrollViewOldoffSet) animated:YES];
     }];
-    
     
 }
 #pragma ********************UITextFieldDelegate**************

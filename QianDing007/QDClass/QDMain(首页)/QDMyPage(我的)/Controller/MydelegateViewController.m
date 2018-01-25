@@ -288,7 +288,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //移除菊花进度条
-    [[shareDelegate shareZHProgress] removeFromSuperview];
+//    [[shareDelegate shareZHProgress] removeFromSuperview];
 
 }
 - (void)didReceiveMemoryWarning {
@@ -310,7 +310,6 @@
                                                               NSLog(@"action = %@", action);
                                                           }];
 
-    
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }

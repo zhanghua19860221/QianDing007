@@ -10,11 +10,11 @@
 
 @interface MyLeveLModel : UITableViewCell
 @property (strong , nonatomic) NSString *mebLevel;      //会员等级
+@property (strong , nonatomic) NSString *mebID;         //会员ID
 @property (strong , nonatomic) NSString *mebRate;       //会员费率
-@property (strong , nonatomic) NSString *mebMoney;     //收款金额
+@property (strong , nonatomic) NSString *mebMoney;      //收款金额
 @property (strong , nonatomic) NSString *mebRequest;    //会员邀请
 @property (strong , nonatomic) NSString *mebBuyMoney;   //购买金额
-@property (strong , nonatomic) NSString *levelView;     //等级视图
 
 
 

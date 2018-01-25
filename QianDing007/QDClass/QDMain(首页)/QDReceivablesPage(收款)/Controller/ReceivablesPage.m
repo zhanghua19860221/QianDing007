@@ -568,7 +568,7 @@
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
     if ([is_checked isEqualToString:@"1"]) {
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
         ScanCodeController *scanVc = [[ScanCodeController alloc] init];
         [self.navigationController pushViewController:scanVc animated:YES];
     }else{

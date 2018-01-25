@@ -1,26 +1,31 @@
 //
-//  AllLevelController.m
+//  AllMerchantController.m
 //  QianDing007
 //
-//  Created by 张华 on 17/12/24.
-//  Copyright © 2017年 张华. All rights reserved.
+//  Created by 张华 on 18/1/25.
+//  Copyright © 2018年 张华. All rights reserved.
 //
 
-#import "AllLevelController.h"
+#import "AllMerchantController.h"
 #import "UserListModel.h"
-@interface AllLevelController (){
-
+#import "UserListCell.h"
+@interface AllMerchantController (){
+    
     NSMutableArray *dataArray;//tableView数据
-
+    
 }
 
+
 @end
-@implementation AllLevelController
+
+@implementation AllMerchantController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self allGetUrlDataSource];
+    [self  createTabelView];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
+
     // Do any additional setup after loading the view.
 }
 - (void)allGetUrlDataSource{
@@ -49,7 +54,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *has_data = responseObject[@"has_data"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
@@ -75,22 +80,57 @@
                     [model setValuesForKeysWithDictionary:allDic];
                     [dataArray addObject:model];
                 }
-                self.basicDataArray = dataArray;
                 [self.tableView reloadData];
-
+                
             }
         }else{
             
-            [self allShowAlert:responseObject[@"info"]];
         }
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
-
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         
         
     }];
 }
+
+-(void)createTabelView{
+    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+    _tableView.separatorStyle = NO;
+    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.height.mas_offset(SC_HEIGHT-124);
+        
+    }];
+
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    return dataArray.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString *ID = @"tableViewCellIdentifier";
+    UserListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        
+        cell = [[UserListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+    }
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    [cell addDataSourceView:dataArray[indexPath.row]];
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    return 169/SCALE_Y;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -99,25 +139,7 @@
     [super viewDidDisappear:animated];
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
-
-}
-/**
- 警示 弹出框
- */
-- (void)allShowAlert:(NSString *)warning{
     
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
-                                                                   message:warning
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
-                                                          handler:^(UIAlertAction * action) {
-                                                              //响应事件
-                                                              NSLog(@"action = %@", action);
-                                                          }];
-    
-    [alert addAction:defaultAction];
-    [self presentViewController:alert animated:YES completion:nil];
 }
 /*
 #pragma mark - Navigation

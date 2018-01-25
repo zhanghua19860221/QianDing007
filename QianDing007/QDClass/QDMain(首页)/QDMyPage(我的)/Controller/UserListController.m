@@ -7,19 +7,22 @@
 //
 
 #import "UserListController.h"
-#import "AllLevelController.h"
-#import "ComMonController.h"
-#import "SilverController.h"
-#import "GoldController.h"
-#import "DiamondsController.h"
+#import "AllMerchantController.h"
+#import "ComMerchantController.h"
+#import "SilverMerchantController.h"
+#import "GoldMerchantController.h"
+#import "DiamondsMerchantController.h"
+
+
+
 @interface UserListController (){
     UIView *tabbarView;//头部选择视图
     UIImageView *imageLine;//滚动红色线条
-    AllLevelController *allLevel;
-    ComMonController *commonLevel;
-    SilverController *silverLevel;
-    GoldController *goldLevel;
-    DiamondsController *diamondLevel;
+    AllMerchantController *allLevel;
+    ComMerchantController *commonLevel;
+    SilverMerchantController *silverLevel;
+    GoldMerchantController *goldLevel;
+    DiamondsMerchantController *diamondLevel;
     
 }
 @end
@@ -140,15 +143,15 @@
  */
 - (void)createSubViewController{
     
-    allLevel = [[AllLevelController alloc] init];
+    allLevel = [[AllMerchantController alloc] init];
     
-    commonLevel = [[ComMonController alloc] init];
+    commonLevel = [[ComMerchantController alloc] init];
     
-    silverLevel = [[SilverController alloc] init];
+    silverLevel = [[SilverMerchantController alloc] init];
     
-    goldLevel = [[GoldController alloc] init];
+    goldLevel = [[GoldMerchantController alloc] init];
     
-    diamondLevel = [[DiamondsController alloc] init];
+    diamondLevel = [[DiamondsMerchantController alloc] init];
 
     [self addChildViewController:allLevel];
     [self addChildViewController:commonLevel];
@@ -161,26 +164,25 @@
  scrollerView展示控制器
  */
 - (void)createScrollerView{
-    
     _scrollView = [[UIScrollView alloc] init];
     _scrollView.backgroundColor = [UIColor whiteColor];
     _scrollView.pagingEnabled = YES;
     [self.view addSubview:_scrollView];
     _scrollView.delegate = self ;
-    //    _scrollView.scrollEnabled = NO;
     _scrollView.bounces = NO;
+    _scrollView.backgroundColor = [UIColor orangeColor];
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*5, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(tabbarView.mas_bottom).offset(10);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
-        make.height.mas_offset(SC_HEIGHT);
+        make.height.mas_equalTo(SC_HEIGHT-124);
         
     }];
     
     for (int i=0; i<5; i++) {
         UIViewController *vc = self.childViewControllers[i];
-        vc.view.frame= CGRectMake(SC_WIDTH*i, 0, SC_WIDTH, SC_HEIGHT);
+        vc.view.frame= CGRectMake(SC_WIDTH*i, 0, SC_WIDTH, SC_HEIGHT-124);
         [_scrollView addSubview:vc.view];
     }
     

@@ -43,13 +43,13 @@
     _name.textAlignment = NSTextAlignmentLeft;
     [_name setTextColor:COLORFromRGB(0x333333)];
     [self.contentView addSubview:_name];
-    [_name mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_supplier_name.mas_centerY);
-        make.left.equalTo(_supplier_name.mas_right).offset(10);
-        make.width.mas_equalTo(70);
-        make.height.mas_equalTo(16);
-        
-    }];
+//    [_name mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(_supplier_name.mas_centerY);
+//        make.left.equalTo(_supplier_name.mas_right).offset(10);
+//        make.width.mas_equalTo(70);
+//        make.height.mas_equalTo(16);
+//        
+//    }];
     
    UILabel *userTele = [[UILabel alloc] init];
     userTele.font = [UIFont systemFontOfSize:16];
