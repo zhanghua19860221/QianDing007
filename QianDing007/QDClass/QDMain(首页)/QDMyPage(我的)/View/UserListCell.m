@@ -176,7 +176,7 @@
         [_mebLevelLabel setTextColor:COLORFromRGB(0xfbaa69)];
 
     }else if ([model.supplier_level isEqualToString:@"4"]){
-        [_mebIconView setImage:[UIImage imageNamed:@"砖石会员44*44"]];
+        [_mebIconView setImage:[UIImage imageNamed:@"钻石会员44*44"]];
         [_mebLevelLabel setTextColor:COLORFromRGB(0x9b77a5)];
 
     }

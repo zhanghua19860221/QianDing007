@@ -106,7 +106,6 @@
         
     }];
     
-
 }
 - (void)createNavgation{
     

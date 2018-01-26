@@ -74,12 +74,13 @@
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             
-           NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//           NSLog(@"%@",[shareDelegate logDic:responseObject]);
             [lv_TopDic addEntriesFromDictionary:responseObject];
             [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
             NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
-            [self addDataToTabelAarry:dicArray];
-            if ([lv_TopDic[@"my_level_info"][@"id"] isEqualToString:@"4"]) {
+            int ID = [lv_TopDic[@"my_level_info"][@"id"] intValue];
+            NSLog(@"ID == %d",ID);
+            if (ID>=4) {
                 
                 UIImageView *imageView = [[UIImageView alloc] init];
                 [imageView setImage:[UIImage imageNamed:@"组3"]];
@@ -91,6 +92,10 @@
 
                 }];
                 
+            }else{
+            
+                [self addDataToTabelAarry:dicArray];
+
             }
             
         }else{

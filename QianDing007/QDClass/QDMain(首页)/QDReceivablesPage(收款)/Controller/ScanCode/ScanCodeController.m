@@ -35,10 +35,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
 
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-}
+
 /**
  创建计算器视图
  */
@@ -252,6 +249,18 @@
         make.height.mas_equalTo(40);
  
     }];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:backButton];
+    [backButton addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(backBtn);
+        make.width.mas_equalTo(44);
+        make.height.mas_equalTo(44);
+        
+    }];
+    
+    
+    
     UILabel *titLabel = [[UILabel alloc] init];
     titLabel.text = @"收款金额";
     titLabel.font = [UIFont systemFontOfSize:18];

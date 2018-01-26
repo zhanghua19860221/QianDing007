@@ -262,6 +262,13 @@
             //本地保存用户 登录密码 数据
             NSString *logPassWord = [responseObject objectForKey:@"password"];
             [[shareDelegate shareNSUserDefaults] setObject:logPassWord forKey:@"password"];
+            
+            //本地保存商户名称
+            NSString *merchantName = [responseObject objectForKey:@"name"];
+            [[shareDelegate shareNSUserDefaults] setObject:merchantName forKey:@"merchantName"];
+            
+            
+            
             RootViewController *home = [[RootViewController alloc] init];
             [self.navigationController pushViewController:home animated:YES];
             

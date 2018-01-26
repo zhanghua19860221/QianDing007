@@ -97,6 +97,8 @@
 		14B421931FEB462F00CC8AE4 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B421921FEB462F00CC8AE4 /* QuartzCore.framework */; };
 		14B9B7BA2005A7A5003BEBDB /* RecordMoneyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14B9B7B92005A7A5003BEBDB /* RecordMoneyModel.m */; };
 		14DB586520045D33009EA1EF /* StarViewPictrue.m in Sources */ = {isa = PBXBuildFile; fileRef = 14DB586420045D33009EA1EF /* StarViewPictrue.m */; };
+		14DCA411201ABCC00011E576 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DCA410201ABCC00011E576 /* Contacts.framework */; };
+		14DCA413201ABCED0011E576 /* ContactsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14DCA412201ABCED0011E576 /* ContactsUI.framework */; };
 		14E3ADAE2009E8E90006EAB0 /* UIButton+ZHCountDown.m in Sources */ = {isa = PBXBuildFile; fileRef = 14E3ADAD2009E8E90006EAB0 /* UIButton+ZHCountDown.m */; };
 		14F62CAB200747DD00B0138B /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CAA200747DD00B0138B /* libicucore.tbd */; };
 		14F62CAD200747E900B0138B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 14F62CAC200747E900B0138B /* libz.tbd */; };
@@ -289,6 +291,8 @@
 		14D836E11FE7DB61006ECD45 /* ForntTabelCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ForntTabelCell.m; sourceTree = "<group>"; };
 		14DB586320045D33009EA1EF /* StarViewPictrue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StarViewPictrue.h; path = QianDing007/QDClass/QDBootPage/StarViewPictrue.h; sourceTree = "<group>"; };
 		14DB586420045D33009EA1EF /* StarViewPictrue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StarViewPictrue.m; path = QianDing007/QDClass/QDBootPage/StarViewPictrue.m; sourceTree = "<group>"; };
+		14DCA410201ABCC00011E576 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		14DCA412201ABCED0011E576 /* ContactsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ContactsUI.framework; path = System/Library/Frameworks/ContactsUI.framework; sourceTree = SDKROOT; };
 		14E3ADAC2009E8E90006EAB0 /* UIButton+ZHCountDown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+ZHCountDown.h"; sourceTree = "<group>"; };
 		14E3ADAD2009E8E90006EAB0 /* UIButton+ZHCountDown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+ZHCountDown.m"; sourceTree = "<group>"; };
 		14E6CA6C1FE511BE00D55DEE /* CustomLabelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomLabelView.h; sourceTree = "<group>"; };
@@ -334,6 +338,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14DCA413201ABCED0011E576 /* ContactsUI.framework in Frameworks */,
+				14DCA411201ABCC00011E576 /* Contacts.framework in Frameworks */,
 				14AFF203200D87F700E9AE59 /* AVFoundation.framework in Frameworks */,
 				1403902F2008B48100B96A9C /* CoreMotion.framework in Frameworks */,
 				1403902D2008B47900B96A9C /* CFNetwork.framework in Frameworks */,
@@ -980,6 +986,8 @@
 		7EA40306F99091D35277AFE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14DCA412201ABCED0011E576 /* ContactsUI.framework */,
+				14DCA410201ABCC00011E576 /* Contacts.framework */,
 				14AFF202200D87F700E9AE59 /* AVFoundation.framework */,
 				1403902E2008B48100B96A9C /* CoreMotion.framework */,
 				1403902C2008B47900B96A9C /* CFNetwork.framework */,
@@ -1170,9 +1178,26 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007-resources.sh",
+				"${PODS_ROOT}/RongCloudIM/RongCloudIM/RongCloud.bundle",
+				"${PODS_ROOT}/RongCloudIM/RongCloudIM/en.lproj",
+				"${PODS_ROOT}/RongCloudIM/RongCloudIM/zh-Hans.lproj",
+				"${PODS_ROOT}/RongCloudIM/RongCloudIM/Emoji.plist",
+				"${PODS_ROOT}/RongCloudIM/RongCloudIM/RCConfig.plist",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/Required/ShareSDK.bundle",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/Optional/ShareSDKConfigFile.bundle",
+				"${PODS_ROOT}/mob_sharesdk/SDK/ShareSDK/Support/Optional/ShareSDKUI.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RongCloud.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/en.lproj",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/zh-Hans.lproj",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/Emoji.plist",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/RCConfig.plist",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDK.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDKConfigFile.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/ShareSDKUI.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1185,13 +1210,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-QianDing007-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1424,7 +1452,7 @@
 			baseConfigurationReference = 5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_MODULES_AUTOLINK = YES;
+				CLANG_MODULES_AUTOLINK = NO;
 				DEVELOPMENT_TEAM = J9MC53XV58;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1446,7 +1474,7 @@
 			baseConfigurationReference = B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_MODULES_AUTOLINK = YES;
+				CLANG_MODULES_AUTOLINK = NO;
 				DEVELOPMENT_TEAM = J9MC53XV58;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (

@@ -115,13 +115,14 @@
     return dataArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *ID = @"tableViewCellIdentifier";
+    NSString *ID = [NSString stringWithFormat:@"Cell%ld",(long)indexPath.row];
+    //以indexPath来唯一确定cell
     UserListCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    
     if (cell == nil) {
         
         cell = [[UserListCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
-    
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     [cell addDataSourceView:dataArray[indexPath.row]];
     return cell;

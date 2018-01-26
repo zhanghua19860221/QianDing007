@@ -25,7 +25,8 @@
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [self.tabBar removeFromSuperview];
+//    [self.navigationController setNavigationBarHidden:NO animated:NO];
+
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
     //注册通知
@@ -40,10 +41,12 @@
     // Do any additional setup after loading the view.
 }
 - (void)removeTabBar:(NSNotification *)noti{
-
+    
+    [self.tabBar removeFromSuperview];
     _tabberView.hidden = YES;
 }
 - (void)showTabBar:(NSNotification *)noti{
+    
     
     _tabberView.hidden = NO;
 }
@@ -115,10 +118,9 @@
     self.viewControllers=@[nav,Second,third];
     
 }
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated{
     
-    [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [super viewDidDisappear:animated];
 //  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
 //  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
     

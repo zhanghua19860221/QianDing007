@@ -32,7 +32,6 @@
     UILabel *rp_moneyNum;  //收款数
     UILabel *rp_moneyScale;//收款环比
 
-    
 }
 @end
 
@@ -148,13 +147,13 @@
     int orderCount = [rp_Dic[@"count"] intValue];
     NSString *str = [NSString stringWithFormat:@"%d",orderCount];
     rp_orderNum.text = str;
-    
-    NSString *orderScale = [NSString stringWithFormat:@"环比%@",rp_Dic[@"relative_count"]];
-    rp_orderScale.text = orderScale;
     rp_moneyNum.text = rp_Dic[@"sum"];
-    
-    NSString *moneyScale = [NSString stringWithFormat:@"环比%@",rp_Dic[@"relative_sum"]];
-    rp_moneyScale.text = moneyScale;
+
+//    NSString *orderScale = [NSString stringWithFormat:@"环比%@",rp_Dic[@"relative_count"]];
+//    rp_orderScale.text = orderScale;
+//
+//    NSString *moneyScale = [NSString stringWithFormat:@"环比%@",rp_Dic[@"relative_sum"]];
+//    rp_moneyScale.text = moneyScale;
 
 }
 /**
@@ -324,6 +323,17 @@
         make.height.mas_equalTo(17);
         
     }];
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:backButton];
+    [backButton addTarget:self action:@selector(showMoreBtn) forControlEvents:UIControlEventTouchUpInside];
+    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(moreBtn);
+        make.width.mas_equalTo(60);
+        make.height.mas_equalTo(60);
+        
+    }];
+    
+    
     
     UIImageView *lineView = [[UIImageView alloc] init];
     lineView.frame = CGRectMake(0, 50, SC_WIDTH, 1);
@@ -344,7 +354,7 @@
     [rp_orderNum setTextColor:COLORFromRGB(0xe10000)];
     [profitView addSubview:rp_orderNum];
     [rp_orderNum mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineView.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(lineView.mas_bottom).offset(30/SCALE_Y);
         make.left.equalTo(profitView);
         make.width.mas_equalTo(SC_WIDTH/2.0);
         make.height.mas_equalTo(20);
@@ -365,32 +375,32 @@
         
     }];
     
-    rp_orderScale = [[UILabel alloc] init];
-    rp_orderScale.text = @"0";
-    rp_orderScale.font = [UIFont systemFontOfSize:12];
-    [rp_orderScale setTextColor:COLORFromRGB(0x999999)];
-    rp_orderScale.textAlignment = NSTextAlignmentCenter;
-    [profitView addSubview:rp_orderScale];
-    [rp_orderScale mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(rp_orderNum.mas_bottom).offset(10);
-        make.left.equalTo(profitView);
-        make.width.mas_equalTo(SC_WIDTH/2.0);
-        make.height.mas_equalTo(12);
-        
-    }];
-    rp_moneyScale = [[UILabel alloc] init];
-    rp_moneyScale.text = @"0";
-    rp_moneyScale.font = [UIFont systemFontOfSize:12];
-    [rp_moneyScale setTextColor:COLORFromRGB(0x999999)];
-    rp_moneyScale.textAlignment = NSTextAlignmentCenter;
-    [profitView addSubview:rp_moneyScale];
-    [rp_moneyScale mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(rp_orderScale.mas_centerY);
-        make.left.equalTo(rp_orderScale.mas_right);
-        make.width.mas_equalTo(SC_WIDTH/2.0);
-        make.height.mas_equalTo(12);
-        
-    }];
+//    rp_orderScale = [[UILabel alloc] init];
+//    rp_orderScale.text = @"0";
+//    rp_orderScale.font = [UIFont systemFontOfSize:12];
+//    [rp_orderScale setTextColor:COLORFromRGB(0x999999)];
+//    rp_orderScale.textAlignment = NSTextAlignmentCenter;
+//    [profitView addSubview:rp_orderScale];
+//    [rp_orderScale mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(rp_orderNum.mas_bottom).offset(10);
+//        make.left.equalTo(profitView);
+//        make.width.mas_equalTo(SC_WIDTH/2.0);
+//        make.height.mas_equalTo(12);
+//        
+//    }];
+//    rp_moneyScale = [[UILabel alloc] init];
+//    rp_moneyScale.text = @"0";
+//    rp_moneyScale.font = [UIFont systemFontOfSize:12];
+//    [rp_moneyScale setTextColor:COLORFromRGB(0x999999)];
+//    rp_moneyScale.textAlignment = NSTextAlignmentCenter;
+//    [profitView addSubview:rp_moneyScale];
+//    [rp_moneyScale mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(rp_orderScale.mas_centerY);
+//        make.left.equalTo(rp_orderScale.mas_right);
+//        make.width.mas_equalTo(SC_WIDTH/2.0);
+//        make.height.mas_equalTo(12);
+//        
+//    }];
     
     
     UILabel *orderLabel = [[UILabel alloc] init];
@@ -400,7 +410,7 @@
     [orderLabel setTextColor:COLORFromRGB(0x333333)];
     [profitView addSubview:orderLabel];
     [orderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(rp_orderScale.mas_bottom).offset(10);
+        make.top.equalTo(rp_orderNum.mas_bottom).offset(10);
         make.left.equalTo(profitView);
         make.width.mas_equalTo(SC_WIDTH/2.0);
         make.height.mas_equalTo(15);
@@ -525,7 +535,6 @@
             break;
     }
     
-    
 }
 /**
  创建二维码视图
@@ -534,15 +543,26 @@
     
     
     UIButton *scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [scanBtn setImage:[UIImage imageNamed:@"我扫吧"] forState:UIControlStateNormal];
+    [scanBtn setImage:[UIImage imageNamed:@"我扫把"] forState:UIControlStateNormal];
     [codeView addSubview:scanBtn];
     [scanBtn addTarget:self action:@selector(scanBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [scanBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(codeView).offset(25/SCALE_Y);
-        make.left.equalTo(codeView).offset(75/SCALE_X);
-        make.bottom.equalTo(codeView).offset(-28/SCALE_Y);
-        make.width.mas_equalTo(55/SCALE_X);
-
+        make.centerY.equalTo(codeView.mas_centerY).offset(-15);
+        make.left.equalTo(codeView).offset(70/SCALE_X);
+        make.width.mas_equalTo(64/SCALE_X);
+        make.height.mas_equalTo(64/SCALE_X);
+    }];
+    
+    UILabel *scanLabel = [[UILabel alloc] init];
+    scanLabel.text = @"我 扫 吧";
+    [scanLabel setTextColor:COLORFromRGB(0xffffff)];
+    scanLabel.font = [UIFont systemFontOfSize:16];
+    [codeView addSubview:scanLabel];
+    [scanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(scanBtn.mas_bottom).offset(10);
+        make.centerX.equalTo(scanBtn.mas_centerX);
+        make.width.mas_equalTo(64/SCALE_X);
+        make.height.mas_equalTo(16);
     }];
     
     UIButton *sweepBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -550,11 +570,23 @@
     [codeView addSubview:sweepBtn];
     [sweepBtn addTarget:self action:@selector(sweepBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [sweepBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(codeView).offset(25/SCALE_Y);
-        make.right.equalTo(codeView).offset(-75/SCALE_X);
-        make.bottom.equalTo(codeView).offset(-28/SCALE_Y);
-        make.width.mas_equalTo(55/SCALE_X);
+        make.centerY.equalTo(codeView.mas_centerY).offset(-15);
+        make.right.equalTo(codeView).offset(-70/SCALE_X);
+        make.width.mas_equalTo(64/SCALE_X);
+        make.height.mas_equalTo(64/SCALE_X);
         
+    }];
+    UILabel *sweepLabel = [[UILabel alloc] init];
+    sweepLabel.text = @"扫 我 吧";
+    sweepLabel.textAlignment = NSTextAlignmentCenter;
+    [sweepLabel setTextColor:COLORFromRGB(0xffffff)];
+    sweepLabel.font = [UIFont systemFontOfSize:16];
+    [codeView addSubview:sweepLabel];
+    [sweepLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(sweepBtn.mas_bottom).offset(10);
+        make.centerX.equalTo(sweepBtn.mas_centerX);
+        make.width.mas_equalTo(64/SCALE_X);
+        make.height.mas_equalTo(16);
     }];
     
 /**
@@ -567,8 +599,6 @@
     
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
     if ([is_checked isEqualToString:@"1"]) {
-        
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
         ScanCodeController *scanVc = [[ScanCodeController alloc] init];
         [self.navigationController pushViewController:scanVc animated:YES];
     }else{
@@ -640,7 +670,6 @@
     }];
 
     codeView = [[UIView alloc] init];
-    [self.view addSubview:myView];
     codeView.backgroundColor = COLORFromRGB(0xe10000);
     codeView.frame =CGRectMake(0, myView.frame.origin.y+myView.frame.size.height, SC_WIDTH,self.view.frame.size.height-myView.frame.origin.y-myView.frame.size.height-44);
     [self.view addSubview:codeView];

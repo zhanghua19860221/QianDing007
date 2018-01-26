@@ -31,6 +31,9 @@ PODS:
   - mob_sharesdk/ShareSDKUI (4.0.4):
     - MOBFoundation
   - MOBFoundation (3.1.0)
+  - RongCloudIM/IMKit (2.8.27):
+    - RongCloudIM/IMLib
+  - RongCloudIM/IMLib (2.8.27)
   - SDWebImage (3.8.2):
     - SDWebImage/Core (= 3.8.2)
   - SDWebImage/Core (3.8.2)
@@ -44,6 +47,8 @@ DEPENDENCIES:
   - mob_sharesdk/ShareSDKPlatforms/QQ
   - mob_sharesdk/ShareSDKPlatforms/WeChat
   - mob_sharesdk/ShareSDKUI
+  - RongCloudIM/IMKit (~> 2.8.10)
+  - RongCloudIM/IMLib (~> 2.8.10)
   - SDWebImage (~> 3.8.1)
 
 SPEC CHECKSUMS:
@@ -51,8 +56,9 @@ SPEC CHECKSUMS:
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
   mob_sharesdk: b3ac49261b0e56d9e305d473c70bcde2e3a6e8ff
   MOBFoundation: 2d0799b6ad2677fa28e4cf5bcb1de28b34788110
+  RongCloudIM: 9993b47342d7ce2c338733470d3dfd8cecd38de1
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: 5a95d6164bea917e2b7b093faf2c176f9aca4273
+PODFILE CHECKSUM: e91b7f465f93c6f7bcfb97730ed191f82216e05c
 
-COCOAPODS: 1.0.1
+COCOAPODS: 1.4.0

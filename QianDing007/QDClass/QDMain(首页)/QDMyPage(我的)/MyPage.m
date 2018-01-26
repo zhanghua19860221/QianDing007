@@ -67,7 +67,59 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
- 
+    
+    //获取商户的代理状态
+    NSString *is_agency = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_agency"];
+    if(![is_agency isEqualToString:@"1"]){
+        [self getAgencyState];
+
+    }
+
+
+}
+/**
+ 获取商户的 代理状态
+ */
+- (void)getAgencyState{
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *bdDic =@{@"auth_session":oldSession};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:DELEGATEGETINFO_URL parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        if ([responseObject[@"status"]  isEqualToString:@"1"]) {
+            
+            [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"is_agency"] forKey:@"is_agency"];
+            
+        }else{
+            
+            [self mpShowAlert:responseObject[@"info"]];
+        }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        
+        
+    }];
+    
 }
 
 /**
@@ -619,12 +671,13 @@
     tempModel = mp_allArray[indexPath.section][indexPath.row];
     NSString *tempStr = tempModel.firstStr;
     if ([tempStr isEqual:@"商户认证"]) {
-
             UserViewController *tempVc = [[UserViewController alloc] init];
             [self.navigationController pushViewController:tempVc animated:YES];
-
+        
     }else if([tempStr isEqual:@"我的代理"]){
+
     NSString *is_agency = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_agency"];
+
         if ([is_agency isEqualToString:@"0"]) {
             BecomeDelegateController *tempVc = [[BecomeDelegateController alloc] init];
             [self.navigationController pushViewController:tempVc animated:YES];

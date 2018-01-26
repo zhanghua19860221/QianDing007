@@ -251,6 +251,17 @@
         make.height.mas_equalTo(22);
     }];
     
+    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:backButton];
+    [backButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
+    [backButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(backBtn);
+        make.width.mas_equalTo(44);
+        make.height.mas_equalTo(44);
+        
+    }];
+    
+    
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"我的代理";
     titleLabel.font = [UIFont systemFontOfSize:18];

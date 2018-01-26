@@ -11,12 +11,12 @@
 
 @interface BecomeDelegateController (){
 
-    UITextField *cityField;   //详细地址
+    UITextField *cityField;   //城市
     UITextField *nameField;   //姓名
     UITextField *teleField;   //联系电话
     UITextField *emailField;  //邮箱
     UITextField *addressField;//地址
-    UIButton    *bd_submitBtn;   //提交按钮
+    UIButton    *bd_submitBtn;//提交按钮
 
 }
 
@@ -28,6 +28,8 @@
     [super viewDidLoad];
     [self createNavgation];
     [self creatSubView];
+    [self getDataSource];
+
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }
@@ -35,8 +37,66 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
     
+}
+
+/**
+ 获取提交的信息填充到相应控件内
+ */
+- (void)getDataSource{
+
+        //创建请求菊花进度条
+        [self.view addSubview:[shareDelegate shareZHProgress]];
+        [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(self.view);
+            make.height.width.mas_equalTo(100);
+        }];
+        [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+        
+        NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+        
+        NSDictionary *bdDic =@{@"auth_session":oldSession};
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+        manager.responseSerializer = [AFJSONResponseSerializer serializer];
+        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+        
+        [manager POST:DELEGATEGETINFO_URL parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+            
+        } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+            
+          NSLog(@"%@",[shareDelegate logDic:responseObject]);
+            if ([responseObject[@"status"]  isEqualToString:@"1"]) {
+
+                [self fillDataToSubView:responseObject[@"partner_info"]];
+                
+            }else{
+                
+                [self bdShowAlertFail:responseObject[@"info"]];
+            }
+            //移除菊花进度条
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+            
+        } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+            
+            
+        }];
     
 }
+- (void)fillDataToSubView:(NSDictionary *)dic{
+    
+    cityField.text = dic[@"city"];
+    nameField.text = dic[@"name"];
+    teleField.text = dic[@"tel"];
+    emailField.text = dic[@"email"];
+    addressField.text = dic[@"address"];
+    NSString *is_agency  = dic[@"is_agency"];
+    [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
+
+}
+/**
+ 创建子视图
+ */
 - (void)creatSubView{
     UILabel *label = [[UILabel alloc] init];
     label.text = @"欢迎加入钱叮，";
@@ -301,13 +361,13 @@
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
     
     if (![shareDelegate deptNameInputShouldChinese:cityField.text]) {
-        [self bdShowAlertFail:@"城市必须为汉字。"];
+        [self bdShowAlertFail:@"请输入正确的城市名称。"];
         
         return;
     }
 
     if (![shareDelegate deptNameInputShouldChinese:nameField.text]) {
-        [self bdShowAlertFail:@"名字必须为汉字。"];
+        [self bdShowAlertFail:@"请输入正确的中文名称。"];
         
         return;
     }
@@ -355,8 +415,10 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 //       NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"]  isEqualToString:@"1"]) {
+            
             NSString *is_agency  = responseObject[@"is_agency"];
             [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
+            
             [self bdShowAlertSuccess:@"信息提交成功。"];
         }else{
             [self bdShowAlertFail:responseObject[@"info"]];

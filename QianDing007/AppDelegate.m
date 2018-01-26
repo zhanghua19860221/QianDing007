@@ -28,7 +28,7 @@
         LoginMain *root = [[LoginMain alloc] init];
         self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     }else{
-        
+
         RootViewController *root = [[RootViewController alloc] init];
         self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     }

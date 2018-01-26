@@ -163,9 +163,8 @@
         make.height.width.mas_equalTo(100);
     }];
     
-    
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-
+    
     NSDictionary *companyDic =@{@"auth_session":oldSession,
                              @"name":com_companyNameField.text,
                              @"biz_license":com_creditField.text,

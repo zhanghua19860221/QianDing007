@@ -20,14 +20,15 @@
     [super viewDidLoad];
     [self createNavgation];
     [self createSubView];
-    
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
-
     [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    UINavigationBar * bar = self.navigationController.navigationBar;
+//    bar.barTintColor = COLORFromRGB(0xe10000);
     
 }
 - (void)createSubView{

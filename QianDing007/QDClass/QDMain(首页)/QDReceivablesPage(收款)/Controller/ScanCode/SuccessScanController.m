@@ -31,12 +31,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
 
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    //展示tabBar
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
 
-}
 - (void)scCreateSubView{
     UIImageView *imageView = [[UIImageView alloc] init];
     if ([_order_status isEqualToString:@"0"]) {
@@ -126,9 +121,12 @@
 
     }];
     NSString *voiceStr = [NSString stringWithFormat:@"收款到账：%@元。",_money_count];
-//    [self zhPlayVoice:voiceStr];
+    [self zhPlayVoice:voiceStr];
 }
 - (void)buttonBackClick{
+    
+    //展示tabBar
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"showTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
     
     for (UIViewController *controller in self.navigationController.viewControllers) {
         if ([controller isKindOfClass:[ReceivablesPage class]]) {

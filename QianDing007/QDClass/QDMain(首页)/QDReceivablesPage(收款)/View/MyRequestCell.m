@@ -201,7 +201,16 @@
     _name.text = model.name;
     _phone.text = model.phone;
     _address.text = model.address;
-    _pass_date.text = model.pass_date;
+    
+    //时间戳转化成时间
+    NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
+    [stampFormatter setDateFormat:@"YYYY-MM-dd  HH:mm:ss"];
+    //以 1970/01/01 GMT为基准，然后过了secs秒的时间
+    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.pass_date intValue]];
+    NSString *orderTime = [stampFormatter stringFromDate:stampDate2];
+    
+    
+    _pass_date.text = orderTime;
     NSString *numStr = [NSString stringWithFormat:@"%@元",model.supplier_num];
     
     _supplier_num.text = numStr;
