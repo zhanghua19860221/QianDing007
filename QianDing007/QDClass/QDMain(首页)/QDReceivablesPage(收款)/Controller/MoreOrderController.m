@@ -70,7 +70,7 @@
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, 0);
     _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tabberView.mas_bottom).offset(20);
+        make.top.equalTo(tabberView.mas_bottom).offset(10);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(SC_HEIGHT);

@@ -72,7 +72,7 @@
 #define PROFIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=agencyDistributeDetails&r_type=1"
 
 //收款界面收款记录接口
-#define RECEIVEACCOUNT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1"
+#define RECEIVEACCOUNT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1&page=%ld"
 
 
 
@@ -121,7 +121,8 @@
 #define RONGCLOUD_IM_APPKEY @"mgb7ka1nmw0hg" //请换成您的appkey
 //把图片保存到相册iOS 9以后使用的最新方法
 #import <Photos/Photos.h>
-
+//MJRefresh 刷新
+#import <MJRefresh.h>
 
 // 自定义宏
 

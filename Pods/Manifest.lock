@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Masonry (1.0.2)
+  - MJRefresh (3.1.15.3)
   - mob_sharesdk (4.0.4):
     - mob_sharesdk/ShareSDK (= 4.0.4)
     - MOBFoundation
@@ -41,6 +42,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
   - Masonry (~> 1.0.1)
+  - MJRefresh (~> 3.1.15.3)
   - mob_sharesdk
   - mob_sharesdk/ShareSDKConfigurationFile
   - mob_sharesdk/ShareSDKExtension
@@ -54,11 +56,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Masonry: 7c429b56da9d4ee0bbb3ed77a5ea710d6a5df39e
+  MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   mob_sharesdk: b3ac49261b0e56d9e305d473c70bcde2e3a6e8ff
   MOBFoundation: 2d0799b6ad2677fa28e4cf5bcb1de28b34788110
   RongCloudIM: 9993b47342d7ce2c338733470d3dfd8cecd38de1
   SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
 
-PODFILE CHECKSUM: e91b7f465f93c6f7bcfb97730ed191f82216e05c
+PODFILE CHECKSUM: f40e78694b3b3498b3c36ac4653b9b61cf318c30
 
 COCOAPODS: 1.4.0

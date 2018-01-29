@@ -5,6 +5,7 @@ target ‘QianDing007’ do
   pod 'SDWebImage', '~> 3.8.1'
   pod 'RongCloudIM/IMLib', '~> 2.8.10'
   pod 'RongCloudIM/IMKit', '~> 2.8.10' 
+  pod 'MJRefresh', '~> 3.1.15.3'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'
