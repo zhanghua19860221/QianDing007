@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "LoginMain.h"
 #import "RootViewController.h"
-#import "NextChangeTeleController.h"
-#import "SuccessScanController.h"
 
 @interface AppDelegate ()
 @end
@@ -33,18 +31,43 @@
         self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
     }
     self.window.rootViewController = self.mainNav ;
+    
+    //集成融云
+    [self IntegrateRongCloud];
+    
     //是否出现引导页
     [self IsGuidePage];
     [self mobShareInit];
-    
+
     // Override point for customization after application launch.
     return YES;
 }
 
 /**
+ 集成融云消息
+ */
+- (void)IntegrateRongCloud{
+    //初始化融云SDK
+    [[RCIM sharedRCIM] initWithAppKey:RONGCLOUD_IM_APPKEY];
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
+ 
+}
+- (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
+        RCTextMessage *content = (RCTextMessage*)message.content;
+        NSLog(@"content.extra == %@",content.extra);
+        
+        NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
+        
+        NSLog(@"getDict == %@",getDict);
+    }
+    
+}
+/**
  初始化配置mob分享
  */
--(void)mobShareInit{
+- (void)mobShareInit{
     /**初始化ShareSDK应用
      
      @param activePlatforms

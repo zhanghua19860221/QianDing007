@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface LoginMain : UIViewController<UITextFieldDelegate>
+@interface LoginMain : UIViewController<UITextFieldDelegate,RCIMUserInfoDataSource>
 
 @end

@@ -41,7 +41,6 @@
     // Do any additional setup after loading the view.
 }
 - (void)removeTabBar:(NSNotification *)noti{
-    
     [self.tabBar removeFromSuperview];
     _tabberView.hidden = YES;
 }

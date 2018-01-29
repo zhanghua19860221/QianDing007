@@ -9,7 +9,6 @@
 #import "SweepMeController.h"
 
 @interface SweepMeController (){
-//    UIImageView *sm_codeView;//二维码展示视图
     NSString *sm_url;//网络图片地址
     UIButton *sm_saveCodeButton; //保存二维码图片按钮
     
@@ -107,7 +106,7 @@
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
     sm_url = imageUrl;
     
-    NSLog(@"imageUrl == %@",imageUrl);
+//    NSLog(@"imageUrl == %@",imageUrl);
     
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     UIImageView *codeView = [[UIImageView alloc] init];
@@ -259,7 +258,6 @@
         
     }];
     
-    
 }
 //防止重复点击
 - (void)changeButtonStatus{
@@ -279,24 +277,23 @@
     NSString *urlString = sm_url;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:urlString]];
     UIImage *image = [UIImage imageWithData:data]; // 取得图片
-    UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     
-}
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
-    
-    if (error == nil) {
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        //写入图片到相册
+        PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"已存入手机相册" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
+    } completionHandler:^(BOOL success, NSError * _Nullable error) {
+        NSLog(@"success = %d, error = %@", success, error);
+        if (success == 1) {
+            [self smShowAlert:@"二维码保存成功"];
+        }else{
+            [self smShowAlert:@"二维码保存失败"];
+            
+        }
         
-    }else{
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:@"保存失败" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定", nil];
-        [alert show];
-    }
-    
-}
+    }];
 
+}
 /**
  导航栏返回按钮
  */
@@ -314,6 +311,25 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+/**
+ 警示 弹出框
+ */
+- (void)smShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 /*

@@ -541,7 +541,6 @@
  */
 - (void)createCodeView{
     
-    
     UIButton *scanBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [scanBtn setImage:[UIImage imageNamed:@"我扫把"] forState:UIControlStateNormal];
     [codeView addSubview:scanBtn];

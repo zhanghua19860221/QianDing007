@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <RongIMLib/RongIMLib.h>
+#import <RongIMKit/RongIMKit.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *mainNav;

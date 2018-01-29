@@ -114,8 +114,13 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 //语音播报
-#import<AVFoundation/AVSpeechSynthesis.h>
-
+#import <AVFoundation/AVSpeechSynthesis.h>
+//融云消息
+#import <RongIMLib/RongIMLib.h>
+#import <RongIMKit/RongIMKit.h>
+#define RONGCLOUD_IM_APPKEY @"mgb7ka1nmw0hg" //请换成您的appkey
+//把图片保存到相册iOS 9以后使用的最新方法
+#import <Photos/Photos.h>
 
 
 // 自定义宏
@@ -125,7 +130,6 @@
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
 #define SCALE_X 375.0*SC_WIDTH
 #define SCALE_Y 667.0*SC_HEIGHT
-#define UIFontFromPixel(pixel) ([UIFont systemFontOfSize:pixel*3/4])//像素转字号
 #define COLORFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000)>>16))/255.0 green:((float)((rgbValue & 0xFF00)>>8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]//设置颜色
 
 

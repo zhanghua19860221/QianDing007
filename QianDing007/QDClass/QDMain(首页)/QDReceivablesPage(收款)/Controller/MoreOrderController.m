@@ -41,8 +41,6 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
 
-
-
 }
 /**
  创建子控制器

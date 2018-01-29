@@ -14,7 +14,6 @@
     UITextField *lg_selectTextField  ;//记录当前编辑的输入框
     UIButton *lg_selectBtn  ;//记录选中的按钮
 
-    
     UIImageView *lg_logoImageView;//logo图标
     UIButton *lg_loginBtn;//登录按钮
     UIButton *lg_getPassWordBtn;//找回密码
@@ -47,7 +46,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+
 }
 
 /**
@@ -176,6 +175,7 @@
         make.left.mas_equalTo(self.view).offset(20);
         make.right.mas_equalTo(self.view).offset(-20);
         make.height.mas_equalTo(@44);
+        
     }];
 }
 //防止重复点击
@@ -267,6 +267,11 @@
             NSString *merchantName = [responseObject objectForKey:@"name"];
             [[shareDelegate shareNSUserDefaults] setObject:merchantName forKey:@"merchantName"];
             
+            //获取融云token
+            NSString *userRongToken = [responseObject objectForKey:@"rongtoken"];
+            [[shareDelegate shareNSUserDefaults] setObject:userRongToken forKey:@"RongToken"];
+            
+            [self landRongCloud:userRongToken];
             
             
             RootViewController *home = [[RootViewController alloc] init];
@@ -285,6 +290,36 @@
     }];
 
 }
+
+/**
+ 链接融云
+ 
+ */
+-(void)landRongCloud:(NSString *)token{
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+
+
+    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
+        //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
+        [[RCIM sharedRCIM] setUserInfoDataSource:self];
+        NSLog(@"链接成功: %@.", userId);
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+        });
+        
+    } error:^(RCConnectErrorCode status) {
+        NSLog(@"链接失败 %ld.", (long)status);
+        
+    } tokenIncorrect:^{
+        NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
+    }];
+    
+}
+
+/**
+ 创建找回密码按钮
+ */
 - (void)lgCreateGetPassWordBtn{
     lg_getPassWordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [lg_getPassWordBtn setTitle:@"找回密码？" forState:UIControlStateNormal];
@@ -361,7 +396,7 @@
     NSDictionary * info = [notification userInfo];
     NSValue *avalue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     CGRect keyboardRect = [self.view convertRect:[avalue CGRectValue] fromView:nil];
-    double keyboardHeight=keyboardRect.size.height;//键盘的高度
+    double keyboardHeight = keyboardRect.size.height;//键盘的高度
     CGRect frame =  CGRectMake(0, 0, SC_WIDTH, SC_HEIGHT);
     frame.origin.y -= 50;
     self.view.frame=frame;
