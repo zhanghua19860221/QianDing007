@@ -166,22 +166,17 @@
     
     NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)self.page++];
     
-    NSLog(@"urlStr == %@",urlStr);
-    
     [manager POST:urlStr parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSLog(@"self.page == %ld",self.page);
-        
         
         [self endRefresh];
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;
         }
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *has_data = responseObject[@"has_data"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {

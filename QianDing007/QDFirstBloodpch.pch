@@ -29,7 +29,7 @@
 //我的等级
 #define LEVEL_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myLevel&r_type=1"
 //我的邀请
-#define INVITATION_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1"
+#define INVITATION_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1&page=%ld"
 
 //我的邀请 二维码图片 url
 #define REQUESTCODE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=getPersonalQR&r_type=1&i_type=1"

@@ -10,8 +10,6 @@
 #import "MyRequestModel.h"
 #import "MyRequestCell.h"
 @interface MyRequestController (){
-
-    NSMutableArray *mr_dataArray;//数据数组
     UIView *mr_requestView;      //商户邀请记录
     UIScrollView *mr_scrollview; //视图滚动展示
     UIView *mr_requestIconView;  //我要邀请视图
@@ -50,7 +48,6 @@
  */
 - (void)getDataSource{
     
-    
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
@@ -61,7 +58,6 @@
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
 
     mr_Dic = [[NSMutableDictionary alloc] init];
-    mr_dataArray = [NSMutableArray arrayWithCapacity:2];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
     NSDictionary *Dic =@{@"auth_session":oldSession};
@@ -71,13 +67,44 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:INVITATION_URL parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSString * urlStr = [NSString stringWithFormat:INVITATION_URL,(long)1];
+
+    
+    [manager POST:urlStr parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [mr_Dic addEntriesFromDictionary:responseObject];
-        NSLog(@"%@",[shareDelegate logDic:mr_Dic]);
-        [self mlGetUrlDataToSubview:mr_Dic];
+        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_count"]];
+        NSString *codeStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_code"]];
+        mr_requestLabel.text = requestStr;
+        mr_codeLabel.text    = codeStr;
         
+        NSArray *array = responseObject[@"invite_supplier_list"];
+        
+        if ([requestStr isEqualToString:@"0"]) {
+            
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [imageView setImage:[UIImage imageNamed:@"暂无邀请记录"]];
+            [self.view addSubview:imageView];
+            [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.centerX.equalTo(self.view.mas_centerX);
+                make.centerY.equalTo(self.view.mas_centerY).offset(-30);
+                make.width.height.mas_equalTo(90);
+            }];
+            [[shareDelegate shareZHProgress] removeFromSuperview];
+            
+            return;
+        }else{
+            
+            for (NSDictionary * tempDic in array) {
+                
+                MyRequestModel *model = [[MyRequestModel alloc]init];
+                [model setValuesForKeysWithDictionary:tempDic];
+                [self.dataArray addObject:model];
+                
+            }
+        }
+        [self.tableView reloadData];
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
@@ -85,46 +112,104 @@
     }];
     
 }
-
 /**
- 获取网络数据后更新视图数据
+ 懒加载数组
+ */
+- (NSMutableArray *)dataArray{
+    if (nil == _dataArray) {
+        _dataArray = [NSMutableArray arrayWithCapacity:2];
+    }
+    return _dataArray;
+}
+/**
+ 懒加载tableview
  
  */
-- (void)mlGetUrlDataToSubview:(NSDictionary*)dic{
-
-    NSString *requestStr = [NSString stringWithFormat:@"%@",dic[@"invite_count"]];
-    NSString *codeStr = [NSString stringWithFormat:@"%@",dic[@"invite_code"]];
-    mr_requestLabel.text = requestStr;
-    mr_codeLabel.text    = codeStr;
-    
-    NSArray *array = dic[@"invite_supplier_list"];
-    
-    if ([requestStr isEqualToString:@"0"]) {
-        
-        UIImageView *imageView = [[UIImageView alloc] init];
-        [imageView setImage:[UIImage imageNamed:@"暂无邀请记录"]];
-        [self.view addSubview:imageView];
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.centerX.equalTo(self.view.mas_centerX);
-            make.centerY.equalTo(self.view.mas_centerY).offset(-30);
-            make.width.height.mas_equalTo(90);
+- (UITableView *)tableView{
+    if (nil == _tableView) {
+        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [self.view addSubview:self.tableView];
+        _tableView.separatorStyle = NO;
+        _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view).offset(74+90/SCALE_Y);
+            make.left.right.equalTo(self.view);
+            make.height.mas_offset(SC_HEIGHT-20-90/SCALE_Y);
+            
         }];
-        [[shareDelegate shareZHProgress] removeFromSuperview];
-
-       return;
-    }else{
-    
-        for (NSDictionary * tempDic in array) {
+        
+        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            self.page = 1;
             
-            MyRequestModel *model = [[MyRequestModel alloc]init];
-            [model setValuesForKeysWithDictionary:tempDic];
-            [mr_dataArray addObject:model];
-            
-        }
-        [[shareDelegate shareZHProgress] removeFromSuperview];
-
+            [self updateData];
+        }];
+        
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            [self updateData];
+        }];
     }
-    [self createTabelView];
+    return _tableView;
+}
+
+/**
+ 
+ 停止刷新
+ **/
+-(void)endRefresh{
+    
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+}
+/*
+ 更新数据.
+ 数据更新后,会自动更新视图.
+ */
+
+- (void)updateData{
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSDictionary *mrDic =@{@"auth_session":oldSession
+                            };
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    NSString * urlStr = [NSString stringWithFormat:INVITATION_URL,(long)self.page++];
+
+    [manager POST:urlStr parameters:mrDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        [self endRefresh];
+        if (2 == self.page) { // 说明是在重新请求数据.
+            self.dataArray = nil;
+        }
+//        NSLog(@"%@",responseObject);
+
+        NSArray *array = responseObject[@"invite_supplier_list"];
+        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_count"]];
+        
+        if (![requestStr isEqualToString:@"0"]) {
+            
+            for (NSDictionary * tempDic in array) {
+                
+                MyRequestModel *model = [[MyRequestModel alloc]init];
+                [model setValuesForKeysWithDictionary:tempDic];
+                [self.dataArray addObject:model];
+                
+            }
+        }
+        [self.tableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        [self endRefresh];
+        
+    }];
+    
 }
 /**
  创建导航栏
@@ -492,10 +577,7 @@
                otherPlatformTypes:nil
                       shareParams:shareParams
               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
-                  
-                  NSLog(@"state == %lu",(unsigned long)state);
-                  
-             
+
              switch (state) {
                      
                  case SSDKResponseStateSuccess:{
@@ -612,32 +694,12 @@
     }
     
 }
-
-/**
- 创建tableview
- */
--(void)createTabelView{
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
-    _tableView.separatorStyle = NO;
-    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(74+90/SCALE_Y);
-        make.left.right.equalTo(self.view);
-        make.height.mas_offset(SC_HEIGHT-74-90/SCALE_Y);
-        
-    }];
-}
-
 #pragma *********************tabelViewDelegate*************************
 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return mr_dataArray.count;
+    return self.dataArray.count;
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *ID = @"tableViewCellIdentifier";
@@ -648,7 +710,7 @@
     }
     
     cell.contentView.backgroundColor = COLORFromRGB(0xffffff);
-    [cell addDataSourceToCell:mr_dataArray[indexPath.row]];
+    [cell addDataSourceToCell:self.dataArray[indexPath.row]];
     
     return cell;
 }
@@ -709,7 +771,8 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self mrShowAlert:@"邀请成功"];
         }else{

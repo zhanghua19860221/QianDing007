@@ -167,17 +167,12 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
     NSString * urlStr = [NSString stringWithFormat:PROFIT_URL,(long)self.page++];
-    
-    NSLog(@"urlStr == %@",urlStr);
-    
+
     [manager POST:urlStr parameters:gpDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSLog(@"self.page == %ld",self.page);
-        
-        
+  
         [self endRefresh];
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;
