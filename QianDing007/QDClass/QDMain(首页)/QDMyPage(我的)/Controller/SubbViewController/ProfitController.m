@@ -61,7 +61,9 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:PROFIT_URL parameters:pcDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        NSString * urlStr = [NSString stringWithFormat:PROFIT_URL,(long)1];
+    
+    [manager POST:urlStr parameters:pcDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         

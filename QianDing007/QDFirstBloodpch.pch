@@ -66,10 +66,10 @@
 #define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1"
 
 //我的代理资金管理
-#define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1"
+#define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1&page=%ld"
 
 //我的代理分润 明细 分润类别(1 升级 分润 2 收款分润)
-#define PROFIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=agencyDistributeDetails&r_type=1"
+#define PROFIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=agencyDistributeDetails&r_type=1&page=%ld"
 
 //收款界面收款记录接口
 #define RECEIVEACCOUNT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1&page=%ld"

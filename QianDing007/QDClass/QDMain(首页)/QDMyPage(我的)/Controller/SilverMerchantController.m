@@ -10,12 +10,7 @@
 #import "UserListModel.h"
 #import "UserListCell.h"
 
-@interface SilverMerchantController (){
-    
-    NSMutableArray *dataArray;//tableView数据
-    
-}
-
+@interface SilverMerchantController ()
 
 @end
 
@@ -24,14 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self scGetUrlDataSource];
-    [self createTabelView];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
     // Do any additional setup after loading the view.
 }
 - (void)scGetUrlDataSource{
-    
-    dataArray = [[NSMutableArray alloc] initWithCapacity:2];
     
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
@@ -46,14 +38,16 @@
     
     NSDictionary *ulDic =@{@"auth_session":oldSession,
                            @"supplier_level":@"2"
+
                            };
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
-    [manager POST:USERLIST_URL parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)1];
+
+    [manager POST:urlStr parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -84,7 +78,7 @@
                 for (NSDictionary *allDic in tempArray) {
                     UserListModel *model = [[UserListModel alloc]init];
                     [model setValuesForKeysWithDictionary:allDic];
-                    [dataArray addObject:model];
+                    [self.dataArray addObject:model];
                 }
                 [self.tableView reloadData];
                 
@@ -103,17 +97,117 @@
     }];
 }
 
--(void)createTabelView{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
-    _tableView.separatorStyle = NO;
-    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-        make.height.mas_offset(SC_HEIGHT-124);
+/**
+ 懒加载数组
+ */
+- (NSMutableArray *)dataArray{
+    if (nil == _dataArray) {
+        _dataArray = [NSMutableArray arrayWithCapacity:2];
+    }
+    return _dataArray;
+}
+/**
+ 懒加载tableview
+ 
+ */
+- (UITableView *)tableView{
+    if (nil == _tableView) {
+        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [self.view addSubview:self.tableView];
+        _tableView.separatorStyle = NO;
+        _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(self.view);
+            make.left.right.equalTo(self.view);
+            make.height.mas_offset(SC_HEIGHT-124);
+            
+        }];
+        
+        _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            self.page = 1;
+            
+            [self updateData];
+        }];
+        
+        _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+            [self updateData];
+        }];
+        //修改刷新动画的位置
+        _tableView.mj_header.frame = CGRectMake(-SC_WIDTH/3.0*2-30/SCALE_X,-50, SC_WIDTH/2.0, 50);
+        _tableView.mj_footer.frame = CGRectMake(-SC_WIDTH/3.0*2-30/SCALE_X,50, SC_WIDTH/2.0, 50);
+    }
+    return _tableView;
+}
+/**
+ 
+ 停止刷新
+ **/
+-(void)endRefresh{
+    
+    [self.tableView.mj_header endRefreshing];
+    [self.tableView.mj_footer endRefreshing];
+}
+/*
+ 更新数据.
+ 数据更新后,会自动更新视图.
+ */
+
+- (void)updateData{
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    
+    NSDictionary *ulDic =@{@"auth_session":oldSession,
+                           @"supplier_level":@"2"
+                           
+                           };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)self.page++];
+    
+    NSLog(@"urlStr == %@",urlStr);
+    
+    [manager POST:urlStr parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"self.page == %ld",self.page);
+        
+        
+        [self endRefresh];
+        if (2 == self.page) { // 说明是在重新请求数据.
+            self.dataArray = nil;
+        }
+        
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSString *has_data = responseObject[@"has_data"];
+        NSString *status = responseObject[@"status"];
+        if ([status isEqualToString:@"1"]) {
+            
+            if (![has_data isEqualToString:@"0"]) {
+                
+                NSArray *tempArray = responseObject[@"supplier_data"];
+                
+                for (NSDictionary *allDic in tempArray) {
+                    UserListModel *model = [[UserListModel alloc]init];
+                    [model setValuesForKeysWithDictionary:allDic];
+                    [self.dataArray addObject:model];
+                }
+            }
+        }else{
+            
+            [self allShowAlert:responseObject[@"info"]];
+        }
+        [self.tableView reloadData];
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
+        [self endRefresh];
         
     }];
     
@@ -139,7 +233,7 @@
 #pragma *************UITableViewDelegate*************************
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    return dataArray.count;
+    return self.dataArray.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *ID = @"tableViewCellIdentifier";
@@ -150,7 +244,7 @@
     }
     
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell addDataSourceView:dataArray[indexPath.row]];
+    [cell addDataSourceView:self.dataArray[indexPath.row]];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

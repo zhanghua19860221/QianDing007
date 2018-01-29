@@ -48,7 +48,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *has_list = responseObject[@"has_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
