@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMKit/RongIMKit.h>
+#import <AVFoundation/AVSpeechSynthesis.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *mainNav;

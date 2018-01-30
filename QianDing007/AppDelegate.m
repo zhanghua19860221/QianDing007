@@ -10,7 +10,11 @@
 #import "LoginMain.h"
 #import "RootViewController.h"
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    
+    AVSpeechSynthesizer*zh_voice;//语音播报
+    
+}
 @end
 
 @implementation AppDelegate
@@ -61,6 +65,21 @@
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
         
         NSLog(@"getDict == %@",getDict);
+
+    zh_voice= [[AVSpeechSynthesizer alloc]init];
+    
+    zh_voice.delegate=self;//挂上代理
+    
+    AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
+    
+    utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
+    
+    AVSpeechSynthesisVoice*voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];//设置发音，这是中文普通话
+    
+    utterance.voice= voice;
+    
+    [zh_voice speakUtterance:utterance];//开始
+        
     }
     
 }

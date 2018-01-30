@@ -6,6 +6,7 @@ target ‘QianDing007’ do
   pod 'RongCloudIM/IMLib', '~> 2.8.10'
   pod 'RongCloudIM/IMKit', '~> 2.8.10' 
   pod 'MJRefresh', '~> 3.1.15.3'
+  pod 'FMDB', '~> 2.7.2'
   pod 'mob_sharesdk'
   pod 'mob_sharesdk/ShareSDKUI'
   pod 'mob_sharesdk/ShareSDKPlatforms/QQ'

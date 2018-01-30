@@ -416,6 +416,7 @@
  
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
+    
     lg_selectTextField = textField;
     switch (textField.tag) {
         case 51:{
@@ -453,14 +454,21 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
-    NSLog(@"当前输入框结束编辑时触发");
+    
 }
+
 /**
  当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
  
  */
-- (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
+-(BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
+    NSString *tem = [[string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]componentsJoinedByString:@""];
     
+    //非空格判断
+    if (![string isEqualToString:tem]) {
+        
+        return NO;
+    }
     return YES;
 }
 /**

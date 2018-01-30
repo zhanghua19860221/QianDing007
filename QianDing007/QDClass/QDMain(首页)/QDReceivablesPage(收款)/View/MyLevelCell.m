@@ -155,32 +155,32 @@
         make.width.mas_equalTo(SC_WIDTH-50);
         
     }];
-    [_thirdView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(_mebBuyMoney.mas_centerY);
-        make.left.equalTo(self.contentView).offset(25/SCALE_X);
-        make.height.width.mas_equalTo(9);
-    
-    }];
-    [_mebBuyMoney mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_mebRequest.mas_bottom).offset(15/SCALE_Y);
-        make.left.equalTo(_thirdView.mas_right).offset(5);
-        make.height.mas_equalTo(14);
-        make.width.mas_equalTo(SC_WIDTH-50);
-    }];
+//    [_thirdView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(_mebBuyMoney.mas_centerY);
+//        make.left.equalTo(self.contentView).offset(25/SCALE_X);
+//        make.height.width.mas_equalTo(9);
+//
+//    }];
+//    [_mebBuyMoney mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(_mebRequest.mas_bottom).offset(15/SCALE_Y);
+//        make.left.equalTo(_thirdView.mas_right).offset(5);
+//        make.height.mas_equalTo(14);
+//        make.width.mas_equalTo(SC_WIDTH-50);
+//    }];
     [_requestUseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(self.contentView).offset(-20/SCALE_Y);
-        make.left.equalTo(self.contentView).offset(30/SCALE_X);
+        make.left.equalTo(self.contentView).offset(50/SCALE_X);
         make.height.mas_equalTo(32);
         make.width.mas_equalTo(110/SCALE_X);
     }];
-    [_buyLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.centerY.equalTo(_requestUseBtn.mas_centerY);
-        make.right.equalTo(self.contentView).offset(-30/SCALE_X);
-        make.height.mas_equalTo(32);
-        make.width.mas_equalTo(110/SCALE_X);
-
-    }];
+//    [_buyLevelBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.centerY.equalTo(_requestUseBtn.mas_centerY);
+//        make.right.equalTo(self.contentView).offset(-30/SCALE_X);
+//        make.height.mas_equalTo(32);
+//        make.width.mas_equalTo(110/SCALE_X);
+//
+//    }];
     
 }
 

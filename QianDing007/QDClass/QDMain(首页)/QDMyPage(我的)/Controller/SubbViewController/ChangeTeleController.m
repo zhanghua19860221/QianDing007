@@ -308,7 +308,13 @@
  
  */
 - (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
+    NSString *tem = [[string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]componentsJoinedByString:@""];
     
+    //非空格判断
+    if (![string isEqualToString:tem]) {
+        
+        return NO;
+    }
     return YES;
 }
 /**
