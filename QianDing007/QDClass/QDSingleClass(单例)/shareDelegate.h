@@ -8,11 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "ZHProgressView.h"
-
+#import <FMDatabase.h>
+#import <FMDB.h>
 @interface shareDelegate : NSObject
 
 //用来记录用户是否设置过账户
 @property(nonatomic,assign)BOOL b_setAccount ;
+//记录融云用户id
+@property(nonatomic,assign)NSString *b_userID ;
+
+
 
 + (shareDelegate *)sharedManager;
 
@@ -107,4 +112,10 @@
  
  */
 + (BOOL)deptNumInputShouldNumber:(NSString *)text;
+
+/**
+ 数据库单利
+ 
+ */
++ (FMDatabase*)shareFMDatabase;
 @end

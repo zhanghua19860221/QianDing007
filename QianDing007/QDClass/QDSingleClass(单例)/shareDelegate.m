@@ -561,4 +561,35 @@
     
 }
 
+/**
+ 数据库单利
+ 
+ */
++ (FMDatabase*)shareFMDatabase{
+    
+    static FMDatabase *collectBase = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        //创建一文件
+        collectBase = [[FMDatabase alloc] initWithPath:[NSString stringWithFormat:@"%@/Documents/collectNews.db",NSHomeDirectory()]];
+        if ([collectBase open]) {
+            //需要创建表格  创建表格的语句    create table 表名(字段名,字段名…);
+            BOOL isSucceed=[collectBase executeUpdate:@"create table collectBase (content,extra,title,time,money,userId)"];
+            
+            if(isSucceed){
+                NSLog(@"数据库创建成功");
+                
+            }else{
+                NSLog(@"数据库创建失败");
+            }
+        }else{
+            NSLog(@"沙盒打开失败");
+        }
+        //需要查看数据库的东西时 ，可以打开查看沙盒路径
+    });
+
+    return collectBase;
+}
+
+
 @end

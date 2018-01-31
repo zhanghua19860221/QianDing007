@@ -56,12 +56,14 @@
             if ([has_data isEqualToString:@"0"]) {
                 
                 UIImageView *imageView = [[UIImageView alloc] init];
-                [imageView setImage:[UIImage imageNamed:@"暂无邀请记录"]];
+                [imageView setImage:[UIImage imageNamed:@"暂无1"]];
                 [self.view addSubview:imageView];
                 [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.top.equalTo(self.view).offset(150);
-                    make.left.equalTo(self.view).offset(SC_WIDTH/2.0-45);
-                    make.width.height.mas_equalTo(90);
+                    make.left.equalTo(self.view).offset((SC_WIDTH-115)/2.0);
+                    make.width.mas_equalTo(125);
+                    make.height.mas_equalTo(115);
+                    
                 }];
                 //移除菊花进度条
                 [[shareDelegate shareZHProgress] removeFromSuperview];

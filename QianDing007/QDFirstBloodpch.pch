@@ -123,6 +123,10 @@
 #import <Photos/Photos.h>
 //MJRefresh 刷新
 #import <MJRefresh.h>
+//数据库
+#import <FMDatabase.h>
+#import <FMDB.h>
+
 
 // 自定义宏
 

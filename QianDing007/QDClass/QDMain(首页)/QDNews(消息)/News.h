@@ -10,4 +10,6 @@
 
 @interface News : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong ,nonatomic) UITableView *tableView;
+@property (strong ,nonatomic) NSMutableArray *dataArray;//消息数组
+
 @end

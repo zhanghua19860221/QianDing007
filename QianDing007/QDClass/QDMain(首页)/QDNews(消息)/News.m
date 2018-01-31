@@ -12,7 +12,7 @@
 #import "NewsModel.h"
 @interface News (){
     UIView *topView;//导航视图
-    NSMutableArray *dataArray;//消息数组
+
     
 }
 @end
@@ -29,56 +29,86 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [self nsGetDataSource];
     [self nsCreateTopView];
-    [self nsCreateTabelView];
     
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
-    
+    [self nsGetDataSource];
+
 }
 
 /**
  初始化消息 数据
  */
 - (void)nsGetDataSource{
-    dataArray = [NSMutableArray arrayWithCapacity:2];
-    NSArray *dayArray = @[@"今天",@"",@"05",@"",@"04",@"05"];
-    NSArray *monthArray = @[@"10月",@"",@"12月",@"",@"11月",@"07月"];
-    NSArray *nameArray = @[@"商户认证失败。",@"收款234.00元已到账。",@"您的代理商提现234.00元，已成功到账。",@"您的代理商提现234.00元失败",@"来自0000公司升级的1.50元分润已到账",@"来自0000公司的1.50元分润已到账"];
-    NSArray *timeArray = @[@"11:20:28",@"11:20:18",@"11:10:28",@"11:30:28",@"11:01:28",@"11:20:28"];
-    NSArray *reasonFailArray = @[@"0",@"1",@"2",@"3",@"4",@"5"];
-
-    for (int i = 0; i<nameArray.count; i++ ) {
-        NewsModel *model = [[NewsModel alloc] init];
-        model.newsDay = dayArray[i];
-        model.newsMonth = monthArray[i];
-        model.newsInfo = nameArray[i];
-        model.newsReasonFail = reasonFailArray[i];
-        model.newsTime = timeArray[i];
-        [dataArray addObject:model];
+    [self.dataArray removeAllObjects];
+    FMResultSet*result = [[shareDelegate shareFMDatabase] executeQuery:@"select * from collectBase"];
+    //FMResultSet类似链表，他的头节点是nil，需要从第二位开始读取
+    while ([result next]) {
+        NSString * str = [result stringForColumn:@"userId"];
+        if ([str isEqualToString:[shareDelegate sharedManager].b_userID]) {
+            NewsModel *model = [[NewsModel alloc] init];
+            model.extra = [result stringForColumn:@"extra"];
+            model.content = [result stringForColumn:@"content"];
+            model.title = [result stringForColumn:@"title"];
+            model.time = [result stringForColumn:@"time"];
+            model.money = [result stringForColumn:@"money"];
+            [self.dataArray addObject:model];
+            
+        }
     }
-}
-
-/**
- 创建tableview
- */
-- (void)nsCreateTabelView{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:self.tableView];
-    _tableView.separatorStyle = NO;
-    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_bottom).offset(10);
-        make.left.right.equalTo(self.view);
-        make.height.mas_offset(SC_HEIGHT-130);
+    if (self.dataArray.count<1) {
         
-    }];
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [imageView setImage:[UIImage imageNamed:@"暂无1"]];
+        [self.view addSubview:imageView];
+        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerX.equalTo(self.view.mas_centerX);
+            make.centerY.equalTo(self.view.mas_centerY).offset(-30);
+            make.width.mas_equalTo(125);
+            make.height.mas_equalTo(115);
+            
+        }];
+        
+        return;
+    }
     
+    [self.tableView reloadData];
+    
+}
+/**
+ 懒加载数组
+ */
+- (NSMutableArray *)dataArray{
+    if (nil == _dataArray) {
+        _dataArray = [NSMutableArray arrayWithCapacity:2];
+    }
+    return _dataArray;
+}
+/**
+ 懒加载tableview
+ 
+ */
+- (UITableView *)tableView{
+    if (nil == _tableView) {
+        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [self.view addSubview:self.tableView];
+        _tableView.separatorStyle = NO;
+        _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(topView.mas_bottom).offset(10);
+            make.left.right.equalTo(self.view);
+            make.height.mas_offset(SC_HEIGHT-130);
+            
+        }];
+        
+    }
+        
+    return _tableView;
 }
 
 /**
@@ -128,37 +158,35 @@
  设置按钮点击事件
  */
 -(void)setBtnClick{
-    
     NewsSetController *newVc= [[NewsSetController alloc] init];
     [self.navigationController pushViewController:newVc animated:YES];
+    
 }
 #pragma *********************tabelViewDelegate*************************
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return dataArray.count;
+    return self.dataArray.count;
     
 }
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *ID = @"tableViewCellIdentifier";
+    NSString *ID = [NSString stringWithFormat:@"Cell%ld",(long)indexPath.row];
     CustomNewsCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {
         
         cell = [[CustomNewsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     cell.contentView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [cell addDataSourceToCell:dataArray[indexPath.row]];
+    [cell addDataSourceToCell:self.dataArray[indexPath.row]];
     
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NewsModel *model = dataArray[indexPath.row];
-    float heightInfo = [shareDelegate labelHeightText:model.newsInfo Font:16 Width:280/SCALE_X];
-    
-
+    NewsModel *model = self.dataArray[indexPath.row];
+    float heightInfo = [shareDelegate labelHeightText:model.title Font:16 Width:280/SCALE_X];
     float heightFail = 0;
     float heightCell = 0;
 
-    if ([model.newsReasonFail isEqualToString:@"0"]) {
-        heightFail =  [shareDelegate labelHeightText:model.newsReasonFail Font:12 Width:280/SCALE_X];
+    if ([model.extra isEqualToString:@"auth_fail"]) {
+        heightFail =  [shareDelegate labelHeightText:model.content Font:12 Width:280/SCALE_X];
         heightCell = heightInfo + heightFail + 60 + 12;
 
     }else{
@@ -166,7 +194,7 @@
     }
     // cell的高度 ＝ 商户信息的高度 ＋ 失败时信息的高度 ＋ 控件间隙高度 + 时间控件高度
     return heightCell;
-};
+}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     

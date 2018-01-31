@@ -74,6 +74,14 @@
         [self getAgencyState];
 
     }
+    
+    //二维码展示视图
+    [[SDImageCache sharedImageCache] clearDisk];
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
+    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSLog(@"%@",imageUrl);
+    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
 
 
 }
@@ -291,7 +299,7 @@
     
     
     mp_maskCodeView = [[UIImageView alloc] init];
-    mp_maskCodeView.backgroundColor = COLORFromRGB(0xe10000);
+    mp_maskCodeView.backgroundColor = COLORFromRGB(0xffffff);
     [mp_showCodeView addSubview:mp_maskCodeView];
     [mp_maskCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mp_showCodeView).offset(1);
@@ -835,8 +843,9 @@
 }
 
 - (void)pushHeadViewToServer:(UIImage *)image{
-    
-    NSData *imageData = UIImageJPEGRepresentation(image,1.0);
+    NSData *imageData = UIImagePNGRepresentation(image);
+
+//    NSData *imageData = UIImageJPEGRepresentation(image,1.0);
     [[shareDelegate shareNSUserDefaults] setObject:imageData forKey:@"LOGO"];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
@@ -853,11 +862,8 @@
                            @"logo":@"头像.png"
                            };
     [manager POST:PUSHLOGO_URL parameters:mpDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
-        
-       
-        NSData *imageData =UIImageJPEGRepresentation(image,0.3);
+        NSData *imageData =UIImagePNGRepresentation(image);
         NSString *fileName = @"头像.png";
-        
         //上传的参数(上传图片，以文件流的格式)
         [formData appendPartWithFileData:imageData
                                     name:@"logo"
@@ -912,10 +918,9 @@
 -(BOOL)isCameraAvailable{
     return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
 }
-
 /**
- 
  @return 判断设备前摄像头是否可用
+
  */
 -(BOOL)isFrontCameraAvailable{
     

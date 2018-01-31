@@ -188,7 +188,7 @@
     UILabel *nameLabel = [[UILabel alloc] init];
     nameLabel.font = [UIFont systemFontOfSize:16];
     nameLabel.textAlignment = NSTextAlignmentLeft;
-    nameLabel.text = @"姓      名";
+    nameLabel.text = @"姓        名";
     [nameLabel setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:nameLabel];
     [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -305,7 +305,7 @@
     UILabel *addressLabel = [[UILabel alloc] init];
     addressLabel.font = [UIFont systemFontOfSize:16];
     addressLabel.textAlignment = NSTextAlignmentLeft;
-    addressLabel.text = @"地    址";
+    addressLabel.text = @"地        址";
     [addressLabel setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:addressLabel];
     [addressLabel mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -84,12 +84,14 @@
         if ([requestStr isEqualToString:@"0"]) {
             
             UIImageView *imageView = [[UIImageView alloc] init];
-            [imageView setImage:[UIImage imageNamed:@"暂无邀请记录"]];
+            [imageView setImage:[UIImage imageNamed:@"暂无2"]];
             [self.view addSubview:imageView];
             [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.centerX.equalTo(self.view.mas_centerX);
                 make.centerY.equalTo(self.view.mas_centerY).offset(-30);
-                make.width.height.mas_equalTo(90);
+                make.width.mas_equalTo(90);
+                make.height.mas_equalTo(120);
+
             }];
             [[shareDelegate shareZHProgress] removeFromSuperview];
             

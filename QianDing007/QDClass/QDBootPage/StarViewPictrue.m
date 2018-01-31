@@ -118,7 +118,7 @@
 //}
 -(void)bttonClick{
 
-        [UIView animateWithDuration:2 animations:^{
+        [UIView animateWithDuration:1 animations:^{
             
             self.alpha = 0.0;
 

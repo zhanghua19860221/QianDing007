@@ -100,9 +100,21 @@
         
     }];
     
-
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:button];
+    [button addTarget:self action:@selector(clearDataBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(view2.mas_centerY);
+        make.left.equalTo(view2).offset(15);
+        make.height.mas_equalTo(50/SCALE_Y);
+        make.width.mas_equalTo(200);
+        
+    }];
 }
-
+- (void)clearDataBtn:(UIButton *)btn{
+    
+    [self nsShowAlertFail:@"是否清空消息数据"];
+}
 /**
  创建导航栏
  */
@@ -130,14 +142,46 @@
     }
 }
 - (void)leftBackClick{
-    
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+/**
+ 警示 提示框
+ */
+- (void)nsShowAlertFail:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+      //删除的语句    delete from 表名 where 条件
+       BOOL isSucceed =[[shareDelegate shareFMDatabase] executeUpdate: @"delete from collectBase where userId = ?",[shareDelegate sharedManager].b_userID];
+                                                              
+          if (isSucceed) {
+                                                                  
+                  NSLog(@"删除成功");
+          }else{
+                  NSLog(@"删除失败");
+          }
+        }];
+    UIAlertAction* CancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [alert addAction:CancelAction];
 
+    [self presentViewController:alert animated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 

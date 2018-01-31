@@ -11,6 +11,7 @@
 @interface SweepMeController (){
     NSString *sm_url;//网络图片地址
     UIButton *sm_saveCodeButton; //保存二维码图片按钮
+    UIImageView *sm_codeView; //二维码展示
     
 }
 @end
@@ -29,6 +30,15 @@
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 
+    //二维码展示视图
+    [[SDImageCache sharedImageCache] clearDisk];
+
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
+    sm_url = imageUrl;
+    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
+    
 }
 /**
  创建顶部导航栏 视图
@@ -109,10 +119,10 @@
 //    NSLog(@"imageUrl == %@",imageUrl);
     
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    UIImageView *codeView = [[UIImageView alloc] init];
-    [firstBjView addSubview:codeView];
-    [codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
-    [codeView mas_makeConstraints:^(MASConstraintMaker *make) {
+    sm_codeView = [[UIImageView alloc] init];
+    [firstBjView addSubview:sm_codeView];
+    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
+    [sm_codeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(merchantNameLabel.mas_bottom).offset(5);
         make.centerX.equalTo(firstBjView.mas_centerX);
         make.height.width.mas_equalTo(240/SCALE_Y);
@@ -126,14 +136,13 @@
     showLabel.textAlignment = NSTextAlignmentCenter;
     [firstBjView addSubview:showLabel];
     [showLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(codeView.mas_bottom).offset(-10);
+        make.top.equalTo(sm_codeView.mas_bottom).offset(-10);
         make.centerX.equalTo(firstBjView.mas_centerX);
         make.width.equalTo(firstBjView.mas_width);
         make.height.mas_equalTo(12);
 
     }];
     
-
     
     UIButton *saveCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [saveCodeButton setTitle:@"保存二维码" forState:UIControlStateNormal];

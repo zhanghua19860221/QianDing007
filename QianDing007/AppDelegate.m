@@ -21,6 +21,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    NSLog(@"%@",@"didFinishLaunchingWithOptions");
+
+    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -59,28 +62,28 @@
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
     if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
         RCTextMessage *content = (RCTextMessage*)message.content;
-        NSLog(@"content.extra == %@",content.extra);
-        
+
         NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
+//        NSLog(@"getDict == %@",getDict);
         
-        NSLog(@"getDict == %@",getDict);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
 
-    zh_voice= [[AVSpeechSynthesizer alloc]init];
+        zh_voice= [[AVSpeechSynthesizer alloc]init];
     
-    zh_voice.delegate=self;//挂上代理
+        zh_voice.delegate=self;//挂上代理
     
-    AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
+        AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
     
-    utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
+        utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
     
-    AVSpeechSynthesisVoice*voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];//设置发音，这是中文普通话
+        AVSpeechSynthesisVoice*voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];//设置发音，这是中文普通话
     
-    utterance.voice= voice;
+        utterance.voice= voice;
     
-    [zh_voice speakUtterance:utterance];//开始
+        [zh_voice speakUtterance:utterance];//开始
         
-    }
+        }
     
 }
 /**
@@ -148,10 +151,11 @@
         StarViewPictrue * star = [[StarViewPictrue alloc]init];
         [self.window addSubview:star];
         [[shareDelegate shareNSUserDefaults] setObject:app_Version forKey:@"AppVersion"];
-        
     }
 }
 - (void)applicationWillResignActive:(UIApplication *)application {
+    NSLog(@"%@",@"applicationWillResignActive");
+    
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     
@@ -159,21 +163,29 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"%@",@"applicationDidEnterBackground");
+
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    NSLog(@"%@",@"applicationWillEnterForeground");
+
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
 
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+    NSLog(@"%@",@"applicationDidBecomeActive");
+
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    NSLog(@"%@",@"applicationWillTerminate");
+
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
 }

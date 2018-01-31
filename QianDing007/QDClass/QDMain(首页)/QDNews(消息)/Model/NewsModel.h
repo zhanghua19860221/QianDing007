@@ -9,11 +9,12 @@
 #import <Foundation/Foundation.h>
 
 @interface NewsModel : NSObject
-@property (strong  ,  nonatomic) NSString *newsDay  ;     //消息day
-@property (strong  ,  nonatomic) NSString *newsMonth;     //消息Month
-@property (strong  ,  nonatomic) NSString *newsInfo;      //消息内容
-@property (strong  ,  nonatomic) NSString *newsReasonFail;//消息状态
-@property (strong  ,  nonatomic) NSString *newsTime;      //消息时间
+@property (strong ,nonatomic) NSString *title;  //消息类型
+@property (strong ,nonatomic) NSString *money;  //金钱
+@property (strong ,nonatomic) NSString *content;//消息内容
+@property (strong ,nonatomic) NSString *extra;  //失败原因
+@property (strong ,nonatomic) NSString *time;   //消息时间
+
 
 
 @end

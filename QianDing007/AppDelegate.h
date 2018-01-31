@@ -10,7 +10,8 @@
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMKit/RongIMKit.h>
 #import <AVFoundation/AVSpeechSynthesis.h>
-
+#import <FMDatabase.h>
+#import <FMDB.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate>
 

@@ -11,6 +11,7 @@
 #import "RegisterController.h"
 #import "RootViewController.h"
 @interface LoginMain (){
+
     UITextField *lg_selectTextField  ;//记录当前编辑的输入框
     UIButton *lg_selectBtn  ;//记录选中的按钮
 
@@ -42,13 +43,14 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    //注册通知
+    //注册键盘
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
+    //注册消息通知-把数据保存到数据库
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFMDBData:) name:@"saveFMDBData" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
 
 }
-
 /**
  创建logo视图
  */
@@ -270,9 +272,8 @@
             //获取融云token
             NSString *userRongToken = [responseObject objectForKey:@"rongtoken"];
             [[shareDelegate shareNSUserDefaults] setObject:userRongToken forKey:@"RongToken"];
-            
+            //链接融云
             [self landRongCloud:userRongToken];
-            
             
             RootViewController *home = [[RootViewController alloc] init];
             [self.navigationController pushViewController:home animated:YES];
@@ -292,31 +293,60 @@
 }
 
 /**
+ 数据库添加数据
+ 
+ */
+- (void)saveFMDBData:(NSNotification*)notification{
+    
+    NSDictionary * infoDic = notification.userInfo;
+    NSLog(@"infoDic == %@",infoDic);
+    BOOL isSucceed=[[shareDelegate shareFMDatabase] executeUpdate:@"insert into collectBase values(?,?,?,?,?,?)",infoDic[@"content"],infoDic[@"extra"],infoDic[@"title"],infoDic[@"time"],infoDic[@"money"],[shareDelegate sharedManager].b_userID];
+    if (isSucceed) {
+        NSLog(@"插入成功");
+    }
+}
+/**
  链接融云
  
  */
 -(void)landRongCloud:(NSString *)token{
     
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-
-
     [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
         //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
         [[RCIM sharedRCIM] setUserInfoDataSource:self];
-        NSLog(@"链接成功: %@.", userId);
-        dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"链接成功: %@", userId);
+        [shareDelegate sharedManager].b_userID = userId;
 
-        });
-        
     } error:^(RCConnectErrorCode status) {
-        NSLog(@"链接失败 %ld.", (long)status);
+        NSLog(@"链接失败 %ld", (long)status);
         
     } tokenIncorrect:^{
         NSLog(@"token 无效 ，请确保生成token 使用的appkey 和初始化时的appkey 一致");
     }];
     
 }
-
+/**
+ *此方法中要提供给融云用户的信息，建议缓存到本地，然后改方法每次从您的缓存返回
+ */
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion
+{
+    //    //此处为了演示写了一个用户信息
+    //    if ([@"1" isEqual:userId]) {
+    //        RCUserInfo *user = [[RCUserInfo alloc]init];
+    //        user.userId = @"1";
+    //        user.name = @"测试1";
+    //        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    //
+    //        return completion(user);
+    //    }else if([@"2" isEqual:userId]) {
+    //        RCUserInfo *user = [[RCUserInfo alloc]init];
+    //        user.userId = @"2";
+    //        user.name = @"测试2";
+    //        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    //        return completion(user);
+    //    }
+}
 /**
  创建找回密码按钮
  */
@@ -509,13 +539,15 @@
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     //移除请求菊花条
-//    [[shareDelegate shareZHProgress] removeFromSuperview];
+    [[shareDelegate shareZHProgress] removeFromSuperview];
     
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification  object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification    object:nil];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+//    [[NSNotificationCenter defaultCenter]  removeObserver:self
+//        name:@"saveFMDBData"                  object:nil];
 
 }
 /*
