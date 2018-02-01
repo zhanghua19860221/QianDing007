@@ -141,7 +141,7 @@
     }];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"agency"];
-    [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"图片验证码"]];
+    [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
     
 }
 
@@ -324,8 +324,9 @@
 
     //本地保存用户 手机号 数据
     NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempPhone =  [NSString stringWithFormat:@"a%@",sharePhone];
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
-    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
+    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,tempPhone];
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     [shareParams SSDKSetupShareParamsByText:@"钱叮"
@@ -374,9 +375,10 @@
 - (void)ruShareTencent{
     
     //本地保存用户 手机号 数据
-    NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *sharePhone =   [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempPhone =  [NSString stringWithFormat:@"a%@",sharePhone];
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
-    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
+    NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,tempPhone];
 
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
@@ -502,7 +504,7 @@
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
-            [self rqShowAlert:@"邀请成功"];
+            [self rqShowAlert:@"短信已发送"];
         }else{
             
             [self rqShowAlert:responseObject[@"info"]];

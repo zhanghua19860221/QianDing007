@@ -26,6 +26,8 @@
 - (void)configCell{
     
     _supplier_name = [[UILabel alloc] init];
+    //结尾部分的内容以……
+    _supplier_name.lineBreakMode = NSLineBreakByTruncatingTail;
     _supplier_name.font = [UIFont systemFontOfSize:16];
     _supplier_name.textAlignment = NSTextAlignmentLeft;
     [_supplier_name setTextColor:COLORFromRGB(0x333333)];
@@ -33,16 +35,16 @@
     [_supplier_name mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).offset(30/SCALE_Y);
         make.left.equalTo(self.contentView).offset(25);
-        make.width.mas_equalTo(SC_WIDTH/2.0);
+        make.width.mas_equalTo(SC_WIDTH-50);
         make.height.mas_equalTo(16);
 
     }];
     
-    _name = [[UILabel alloc] init];
-    _name.font = [UIFont systemFontOfSize:16];
-    _name.textAlignment = NSTextAlignmentLeft;
-    [_name setTextColor:COLORFromRGB(0x333333)];
-    [self.contentView addSubview:_name];
+//    _name = [[UILabel alloc] init];
+//    _name.font = [UIFont systemFontOfSize:16];
+//    _name.textAlignment = NSTextAlignmentLeft;
+//    [_name setTextColor:COLORFromRGB(0x333333)];
+//    [self.contentView addSubview:_name];
 //    [_name mas_makeConstraints:^(MASConstraintMaker *make) {
 //        make.centerY.equalTo(_supplier_name.mas_centerY);
 //        make.left.equalTo(_supplier_name.mas_right).offset(10);
@@ -93,14 +95,15 @@
     }];
     
     _address = [[UILabel alloc] init];
+    _address.numberOfLines = 0;
     _address.font = [UIFont systemFontOfSize:16];
     _address.textAlignment = NSTextAlignmentLeft;
     [_address setTextColor:COLORFromRGB(0x666666)];
     [self.contentView addSubview:_address];
     [_address mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(address.mas_centerY);
+        make.top.equalTo(address.mas_top);
         make.left.equalTo(address.mas_right);
-        make.width.mas_equalTo(SC_WIDTH-110);
+        make.width.mas_equalTo(SC_WIDTH-125);
         make.height.mas_equalTo(16);
         
     }];
@@ -111,7 +114,7 @@
     [activation setTextColor:COLORFromRGB(0x666666)];
     [self.contentView addSubview:activation];
     [activation mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(address.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(_address.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(self.contentView).offset(25);
         make.width.mas_equalTo(85);
         make.height.mas_equalTo(16);
@@ -198,8 +201,13 @@
 -(void)addDataSourceToCell:(MyRequestModel*) model{
     
     _supplier_name.text = model.supplier_name;
-    _name.text = model.name;
+//    _name.text = model.name;
     _phone.text = model.phone;
+    float addressHeight = [shareDelegate labelHeightText:model.address Font:16 Width:(SC_WIDTH-125)/SCALE_X];
+    [_address mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.height.mas_equalTo(addressHeight+1);
+        
+    }];
     _address.text = model.address;
     
     //时间戳转化成时间
@@ -238,7 +246,10 @@
     [noteStrOne addAttribute:NSForegroundColorAttributeName value:COLORFromRGB(0x00c6c8) range:rangeOne];
     // 为label添加Attributed
     [_supplier_count setAttributedText:noteStrOne];
-
+    
+    //刷新视图
+    [self.contentView layoutIfNeeded];
+ 
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

@@ -68,7 +68,7 @@
                 //移除菊花进度条
                 [[shareDelegate shareZHProgress] removeFromSuperview];
                 return;
-                
+
             }else{
                 
                 NSArray *tempArray = responseObject[@"list"];

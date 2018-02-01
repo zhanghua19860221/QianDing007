@@ -12,7 +12,7 @@
 #import "NewsModel.h"
 @interface News (){
     UIView *topView;//导航视图
-
+    UIImageView *nullImageView;//暂无数据图片展示视图
     
 }
 @end
@@ -44,6 +44,8 @@
  */
 - (void)nsGetDataSource{
     [self.dataArray removeAllObjects];
+    [self.tempArray removeAllObjects];
+
     FMResultSet*result = [[shareDelegate shareFMDatabase] executeQuery:@"select * from collectBase"];
     //FMResultSet类似链表，他的头节点是nil，需要从第二位开始读取
     while ([result next]) {
@@ -55,28 +57,39 @@
             model.title = [result stringForColumn:@"title"];
             model.time = [result stringForColumn:@"time"];
             model.money = [result stringForColumn:@"money"];
-            [self.dataArray addObject:model];
+            [self.tempArray addObject:model];
             
         }
     }
-    if (self.dataArray.count<1) {
-        
-        UIImageView *imageView = [[UIImageView alloc] init];
-        [imageView setImage:[UIImage imageNamed:@"暂无1"]];
-        [self.view addSubview:imageView];
-        [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+    //将数据库中数据 倒序入data数组中
+    for (NSInteger i = self.tempArray.count-1; i>=0; i--) {
+        NewsModel *model = (NewsModel*)self.tempArray[i];
+        [self.dataArray addObject:model];
+    }
+    [self.tableView reloadData];
+    
+    if (self.dataArray.count == 0) {
+        nullImageView = [[UIImageView alloc] init];
+        [nullImageView setImage:[UIImage imageNamed:@"暂无1"]];
+        [self.view addSubview:nullImageView];
+        [nullImageView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(self.view.mas_centerX);
             make.centerY.equalTo(self.view.mas_centerY).offset(-30);
             make.width.mas_equalTo(125);
             make.height.mas_equalTo(115);
-            
+
         }];
-        
-        return;
     }
-    
-    [self.tableView reloadData];
-    
+
+}
+/**
+ 懒加载临时数组
+ */
+- (NSMutableArray *)tempArray{
+    if (nil == _tempArray) {
+        _tempArray = [NSMutableArray arrayWithCapacity:2];
+    }
+    return _tempArray;
 }
 /**
  懒加载数组
@@ -195,16 +208,15 @@
     // cell的高度 ＝ 商户信息的高度 ＋ 失败时信息的高度 ＋ 控件间隙高度 + 时间控件高度
     return heightCell;
 }
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    [nullImageView removeFromSuperview];
+    
+}
 /*
 #pragma mark - Navigation
 

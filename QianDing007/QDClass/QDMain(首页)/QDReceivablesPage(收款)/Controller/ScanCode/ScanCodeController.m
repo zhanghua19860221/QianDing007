@@ -215,14 +215,78 @@
  
  */
 - (void)buttonOneClick:(UIButton*)btn{
-    NSMutableString *tempMoney = [NSMutableString stringWithString:sc_moneyField.text];
-    [tempMoney deleteCharactersInRange:NSMakeRange(0, 1)];
-    [[shareDelegate shareNSUserDefaults] setObject:tempMoney forKey:@"money_count"];
+    [self judgeCameraLimits];
+
+}
+/**
+ 判断是否有调用摄像头的权限提醒
+ */
+- (void)judgeCameraLimits{
+    /// 先判断摄像头硬件是否好用
+    if([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]){
+        // 用户是否允许摄像头使用
+        NSString * mediaType = AVMediaTypeVideo;
+        AVAuthorizationStatus  authorizationStatus = [AVCaptureDevice authorizationStatusForMediaType:mediaType];
+        // 不允许弹出提示框
+        if (authorizationStatus == AVAuthorizationStatusRestricted|| authorizationStatus == AVAuthorizationStatusDenied) {
+            [self scShowAlertOpenCamera:@"摄像头访问受限,前往设置"];
+            
+        }else{
+            
+            NSMutableString *tempMoney = [NSMutableString stringWithString:sc_moneyField.text];
+            [tempMoney deleteCharactersInRange:NSMakeRange(0, 1)];
+            [[shareDelegate shareNSUserDefaults] setObject:tempMoney forKey:@"money_count"];
+            
+            ZHScanViewController *zhVc = [[ZHScanViewController alloc] init];
+            [self.navigationController pushViewController:zhVc animated:YES];
+            
+        }
+    } else {
+        [self scShowAlert:@"摄像头不可用、请检查手机摄像头设备"];
+        
+    }
+}
+/**
+ 设置打开摄像头
+ 
+ */
+- (void)scShowAlertOpenCamera:(NSString *)warning{
     
-    ZHScanViewController *zhVc = [[ZHScanViewController alloc] init];
-    [self.navigationController pushViewController:zhVc animated:YES];
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+            //获取当前系统版本号
+            NSString* phoneVersion = [[UIDevice currentDevice] systemVersion];
+            if (![phoneVersion isEqualToString:@"ios10"]) {
+                   [[UIApplication sharedApplication]openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+             }
+                                                              
+    }];
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+/**
+ 警示 弹出框
+ */
+- (void)scShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              NSLog(@"action = %@", action);
+                                                          }];
     
     
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 /**
  创建头部视图

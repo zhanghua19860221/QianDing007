@@ -182,7 +182,7 @@
     
     NSString * urlStr = [NSString stringWithFormat:RECEIVEACCOUNT_URL,(long)self.page++];
     
-//    NSLog(@"urlStr == %@",urlStr);
+    NSLog(@"urlStr == %@",urlStr);
 
     [manager POST:urlStr parameters:midDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -194,7 +194,7 @@
             self.dataArray = nil;
         }
         
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject);
         NSString *has_list = responseObject[@"has_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {

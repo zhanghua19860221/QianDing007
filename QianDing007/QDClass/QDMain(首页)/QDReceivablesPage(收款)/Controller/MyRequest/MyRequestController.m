@@ -74,7 +74,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         [mr_Dic addEntriesFromDictionary:responseObject];
-        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_count"]];
+        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
         NSString *codeStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_code"]];
         mr_requestLabel.text = requestStr;
         mr_codeLabel.text    = codeStr;
@@ -151,6 +151,7 @@
         _tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
             [self updateData];
         }];
+        
     }
     return _tableView;
 }
@@ -180,6 +181,9 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
     NSString * urlStr = [NSString stringWithFormat:INVITATION_URL,(long)self.page++];
+    
+    NSLog(@"urlStr == %@",urlStr);
+
 
     [manager POST:urlStr parameters:mrDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -190,10 +194,10 @@
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;
         }
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject);
 
         NSArray *array = responseObject[@"invite_supplier_list"];
-        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_count"]];
+        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
         
         if (![requestStr isEqualToString:@"0"]) {
             
@@ -716,9 +720,13 @@
     
     return cell;
 }
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    return 220/SCALE_Y;
+     MyRequestModel *model = self.dataArray[indexPath.row];
+    float heightInfo = [shareDelegate labelHeightText:model.address Font:16 Width:(SC_WIDTH-125)/SCALE_X];
+    float heightCell = 0;
+    heightCell = 220/SCALE_Y + heightInfo;
+    return heightCell;
 }
 #pragma ************ 通讯录代理方法********************************
 

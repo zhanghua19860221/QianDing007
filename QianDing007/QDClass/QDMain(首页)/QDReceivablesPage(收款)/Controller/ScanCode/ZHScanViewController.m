@@ -294,17 +294,7 @@
             
         }else{
             [self alertControllerMessage:responseObject[@"info"]];
-//            if ([responseObject[@"info"] isKindOfClass:@"等待密码"]) {
-//                
-                SuccessScanController *successVc = [[SuccessScanController alloc] init];
-                successVc.order_num = responseObject[@"orderNo"];
-                successVc.order_time = responseObject[@"reqTime"];
-                successVc.money_count = responseObject[@"money"];
-                successVc.order_status = responseObject[@"status"];
 
-                [self.navigationController pushViewController:successVc animated:YES];
-//            }
-            
         }
 
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

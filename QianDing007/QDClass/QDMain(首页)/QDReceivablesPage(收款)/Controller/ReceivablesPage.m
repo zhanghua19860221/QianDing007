@@ -92,7 +92,7 @@
         [[shareDelegate shareNSUserDefaults] setObject:checked forKey:@"is_checked"];
         
         [rp_Dic addEntriesFromDictionary:responseObject];
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self addDataToSubview];
             
@@ -112,8 +112,12 @@
     
 // 商户信息视图填充网络数据
 
-    NSString *tempStr = [NSString stringWithFormat:@"您好！%@",[rp_Dic objectForKey:@"supplier_name"]];
+    NSString *tempStr = [NSString stringWithFormat:@"%@",[rp_Dic objectForKey:@"supplier_name"]];
     float rpWidth = [shareDelegate labelWidth:tempStr Font:16] + 1;
+    
+    if (rpWidth>120) {
+        rpWidth = 120;
+    }
     [rp_telePhone mas_updateConstraints:^(MASConstraintMaker *make){
         make.width.mas_equalTo(rpWidth);
         
@@ -161,6 +165,20 @@
  */
 - (void)createMebInfoView{
     
+    UILabel *defaultLabel = [[UILabel alloc] init];
+    defaultLabel.text = @"您好！";
+    [defaultLabel setTextColor:COLORFromRGB(0x333333)];
+    defaultLabel.font = [UIFont systemFontOfSize:16];
+    defaultLabel.textAlignment = NSTextAlignmentLeft;
+    [mebInfoView addSubview:defaultLabel];
+    [defaultLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(mebInfoView).offset(15/SCALE_Y);
+        make.left.equalTo(mebInfoView).offset(15);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(16);
+        
+    }];
+    
     rp_telePhone = [[UILabel alloc] init];
     rp_telePhone.text = @"商户名称";
     [rp_telePhone setTextColor:COLORFromRGB(0x333333)];
@@ -169,10 +187,10 @@
     [mebInfoView addSubview:rp_telePhone];
     [rp_telePhone mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mebInfoView).offset(15/SCALE_Y);
-        make.left.equalTo(mebInfoView).offset(15);
-        make.width.mas_equalTo(65);
+        make.left.equalTo(defaultLabel.mas_right);
+        make.width.mas_equalTo(120);
         make.height.mas_equalTo(16);
-        
+
     }];
     rp_verificationBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [mebInfoView addSubview:rp_verificationBtn];

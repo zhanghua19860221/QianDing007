@@ -48,6 +48,14 @@
 				<string>alisdkdemo</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>prefs</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -67,11 +75,11 @@
 	<string>23a1b07127cb8
 </string>
 	<key>NSCameraUsageDescription</key>
-	<string>cameraDesciption</string>
+	<string>App需要您的同意,才能访问相机</string>
 	<key>NSContactsUsageDescription</key>
 	<string>contactsDesciption</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>microphoneDesciption</string>
+	<string>App需要您的同意,才能访问麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photoLibraryDesciption</string>
 	<key>UILaunchStoryboardName</key>

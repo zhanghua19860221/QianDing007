@@ -37,8 +37,7 @@
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
     sm_url = imageUrl;
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
-    
+    [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 }
 /**
  创建顶部导航栏 视图

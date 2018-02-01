@@ -44,7 +44,12 @@
     
     //是否出现引导页
     [self IsGuidePage];
+    
+    //mob分享
     [self mobShareInit];
+    
+    //默认打开融云消息提示声音
+    [[shareDelegate shareNSUserDefaults] setBool:YES forKey:@"is_OpenSound"];
 
     // Override point for customization after application launch.
     return YES;
@@ -68,22 +73,27 @@
 //        NSLog(@"getDict == %@",getDict);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
-
-        zh_voice= [[AVSpeechSynthesizer alloc]init];
-    
-        zh_voice.delegate=self;//挂上代理
-    
-        AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
-    
-        utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
-    
-        AVSpeechSynthesisVoice*voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];//设置发音，这是中文普通话
-    
-        utterance.voice= voice;
-    
-        [zh_voice speakUtterance:utterance];//开始
-        
+        //用户是否屏蔽语音
+        BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
+        NSLog(@"is_OpenSoundOne == %d",is_OpenSound);
+        if (is_OpenSound) {
+            zh_voice= [[AVSpeechSynthesizer alloc]init];
+            
+            zh_voice.delegate=self;//挂上代理
+            
+            AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
+            
+            utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
+            
+            AVSpeechSynthesisVoice*voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];//设置发音，这是中文普通话
+            
+            utterance.voice= voice;
+            
+            [zh_voice speakUtterance:utterance];//开始
         }
+
+        
+    }
     
 }
 /**

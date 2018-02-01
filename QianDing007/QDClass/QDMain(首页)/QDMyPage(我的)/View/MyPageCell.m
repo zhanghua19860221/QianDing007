@@ -84,6 +84,8 @@
         
     }];
     
+    NSLog(@"thirdStr == %@",model.thirdStr);
+    
     //判断我的界面 cell认证状态，及是否显示
     if ([self.firstLabel.text isEqualToString:@"商户认证"]) {
         

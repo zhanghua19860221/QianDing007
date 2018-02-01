@@ -23,6 +23,7 @@
     
     NSMutableArray*mp_allArray;  //table分组数组
     UIImageView *mp_topView ;    //顶视图
+    UILabel  *mp_stateLabel;     //头像下方认证状态 label
     UIButton *mp_codeButton ;    //二维码展示button
     UIButton *mp_headViewBtn;    //头像视图按钮
     NSString *mp_localVersion;   //记录本地版本号
@@ -58,7 +59,7 @@
     [self mpTestingVersion];//检查更新
     [self mpCreateMaskView];//创建二维码弹出视图
     [self mpHeadMaskView];//创建头像视图点击事件蒙板视图
-
+    
 
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
 
@@ -81,9 +82,66 @@
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
     NSLog(@"%@",imageUrl);
-    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
+    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 
+    //更新获取tableview数据
+    [self upDataTableView];
+    
+    
+    //修改头像下方认证状态label 显示文字
+    NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    NSLog(@"is_checked == %@",is_checked);
+    
+    if ([is_checked isEqualToString:@"1"]) {
+        
+        mp_stateLabel.text = @"已认证";
+        
+    }else{
+        
+        mp_stateLabel.text = @"未认证";
+        
+    }
 
+}
+
+/**
+ 更新tableview数据
+ */
+- (void)upDataTableView{
+    NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
+    NSArray *stateFirstArray = @[is_checked,@"空"];
+    NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
+    NSArray *stateSecondArray= @[@"空",@"空",@"空",@"空"];
+    
+    NSMutableArray *firstArray = [[NSMutableArray alloc] init];
+    NSMutableArray *secondArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i<imageFirstArray.count ; i++) {
+        
+        MyPageModel *dataModle = [[MyPageModel alloc] init];
+        dataModle.firstStr  = imageFirstArray[i];
+        dataModle.secondStr = imageFirstArray[i];
+        dataModle.thirdStr  = stateFirstArray[i];
+        dataModle.fourStr   = @"更多图标";
+        [firstArray addObject:dataModle];
+        
+    }
+    for (int i = 0; i<imageSecondArray.count ; i++) {
+        
+        MyPageModel *dataModle = [[MyPageModel alloc] init];
+        dataModle.firstStr  = imageSecondArray[i];
+        dataModle.secondStr = imageSecondArray[i];
+        dataModle.thirdStr  = stateSecondArray[i];
+        dataModle.fourStr   = @"更多图标";
+        [secondArray addObject:dataModle];
+    }
+    
+    mp_allArray = [[NSMutableArray alloc] initWithCapacity:2];
+    [mp_allArray addObject:firstArray];
+    [mp_allArray addObject:secondArray];
+    
+    [self.tableView reloadData];
+    
 }
 /**
  获取商户的 代理状态
@@ -171,54 +229,40 @@
  tableview创建 加载数据
  */
 - (void)mpCreateTabelView{
-    
+//    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+//    _tableView.delegate = self;
+//    _tableView.dataSource = self;
+//    [self.view addSubview:_tableView];
+//    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+//    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(mp_topView.mas_bottom).offset(40/SCALE_Y);
+//        make.left.right.equalTo(self.view);
+//        make.height.mas_equalTo(SC_HEIGHT);
+//    }];
 
-    NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-    
-    NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
-    NSArray *stateFirstArray = @[is_checked,@"空"];
-    NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
-    NSArray *stateSecondArray= @[@"空",@"空",@"空",@"空"];
-    
-    NSMutableArray *firstArray = [[NSMutableArray alloc] init];
-    NSMutableArray *secondArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i<imageFirstArray.count ; i++) {
-        
-        MyPageModel *dataModle = [[MyPageModel alloc] init];
-        dataModle.firstStr  = imageFirstArray[i];
-        dataModle.secondStr = imageFirstArray[i];
-        dataModle.thirdStr  = stateFirstArray[i];
-        dataModle.fourStr   = @"更多图标";
-        [firstArray addObject:dataModle];
+}
+/**
+ 懒加载tableview
+ 
+ */
+- (UITableView *)tableView{
+    if (nil == _tableView) {
+        _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        _tableView.delegate = self;
+        _tableView.dataSource = self;
+        [self.view addSubview:_tableView];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
+        [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(mp_topView.mas_bottom).offset(40/SCALE_Y);
+            make.left.right.equalTo(self.view);
+            make.height.mas_equalTo(SC_HEIGHT);
+        }];
         
     }
-    for (int i = 0; i<imageSecondArray.count ; i++) {
-        
-        MyPageModel *dataModle = [[MyPageModel alloc] init];
-        dataModle.firstStr  = imageSecondArray[i];
-        dataModle.secondStr = imageSecondArray[i];
-        dataModle.thirdStr  = stateSecondArray[i];
-        dataModle.fourStr   = @"更多图标";
-        [secondArray addObject:dataModle];
-    }
     
-    mp_allArray = [[NSMutableArray alloc] initWithCapacity:2];
-    [mp_allArray addObject:firstArray];
-    [mp_allArray addObject:secondArray];
-    
-    
-    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    [self.view addSubview:_tableView];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mp_topView.mas_bottom).offset(40/SCALE_Y);
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(SC_HEIGHT);
-    }];
-
+    return _tableView;
 }
 
 /**
@@ -310,7 +354,7 @@
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr]];
+    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 
     mp_requestLabel = [[UILabel alloc] init];
     mp_requestLabel.text = @"扫我吧 ！";
@@ -409,25 +453,24 @@
     
     
     
-    UILabel *stateLabel = [[UILabel alloc] init];
+    mp_stateLabel = [[UILabel alloc] init];
     
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-    
     //判断是否认证
     if ([is_checked isEqualToString:@"1"]) {
         
-        stateLabel.text = @"已认证";
+        mp_stateLabel.text = @"已认证";
 
     }else{
     
-        stateLabel.text = @"未认证";
+        mp_stateLabel.text = @"未认证";
         
     }
-    stateLabel.backgroundColor = [UIColor clearColor];
-    stateLabel.textColor = COLORFromRGB(0xffffff);
-    stateLabel.textAlignment = NSTextAlignmentCenter;
-    stateLabel.font = [UIFont systemFontOfSize:16];
-    [mp_topView addSubview:stateLabel];
+    mp_stateLabel.backgroundColor = [UIColor clearColor];
+    mp_stateLabel.textColor = COLORFromRGB(0xffffff);
+    mp_stateLabel.textAlignment = NSTextAlignmentCenter;
+    mp_stateLabel.font = [UIFont systemFontOfSize:16];
+    [mp_topView addSubview:mp_stateLabel];
     
     [mp_headViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.size.mas_equalTo(CGSizeMake(70, 70));
@@ -435,7 +478,7 @@
         
     }];
 
-    [stateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    [mp_stateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mp_headViewBtn.mas_bottom).offset(10);
         make.width.mas_equalTo(70);
         make.height.mas_equalTo(16);
@@ -843,9 +886,10 @@
 }
 
 - (void)pushHeadViewToServer:(UIImage *)image{
-    NSData *imageData = UIImagePNGRepresentation(image);
 
-//    NSData *imageData = UIImageJPEGRepresentation(image,1.0);
+    NSData *imageData = UIImagePNGRepresentation(image);
+    
+//  NSData *imageData = UIImageJPEGRepresentation(image,1.0);
     [[shareDelegate shareNSUserDefaults] setObject:imageData forKey:@"LOGO"];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     
@@ -881,7 +925,6 @@
     }];
 
 }
-
 // 当用户取消时，调用该方法
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     
