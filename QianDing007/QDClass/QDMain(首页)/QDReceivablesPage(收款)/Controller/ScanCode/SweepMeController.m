@@ -31,12 +31,19 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 
     //二维码展示视图
+
     [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];//可有可无
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
     sm_url = imageUrl;
+    
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    
+    NSLog(@"tempUrlStr = %@",tempUrlStr);
+
+    
     [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 }
 /**

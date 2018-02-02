@@ -181,8 +181,6 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
     NSString * urlStr = [NSString stringWithFormat:RECEIVEACCOUNT_URL,(long)self.page++];
-    
-    NSLog(@"urlStr == %@",urlStr);
 
     [manager POST:urlStr parameters:midDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -193,13 +191,14 @@
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;
         }
-        
         NSLog(@"%@",responseObject);
+        NSLog(@"self.page == %ld",self.page);
+        
         NSString *has_list = responseObject[@"has_list"];
         NSString *status = responseObject[@"status"];
-        if ([status isEqualToString:@"1"]) {
+        if ([status isEqualToString:@"1"]){
             
-            if (![has_list isEqualToString:@"0"]) {
+            if (![has_list isEqualToString:@"0"] && self.page != 1) {
                 
                 NSArray *responseArticles = responseObject[@"list"];
                 

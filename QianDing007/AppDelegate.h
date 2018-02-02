@@ -12,11 +12,13 @@
 #import <AVFoundation/AVSpeechSynthesis.h>
 #import <FMDatabase.h>
 #import <FMDB.h>
+#import "LoginMain.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *mainNav;
+@property (strong, nonatomic) LoginMain *root;
 
 @end
 

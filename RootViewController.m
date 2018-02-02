@@ -31,6 +31,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar:) name:@"showTabBar" object:nil];
+    
+    //注册消息通知-把数据保存到数据库
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFMDBData:) name:@"saveFMDBData" object:nil];
 }
 
 - (void)viewDidLoad{
@@ -48,6 +51,23 @@
     
     
     _tabberView.hidden = NO;
+}
+/**
+ 数据库添加数据
+ 
+ */
+- (void)saveFMDBData:(NSNotification*)notification{
+    
+    NSLog(@"NSThread currentThread +++++%@", [NSThread currentThread]);
+    
+    NSDictionary * infoDic = notification.userInfo;
+    NSLog(@"infoDic == %@",infoDic);
+    BOOL isSucceed=[[shareDelegate shareFMDatabase] executeUpdate:@"insert into collectBase values(?,?,?,?,?,?)",infoDic[@"content"],infoDic[@"extra"],infoDic[@"title"],infoDic[@"time"],infoDic[@"money"],[shareDelegate sharedManager].b_userID];
+    if (isSucceed) {
+        NSLog(@"插入成功");
+        
+    }
+    
 }
 - (void)creatTabBarView{
     
@@ -119,14 +139,13 @@
 }
 - (void)viewDidDisappear:(BOOL)animated{
     
-    [super viewDidDisappear:animated];
-//  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
-//  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
+  [super viewDidDisappear:animated];
+  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
+  [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self
+                                                        name:@"saveFMDBData"                  object:nil];
     
-
-
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

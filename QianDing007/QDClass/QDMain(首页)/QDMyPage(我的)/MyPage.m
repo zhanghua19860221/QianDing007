@@ -78,10 +78,13 @@
     
     //二维码展示视图
     [[SDImageCache sharedImageCache] clearDisk];
+    [[SDImageCache sharedImageCache] clearMemory];//可有可无
+    
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSLog(@"%@",imageUrl);
+    NSLog(@"tempUrlStr = %@",tempUrlStr);
+    
     [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 
     //更新获取tableview数据
@@ -90,7 +93,7 @@
     
     //修改头像下方认证状态label 显示文字
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-    NSLog(@"is_checked == %@",is_checked);
+//    NSLog(@"is_checked == %@",is_checked);
     
     if ([is_checked isEqualToString:@"1"]) {
         
@@ -169,7 +172,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"]  isEqualToString:@"1"]) {
             
             [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"is_agency"] forKey:@"is_agency"];
@@ -862,22 +865,22 @@
                                                          @"text/json",
                                                          nil];
     NSDictionary *mpDic =@{@"auth_session":oldSession,
-                           @"logo":@"头像.png"
+                           @"logo":@"头像.jpeg"
                            };
     [manager POST:PUSHLOGO_URL parameters:mpDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
-        NSData *imageData =UIImagePNGRepresentation(image);
-        NSString *fileName = @"头像.png";
+        NSString *fileName = @"头像.jpeg";
         //上传的参数(上传图片，以文件流的格式)
         [formData appendPartWithFileData:imageData
                                     name:@"logo"
                                 fileName:fileName
-                                mimeType:@"image/png"];
+                                mimeType:@"image/jpeg"];
 
     } progress:^(NSProgress *_Nonnull uploadProgress) {
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
         NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        [self mpShowAlert:responseObject[@"info"]];
 
     } failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
         //上传失败

@@ -601,7 +601,8 @@
         NSData *data = UIImageJPEGRepresentation(image, 1-0.05*i);
         //KSLog(@"压缩质量后所占的大小=%lu",data.length/1024);
         NSInteger size = data.length/1024;
-        if(size<1000) {
+        
+        if(size<600) {
             
             return data;
             break;

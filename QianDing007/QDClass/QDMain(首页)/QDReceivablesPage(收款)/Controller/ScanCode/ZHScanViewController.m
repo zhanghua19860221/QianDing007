@@ -196,6 +196,7 @@
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         NSString *stringValue = [NSString stringWithFormat:@"%@",metadataObject.stringValue];
         
+        
         NSLog(@"stringValue = %@",stringValue);
         
         if([shareDelegate deptNumInputShouldNumber:stringValue]){
@@ -282,7 +283,7 @@
     [manager POST:SCANME_URL parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-      NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             
             SuccessScanController *successVc = [[SuccessScanController alloc] init];

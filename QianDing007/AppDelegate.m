@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginMain.h"
 #import "RootViewController.h"
 
 @interface AppDelegate (){
@@ -30,12 +29,12 @@
     
     NSString *str = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"] ;
     if (str == NULL){
-        LoginMain *root = [[LoginMain alloc] init];
-        self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
+        self.root = [[LoginMain alloc] init];
+        self.mainNav = [[UINavigationController alloc] initWithRootViewController:self.root];
     }else{
 
-        RootViewController *root = [[RootViewController alloc] init];
-        self.mainNav = [[UINavigationController alloc] initWithRootViewController:root];
+        RootViewController *rootOne = [[RootViewController alloc] init];
+        self.mainNav = [[UINavigationController alloc] initWithRootViewController:rootOne];
     }
     self.window.rootViewController = self.mainNav ;
     
@@ -65,14 +64,15 @@
  
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+        
     if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
         RCTextMessage *content = (RCTextMessage*)message.content;
 
         NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
-//        NSLog(@"getDict == %@",getDict);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
+
         //用户是否屏蔽语音
         BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
         NSLog(@"is_OpenSoundOne == %d",is_OpenSound);

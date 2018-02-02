@@ -121,7 +121,6 @@
 
     }];
     NSString *voiceStr = [NSString stringWithFormat:@"收款到账：%@元。",_money_count];
-    [self zhPlayVoice:voiceStr];
 }
 - (void)buttonBackClick{
     
@@ -162,58 +161,11 @@
     
 }
 
-/**
- 语音播报方法
- 
- */
-- (void)zhPlayVoice:(NSString*)moneySter{
-    
-    zh_voice= [[AVSpeechSynthesizer alloc]init];
-    
-    zh_voice.delegate=self;//挂上代理
-    
-    AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:moneySter];//需要转换的文字
-    
-    utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
-    
-    AVSpeechSynthesisVoice*voice = [AVSpeechSynthesisVoice voiceWithLanguage:@"zh-CN"];//设置发音，这是中文普通话
-    
-    utterance.voice= voice;
-    
-    [zh_voice speakUtterance:utterance];//开始
-    
-}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma *************AVSpeechSynthesizerDelegate语音播报代理*********************
-
-- (void)speechSynthesizer:(AVSpeechSynthesizer*)synthesizer didStartSpeechUtterance:(AVSpeechUtterance*)utterance{
-    
-    NSLog(@"---开始播放");
-    
-}
-
-
-- (void)speechSynthesizer:(AVSpeechSynthesizer*)synthesizer didFinishSpeechUtterance:(AVSpeechUtterance*)utterance{
-    
-    NSLog(@"---完成播放");
-    
-}
-
-
-- (void)speechSynthesizer:(AVSpeechSynthesizer*)synthesizer didPauseSpeechUtterance:(AVSpeechUtterance*)utterance{
-    
-    NSLog(@"---播放中止");
-    
-}
-- (void)speechSynthesizer:(AVSpeechSynthesizer*)synthesizer didContinueSpeechUtterance:(AVSpeechUtterance*)utterance{
-    
-    NSLog(@"---恢复播放");
-    
-}
 /*
 #pragma mark - Navigation
 

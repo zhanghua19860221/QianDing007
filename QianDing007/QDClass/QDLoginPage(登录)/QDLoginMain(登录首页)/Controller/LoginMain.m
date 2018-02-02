@@ -46,8 +46,6 @@
     //注册键盘
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardshow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyBoardhide:) name:UIKeyboardWillHideNotification object:nil];
-    //注册消息通知-把数据保存到数据库
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFMDBData:) name:@"saveFMDBData" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
 
 }
@@ -273,11 +271,10 @@
             [[shareDelegate shareNSUserDefaults] setObject:userRongToken forKey:@"RongToken"];
             //链接融云
             [self landRongCloud:userRongToken];
-            
             RootViewController *home = [[RootViewController alloc] init];
             [self.navigationController pushViewController:home animated:YES];
             
-
+            
         }else{
             [self lgShowAlert:responseObject[@"info"]];
 
@@ -291,19 +288,6 @@
 
 }
 
-/**
- 数据库添加数据
- 
- */
-- (void)saveFMDBData:(NSNotification*)notification{
-    
-    NSDictionary * infoDic = notification.userInfo;
-    NSLog(@"infoDic == %@",infoDic);
-    BOOL isSucceed=[[shareDelegate shareFMDatabase] executeUpdate:@"insert into collectBase values(?,?,?,?,?,?)",infoDic[@"content"],infoDic[@"extra"],infoDic[@"title"],infoDic[@"time"],infoDic[@"money"],[shareDelegate sharedManager].b_userID];
-    if (isSucceed) {
-        NSLog(@"插入成功");
-    }
-}
 /**
  链接融云
  
@@ -537,17 +521,14 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification    object:nil];
+    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
+    
     //移除请求菊花条
     [[shareDelegate shareZHProgress] removeFromSuperview];
     
-}
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidShowNotification    object:nil];
-    [[NSNotificationCenter defaultCenter]  removeObserver:self  name:UIKeyboardDidHideNotification    object:nil];
-//    [[NSNotificationCenter defaultCenter]  removeObserver:self
-//        name:@"saveFMDBData"                  object:nil];
-
 }
 /*
 #pragma mark - Navigation
