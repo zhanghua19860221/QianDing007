@@ -550,7 +550,6 @@
  自定义进度条
  */
 + (ZHProgressView*)shareZHProgress{
-    
     static ZHProgressView *zhprogress = nil;
     static dispatch_once_t predicate;
     dispatch_once(&predicate, ^{
@@ -590,6 +589,26 @@
 
     return collectBase;
 }
+/**
+ 把图片压缩到 1兆以内
 
-
+ */
++(NSData *)dealBigImage:(UIImage *)image{
+    //循环语句压缩size
+    int i = 1;
+    while (i < 200) {
+        //KSLog(@"我现在第%d次循环压缩",i);
+        NSData *data = UIImageJPEGRepresentation(image, 1-0.05*i);
+        //KSLog(@"压缩质量后所占的大小=%lu",data.length/1024);
+        NSInteger size = data.length/1024;
+        if(size<1000) {
+            
+            return data;
+            break;
+        }else {
+            i++;
+        }
+    }
+    return nil;
+}
 @end

@@ -824,75 +824,34 @@
 
 #pragma **************UIImagePickerControllerDelegate**************************
 
-
-/**
- 保存图片后到相册后，调用的相关方法，查看是否保存成功
- 
- @param paramImage <#paramImage description#>
- @param paramError <#paramError description#>
- @param paramContextInfo <#paramContextInfo description#>
- */
--(void)imageWasSavedSuccessfully:(UIImage *)paramImage didFinishSavingWithError:(NSError *)paramError contextInfo:(void *)paramContextInfo{
-    
-    if (paramError == nil){
-        NSLog(@"Image was saved successfully.");
-    } else {
-        NSLog(@"An error happened while saving the image.");
-        NSLog(@"Error = %@", paramError);
-    }
-}
 // 当得到照片或者视频后，调用该方法
+
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    
-    NSLog(@"Picker returned successfully.");
     NSLog(@"%@---", info);
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
-    picker.allowsEditing = NO;
+    picker.allowsEditing = YES;
     // 判断获取类型：图片
-    if ([mediaType isEqualToString:( NSString *)kUTTypeImage]){
+    if ([mediaType isEqualToString:@"public.image"]){
         UIImage *theImage = nil;
         // 判断，图片是否允许修改
         if ([picker allowsEditing]){
             //获取用户编辑之后的图像
             theImage = [info objectForKey:UIImagePickerControllerEditedImage];
-            // 保存图片到相册中
-            SEL selectorToCall = @selector(imageWasSavedSuccessfully:didFinishSavingWithError:contextInfo:);
-            
-            UIImageWriteToSavedPhotosAlbum(theImage, self,selectorToCall, NULL);
-            
-        } else {
-            // 照片的原数据
-            theImage = [info objectForKey:UIImagePickerControllerOriginalImage];
         }
         [mp_headViewBtn setImage:theImage forState:UIControlStateNormal];
         [self pushHeadViewToServer:theImage];
-        
-        
-    }else if ([mediaType isEqualToString:(NSString *)kUTTypeMovie]){
-        // 判断获取类型：视频 //获取视频文件的url
-        NSURL* mediaURL = [info objectForKey:UIImagePickerControllerMediaURL];
-        //创建ALAssetsLibrary对象并将视频保存到媒体库
-        // Assets Library 框架包是提供了在应用程序中操作图片和视频的相关功能。相当于一个桥梁，链接了应用程序和多媒体文件。
-        ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
-        // 将视频保存到相册中
-        [assetsLibrary writeVideoAtPathToSavedPhotosAlbum:mediaURL completionBlock:^(NSURL *assetURL, NSError *error) {
-            if (!error) {
-                NSLog(@"captured video saved with no error.");
-            }else{
-                NSLog(@"error occured while saving the video:%@", error);
-            } }];
     }
     [picker dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 - (void)pushHeadViewToServer:(UIImage *)image{
-
-    NSData *imageData = UIImagePNGRepresentation(image);
     
-//  NSData *imageData = UIImageJPEGRepresentation(image,1.0);
+    NSData *imageData = [shareDelegate dealBigImage:image];
+    
     [[shareDelegate shareNSUserDefaults] setObject:imageData forKey:@"LOGO"];
-    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    
+    NSString *oldSession = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //接收类型不一致请替换一致text/html或别的
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
@@ -913,13 +872,13 @@
                                     name:@"logo"
                                 fileName:fileName
                                 mimeType:@"image/png"];
-        
+
     } progress:^(NSProgress *_Nonnull uploadProgress) {
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
         NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
+
     } failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {
         //上传失败
     }];
@@ -927,11 +886,12 @@
 }
 // 当用户取消时，调用该方法
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
-    
     [picker dismissViewControllerAnimated:YES completion:nil];
+    
 }
 // 从相册获取图片和视频数据
 - (void)ClickShowPhotoAction:(id)sender{
+    
     if ([self isPhotoLibraryAvailable]){
         UIImagePickerController *controller = [[UIImagePickerController alloc] init]; [controller setSourceType:UIImagePickerControllerSourceTypePhotoLibrary];
         // 设置类型
@@ -1054,6 +1014,10 @@
     
 }
 
+/**
+   判断图片大小是否小于一兆 ，对大于一兆的图片进行压缩
+
+ */
 
 /*
 #pragma mark - Navigation

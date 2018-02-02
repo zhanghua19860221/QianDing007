@@ -56,7 +56,6 @@
  */
 - (void)lgCreateLogoView{
     
-    
     lg_logoImageView = [[UIImageView alloc] init];
     lg_logoImageView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:lg_logoImageView];

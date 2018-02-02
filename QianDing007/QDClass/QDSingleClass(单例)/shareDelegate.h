@@ -118,4 +118,9 @@
  
  */
 + (FMDatabase*)shareFMDatabase;
+/**
+ 把图片压缩到 1兆以内
+ 
+ */
++(NSData *)dealBigImage:(UIImage *)image;
 @end

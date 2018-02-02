@@ -285,6 +285,7 @@
     
 }
 - (void)fillDataToSubView:(NSDictionary *)comPanyDic{
+    
     com_companyNameField.text= comPanyDic[@"name"];
     com_creditField.text = comPanyDic[@"biz_license"];
     com_detailAddressField.text = comPanyDic[@"address"];
