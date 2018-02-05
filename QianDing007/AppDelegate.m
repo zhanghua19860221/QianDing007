@@ -46,9 +46,6 @@
     
     //mob分享
     [self mobShareInit];
-    
-    //默认打开融云消息提示声音
-    [[shareDelegate shareNSUserDefaults] setBool:YES forKey:@"is_OpenSound"];
 
     // Override point for customization after application launch.
     return YES;
@@ -71,12 +68,14 @@
         NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
+        if (![getDict[@"title"] isEqualToString:@""]&& getDict[@"title"]!=NULL ) {
 
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
+        }
         //用户是否屏蔽语音
         BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
         NSLog(@"is_OpenSoundOne == %d",is_OpenSound);
-        if (is_OpenSound) {
+        if (!is_OpenSound) {
             zh_voice= [[AVSpeechSynthesizer alloc]init];
             
             zh_voice.delegate=self;//挂上代理

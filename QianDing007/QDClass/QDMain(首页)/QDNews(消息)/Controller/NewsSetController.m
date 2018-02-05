@@ -51,9 +51,7 @@
     
         
     }];
-    
     UISwitch *switchView = [[UISwitch alloc] init];
-    
     BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
     NSLog(@"is_OpenSoundTwo == %d",is_OpenSound);
 

@@ -73,15 +73,20 @@
     [manager POST:urlStr parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"responseObject == %@",responseObject);
+        
         [mr_Dic addEntriesFromDictionary:responseObject];
-        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
+        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_count"]];
         NSString *codeStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_code"]];
         mr_requestLabel.text = requestStr;
         mr_codeLabel.text    = codeStr;
         
         NSArray *array = responseObject[@"invite_supplier_list"];
         
-        if ([requestStr isEqualToString:@"0"]) {
+        NSString *requestList = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
+
+        if ([requestList isEqualToString:@"0"]) {
             
             UIImageView *imageView = [[UIImageView alloc] init];
             [imageView setImage:[UIImage imageNamed:@"暂无2"]];
@@ -138,7 +143,7 @@
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view).offset(74+90/SCALE_Y);
             make.left.right.equalTo(self.view);
-            make.height.mas_offset(SC_HEIGHT-20-90/SCALE_Y);
+            make.height.mas_offset(SC_HEIGHT-10-90/SCALE_Y);
             
         }];
         
@@ -197,12 +202,11 @@
         NSLog(@"%@",responseObject);
 
         NSArray *array = responseObject[@"invite_supplier_list"];
-        NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
+        NSString *requestList = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
         
-        if (![requestStr isEqualToString:@"0"]) {
+        if (![requestList isEqualToString:@"0"] && self.page != 1) {
             
             for (NSDictionary * tempDic in array) {
-                
                 MyRequestModel *model = [[MyRequestModel alloc]init];
                 [model setValuesForKeysWithDictionary:tempDic];
                 [self.dataArray addObject:model];

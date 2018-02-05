@@ -58,8 +58,6 @@
  */
 - (void)saveFMDBData:(NSNotification*)notification{
     
-    NSLog(@"NSThread currentThread +++++%@", [NSThread currentThread]);
-    
     NSDictionary * infoDic = notification.userInfo;
     NSLog(@"infoDic == %@",infoDic);
     BOOL isSucceed=[[shareDelegate shareFMDatabase] executeUpdate:@"insert into collectBase values(?,?,?,?,?,?)",infoDic[@"content"],infoDic[@"extra"],infoDic[@"title"],infoDic[@"time"],infoDic[@"money"],[shareDelegate sharedManager].b_userID];

@@ -360,7 +360,7 @@
     [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 
     mp_requestLabel = [[UILabel alloc] init];
-    mp_requestLabel.text = @"扫我吧 ！";
+    mp_requestLabel.text = @"扫码邀请 ！";
     mp_requestLabel.alpha = 0;
     mp_requestLabel.hidden = YES;
     mp_requestLabel.backgroundColor = COLORFromRGB(0xffffff);

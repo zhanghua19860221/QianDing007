@@ -185,7 +185,7 @@
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
             
-            if (![has_data isEqualToString:@"0"]) {
+            if (![has_data isEqualToString:@"0"] && self.page != 1) {
                 
                 NSArray *tempArray = responseObject[@"supplier_data"];
                 

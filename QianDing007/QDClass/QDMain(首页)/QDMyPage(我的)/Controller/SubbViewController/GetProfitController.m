@@ -184,7 +184,7 @@
             NSString *status = responseObject[@"status"];
             if ([status isEqualToString:@"1"]) {
 
-                if (![have_detail_list isEqualToString:@"0"]) {
+                if (![have_detail_list isEqualToString:@"0"] && self.page != 1) {
 
                     NSArray *tempArray = responseObject[@"detail_list"];
                     for (NSDictionary *allDic in tempArray) {

@@ -8,5 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CompanyController : UIViewController<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface CompanyController : UIViewController<UITextFieldDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,UIPickerViewDelegate,UIPickerViewDataSource>
+//遵循协议
+@property (nonatomic,strong)UIPickerView * pickerView;//自定义pickerview
+@property (nonatomic,strong)NSMutableArray * dataArray;//保存要展示内容
+
 @end

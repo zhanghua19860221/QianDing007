@@ -29,6 +29,7 @@
 		1444FDE31FF4781700F6D945 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1444FDE01FF4781700F6D945 /* city.plist */; };
 		1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDE21FF4781700F6D945 /* LSCityChooseView.m */; };
 		1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */; };
+		144C0BB72028470F00E4D8D4 /* QDPickerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 144C0BB62028470F00E4D8D4 /* QDPickerModel.m */; };
 		146EA966201EBFF100E53CA8 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146EA965201EBFF000E53CA8 /* Photos.framework */; };
 		147B90B51FFF78AB00644A89 /* SuccessScanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 147B90B41FFF78AB00644A89 /* SuccessScanController.m */; };
 		14823DFE1FFCCD990064D74A /* ChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823DFD1FFCCD990064D74A /* ChangeTeleController.m */; };
@@ -178,6 +179,8 @@
 		1444FDE21FF4781700F6D945 /* LSCityChooseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LSCityChooseView.m; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/LSCityChooseView.m"; sourceTree = SOURCE_ROOT; };
 		1444FDE91FF4B30A00F6D945 /* BecomeDelegateController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BecomeDelegateController.h; sourceTree = "<group>"; };
 		1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BecomeDelegateController.m; sourceTree = "<group>"; };
+		144C0BB52028470F00E4D8D4 /* QDPickerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPickerModel.h; sourceTree = "<group>"; };
+		144C0BB62028470F00E4D8D4 /* QDPickerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDPickerModel.m; sourceTree = "<group>"; };
 		146EA965201EBFF000E53CA8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		147B90B31FFF78AB00644A89 /* SuccessScanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessScanController.h; path = ScanCode/SuccessScanController.h; sourceTree = "<group>"; };
 		147B90B41FFF78AB00644A89 /* SuccessScanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessScanController.m; path = ScanCode/SuccessScanController.m; sourceTree = "<group>"; };
@@ -651,6 +654,8 @@
 				14FEFB9D1FEF88700050E524 /* UserListModel.m */,
 				14CF1D3C1FF1F030005F2D2F /* PresentRecordModel.h */,
 				14CF1D3D1FF1F030005F2D2F /* PresentRecordModel.m */,
+				144C0BB52028470F00E4D8D4 /* QDPickerModel.h */,
+				144C0BB62028470F00E4D8D4 /* QDPickerModel.m */,
 			);
 			name = Model;
 			path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/Model";
@@ -1237,6 +1242,7 @@
 			files = (
 				149536B21FF2579400C85C05 /* EditAccountController.m in Sources */,
 				14823E011FFCCDA90064D74A /* ChangePassWordController.m in Sources */,
+				144C0BB72028470F00E4D8D4 /* QDPickerModel.m in Sources */,
 				149536B31FF2579400C85C05 /* MyGetProfitModel.m in Sources */,
 				1403903C2008BA1200B96A9C /* APOrderInfo.m in Sources */,
 				149536B41FF2579400C85C05 /* MyProfitModel.m in Sources */,
