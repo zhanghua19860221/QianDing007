@@ -92,7 +92,7 @@
         [[shareDelegate shareNSUserDefaults] setObject:checked forKey:@"is_checked"];
         
         [rp_Dic addEntriesFromDictionary:responseObject];
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self addDataToSubview];
             

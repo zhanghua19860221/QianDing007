@@ -58,16 +58,18 @@
     //初始化融云SDK
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUD_IM_APPKEY];
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
+    [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
+
+
  
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
-        
     if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
         RCTextMessage *content = (RCTextMessage*)message.content;
 
         NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
-        
+        NSLog(@"getDict title == %@" ,getDict[@"title"]);
         if (![getDict[@"title"] isEqualToString:@""]&& getDict[@"title"]!=NULL ) {
 
             [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
@@ -93,6 +95,47 @@
 
         
     }
+    
+}
+
+/**
+ 
+ *  网络状态变化。
+ 
+ *
+ 
+ *  @param status 网络状态。
+ 
+ */
+
+- (void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status {
+    
+    if (status == ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT) {
+        
+        UIAlertView *alert = [[UIAlertView alloc]
+                              
+                              initWithTitle:@"提示"
+                              
+                              message:@"您"
+                              
+                              @"的帐号在别的设备上登录，您被迫下线！"
+                              
+                              delegate:self
+                              
+                              cancelButtonTitle:@"确定"
+                              
+                              otherButtonTitles:nil, nil];
+        
+        [alert show];
+        //注意这里下面的4行，根据自己需要修改  也可以注释了，但是只能注释这4行，网络状态变化这个方法一定要实
+    }
+    
+}
+//UIAlertView 协议代理方法 实现单点登陆功能
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    self.root = [[LoginMain alloc] init];
+    [self.mainNav pushViewController:self.root animated:YES];
     
 }
 /**

@@ -229,7 +229,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
 
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {

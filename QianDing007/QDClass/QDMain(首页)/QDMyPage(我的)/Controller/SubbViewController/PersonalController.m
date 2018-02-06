@@ -513,7 +513,7 @@
             //上传成功后禁止scrollview滚动
             [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"account_type"] forKey:@"account_type"];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeScrollEnabled" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-            [self psShowAlert:@"上传成功"];
+            [self psShowAlert:@"资料上传成功"];
         }else{
             [self psShowAlert:responseObject[@"info"]];
         }
@@ -1718,6 +1718,9 @@
  银行选择 按钮点击事件
  */
 - (void)selectorbankClick{
+    //收回键盘
+    [self.view endEditing:YES];
+    
     ps_maskView.hidden = NO;
     //修改下边距约束
     [ps_bankView mas_updateConstraints:^(MASConstraintMaker *make) {

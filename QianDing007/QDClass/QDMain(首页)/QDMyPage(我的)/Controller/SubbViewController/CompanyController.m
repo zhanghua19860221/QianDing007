@@ -468,7 +468,7 @@
         [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"account_type"] forKey:@"account_type"];
             
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeScrollEnabled" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-            [self cpShowAlert:@"上传成功"];
+            [self cpShowAlert:@"资料上传成功"];
 
         }else{
             [self cpShowAlert:responseObject[@"info"]];
@@ -1166,15 +1166,19 @@
     [com_cashierImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(cashierBtn);
     }];
-    
-    UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.backgroundColor = COLORFromRGB(0xffffff);
-    [imageView setImage:[UIImage imageNamed:@"组4"]];
-    [com_scrollView addSubview:imageView];
-    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+
+    UIButton *buttonOne = [UIButton buttonWithType:UIButtonTypeCustom];
+    [buttonOne setTitle:@"结算账户信息(企业账户或法人账户)" forState:UIControlStateNormal];
+    buttonOne.userInteractionEnabled = NO;
+    buttonOne.titleLabel.font = [UIFont systemFontOfSize:14];
+    buttonOne.titleLabel.textAlignment = NSTextAlignmentCenter;
+    buttonOne.backgroundColor = COLORFromRGB(0xe10000);
+    [buttonOne setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    [com_scrollView addSubview:buttonOne];
+    [buttonOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(placeBtn.mas_bottom).offset(20/SCALE_Y);
         make.left.equalTo(com_scrollView);
-        make.width.mas_equalTo(187);
+        make.width.mas_equalTo(249);
         make.height.mas_equalTo(30);
         
     }];
@@ -1183,7 +1187,7 @@
     lineSeven.backgroundColor = COLORFromRGB(0xf9f9f9);
     [com_scrollView addSubview:lineSeven];
     [lineSeven mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(imageView.mas_bottom).offset(50/SCALE_Y);
+        make.top.equalTo(buttonOne.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(com_scrollView).offset(95);
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(1);
@@ -1365,7 +1369,7 @@
  城市选择按钮点击事件
  */
 - (void)selectorBtnClick{
-    
+    //收回键盘
     [self.view endEditing:YES];
     
     
@@ -1726,6 +1730,8 @@
  银行选择 按钮点击事件
  */
 - (void)selectorbankClick{
+    //收回键盘
+    [self.view endEditing:YES];
 
     com_maskView.hidden = NO;
     //修改下边距约束

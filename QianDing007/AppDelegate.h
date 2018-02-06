@@ -14,7 +14,7 @@
 #import <FMDB.h>
 #import "LoginMain.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate,RCIMConnectionStatusDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *mainNav;

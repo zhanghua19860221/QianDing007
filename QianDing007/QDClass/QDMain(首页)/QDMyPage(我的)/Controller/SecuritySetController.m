@@ -163,6 +163,8 @@
     //清空本地数据
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //退出融云登陆
+    [[RCIM sharedRCIM] disconnect];
     
     LoginMain * loginVC = [[LoginMain alloc] init];
     [self.navigationController pushViewController:loginVC animated:YES];

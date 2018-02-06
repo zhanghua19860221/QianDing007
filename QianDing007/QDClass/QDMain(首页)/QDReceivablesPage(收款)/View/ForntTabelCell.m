@@ -162,27 +162,27 @@
     NSString *orderTime = [stampFormatter stringFromDate:stampDate2];
     
     if ([model.tran_result isEqualToString:@"1"]) {
-        _stateLabel.text = @"状态：已到账";
+        _stateLabel.text = @"状  态：已到账";
         _payLabelone.text = @"到账时间";
         _payTimeLabel.text = orderTime;
 
     }else if ([model.tran_result isEqualToString:@"0"]){
-        _stateLabel.text = @"状态：处理中";
+        _stateLabel.text = @"状  态：处理中";
         _payLabelone.text = @"付款时间";
         _payTimeLabel.text = orderTime;
 
     }else if ([model.tran_result isEqualToString:@"3"]){
-        _stateLabel.text = @"状态：未到账";
+        _stateLabel.text = @"状  态：未到账";
         _payLabelone.text = @"到账时间";
         _payTimeLabel.text = orderTime;
         
     }else if ([model.tran_result isEqualToString:@"4"]){
-        _stateLabel.text = @"状态：退票";
+        _stateLabel.text = @"状  态：退票";
         _payLabelone.text = @"退款时间";
         _payTimeLabel.text = orderTime;
         
     }else if ([model.tran_result isEqualToString:@"5"]){
-        _stateLabel.text = @"状态：失败";
+        _stateLabel.text = @"状  态：失败";
         _payLabelone.text = @"到账时间";
         _payTimeLabel.text = orderTime;
     }

@@ -188,12 +188,11 @@
     _upStrLabelOne.text = model.level_name_new;
     
     _profitLabelOne.text = model.distribute;
-    NSString *payTempOne = [NSString stringWithFormat:@"%@元",model.distribute];
 
     // 创建Attributed
-    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:payTempOne];
+    NSMutableAttributedString *noteStrOne = [[NSMutableAttributedString alloc] initWithString:model.distribute];
     // 需要改变的最后一个文字的位置
-    NSUInteger secondLocOne = [[noteStrOne string] rangeOfString:@"元"].location;
+    NSUInteger secondLocOne = noteStrOne.length-1;
     // 需要改变的区间
     NSRange rangeOne = NSMakeRange(0, secondLocOne);
     // 改变颜色

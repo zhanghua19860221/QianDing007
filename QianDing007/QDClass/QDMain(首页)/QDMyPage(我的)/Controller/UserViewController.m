@@ -37,20 +37,12 @@
     [self createChooseView];
     [self createSubViewController];
     [self createScrollerView];
-    
-    //注册通知
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeScrollEnabled:) name:@"changeScrollEnabled" object:nil];
-
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     // Do any additional setup after loading the view.
 }
-- (void)changeScrollEnabled:(NSNotification *)noti{
-    _scrollView.scrollEnabled = NO;
-    
 
-}
 - (void)viewWillAppear:(BOOL)animated{
     
     [super viewWillAppear:animated];
@@ -58,6 +50,13 @@
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xe10000);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
+    //注册通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeScrollEnabled:) name:@"changeScrollEnabled" object:nil];
+
+}
+- (void)changeScrollEnabled:(NSNotification *)noti{
+    _scrollView.scrollEnabled = NO;
+    
 }
 /**
  scrollerView展示控制器
@@ -409,11 +408,10 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated ];
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"changeScrollEnabled"  object:nil];
-
+    
 }
 /*
 #pragma mark - Navigation
