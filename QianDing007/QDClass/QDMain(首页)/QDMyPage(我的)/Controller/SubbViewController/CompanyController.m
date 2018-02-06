@@ -1639,7 +1639,7 @@
 }
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component{
     
-    return 375; //行宽度
+    return SC_WIDTH; //行宽度
 }
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component{
     
@@ -1660,13 +1660,9 @@
     QDPickerModel *model = self.dataArray[row];
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.frame = CGRectMake(100/SCALE_X,10,20,20);
-    imageView.backgroundColor = [UIColor grayColor];
+    imageView.backgroundColor = [UIColor whiteColor];
     NSURL *imageUrl = [NSURL URLWithString:model.logo];
-    NSLog(@"%@",model.logo);
-    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
-    UIImage *image = [UIImage imageWithData:imageData];
-    [imageView setImage:image];
-//    [imageView sd_setImageWithURL:imageUrl];
+    [imageView sd_setImageWithURL:imageUrl];
     [view addSubview:imageView];
     
     UILabel *nameLabel = [[UILabel alloc] init];

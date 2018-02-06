@@ -162,7 +162,7 @@
     NSString *orderTime = [stampFormatter stringFromDate:stampDate2];
     
     if ([model.tran_result isEqualToString:@"1"]) {
-        _stateLabel.text = @"状态：处理成功";
+        _stateLabel.text = @"状态：已到账";
         _payLabelone.text = @"到账时间";
         _payTimeLabel.text = orderTime;
 
