@@ -70,7 +70,7 @@
             [self mdCreateFirstView:array];
             [self mdCreateSecondView];
             //商户名称
-            labelName.text = [NSString stringWithFormat:@"您好!%@",responseObject[@"name"]];
+            labelName.text = [NSString stringWithFormat:@"%@",responseObject[@"name"]];
         }else{
         
             [self mdShowAlert:responseObject[@"info"]];
@@ -276,17 +276,31 @@
         make.height.mas_equalTo(44);
     }];
     
+    UILabel *nameLabel = [[UILabel alloc] init];
+    nameLabel.text = @"您好! ";
+    nameLabel.font = [UIFont systemFontOfSize:16];
+    nameLabel.textAlignment = NSTextAlignmentLeft;
+    [nameLabel setTextColor:COLORFromRGB(0xffffff)];
+    [topView addSubview:nameLabel];
+    [nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(topView.mas_bottom).offset(-20);
+        make.left.equalTo(topView).offset(21);
+        make.width.mas_equalTo(50);
+        make.height.mas_equalTo(16);
+        
+    }];
+    
+    
     labelName = [[UILabel alloc] init];
-    labelName.text = @"您好! ";
     labelName.font = [UIFont systemFontOfSize:16];
     labelName.textAlignment = NSTextAlignmentLeft;
     [labelName setTextColor:COLORFromRGB(0xffffff)];
     [topView addSubview:labelName];
     [labelName mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(backBtn.mas_bottom);
-        make.left.equalTo(topView).offset(21);
-        make.width.mas_equalTo(200);
-        make.bottom.equalTo(topView.mas_bottom);
+        make.bottom.equalTo(topView.mas_bottom).offset(-20);
+        make.left.equalTo(nameLabel.mas_right);
+        make.right.mas_equalTo(topView).offset(-21);
+        make.height.mas_equalTo(16);
 
     }];
 }
