@@ -1651,7 +1651,7 @@
     }
     QDPickerModel *model = self.dataArray[row];
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(100/SCALE_X,10,30,30);
+    imageView.frame = CGRectMake(100/SCALE_X,5,30,30);
     imageView.backgroundColor = [UIColor whiteColor];
     NSURL *imageUrl = [NSURL URLWithString:model.logo];
     [imageView sd_setImageWithURL:imageUrl];

@@ -571,15 +571,17 @@
     
     //本地保存用户 手机号 数据
     NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    NSString *tempCode = [NSString stringWithFormat:@"邀请码：%@",sharePhone];
+
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
         //创建分享参数
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:@"钱叮"
-                                         images:[UIImage imageNamed:@"图层1"]
+        [shareParams SSDKSetupShareParamsByText:tempCode
+                                         images:[UIImage imageNamed:@"LOGO"]
                                             url:[NSURL URLWithString:inviteUrl]
-                                          title:@"钱叮0001"
+                                          title:@"商户邀请"
                                            type:SSDKContentTypeWebPage
          ];
         //开始进行分享
@@ -625,15 +627,18 @@
     
     //本地保存用户 手机号 数据
     NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
+    
+    NSString *tempCode = [NSString stringWithFormat:@"邀请码：%@",sharePhone];
+    
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    [shareParams SSDKSetupShareParamsByText:@"钱叮"
-                                     images:[UIImage imageNamed:@"QQ"]
+    [shareParams SSDKSetupShareParamsByText:tempCode
+                                     images:[UIImage imageNamed:@"LOGO"]
                                         url:[NSURL URLWithString:inviteUrl]
-                                      title:@"钱叮0001"
+                                      title:@"商户邀请"
                                        type:SSDKContentTypeWebPage
      ];
         //开始进行分享
