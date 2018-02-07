@@ -52,7 +52,7 @@
 
 }
 
--(void)addDataSourceView:(MyPageModel*)model{
+-(void)addDataSourceView:(MyPageModel*)model Version:(NSString*)version{
     
     [self.iconView setImage:[UIImage imageNamed:model.firstStr]];
     self.firstLabel.text = model.secondStr;
@@ -109,6 +109,17 @@
                 
             }];
         }
+        
+    }
+    if ([self.firstLabel.text isEqualToString:@"检查更新"]) {
+        self.secondLabel.text = version;
+        [self.secondLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.centerY.equalTo(self.contentView.mas_centerY);
+            make.right.equalTo(self.directionBtn.mas_left).offset(-5);
+            make.width.mas_offset(50);
+            make.height.mas_offset(14);
+            
+        }];
         
     }
     

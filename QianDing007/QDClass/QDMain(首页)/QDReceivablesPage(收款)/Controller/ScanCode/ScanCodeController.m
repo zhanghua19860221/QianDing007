@@ -15,6 +15,10 @@
     NSMutableString * sc_oldMoney;//一个个清除数据记录
     UIView *sc_topView;//头部视图
     UIView *sc_calculatorView;//计算器视图
+    
+    NSString *tempPoint;//初始化“.”统计输入的数字字符串中 点的个数
+    BOOL isHaveDian ;//判断字符串中是否有点
+    int  maxMoney;   //记录收取的最大金额
 
     
 }
@@ -33,6 +37,7 @@
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+
 
 }
 
@@ -69,7 +74,7 @@
     }];
     
     sc_moneyOneField = [[UITextField alloc] init];
-    sc_moneyOneField.text = @"￥0.00";
+    sc_moneyOneField.text = @"￥";
     sc_moneyOneField.delegate = self;
     sc_moneyOneField.textAlignment = NSTextAlignmentRight;
     sc_moneyOneField.font = [UIFont systemFontOfSize:20];
@@ -153,6 +158,8 @@
  
  */
 - (void)buttonClick:(UIButton*)btn{
+    maxMoney = 1000000000;
+
     switch (btn.tag) {
         case 100:
 
@@ -170,39 +177,209 @@
 
         case 109:
 
-        case 110:
-
-        case 112:
-
-        case 113:
-
-        case 114:
-            //归零后 继续输入数字，取消最前的0的显示
-            if ([sc_moneyField.text isEqual:@"￥0.00"]&&[sc_moneyOneField.text isEqual:@"￥0.00"]) {
-                sc_moneyField.text = @"￥";
-                sc_moneyOneField.text = @"￥";
-
+        case 110:{
+            //当开始输入小数点时 自动补零
+            if ([sc_moneyField.text isEqual:@"￥."]&&[sc_moneyOneField.text isEqual:@"￥."]) {
+                sc_moneyField.text = @"￥0.";
+                sc_moneyOneField.text = @"￥0.";
+                
             }
-            sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+            if ([sc_moneyField.text isEqual:@"￥0"] && ![btn.currentTitle isEqual:@"."]  ) {
+                sc_moneyField.text = @"￥0";
+                sc_moneyOneField.text = @"￥0";
+                break;
+            }
+
+            // 小数点后最多输入两位
+            if ([sc_recordMoney containsString:@"."]) {
+                isHaveDian = YES;
+            }else{
+                isHaveDian = NO;
+            }
+
+            if (isHaveDian) {
+                NSUInteger secondLoc = [sc_recordMoney rangeOfString:@"."].location;
+                NSUInteger length = sc_recordMoney.length;
+                NSUInteger difference = length-secondLoc;
+                if (difference >=3) {
+                    break;
+                }else{
+                    sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+                }
+            }else{
+                sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+            }
+            //截取掉下标3之后的字符串
+            {
+                NSString *tempStrOne = [sc_recordMoney substringFromIndex:1];
+                int tempMoneyOne = [tempStrOne intValue];
+                //最大限额控制
+                if (tempMoneyOne > maxMoney) {
+                    
+                    break;
+                }
+            }
             sc_moneyField.text = sc_recordMoney;
             sc_moneyOneField.text = sc_recordMoney;
+    }
+            break;
+            
+            case 112:
+            //当开始输入小数点时 自动补零
+            if ([sc_moneyField.text isEqual:@"￥."]&&[sc_moneyOneField.text isEqual:@"￥."]) {
+                    sc_moneyField.text = @"￥0.";
+                    sc_moneyOneField.text = @"￥0.";
+
+            }else if([sc_moneyField.text isEqual:@"￥0"]&&[sc_moneyOneField.text isEqual:@"￥0"]){
+                
+                break;
+            }
+            // 小数点后最多输入两位小数
+            if ([sc_recordMoney containsString:@"."]) {
+                isHaveDian = YES;
+            }else{
+                isHaveDian = NO;
+            }
+            if (isHaveDian) {
+                NSUInteger secondLoc = [sc_recordMoney rangeOfString:@"."].location;
+                NSUInteger length = sc_recordMoney.length;
+                NSUInteger difference = length-secondLoc;
+                if (difference >=3) {
+                    break;
+                }else{
+                    sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+                }
+            }else{
+                sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+            }
+            //截取掉下标3之后的字符串
+            {
+                NSString *tempStrOne = [sc_recordMoney substringFromIndex:1];
+                int tempMoneyOne = [tempStrOne intValue];
+                //最大限额控制
+                if (tempMoneyOne > maxMoney) {
+                
+                    break;
+                }
+            }
+            sc_moneyField.text = sc_recordMoney;
+            sc_moneyOneField.text = sc_recordMoney;
+            break;
+        case 113:{
+            tempPoint = @".";
+            //当开始输入小数点时 自动补零
+            if ([sc_moneyField.text isEqual:@"￥."]&&[sc_moneyOneField.text isEqual:@"￥."]) {
+                sc_moneyField.text = @"￥0.";
+                sc_moneyOneField.text = @"￥0.";
+                
+            }
+            // 小数点后最多输入两位小数
+            if ([sc_recordMoney containsString:@"."]) {
+                isHaveDian = YES;
+            }else{
+                isHaveDian = NO;
+            }
+            if (isHaveDian) {
+                NSUInteger secondLoc = [sc_recordMoney rangeOfString:@"."].location;
+                NSUInteger length = sc_recordMoney.length;
+                NSUInteger difference = length-secondLoc;
+                if (difference >=3) {
+                    break;
+                }else{
+                    sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+                }
+            }else{
+                sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+            }
+            NSArray * array=[sc_recordMoney componentsSeparatedByString:tempPoint];
+            NSLog(@"count == %ld",array.count);
+
+            NSInteger count=[array count]-1;
+
+            if (count > 1 ) {
+                NSMutableString *tempStr =[NSMutableString stringWithString:sc_recordMoney];
+                [tempStr deleteCharactersInRange:NSMakeRange((tempStr.length-1), 1)];
+                sc_recordMoney = tempStr;
+
+            }
+            //截取掉下标3之后的字符串
+            {
+                NSString *tempStrOne = [sc_recordMoney substringFromIndex:1];
+                int tempMoneyOne = [tempStrOne intValue];
+                //最大限额控制
+                if (tempMoneyOne > maxMoney) {
+                    
+                    break;
+                }
+            }
+            sc_moneyField.text = sc_recordMoney;
+            sc_moneyOneField.text = sc_recordMoney;
+    }
+            break;
+        case 114:
+            //当开始输入小数点时 自动补零
+            if ([sc_moneyField.text isEqual:@"￥."]&&[sc_moneyOneField.text isEqual:@"￥."]) {
+                sc_moneyField.text = @"￥0.";
+                sc_moneyOneField.text = @"￥0.";
+                     //当输入框只有一个零时 ，00不可输入
+            }else if ([sc_moneyField.text isEqualToString:@"￥0"] && ![btn.currentTitle isEqualToString:@"."]  ) {
+                sc_moneyField.text = @"￥0";
+                sc_moneyOneField.text = @"￥0";
+                break;
+            }else if([sc_moneyField.text isEqual:@"￥"]){
+                
+                break;
+            }
+            // 小数点后最多输入两位小数
+            if ([sc_recordMoney containsString:@"."]) {
+                isHaveDian = YES;
+            }else{
+                isHaveDian = NO;
+            }
+            if (isHaveDian) {
+                NSUInteger secondLoc = [sc_recordMoney rangeOfString:@"."].location;
+                NSUInteger length = sc_recordMoney.length;
+                NSUInteger difference = length-secondLoc;
+                if (difference >=3) {
+                    break;
+                }else{
+                    sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+                }
+            }else{
+                sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
+            }
+            //截取掉下标3之后的字符串
+            {
+                NSString *tempStrOne = [sc_recordMoney substringFromIndex:1];
+                int tempMoneyOne = [tempStrOne intValue];
+                //最大限额控制
+                if (tempMoneyOne > maxMoney) {
+                
+                break;
+                }
+            }
+            sc_moneyField.text = sc_recordMoney;
+            sc_moneyOneField.text = sc_recordMoney;
+            
             break;
         case 103:
             //删除数字时。将utf。text转化为可变字符串从最后一个开始删除，设置长度为0时给text赋值为0否则崩溃
             sc_oldMoney = [NSMutableString stringWithString:sc_moneyField.text];
             [sc_oldMoney deleteCharactersInRange:NSMakeRange(sc_oldMoney.length-1, 1)];
+            sc_recordMoney = sc_oldMoney;
             sc_moneyField.text = sc_oldMoney;
             sc_moneyOneField.text = sc_oldMoney;
             
             if (sc_moneyField.text.length == 0) {
-                sc_moneyField.text = @"￥0.00";
-                sc_moneyOneField.text = @"￥0.00";
+                sc_moneyField.text = @"￥";
+                sc_moneyOneField.text = @"￥";
                 
             }
             break;
         case 107:
-            sc_moneyField.text = @"￥0.00";
-            sc_moneyOneField.text = @"￥0.00";
+            sc_recordMoney = nil;
+            sc_moneyField.text = @"￥";
+            sc_moneyOneField.text = @"￥";
             break;
         default:
             break;
@@ -339,7 +516,7 @@
     }];
     
     sc_moneyField = [[UITextField alloc] init];
-    sc_moneyField.text = @"￥0.00";
+    sc_moneyField.text = @"￥";
     sc_moneyField.delegate = self;
     sc_moneyField.textAlignment = NSTextAlignmentCenter;
     sc_moneyField.font = [UIFont systemFontOfSize:45];

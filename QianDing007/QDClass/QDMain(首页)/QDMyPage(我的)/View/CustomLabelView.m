@@ -28,10 +28,8 @@
     return self;
 }
 - (void)configView{
-    
     self.iconView = [[UIImageView alloc] init];
     [self.iconView setImage:[UIImage imageNamed:self.firstImage]];
-//    self.iconView.backgroundColor = [UIColor redColor];
     [self addSubview:self.iconView];
 
     self.directionBtn = [UIButton buttonWithType:UIButtonTypeCustom];

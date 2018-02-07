@@ -15,6 +15,6 @@
 @property(strong , nonatomic) UILabel *secondLabel;
 @property(strong , nonatomic) UIButton *directionBtn;
 
--(void)addDataSourceView:(MyPageModel*)model;
+-(void)addDataSourceView:(MyPageModel*)model Version:(NSString*)version;
 
 @end

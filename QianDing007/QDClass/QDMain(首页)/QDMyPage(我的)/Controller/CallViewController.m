@@ -75,7 +75,7 @@
         
     }];
     UILabel *teleLabelOne = [[UILabel alloc] init];
-    teleLabelOne.text = @"400-678-0180";
+    teleLabelOne.text = @"010-53536650";
     teleLabelOne.textAlignment = NSTextAlignmentRight;
     teleLabelOne.font = [UIFont systemFontOfSize:16];
     [teleLabelOne setTextColor:COLORFromRGB(0x999999)];
@@ -114,7 +114,7 @@
     }];
     
     UILabel *mailLabelOne = [[UILabel alloc] init];
-    mailLabelOne.text = @"3051942353@qq.com";
+    mailLabelOne.text = @"miaoyin@gyjfgroup.com";
     mailLabelOne.textAlignment = NSTextAlignmentRight;
     mailLabelOne.font = [UIFont systemFontOfSize:16];
     [mailLabelOne setTextColor:COLORFromRGB(0x999999)];
@@ -142,7 +142,7 @@
     teleView.userInteractionEnabled = NO;
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
     
-    NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",@"13601112349"];
+    NSMutableString *str=[[NSMutableString alloc] initWithFormat:@"tel:%@",@"01053536650"];
     UIWebView *callWebview = [[UIWebView alloc] init];
     [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
     [self.view addSubview:callWebview];

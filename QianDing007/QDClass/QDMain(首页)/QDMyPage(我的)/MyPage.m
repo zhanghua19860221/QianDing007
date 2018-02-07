@@ -54,9 +54,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self mpTestingVersion];//检查更新
     [self mpCreateTopView];
     [self mpCreateTabelView];
-    [self mpTestingVersion];//检查更新
     [self mpCreateMaskView];//创建二维码弹出视图
     [self mpHeadMaskView];//创建头像视图点击事件蒙板视图
     
@@ -715,7 +715,7 @@
     }
     cell.contentView.layer.borderColor = [COLORFromRGB(0xf9f9f9) CGColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    [cell addDataSourceView:mp_allArray[indexPath.section][indexPath.row]];
+    [cell addDataSourceView:mp_allArray[indexPath.section][indexPath.row] Version:mp_localVersion];
     
     return cell;
 }
