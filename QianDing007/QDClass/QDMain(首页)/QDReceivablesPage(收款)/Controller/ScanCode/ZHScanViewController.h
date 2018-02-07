@@ -23,7 +23,6 @@
 @property (strong , nonatomic) AVCaptureMetadataOutput * outPut;
 @property (strong , nonatomic) AVCaptureSession * session;
 @property (strong , nonatomic) AVCaptureVideoPreviewLayer * preview;
-@property (strong , nonatomic) UIImageView * line;
 @property (strong ,nonatomic) UIButton *butPhotoList;// 调用相册图片列表
 @property (strong ,nonatomic) UIImageView *imageView;//把相册里面的图片展示在此视图上
 

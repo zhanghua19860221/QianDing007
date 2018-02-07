@@ -13,7 +13,6 @@
     
     int num;
     BOOL upOrdown;
-    NSTimer * timer;
     CAShapeLayer *cropLayer;
     NSString *Str;
 }
@@ -27,7 +26,6 @@
     [self connectInputAndOutput];
     [self setTypeCode];
     [self creatCropLayer];
-    [self configView];
     [self addQRView];
     [self startScan];
     [self zhCreateNavgation];
@@ -36,41 +34,6 @@
     // Do any additional setup after loading the view.
 }
 
-/**
- 创建设置扫描框
- */
--(void)configView{
-    UIImageView * imageView = [[UIImageView alloc]initWithFrame:kScanRect];
-    imageView.image = [UIImage imageNamed:@"pick_bg"];
-    [self.view addSubview:imageView];
-    
-    upOrdown = NO;
-    num =0;
-    _line = [[UIImageView alloc] initWithFrame:CGRectMake(LEFT, TOP+10, 220, 2)];
-    _line.image = [UIImage imageNamed:@"line.png"];
-    [self.view addSubview:_line];
-    
-    timer = [NSTimer scheduledTimerWithTimeInterval:.02 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
-    
-}
--(void)animation1{
-    
-    if (upOrdown == NO) {
-        
-        num ++;
-        _line.frame = CGRectMake(LEFT, TOP+10+2*num, 220, 2);
-        if (2*num == 200) {
-            upOrdown = YES;
-        }
-    }else {
-        num --;
-        _line.frame = CGRectMake(LEFT, TOP+10+2*num, 220, 2);
-        if (num == 0) {
-            upOrdown = NO;
-        }
-    }
-    
-}
 /**
  判断是否有摄像头／创建必要对象
  */
@@ -188,15 +151,18 @@
  */
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection{
     
+    sleep(2);
     if ([metadataObjects count] >0){
+        [self.session stopRunning];
+        //    //创建请求菊花进度条
+        [[UIApplication sharedApplication].keyWindow addSubview:[shareDelegate shareZHProgress]];
+        [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo([UIApplication sharedApplication].keyWindow);
+            make.height.width.mas_equalTo(100);
+        }];
         
-        [_session stopRunning];
-        [timer setFireDate:[NSDate distantFuture]];
-
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         NSString *stringValue = [NSString stringWithFormat:@"%@",metadataObject.stringValue];
-        
-        
         NSLog(@"stringValue = %@",stringValue);
         
         if([shareDelegate deptNumInputShouldNumber:stringValue]){
@@ -204,6 +170,7 @@
             
             return;
         }
+
         [self getUrlDateSource:stringValue];
  
     }
@@ -284,8 +251,8 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
-            
             SuccessScanController *successVc = [[SuccessScanController alloc] init];
             successVc.order_num = responseObject[@"orderNo"];
             successVc.order_time = responseObject[@"reqTime"];
@@ -297,7 +264,9 @@
             [self alertControllerMessage:responseObject[@"info"]];
 
         }
-
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+        
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
         
     }];

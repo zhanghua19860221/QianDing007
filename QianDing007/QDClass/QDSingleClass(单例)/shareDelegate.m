@@ -603,13 +603,69 @@
         NSInteger size = data.length/1024;
         
         if(size<600) {
-            
             return data;
+            
             break;
         }else {
             i++;
         }
     }
     return nil;
+}
+/**
+ 纯中文正则判断
+ */
++ (BOOL)isSocialCredit18Number:(NSString *)socialCreditNum {
+    if(socialCreditNum.length != 18){
+        return NO;
+    }
+    NSString *scN = @"^([0-9ABCDEFGHJKLMNPQRTUWXY]{2})([0-9]{6})([0-9ABCDEFGHJKLMNPQRTUWXY]{9})([0-9Y])$";
+    NSPredicate *regextestSCNum = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", scN];
+    if (![regextestSCNum evaluateWithObject:socialCreditNum]) {
+        return NO;
+    }
+
+    NSArray *ws = @[@1,@3,@9,@27,@19,@26,@16,@17,@20,@29,@25,@13,@8,@24,@10,@30,@28];
+    NSDictionary *zmDic = @{@"A":@10,@"B":@11,@"C":@12,@"D":@13,@"E":@14,@"F":@15,@"G":@16,@"H":@17,@"J":@18,@"K":@19,@"L":@20,@"M":@21,@"N":@22,@"P":@23,@"Q":@24,@"R":@25,@"T":@26,@"U":@27,@"W":@28,@"X":@29,@"Y":@30};
+    NSMutableArray *codeArr = [NSMutableArray array];
+    NSMutableArray *codeArr2 = [NSMutableArray array];
+    
+    codeArr[0] = [socialCreditNum substringWithRange:NSMakeRange(0,socialCreditNum.length-1)];
+    codeArr[1] = [socialCreditNum substringWithRange:NSMakeRange(socialCreditNum.length-1,1)];
+    
+    int sum = 0;
+    
+    for (int i = 0; i < [codeArr[0] length]; i++) {
+        
+        [codeArr2 addObject:[codeArr[0] substringWithRange:NSMakeRange(i, 1)]];
+    }
+    
+    NSScanner* scan;
+    int val;
+    for (int j = 0; j < codeArr2.count; j++) {
+        scan = [NSScanner scannerWithString:codeArr2[j]];
+        if (![scan scanInt:&val] && ![scan isAtEnd]) {
+            codeArr2[j] = zmDic[codeArr2[j]];
+        }
+    }
+    
+    
+    for (int x = 0; x < codeArr2.count; x++) {
+        sum += [ws[x] intValue]*[codeArr2[x] intValue];
+    }
+    
+    
+    int c18 = 31 - (sum % 31);
+    
+    for (NSString *key in zmDic.allKeys) {
+        
+        if (zmDic[key]==[NSNumber numberWithInt:c18]) {
+            if (![codeArr[1] isEqualToString:key]) {
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
 }
 @end

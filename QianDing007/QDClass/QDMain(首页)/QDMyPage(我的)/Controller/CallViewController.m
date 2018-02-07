@@ -87,9 +87,7 @@
         make.height.mas_equalTo(16);
         
     }];
-    
-    
-    
+
     mailView = [[UIView alloc] init];
     mailView.backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:mailView];

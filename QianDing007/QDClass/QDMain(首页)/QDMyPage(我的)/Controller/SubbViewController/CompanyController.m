@@ -330,8 +330,8 @@
         
         [self cpShowAlert:@"企业名称不合法"];
     }
-    if ([com_creditField.text isEqualToString:@""]) {
-        [self cpShowAlert:@"统一社会信用代码不可为空。"];
+    if ([com_creditField.text isEqualToString:@""]||![shareDelegate isSocialCredit18Number:com_creditField.text]) {
+        [self cpShowAlert:@"请输入正确的统一社会信用代码。"];
         
         return;
     }

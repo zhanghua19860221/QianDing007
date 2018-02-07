@@ -123,4 +123,10 @@
  
  */
 +(NSData *)dealBigImage:(UIImage *)image;
+
+/**
+ 企业统一社会信用代码验证
+ 
+ */
++ (BOOL)isSocialCredit18Number:(NSString *)socialCreditNum;
 @end

@@ -17,7 +17,6 @@
     CGFloat   ps_scrollViewOldoffSet;//记录scrollView旧的偏移量
     UIButton  *ps_selectBtnImage;    //记录当前点击的是那个照片button
 
-    
     UITextField *ps_businessField;     //商家名称
     UITextField *ps_detailAddressField;//详细地址
     UITextField *ps_userNameField;     //姓名
@@ -508,10 +507,13 @@
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //上传成功后禁止scrollview滚动
             [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"account_type"] forKey:@"account_type"];
+            
+            NSLog(@"account_type == %@",responseObject[@"account_type"]);
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeScrollEnabled" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
             [self psShowAlert:@"资料上传成功"];
         }else{

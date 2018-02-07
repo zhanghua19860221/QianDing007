@@ -56,13 +56,10 @@
     [super viewDidLoad];
     [self mpTestingVersion];//检查更新
     [self mpCreateTopView];
-    [self mpCreateTabelView];
     [self mpCreateMaskView];//创建二维码弹出视图
     [self mpHeadMaskView];//创建头像视图点击事件蒙板视图
     
-
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
-
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -77,23 +74,21 @@
     }
     
     //二维码展示视图
-    [[SDImageCache sharedImageCache] clearDisk];
-    [[SDImageCache sharedImageCache] clearMemory];//可有可无
-    
+    [mp_maskCodeView setImage:[UIImage imageNamed:@"二维码占位图"]];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    NSURL *urlImage = [NSURL URLWithString:tempUrlStr];
+    NSData *imageData = [NSData dataWithContentsOfURL:urlImage];
+    UIImage *image = [UIImage imageWithData:imageData];
+    [mp_maskCodeView setImage:image];
     
-    NSLog(@"tempUrlStr = %@",tempUrlStr);
-    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 
     //更新获取tableview数据
     [self upDataTableView];
-    
-    
+
     //修改头像下方认证状态label 显示文字
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
-//    NSLog(@"is_checked == %@",is_checked);
     
     if ([is_checked isEqualToString:@"1"]) {
         
@@ -229,23 +224,6 @@
 }
 
 /**
- tableview创建 加载数据
- */
-- (void)mpCreateTabelView{
-//    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
-//    _tableView.delegate = self;
-//    _tableView.dataSource = self;
-//    [self.view addSubview:_tableView];
-//    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
-//    [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-//        make.top.equalTo(mp_topView.mas_bottom).offset(40/SCALE_Y);
-//        make.left.right.equalTo(self.view);
-//        make.height.mas_equalTo(SC_HEIGHT);
-//    }];
-
-}
-/**
  懒加载tableview
  
  */
@@ -354,10 +332,6 @@
         make.width.height.mas_equalTo(44);
         
     }];
-    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
-    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    [mp_maskCodeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 
     mp_requestLabel = [[UILabel alloc] init];
     mp_requestLabel.text = @"扫码邀请 ！";
@@ -1017,12 +991,6 @@
     
 }
 
-/**
-   判断图片大小是否小于一兆 ，对大于一兆的图片进行压缩
-
- */
-
-/*
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -1030,6 +998,6 @@
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 }
-*/
+
 
 @end

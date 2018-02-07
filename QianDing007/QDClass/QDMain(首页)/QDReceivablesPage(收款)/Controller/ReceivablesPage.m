@@ -687,7 +687,7 @@
     }];
 
     codeView = [[UIView alloc] init];
-    codeView.backgroundColor = COLORFromRGB(0xe10000);
+    codeView.backgroundColor = COLORFromRGB(0xef2f37);
     codeView.frame =CGRectMake(0, myView.frame.origin.y+myView.frame.size.height, SC_WIDTH,self.view.frame.size.height-myView.frame.origin.y-myView.frame.size.height-44);
     [self.view addSubview:codeView];
     [codeView mas_makeConstraints:^(MASConstraintMaker *make) {

@@ -52,7 +52,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeScrollEnabled:) name:@"changeScrollEnabled" object:nil];
-
+    
 }
 - (void)changeScrollEnabled:(NSNotification *)noti{
     _scrollView.scrollEnabled = NO;
@@ -83,7 +83,7 @@
     }
     
     NSString *type = [[shareDelegate shareNSUserDefaults] objectForKey:@"account_type"];
-    
+//    NSLog(@"type == %@",type);
     if ([type isEqualToString:@"1"]) {
         //个人认证
         [_scrollView setContentOffset:CGPointMake(SC_WIDTH, 0) animated:YES];
@@ -354,7 +354,8 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     
     NSString *type = [[shareDelegate shareNSUserDefaults] objectForKey:@"account_type"];
-    
+    NSLog(@"type == %@",type);
+
     //未认证情况下可以点击出现效果
     if ([type isEqualToString:@"3"]){
         int x = scrollView.contentOffset.x/SC_WIDTH;

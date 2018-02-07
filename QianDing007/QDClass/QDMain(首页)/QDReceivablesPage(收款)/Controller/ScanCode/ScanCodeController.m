@@ -88,7 +88,7 @@
         
     }];
     
-    NSArray * calculatorBtn=@[@"1",@"2",@"3",@"X",@"4",@"5",@"6",@"清除",@"7",@"8",@"9",@"",@"0",@".",@"00",@""];
+    NSArray * calculatorBtn=@[@"1",@"2",@"3",@"",@"4",@"5",@"6",@"清除",@"7",@"8",@"9",@"",@"0",@".",@"00",@""];
     
     UIView *calculatorView = [[UIView alloc] init];
     [self.view addSubview:calculatorView];
@@ -129,6 +129,9 @@
         }
         if (i == 3 || i == 7) {
             button.titleLabel.font = [UIFont systemFontOfSize:20];
+        }
+        if (i == 3) {
+            [button setImage:[UIImage imageNamed:@"清除"] forState:UIControlStateNormal];
         }
         
     }

@@ -131,8 +131,8 @@
     }
     
 }
-//UIAlertView 协议代理方法 实现单点登陆功能
 
+//UIAlertView 协议代理方法 实现单点登陆功能
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     self.root = [[LoginMain alloc] init];
     [self.mainNav pushViewController:self.root animated:YES];
