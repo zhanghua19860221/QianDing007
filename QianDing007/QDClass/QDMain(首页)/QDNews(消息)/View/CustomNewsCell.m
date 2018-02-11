@@ -75,7 +75,7 @@
     [_basicView addSubview:_content];
     _content.frame = CGRectZero;
     _content.numberOfLines = 0;
-    [_content setTextColor:COLORFromRGB(0x999999)];
+    [_content setTextColor:COLORFromRGB(0x666666)];
     [_content mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_title.mas_bottom).offset(10);
         make.left.equalTo(_basicView).offset(10);

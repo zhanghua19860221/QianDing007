@@ -196,7 +196,7 @@
     [mebInfoView addSubview:rp_verificationBtn];
     [rp_verificationBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(rp_telePhone.mas_centerY);
-        make.left.equalTo(rp_telePhone.mas_right).offset(10);
+        make.left.equalTo(rp_telePhone.mas_right).offset(5);
         make.width.mas_equalTo(56);
         make.height.mas_equalTo(23);
         
@@ -205,14 +205,14 @@
     rp_mebLeveLabel = [[UILabel alloc] init];
     rp_mebLeveLabel.text = @"";
     rp_mebLeveLabel.textAlignment = NSTextAlignmentLeft;
-    rp_mebLeveLabel.font = [UIFont systemFontOfSize:16];
-    [rp_mebLeveLabel setTextColor:COLORFromRGB(0x333333)];
+    rp_mebLeveLabel.font = [UIFont systemFontOfSize:14];
+    [rp_mebLeveLabel setTextColor:COLORFromRGB(0x666666)];
     [mebInfoView addSubview:rp_mebLeveLabel];
     [rp_mebLeveLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(rp_telePhone.mas_bottom).offset(33/SCALE_Y);
         make.left.equalTo(mebInfoView).offset(55/SCALE_X);
         make.width.mas_equalTo(70);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(14);
         
     }];
     
@@ -230,14 +230,14 @@
     UILabel *mebRateLabel = [[UILabel alloc] init];
     mebRateLabel.text = @"费        率";
     mebRateLabel.textAlignment = NSTextAlignmentLeft;
-    [rp_telePhone setTextColor:COLORFromRGB(0x333333)];
-    mebRateLabel.font = [UIFont systemFontOfSize:16];
+    [mebRateLabel setTextColor:COLORFromRGB(0x666666)];
+    mebRateLabel.font = [UIFont systemFontOfSize:14];
     [mebInfoView addSubview:mebRateLabel];
     [mebRateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(rp_mebLeveLabel.mas_bottom).offset(25/SCALE_Y);
         make.left.equalTo(rp_mebLeveLabel);
         make.width.mas_equalTo(70);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(14);
         
     }];
     
@@ -254,7 +254,7 @@
     }];
     
     UIButton *upGradeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    upGradeBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    upGradeBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [upGradeBtn setTitleColor:COLORFromRGB(0x333333) forState:UIControlStateNormal];
     [upGradeBtn setTitle:@"去升级" forState:UIControlStateNormal];
     [upGradeBtn addTarget:self action:@selector(upGradeBtnClick) forControlEvents:UIControlEventTouchUpInside];
@@ -263,7 +263,7 @@
         make.centerY.equalTo(mebRateLabel.mas_centerY);
         make.right.equalTo(mebInfoView).offset(-55/SCALE_X);
         make.width.mas_equalTo(50);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(14);
         
     }];
     
@@ -423,28 +423,28 @@
     
     UILabel *orderLabel = [[UILabel alloc] init];
     orderLabel.text = @"今日订单";
-    orderLabel.font = [UIFont systemFontOfSize:15];
+    orderLabel.font = [UIFont systemFontOfSize:14];
     orderLabel.textAlignment = NSTextAlignmentCenter;
-    [orderLabel setTextColor:COLORFromRGB(0x333333)];
+    [orderLabel setTextColor:COLORFromRGB(0x666666)];
     [profitView addSubview:orderLabel];
     [orderLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(rp_orderNum.mas_bottom).offset(10);
         make.left.equalTo(profitView);
         make.width.mas_equalTo(SC_WIDTH/2.0);
-        make.height.mas_equalTo(15);
+        make.height.mas_equalTo(14);
         
     }];
     UILabel *moneyLabel = [[UILabel alloc] init];
     moneyLabel.text = @"今日收款";
-    moneyLabel.font = [UIFont systemFontOfSize:15];
+    moneyLabel.font = [UIFont systemFontOfSize:14];
     moneyLabel.textAlignment = NSTextAlignmentCenter;
-    [moneyLabel setTextColor:COLORFromRGB(0x333333)];
+    [moneyLabel setTextColor:COLORFromRGB(0x666666)];
     [profitView addSubview:moneyLabel];
     [moneyLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(orderLabel.mas_centerY);
         make.left.equalTo(orderLabel.mas_right);
         make.width.mas_equalTo(SC_WIDTH/2.0);
-        make.height.mas_equalTo(15);
+        make.height.mas_equalTo(14);
         
     }];
 
@@ -493,14 +493,15 @@
         }];
         UILabel *textLabel = [[UILabel alloc] init];
         textLabel.text = textArray[i];
-        textLabel.font = [UIFont systemFontOfSize:16];
+        textLabel.font = [UIFont systemFontOfSize:14];
+        [textLabel setTextColor:COLORFromRGB(0x333333)];
         textLabel.textAlignment = NSTextAlignmentCenter;
         [myView addSubview:textLabel];
         [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
             make.centerX.equalTo(button.mas_centerX);
             make.top.equalTo(button.mas_bottom).offset(5);
             make.width.mas_equalTo(button);
-            make.height.mas_equalTo(16);
+            make.height.mas_equalTo(14);
             
         }];
         tempBtn = button;
@@ -571,15 +572,16 @@
     }];
     
     UILabel *scanLabel = [[UILabel alloc] init];
-    scanLabel.text = @"我 扫 吧";
+    scanLabel.text = @"我扫吧";
+    scanLabel.textAlignment = NSTextAlignmentCenter;
     [scanLabel setTextColor:COLORFromRGB(0xffffff)];
-    scanLabel.font = [UIFont systemFontOfSize:16];
+    scanLabel.font = [UIFont systemFontOfSize:16/SCALE_X];
     [codeView addSubview:scanLabel];
     [scanLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(scanBtn.mas_bottom).offset(10);
         make.centerX.equalTo(scanBtn.mas_centerX);
         make.width.mas_equalTo(64/SCALE_X);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(16/SCALE_X);
     }];
     
     UIButton *sweepBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -594,16 +596,17 @@
         
     }];
     UILabel *sweepLabel = [[UILabel alloc] init];
-    sweepLabel.text = @"扫 我 吧";
+    sweepLabel.text = @"扫我吧";
+    sweepLabel.textAlignment = NSTextAlignmentCenter;
     sweepLabel.textAlignment = NSTextAlignmentCenter;
     [sweepLabel setTextColor:COLORFromRGB(0xffffff)];
-    sweepLabel.font = [UIFont systemFontOfSize:16];
+    sweepLabel.font = [UIFont systemFontOfSize:16/SCALE_X];
     [codeView addSubview:sweepLabel];
     [sweepLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(sweepBtn.mas_bottom).offset(10);
         make.centerX.equalTo(sweepBtn.mas_centerX);
         make.width.mas_equalTo(64/SCALE_X);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(16/SCALE_X);
     }];
     
 /**

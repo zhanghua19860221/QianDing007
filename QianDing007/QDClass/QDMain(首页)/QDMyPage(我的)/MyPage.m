@@ -74,16 +74,27 @@
     }
     
     //二维码展示视图
-    [mp_maskCodeView setImage:[UIImage imageNamed:@"二维码占位图"]];
-    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
-    NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    NSURL *urlImage = [NSURL URLWithString:tempUrlStr];
-    NSData *imageData = [NSData dataWithContentsOfURL:urlImage];
-    UIImage *image = [UIImage imageWithData:imageData];
-    [mp_maskCodeView setImage:image];
+    dispatch_queue_t queue= dispatch_queue_create("test.queue", DISPATCH_QUEUE_CONCURRENT);
     
-
+    [mp_maskCodeView setImage:[UIImage imageNamed:@"二维码占位图"]];
+    // 异步执行任务创建方法
+    dispatch_async(queue, ^{
+        NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+        NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
+        NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+        NSURL *urlImage = [NSURL URLWithString:tempUrlStr];
+        NSData *imageData = [NSData dataWithContentsOfURL:urlImage];
+        if (imageData != NULL) {
+            UIImage *image = [UIImage imageWithData:imageData];
+        
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [mp_maskCodeView setImage:image];
+                
+            });
+        }
+        
+    });
+    
     //更新获取tableview数据
     [self upDataTableView];
 
@@ -107,6 +118,7 @@
  */
 - (void)upDataTableView{
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    
     NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
     NSArray *stateFirstArray = @[is_checked,@"空"];
     NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
@@ -214,11 +226,13 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:queue completionHandler:^(NSURLResponse *response,NSData *data,NSError *error){
         
-        NSDictionary *receiveDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
-        NSArray *array = receiveDic[@"results"];
-        NSDictionary *dict = [array lastObject];
-        mp_serverVersion = dict[@"version"];
-        
+        if (data != NULL) {
+            NSDictionary *receiveDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:nil];
+            NSArray *array = receiveDic[@"results"];
+            NSDictionary *dict = [array lastObject];
+            mp_serverVersion = dict[@"version"];
+            
+        }
     }];
     
 }
@@ -416,6 +430,7 @@
     mp_headViewBtn.layer.borderWidth = 1;
     mp_headViewBtn.layer.borderColor = [COLORFromRGB(0xf39f34)CGColor];
     NSData *dataImage = [[shareDelegate shareNSUserDefaults] objectForKey:@"LOGO"];
+    
     UIImage *image = [UIImage imageWithData:dataImage]; // 取得图片
     if (dataImage == NULL) {
         [mp_headViewBtn setImage:[UIImage imageNamed:@"图层1"] forState:UIControlStateNormal];
@@ -825,7 +840,9 @@
 - (void)pushHeadViewToServer:(UIImage *)image{
     
     NSData *imageData = [shareDelegate dealBigImage:image];
-    
+    if (imageData == NULL) {
+        return;
+    }
     [[shareDelegate shareNSUserDefaults] setObject:imageData forKey:@"LOGO"];
     NSString *oldSession = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
 

@@ -74,6 +74,25 @@
 //收款界面收款记录接口
 #define RECEIVEACCOUNT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1&page=%ld"
 
+//资金管理首页获取数据接口
+#define GETMONEYSUBMIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getMoneySubmit&r_type=1"
+
+//资金管理首页提交数据接口
+#define POSTMONEYSUBMIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=withdrawDone&r_type=1"
+
+//资金管理提现账户设置接口
+#define SAVESETBANKINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=saveUserBankInfo&r_type=1"
+
+//资金管理获取银行卡信息接口
+#define GETBANKINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getUserBankInfo&r_type=1"
+
+//资金管理提现记录接口
+#define GETRECORDINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getSubmitMoneyInfo&r_type=1&page=%ld"
+
+
+
+
+
 
 
 // 公用头文件
@@ -118,7 +137,7 @@
 //融云消息
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMKit/RongIMKit.h>
-#define RONGCLOUD_IM_APPKEY @"mgb7ka1nmw0hg" //请换成您的appkey
+#define RONGCLOUD_IM_APPKEY @"8w7jv4qb8cu6y" //请换成您的appkey
 //把图片保存到相册iOS 9以后使用的最新方法
 #import <Photos/Photos.h>
 //MJRefresh 刷新
@@ -138,7 +157,8 @@
 #define SCALE_X 375.0*SC_WIDTH
 #define SCALE_Y 667.0*SC_HEIGHT
 #define COLORFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000)>>16))/255.0 green:((float)((rgbValue & 0xFF00)>>8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]//设置颜色
-
+#define SHATETEXT  @"钱叮是最前沿的支付平台，开启聚合支付新模式"
+#define SHATETITLE @"好友邀请您加入钱叮商户一起赚大钱"
 
 
 

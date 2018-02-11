@@ -10,7 +10,7 @@
 
 @interface RegisterController (){
     UITextField *zc_selectField;       //记录当前编辑的输入框
-
+    
     NSString    *zc_sess_id;           //请求验证码时获取
     UITextField *zc_inviteField;       //邀请码
     UITextField *zc_teleField;         //电话号码
@@ -246,7 +246,6 @@
         }
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.height.width.mas_equalTo(100);

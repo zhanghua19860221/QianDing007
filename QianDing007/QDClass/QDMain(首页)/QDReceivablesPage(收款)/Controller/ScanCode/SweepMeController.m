@@ -31,7 +31,6 @@
     [self.navigationController setNavigationBarHidden:YES animated:NO];
 
     //二维码展示视图
-
     [[SDImageCache sharedImageCache] clearDisk];
     [[SDImageCache sharedImageCache] clearMemory];//可有可无
 

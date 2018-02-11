@@ -25,14 +25,62 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self createNavgation];
-    [self createSubView];
-    [self createReMoveView];
+    [self paCreateNavgation];
+    [self paCreateSubView];
+    [self paCreateReMoveView];
     self.view.backgroundColor = COLORFromRGB(0xffffff);
     
     // Do any additional setup after loading the view.
 }
-- (void)createReMoveView{
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
+    [self paGetDateSource];
+
+
+}
+- (void)paGetDateSource{
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
+    NSDictionary *paDic =@{@"auth_session":oldSession};
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:GETBANKINFO_URL parameters:paDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            
+            s_BankNumbLabel.text = responseObject[@"bank_info"];
+            s_OpenAccountLabel.text = responseObject[@"bank_user"];
+            s_OpenBankLabel.text = responseObject[@"bank_name"];
+
+        }else{
+
+        }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+}
+- (void)paCreateReMoveView{
     
     s_MaskView= [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
     s_MaskView.hidden = YES;
@@ -140,13 +188,6 @@
 
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    UINavigationBar * bar = self.navigationController.navigationBar;
-    bar.barTintColor = COLORFromRGB(0xffffff);
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-
-}
 
 /**
  删除弹出框确认删除按钮点击事件
@@ -167,7 +208,7 @@
 
     
 }
-- (void)createSubView{
+- (void)paCreateSubView{
     UIImageView *imageView = [[UIImageView alloc] init];
     imageView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:imageView];
@@ -273,65 +314,66 @@
         make.width.mas_equalTo(SC_WIDTH-70);
     }];
     
-    UIImageView *lineThird = [[UIImageView alloc] init];
-    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [self.view addSubview:lineThird];
-    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineTwo.mas_bottom).offset(50);
-        make.left.equalTo(self.view).offset(15);
-        make.right.equalTo(self.view);
-        make.height.mas_equalTo(1);
-        
-    }];
+//    UIImageView *lineThird = [[UIImageView alloc] init];
+//    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [self.view addSubview:lineThird];
+//    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineTwo.mas_bottom).offset(50);
+//        make.left.equalTo(self.view).offset(15);
+//        make.right.equalTo(self.view);
+//        make.height.mas_equalTo(1);
+//
+//    }];
     
-    UILabel *branchBankLabel = [[UILabel alloc] init];
-    branchBankLabel.text = @"支行名称";
-    [self.view addSubview:branchBankLabel];
-    [branchBankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lineThird);
-        make.bottom.equalTo(lineThird).offset(-17);
-        make.width.mas_equalTo(70);
-        make.height.mas_equalTo(16);
-        
-    }];
-    s_BranchBankLabel = [[UILabel alloc] init];
-    [self.view addSubview:s_BranchBankLabel];
-    s_BranchBankLabel.textAlignment = NSTextAlignmentRight;
-    s_BranchBankLabel.text = self.dataArray[3];
-    [s_BranchBankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.centerY.equalTo(branchBankLabel.mas_centerY);
-        make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(16);
-        make.width.mas_equalTo(SC_WIDTH-70);
-    }];
+//    UILabel *branchBankLabel = [[UILabel alloc] init];
+//    branchBankLabel.text = @"支行名称";
+//    [self.view addSubview:branchBankLabel];
+//    [branchBankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(lineThird);
+//        make.bottom.equalTo(lineThird).offset(-17);
+//        make.width.mas_equalTo(70);
+//        make.height.mas_equalTo(16);
+//
+//    }];
+//    s_BranchBankLabel = [[UILabel alloc] init];
+//    [self.view addSubview:s_BranchBankLabel];
+//    s_BranchBankLabel.textAlignment = NSTextAlignmentRight;
+//    s_BranchBankLabel.text = self.dataArray[3];
+//    [s_BranchBankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//
+//        make.centerY.equalTo(branchBankLabel.mas_centerY);
+//        make.right.equalTo(self.view).offset(-15);
+//        make.height.mas_equalTo(16);
+//        make.width.mas_equalTo(SC_WIDTH-70);
+//    }];
 
     
-    UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
-    [deleteBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    deleteBtn.backgroundColor = COLORFromRGB(0xe10000);
-    deleteBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    deleteBtn.layer.masksToBounds = YES;
-    deleteBtn.layer.cornerRadius = 5;
-    [deleteBtn addTarget:self action:@selector(deleteAccount) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:deleteBtn];
-    [deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineThird.mas_bottom).offset(50);
-        make.left.equalTo(self.view).offset(15);
-        make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(50);
-        
-    }];
+//    UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [deleteBtn setTitle:@"删除" forState:UIControlStateNormal];
+//    [deleteBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+//    deleteBtn.backgroundColor = COLORFromRGB(0xe10000);
+//    deleteBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+//    deleteBtn.layer.masksToBounds = YES;
+//    deleteBtn.layer.cornerRadius = 5;
+//    [deleteBtn addTarget:self action:@selector(deleteAccount) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:deleteBtn];
+//    [deleteBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineTwo.mas_bottom).offset(100);
+//        make.left.equalTo(self.view).offset(15);
+//        make.right.equalTo(self.view).offset(-15);
+//        make.height.mas_equalTo(50);
+//
+//    }];
 };
 /**
  创建导航栏
  */
-- (void)createNavgation{
+- (void)paCreateNavgation{
     
     self.navigationItem.title = @"提现账户";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
     [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
@@ -423,6 +465,10 @@
 - (BOOL)textFieldShouldClear:( UITextField*)textField{
     
     return YES;
+}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
 }
 /**
  返回按钮

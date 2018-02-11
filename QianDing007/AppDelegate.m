@@ -194,12 +194,12 @@
     //获取plist里面的版本号
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     //CFShow(CFBridgingRetain(infoDictionary));
-    
+
     //app应用版本号
     NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
     //版本号不想等时执行 括号内代码
     if ( ![Version isEqualToString:app_Version]  ) {
-        
+    
         StarViewPictrue * star = [[StarViewPictrue alloc]init];
         [self.window addSubview:star];
         [[shareDelegate shareNSUserDefaults] setObject:app_Version forKey:@"AppVersion"];

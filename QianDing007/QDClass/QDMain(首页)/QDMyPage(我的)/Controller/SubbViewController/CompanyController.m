@@ -327,8 +327,8 @@
     //字符串长度
 
     if (com_companyNameField.text.length >(NSUInteger)19) {
-        
         [self cpShowAlert:@"企业名称不合法"];
+        
     }
     if ([com_creditField.text isEqualToString:@""]||![shareDelegate isSocialCredit18Number:com_creditField.text]) {
         [self cpShowAlert:@"请输入正确的统一社会信用代码。"];
@@ -337,6 +337,7 @@
     }
     if (com_panyAddressLabel.text == NULL) {
         [self cpShowAlert:@"企业地址不可为空。"];
+        
         return;
     }
 
@@ -542,6 +543,12 @@
     com_province = comPanyDic[@"province_id"];
     com_city = comPanyDic[@"city_id"];
     com_area = comPanyDic[@"area_id"];
+    if (com_city == NULL) {
+        com_city = @"";
+    }
+    if (com_area == NULL) {
+        com_area = @"";
+    }
     NSString *companyAddress = [NSString stringWithFormat:@"%@%@%@",com_province,com_city,com_area,nil];
     com_panyAddressLabel.text = companyAddress;
     
@@ -644,7 +651,7 @@
     com_companyNameField.textAlignment = NSTextAlignmentLeft;
     com_companyNameField.font = [UIFont systemFontOfSize:14];
     [com_companyNameField setTextColor:COLORFromRGB(0x333333)];
-    com_companyNameField.placeholder = @"名称";
+    com_companyNameField.placeholder = @"与营业执照一致（必填）";
     [com_companyNameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(line.mas_centerY).offset(-25);
         make.left.right.equalTo(line);
@@ -696,7 +703,7 @@
     com_creditField.textAlignment = NSTextAlignmentLeft;
     com_creditField.font = [UIFont systemFontOfSize:14];
     [com_creditField setTextColor:COLORFromRGB(0x333333)];
-    com_creditField.placeholder = @"信用";
+    com_creditField.placeholder = @"（必填）";
     [com_creditField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineOne.mas_centerY).offset(-25);
         make.left.right.equalTo(lineOne);
@@ -788,7 +795,7 @@
     com_detailAddressField.textAlignment = NSTextAlignmentLeft;
     com_detailAddressField.font = [UIFont systemFontOfSize:14];
     [com_detailAddressField setTextColor:COLORFromRGB(0x333333)];
-    com_detailAddressField.placeholder = @"详细地址";
+    com_detailAddressField.placeholder = @"（必填）";
     [com_detailAddressField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineThird.mas_centerY).offset(-25);
         make.left.right.equalTo(lineThird);
@@ -827,7 +834,7 @@
     com_userNameField.textAlignment = NSTextAlignmentLeft;
     com_userNameField.font = [UIFont systemFontOfSize:14];
     [com_userNameField setTextColor:COLORFromRGB(0x333333)];
-    com_userNameField.placeholder = @"姓名";
+    com_userNameField.placeholder = @"法人（必填）";
     [com_userNameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineFour.mas_centerY).offset(-25);
         make.left.right.equalTo(lineThird);
@@ -866,7 +873,7 @@
     com_cardedField.textAlignment = NSTextAlignmentLeft;
     com_cardedField.font = [UIFont systemFontOfSize:14];
     [com_cardedField setTextColor:COLORFromRGB(0x333333)];
-    com_cardedField.placeholder = @"身份证号";
+    com_cardedField.placeholder = @"与填写姓名保持一致（必填）";
     [com_cardedField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineFive.mas_centerY).offset(-25);
         make.left.right.equalTo(lineFive);
@@ -906,7 +913,7 @@
     com_telePhoneField.textAlignment = NSTextAlignmentLeft;
     com_telePhoneField.font = [UIFont systemFontOfSize:14];
     [com_telePhoneField setTextColor:COLORFromRGB(0x333333)];
-    com_telePhoneField.placeholder = @"联系电话";
+    com_telePhoneField.placeholder = @"（必填）";
     [com_telePhoneField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineSix.mas_centerY).offset(-25);
         make.left.right.equalTo(lineSix);
@@ -1213,7 +1220,7 @@
     com_accountField.textAlignment = NSTextAlignmentLeft;
     com_accountField.font = [UIFont systemFontOfSize:14];
     [com_accountField setTextColor:COLORFromRGB(0x333333)];
-    com_accountField.placeholder = @"账户";
+    com_accountField.placeholder = @"（必填）";
     [com_accountField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineSeven.mas_centerY).offset(-25);
         make.left.right.equalTo(lineSeven);
@@ -1233,7 +1240,7 @@
     UILabel *payeeLabel = [[UILabel alloc] init];
     payeeLabel.font = [UIFont systemFontOfSize:14];
     payeeLabel.textAlignment = NSTextAlignmentLeft;
-    payeeLabel.text = @"收款人：";
+    payeeLabel.text = @"收  款  人：";
     [payeeLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:payeeLabel];
     [payeeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1250,7 +1257,7 @@
     com_payeeField.textAlignment = NSTextAlignmentLeft;
     com_payeeField.font = [UIFont systemFontOfSize:14];
     [com_payeeField setTextColor:COLORFromRGB(0x333333)];
-    com_payeeField.placeholder = @"收款人";
+    com_payeeField.placeholder = @"（必填）";
     [com_payeeField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineEight.mas_centerY).offset(-25);
         make.left.right.equalTo(lineEight);
@@ -1271,7 +1278,7 @@
     UILabel *bankLabel = [[UILabel alloc] init];
     bankLabel.font = [UIFont systemFontOfSize:14];
     bankLabel.textAlignment = NSTextAlignmentLeft;
-    bankLabel.text = @"开户行：";
+    bankLabel.text = @"开  户  行：";
     [bankLabel setTextColor:COLORFromRGB(0x333333)];
     [com_scrollView addSubview:bankLabel];
     [bankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -1340,7 +1347,7 @@
     com_branceTeleField.textAlignment = NSTextAlignmentLeft;
     com_branceTeleField.font = [UIFont systemFontOfSize:14];
     [com_branceTeleField setTextColor:COLORFromRGB(0x333333)];
-    com_branceTeleField.placeholder = @"银行预留手机号";
+    com_branceTeleField.placeholder = @"（必填）";
     [com_branceTeleField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(lineTen.mas_centerY).offset(-25);
         make.left.right.equalTo(lineTen);

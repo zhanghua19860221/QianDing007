@@ -1099,8 +1099,8 @@
 				TargetAttributes = {
 					14A0ACDC1FDA1D6C0095003F = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = J9MC53XV58;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = WSMZXD2423;
+						ProvisioningStyle = Manual;
 					};
 					14A0ACF51FDA1D6D0095003F = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -1392,9 +1392,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = WSMZXD2423;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1439,9 +1441,11 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WSMZXD2423;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1464,8 +1468,12 @@
 			baseConfigurationReference = 5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_MODULES_AUTOLINK = NO;
-				DEVELOPMENT_TEAM = J9MC53XV58;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = WSMZXD2423;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1475,8 +1483,10 @@
 				INFOPLIST_FILE = QianDing007/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.zhanghua.mac.QianDing007;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hengfengyzf.yinzhifubusiness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f9ea84ed-f7be-4751-8956-8c27cbdff57c";
+				PROVISIONING_PROFILE_SPECIFIER = QianDingFile;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1486,8 +1496,12 @@
 			baseConfigurationReference = B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_MODULES_AUTOLINK = NO;
-				DEVELOPMENT_TEAM = J9MC53XV58;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = WSMZXD2423;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1497,8 +1511,10 @@
 				INFOPLIST_FILE = QianDing007/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = cn.zhanghua.mac.QianDing007;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hengfengyzf.yinzhifubusiness;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "f9ea84ed-f7be-4751-8956-8c27cbdff57c";
+				PROVISIONING_PROFILE_SPECIFIER = QianDingFile;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -1563,7 +1579,7 @@
 				14A0AD091FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		14A0AD0A1FDA1D6D0095003F /* Build configuration list for PBXNativeTarget "QianDing007" */ = {
 			isa = XCConfigurationList;
@@ -1572,7 +1588,7 @@
 				14A0AD0C1FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		14A0AD0D1FDA1D6D0095003F /* Build configuration list for PBXNativeTarget "QianDing007Tests" */ = {
 			isa = XCConfigurationList;
@@ -1581,7 +1597,7 @@
 				14A0AD0F1FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		14A0AD101FDA1D6D0095003F /* Build configuration list for PBXNativeTarget "QianDing007UITests" */ = {
 			isa = XCConfigurationList;
@@ -1590,7 +1606,7 @@
 				14A0AD121FDA1D6D0095003F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

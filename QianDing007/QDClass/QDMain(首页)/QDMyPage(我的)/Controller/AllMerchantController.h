@@ -11,7 +11,7 @@
 @interface AllMerchantController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 
 @property (strong , nonatomic) UITableView *tableView;
-@property (nonatomic, strong) NSMutableArray * dataArray;
-@property (assign, nonatomic) NSInteger page; //!< 数据页数.表示下次请求第几页的数据.
+@property (strong , nonatomic) NSMutableArray * dataArray;
+@property (assign , nonatomic) NSInteger page; //!< 数据页数.表示下次请求第几页的数据.
 
 @end

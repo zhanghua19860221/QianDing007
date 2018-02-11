@@ -325,15 +325,14 @@
     //本地保存用户 手机号 数据
     NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
     NSString *tempPhone =  [NSString stringWithFormat:@"a%@",sharePhone];
-    NSString *tempCode = [NSString stringWithFormat:@"邀请码：%@",tempPhone];
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,tempPhone];
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    [shareParams SSDKSetupShareParamsByText:tempCode
+    [shareParams SSDKSetupShareParamsByText:SHATETEXT
                                      images:[UIImage imageNamed:@"LOGO"]
                                         url:[NSURL URLWithString:inviteUrl]
-                                      title:@"代理商邀请"
+                                      title:SHATETITLE
                                        type:SSDKContentTypeWebPage
      ];
     //开始进行分享
@@ -378,16 +377,15 @@
     //本地保存用户 手机号 数据
     NSString *sharePhone =   [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
     NSString *tempPhone =  [NSString stringWithFormat:@"a%@",sharePhone];
-    NSString *tempCode = [NSString stringWithFormat:@"邀请码：%@",tempPhone];
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,tempPhone];
 
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    [shareParams SSDKSetupShareParamsByText:tempCode
+    [shareParams SSDKSetupShareParamsByText:SHATETEXT
                                      images:[UIImage imageNamed:@"LOGO"]
                                         url:[NSURL URLWithString:inviteUrl]
-                                      title:@"代理商邀请"
+                                      title:SHATETITLE
                                        type:SSDKContentTypeWebPage
      ];
     //开始进行分享

@@ -14,6 +14,8 @@
     UITextField *openAccountField;//开户人
     UITextField *openBankField;   //开户银行
     UITextField *branchBankField; //支行名称
+    
+    UIButton *sa_subMitBtn;//确认按钮
 
 }
 
@@ -32,9 +34,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    UINavigationBar * bar = self.navigationController.navigationBar;
-    bar.barTintColor = COLORFromRGB(0xffffff);
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
 
 
     
@@ -74,11 +75,11 @@
     bankNumbField.textAlignment = NSTextAlignmentRight;
     [self.view addSubview:bankNumbField];
     bankNumbField.delegate = self;
-    bankNumbField.placeholder = @"输入银行卡号";
+    bankNumbField.placeholder = @"（必填）";
     [bankNumbField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(bankNumLabel.mas_centerY);
         make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(SC_WIDTH-70);
     }];
     
@@ -107,11 +108,11 @@
     [self.view addSubview:openAccountField];
     openAccountField.textAlignment = NSTextAlignmentRight;
     openAccountField.delegate = self;
-    openAccountField.placeholder = @"输入开户人";
+    openAccountField.placeholder = @"（必填）";
     [openAccountField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(openAccountLabel.mas_centerY);
         make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(SC_WIDTH-70);
     }];
     
@@ -140,80 +141,140 @@
     [self.view addSubview:openBankField];
     openBankField.textAlignment = NSTextAlignmentRight;
     openBankField.delegate = self;
-    openBankField.placeholder = @"输入开户银行";
+    openBankField.placeholder = @"（必填）";
     [openBankField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(openBankLabel.mas_centerY);
         make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(16);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(SC_WIDTH-70);
     }];
     
-    UIImageView *lineThird = [[UIImageView alloc] init];
-    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [self.view addSubview:lineThird];
-    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineTwo.mas_bottom).offset(50);
-        make.left.equalTo(self.view).offset(15);
-        make.right.equalTo(self.view);
-        make.height.mas_equalTo(1);
-        
-    }];
+//    UIImageView *lineThird = [[UIImageView alloc] init];
+//    lineThird.backgroundColor = COLORFromRGB(0xf9f9f9);
+//    [self.view addSubview:lineThird];
+//    [lineThird mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lineTwo.mas_bottom).offset(50);
+//        make.left.equalTo(self.view).offset(15);
+//        make.right.equalTo(self.view);
+//        make.height.mas_equalTo(1);
+//
+//    }];
     
-    UILabel *branchBankLabel = [[UILabel alloc] init];
-    branchBankLabel.text = @"支行名称";
-    [self.view addSubview:branchBankLabel];
-    [branchBankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(lineThird);
-        make.bottom.equalTo(lineThird).offset(-17);
-        make.width.mas_equalTo(70);
-        make.height.mas_equalTo(16);
-        
-    }];
-    branchBankField = [[UITextField alloc] init];
-    [self.view addSubview:branchBankField];
-    branchBankField.delegate = self;
-    branchBankField.textAlignment = NSTextAlignmentRight;
-    branchBankField.placeholder = @"输入支行名称";
-    [branchBankField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(branchBankLabel.mas_centerY);
-        make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(16);
-        make.width.mas_equalTo(SC_WIDTH-70);
-    }];
+//    UILabel *branchBankLabel = [[UILabel alloc] init];
+//    branchBankLabel.text = @"支行名称";
+//    [self.view addSubview:branchBankLabel];
+//    [branchBankLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.equalTo(lineThird);
+//        make.bottom.equalTo(lineThird).offset(-17);
+//        make.width.mas_equalTo(70);
+//        make.height.mas_equalTo(16);
+//
+//    }];
+//    branchBankField = [[UITextField alloc] init];
+//    [self.view addSubview:branchBankField];
+//    branchBankField.delegate = self;
+//    branchBankField.textAlignment = NSTextAlignmentRight;
+//    branchBankField.placeholder = @"输入支行名称";
+//    [branchBankField mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.centerY.equalTo(branchBankLabel.mas_centerY);
+//        make.right.equalTo(self.view).offset(-15);
+//        make.height.mas_equalTo(16);
+//        make.width.mas_equalTo(SC_WIDTH-70);
+//    }];
 
     
-    UIButton *okBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [okBtn setTitle:@"确认" forState:UIControlStateNormal];
-    [okBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    okBtn.backgroundColor = COLORFromRGB(0xe10000);
-    okBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    okBtn.layer.masksToBounds = YES;
-    okBtn.layer.cornerRadius = 5;
-    [okBtn addTarget:self action:@selector(writeCompletion) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:okBtn];
-    [okBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineThird.mas_bottom).offset(50);
+    sa_subMitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [sa_subMitBtn setTitle:@"确认" forState:UIControlStateNormal];
+    [sa_subMitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    sa_subMitBtn.backgroundColor = COLORFromRGB(0xe10000);
+    sa_subMitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    sa_subMitBtn.layer.masksToBounds = YES;
+    sa_subMitBtn.layer.cornerRadius = 5;
+    [sa_subMitBtn addTarget:self action:@selector(writeCompletion) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:sa_subMitBtn];
+    [sa_subMitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lineTwo.mas_bottom).offset(50);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_equalTo(50);
 
     }];
 };
+- (void)saChangeButtonStatus{
+    sa_subMitBtn.enabled = YES;
 
+}
 /**
  点击确认按钮事件
  */
 - (void)writeCompletion{
+    //防止重复点击
+    sa_subMitBtn.enabled = NO;
+    [self performSelector:@selector(saChangeButtonStatus)withObject:nil afterDelay:2.0f];//防止重复点击
+    if ([bankNumbField.text isEqualToString:@""]||![shareDelegate checkCardNo:bankNumbField.text]) {
+        [self saShowAlert:@"银行卡号输入不正确。"];
+        
+        return;
+    }
     
-    NSMutableArray *mutableArray = [NSMutableArray arrayWithCapacity:0];
-    [mutableArray addObject:bankNumbField.text];
-    [mutableArray addObject:openAccountField.text];
-    [mutableArray addObject:openBankField.text];
-    [mutableArray addObject:branchBankField.text];
+    if ([openAccountField.text isEqualToString:@""]||![shareDelegate deptNameInputShouldChinese:openAccountField.text]||![shareDelegate isStringLengthName:openAccountField.text]) {
+        [self saShowAlert:@"请输不可为空的、11个字以内的纯中文收款人名称。"];
+        
+        return;
+    }
+    if ([openAccountField.text isEqualToString:@""]) {
+        
+        [self saShowAlert:@"开户银行不可为空。"];
+        return;
+        
+    }
+    
+    
+    //创建请求菊花进度条
+    [self.view addSubview:[shareDelegate shareZHProgress]];
+    [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(self.view);
+        make.height.width.mas_equalTo(100);
+    }];
+    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
 
-    PresentAccountController *account = [[PresentAccountController alloc] init];
-    account.dataArray = mutableArray;
-    [self.navigationController pushViewController:account animated:YES];
+    
+    NSDictionary *saDic =@{@"auth_session":oldSession,//登陆标志
+                           @"bank_user":openAccountField.text, //银行卡用户名
+                           @"bank_name":openBankField.text, //银行名称
+                           @"bank_info":bankNumbField.text   //银行卡号
+                           };
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    
+    [manager POST:SAVESETBANKINFO_URL parameters:saDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
+        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            
+            [self saShowAlertSuccese:responseObject[@"info"]];
+            
+        }else{
+            [self saShowAlert:responseObject[@"info"]];
+            
+        }
+        //移除菊花进度条
+        [[shareDelegate shareZHProgress] removeFromSuperview];
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        NSLog(@"%@",error);
+    }];
+    
+
 }
 /**
  创建导航栏
@@ -222,6 +283,7 @@
     self.navigationItem.title = @"提现账户设置";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
     [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
@@ -287,19 +349,57 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [bankNumbField resignFirstResponder];
-    [openAccountField resignFirstResponder];
-    [openBankField resignFirstResponder];
-    [branchBankField resignFirstResponder];
+    [textField resignFirstResponder];
 
     return YES;
 }
-
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self.view endEditing:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+/**
+ 警示 提示框
+ */
+- (void)saShowAlert:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                              //响应事件
+                                                              
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+/**
+ 警示 提示框
+ */
+- (void)saShowAlertSuccese:(NSString *)warning{
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:warning
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+                                                             
+        [self.navigationController popViewControllerAnimated:YES];
 
+                                                          }];
+    
+    
+    [alert addAction:defaultAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 /*
 #pragma mark - Navigation
 

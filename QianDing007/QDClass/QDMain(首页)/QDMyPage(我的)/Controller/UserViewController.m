@@ -191,7 +191,7 @@
         lableThree = [[UILabel alloc] init];
         lableThree.text = @"个人认证";
         lableThree.textAlignment = NSTextAlignmentRight;
-        [lableThree setTextColor:COLORFromRGB(0x999999)];
+        [lableThree setTextColor:COLORFromRGB(0x666666)];
         lableThree.font = [UIFont systemFontOfSize:16];
         [self.view addSubview:lableThree];
         [lableThree mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -205,7 +205,7 @@
         lableFour = [[UILabel alloc] init];
         lableFour.text = @"(无营业执照)";
         lableFour.textAlignment = NSTextAlignmentLeft;
-        [lableFour setTextColor:COLORFromRGB(0x999999)];
+        [lableFour setTextColor:COLORFromRGB(0x666666)];
         lableFour.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:lableFour];
         [lableFour mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -287,8 +287,8 @@
             case 300:{
                 [lableOne setTextColor:COLORFromRGB(0xe10000)];
                 [lableTwo setTextColor:COLORFromRGB(0xe10000)];
-                [lableThree setTextColor:COLORFromRGB(0x999999)];
-                [lableFour  setTextColor:COLORFromRGB(0x999999)];
+                [lableThree setTextColor:COLORFromRGB(0x666666)];
+                [lableFour  setTextColor:COLORFromRGB(0x666666)];
                 _scrollView.contentOffset = CGPointMake(0, 0);
                 [UIView animateWithDuration:0.3 animations:^{
                     scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
@@ -298,8 +298,8 @@
             case 301:{
                 [lableThree setTextColor:COLORFromRGB(0xe10000)];
                 [lableFour  setTextColor:COLORFromRGB(0xe10000)];
-                [lableOne setTextColor:COLORFromRGB(0x999999)];
-                [lableTwo setTextColor:COLORFromRGB(0x999999)];
+                [lableOne setTextColor:COLORFromRGB(0x666666)];
+                [lableTwo setTextColor:COLORFromRGB(0x666666)];
                 _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
                 [UIView animateWithDuration:0.3 animations:^{
                     scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
@@ -363,8 +363,8 @@
         if (x == 0) {
             [lableOne setTextColor:COLORFromRGB(0xe10000)];
             [lableTwo setTextColor:COLORFromRGB(0xe10000)];
-            [lableThree setTextColor:COLORFromRGB(0x999999)];
-            [lableFour  setTextColor:COLORFromRGB(0x999999)];
+            [lableThree setTextColor:COLORFromRGB(0x666666)];
+            [lableFour  setTextColor:COLORFromRGB(0x666666)];
             [UIView animateWithDuration:0.3 animations:^{
                 scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
             }];
@@ -372,8 +372,8 @@
         }else if (x == 1){
             [lableThree setTextColor:COLORFromRGB(0xe10000)];
             [lableFour  setTextColor:COLORFromRGB(0xe10000)];
-            [lableOne setTextColor:COLORFromRGB(0x999999)];
-            [lableTwo setTextColor:COLORFromRGB(0x999999)];
+            [lableOne setTextColor:COLORFromRGB(0x666666)];
+            [lableTwo setTextColor:COLORFromRGB(0x666666)];
             [UIView animateWithDuration:0.3 animations:^{
                 scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
             }];

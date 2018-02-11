@@ -167,7 +167,7 @@
     cityField.textAlignment = NSTextAlignmentLeft;
     cityField.font = [UIFont systemFontOfSize:16];
     [cityField setTextColor:COLORFromRGB(0x666666)];
-    cityField.placeholder = @"城市";
+    cityField.placeholder = @"（必填）";
     [cityField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(line.mas_bottom);
         make.left.right.equalTo(line);
@@ -204,7 +204,7 @@
     nameField.textAlignment = NSTextAlignmentLeft;
     nameField.font = [UIFont systemFontOfSize:16];
     [nameField setTextColor:COLORFromRGB(0x666666)];
-    nameField.placeholder = @"姓名";
+    nameField.placeholder = @"（必填）";
     [nameField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.right.equalTo(line);
@@ -243,7 +243,7 @@
     teleField.textAlignment = NSTextAlignmentLeft;
     teleField.font = [UIFont systemFontOfSize:16];
     [teleField setTextColor:COLORFromRGB(0x666666)];
-    teleField.placeholder = @"电话";
+    teleField.placeholder = @"（必填）";
     [teleField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.right.equalTo(line);
@@ -282,7 +282,7 @@
     emailField.textAlignment = NSTextAlignmentLeft;
     emailField.font = [UIFont systemFontOfSize:16];
     [emailField setTextColor:COLORFromRGB(0x666666)];
-    emailField.placeholder = @"邮箱";
+    emailField.placeholder = @"（必填）";
     [emailField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineThree.mas_bottom);
         make.left.right.equalTo(line);
@@ -321,7 +321,7 @@
     addressField.textAlignment = NSTextAlignmentLeft;
     addressField.font = [UIFont systemFontOfSize:16];
     [addressField setTextColor:COLORFromRGB(0x666666)];
-    addressField.placeholder = @"地址";
+    addressField.placeholder = @"（必填）";
     [addressField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineFour.mas_bottom);
         make.left.right.equalTo(line);

@@ -114,22 +114,13 @@
         
     }];
 
-    _stateLabel = [[UILabel alloc] init];
-    _stateLabel.font = [UIFont systemFontOfSize:16];
-    _stateLabel.layer.masksToBounds = YES;
-    _stateLabel.layer.cornerRadius = 3;
-    _stateLabel.backgroundColor = COLORFromRGB(0xffa800);
-//    _stateLabel.backgroundColor = COLORFromRGB(0x00c6c8);
-//    _stateLabel.backgroundColor = COLORFromRGB(0xebebeb);
-
-    _stateLabel.textAlignment = NSTextAlignmentCenter;
-    [_stateLabel setTextColor:COLORFromRGB(0xffffff)];
-    [self.contentView addSubview:_stateLabel];
-    [_stateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    _stateView = [[UIImageView alloc] init];
+    [self.contentView addSubview:_stateView];
+    [_stateView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_moneyLabel.mas_centerY);
         make.right.equalTo(self.contentView).offset(-15);
-        make.width.mas_equalTo(137);
-        make.height.mas_equalTo(16);
+        make.width.mas_equalTo(167);
+        make.height.mas_equalTo(20);
     }];
 
     _timeLabel = [[UILabel alloc] init];
@@ -140,19 +131,35 @@
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(money.mas_centerY);
         make.right.equalTo(self.contentView).offset(-15);
-        make.width.right.equalTo(_stateLabel);
+        make.width.right.equalTo(_stateView);
 
     }];
     
     
 }
 -(void)addDataSourceView:(PresentRecordModel*)model{
-      _orderLabel.text = model.orderStr;
-    _accountLabel.text = model.accountStr;
-      _moneyLabel.text = model.moneyStr;
-      _stateLabel.text = model.stateStr;
-       _timeLabel.text = model.timeStr;
-
+    
+      _orderLabel.text = model.order_no;
+    _accountLabel.text = model.bank_account;
+      _moneyLabel.text = model.money;
+    if ([model.is_paid isEqualToString:@"0"]) {
+        [_stateView setImage:[UIImage imageNamed:@"提现中"]];
+        
+    }else if([model.is_paid isEqualToString:@"1"]){
+        [_stateView setImage:[UIImage imageNamed:@"已到账"]];
+        
+    }else if([model.is_paid isEqualToString:@"2"]){
+        [_stateView setImage:[UIImage imageNamed:@"失败了"]];
+    }
+    
+    //时间戳转化成时间
+    NSDateFormatter *stampFormatter = [[NSDateFormatter alloc] init];
+    [stampFormatter setDateFormat:@"YYYY.MM.dd  HH:mm:ss"];
+    //以 1970/01/01 GMT为基准，然后过了secs秒的时间
+    NSDate *stampDate2 = [NSDate dateWithTimeIntervalSince1970:[model.time intValue]];
+    NSString *tempTime = [stampFormatter stringFromDate:stampDate2];
+    _timeLabel.text = tempTime;
+    
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

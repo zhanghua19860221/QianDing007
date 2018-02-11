@@ -2,4 +2,54 @@
 <Bucket
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "QianDing007/QDClass/QDMain(&#x9996;&#x9875;)/QDMyPage(&#x6211;&#x7684;)/MyPage.m"
+            timestampString = "540026914.241258"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "579"
+            endingLineNumber = "579"
+            landmarkName = "-mpTapAction:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[MyPage mpTapAction:]"
+                  moduleName = "QianDing007"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhanghua/Desktop/QianDing007/QianDing007/QDClass/QDMain(%E9%A6%96%E9%A1%B5)/QDMyPage(%E6%88%91%E7%9A%84)/MyPage.m"
+                  timestampString = "539861652.339167"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "576"
+                  endingLineNumber = "576"
+                  offsetFromSymbolStart = "84">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__22-[MyPage mpTapAction:]_block_invoke"
+                  moduleName = "QianDing007"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhanghua/Desktop/QianDing007/QianDing007/QDClass/QDMain(%E9%A6%96%E9%A1%B5)/QDMyPage(%E6%88%91%E7%9A%84)/MyPage.m"
+                  timestampString = "539861652.341374"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "576"
+                  endingLineNumber = "576"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

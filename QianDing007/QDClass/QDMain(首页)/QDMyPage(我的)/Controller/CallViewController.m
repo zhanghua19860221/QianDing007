@@ -112,7 +112,7 @@
     }];
     
     UILabel *mailLabelOne = [[UILabel alloc] init];
-    mailLabelOne.text = @"miaoyin@gyjfgroup.com";
+    mailLabelOne.text = @"miaoyinkefu@gyjfgroup.com ";
     mailLabelOne.textAlignment = NSTextAlignmentRight;
     mailLabelOne.font = [UIFont systemFontOfSize:16];
     [mailLabelOne setTextColor:COLORFromRGB(0x999999)];
@@ -120,7 +120,7 @@
     [mailLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(mailView.mas_centerY);
         make.right.equalTo(mailView).offset(-15);
-        make.width.mas_equalTo(200);
+        make.width.mas_equalTo(230);
         make.height.mas_equalTo(16);
         
     }];

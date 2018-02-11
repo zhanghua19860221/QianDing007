@@ -239,6 +239,7 @@
     rightButton.frame = CGRectMake(0, 0, 40,40);
     [rightButton setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
     [rightButton setTitle:@"邀请" forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [rightButton addTarget:self action:@selector(mrRightBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
     self.navigationItem.rightBarButtonItem = rightItem;
@@ -336,7 +337,7 @@
     [mr_requestView addSubview:codeLabel];
     [codeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mr_codeLabel.mas_bottom).offset(10);
-        make.left.equalTo(mr_codeLabel.mas_left).offset(20);
+        make.left.equalTo(mr_codeLabel.mas_left).offset(30/SCALE_X);
         make.width.mas_equalTo(70);
         make.height.mas_equalTo(14);
     
@@ -571,17 +572,15 @@
     
     //本地保存用户 手机号 数据
     NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
-    NSString *tempCode = [NSString stringWithFormat:@"邀请码：%@",sharePhone];
-
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
         //创建分享参数
         NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-        [shareParams SSDKSetupShareParamsByText:tempCode
+        [shareParams SSDKSetupShareParamsByText:SHATETEXT
                                          images:[UIImage imageNamed:@"LOGO"]
                                             url:[NSURL URLWithString:inviteUrl]
-                                          title:@"商户邀请"
+                                          title:SHATETITLE
                                            type:SSDKContentTypeWebPage
          ];
         //开始进行分享
@@ -627,18 +626,15 @@
     
     //本地保存用户 手机号 数据
     NSString *sharePhone = [[shareDelegate shareNSUserDefaults] objectForKey:@"phone"];
-    
-    NSString *tempCode = [NSString stringWithFormat:@"邀请码：%@",sharePhone];
-    
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
-    [shareParams SSDKSetupShareParamsByText:tempCode
+    [shareParams SSDKSetupShareParamsByText:SHATETEXT
                                      images:[UIImage imageNamed:@"LOGO"]
                                         url:[NSURL URLWithString:inviteUrl]
-                                      title:@"商户邀请"
+                                      title:SHATETITLE
                                        type:SSDKContentTypeWebPage
      ];
         //开始进行分享

@@ -11,10 +11,12 @@
 @interface MyLevelController (){
 
     NSMutableArray *lv_tableArray;//tableView 数组
+    UIImageView *lv_topView;//顶部视图
     UILabel *lv_upLabel;//升级提示文本
     NSMutableDictionary *lv_TopDic;//数据字典
     UIImageView *lv_headView ;//头视图会员等级icon
     UILabel *lv_levelLabel;//头视图等级
+    
 
 }
 @end
@@ -121,7 +123,7 @@
     lv_upLabel.text = [NSString stringWithFormat:@"还差%@元升级",amount];
     
     if ([dic[@"id"] isEqualToString:@"4"]) {
-        lv_upLabel.text = @"您已是最高等级会员";
+        lv_upLabel.text = @"您已是最高级别会员";
     }
     
     switch ([dic[@"id"] intValue]) {
@@ -182,7 +184,7 @@
     [self.view addSubview:_tableView];
     _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lv_upLabel.mas_bottom).offset(15);
+        make.top.equalTo(lv_topView.mas_bottom);
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(SC_HEIGHT-213/SCALE_Y);
         
@@ -192,94 +194,84 @@
 
 - (void)createTopView{
 
-    UIImageView *topView = [[UIImageView alloc] init];
-    [topView setImage:[UIImage imageNamed:@"标题栏红色底"]];
-    [self.view addSubview:topView];
-    topView.userInteractionEnabled = YES;
+    lv_topView = [[UIImageView alloc] init];
+    [lv_topView setImage:[UIImage imageNamed:@"等级红色背景"]];
+    [self.view addSubview:lv_topView];
+    lv_topView.userInteractionEnabled = YES;
+    [lv_topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(210/SCALE_Y);
+        
+    }];
 
-    UIButton *maskBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    maskBtn.backgroundColor = COLORFromRGB(0xe10000);
-    [topView addSubview:maskBtn];
-    [maskBtn addTarget:self action:@selector(leftBackClick:) forControlEvents:UIControlEventTouchUpInside];
-    
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
-    [topView addSubview:button];
+    [lv_topView addSubview:button];
     [button addTarget:self action:@selector(leftBackClick:) forControlEvents:UIControlEventTouchUpInside];
+    [button mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lv_topView).offset(35/SCALE_Y);
+        make.left.equalTo(lv_topView).offset(15);
+        make.height.mas_equalTo(22/SCALE_Y);
+    }];
+
+    UIButton *maskBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [lv_topView addSubview:maskBtn];
+    [maskBtn addTarget:self action:@selector(leftBackClick:) forControlEvents:UIControlEventTouchUpInside];
+    [maskBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.center.equalTo(button);
+        make.height.width.mas_equalTo(30/SCALE_Y);
+    }];
     
     UILabel *titleLabel = [[UILabel alloc] init];
     titleLabel.text = @"等级";
     titleLabel.font = [UIFont systemFontOfSize:18];
     [titleLabel setTextColor:COLORFromRGB(0xffffff)];
-    [topView addSubview:titleLabel];
-    
+    [lv_topView addSubview:titleLabel];
+    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerX.equalTo(lv_topView.mas_centerX);
+        make.top.equalTo(lv_topView).offset(35/SCALE_Y);
+        make.height.mas_equalTo(22/SCALE_Y);
+    }];
+
     lv_headView = [[UIImageView alloc] init];
     lv_headView.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [self.view addSubview:lv_headView];
+    [lv_topView addSubview:lv_headView];
     lv_headView.layer.masksToBounds = YES;
     lv_headView.layer.cornerRadius  = 27.5;
     [lv_headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView.mas_bottom).offset(-33/SCALE_Y);
-        make.centerX.equalTo(topView.mas_centerX);
+        make.bottom.equalTo(lv_topView.mas_bottom).offset(-63/SCALE_Y);
+        make.centerX.equalTo(lv_topView.mas_centerX);
         make.height.width.mas_equalTo(55);
-        
+
     }];
     
     lv_levelLabel = [[UILabel alloc] init];
     lv_levelLabel.text = @"会员等级";
     lv_levelLabel.textAlignment = NSTextAlignmentCenter;
-    [lv_levelLabel setTextColor:COLORFromRGB(0x333333)];
+    [lv_levelLabel setTextColor:COLORFromRGB(0xffffff)];
     lv_levelLabel.font = [UIFont systemFontOfSize:16];
-    [self.view addSubview:lv_levelLabel];
-    
-    lv_upLabel = [[UILabel alloc] init];
-    lv_upLabel.text = @"还差000元升级";
-    lv_upLabel.textAlignment = NSTextAlignmentCenter;
-    [lv_upLabel setTextColor:COLORFromRGB(0x333333)];
-    lv_upLabel.font = [UIFont systemFontOfSize:12];
-    [self.view addSubview:lv_upLabel];
-
-    [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerX.equalTo(topView.mas_centerX);
-        make.top.equalTo(topView).offset(35/SCALE_Y);
-        make.height.mas_equalTo(22/SCALE_Y);
-    }];
-
-    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view);
-        make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(122/SCALE_Y);
-        
-    }];
-    
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(topView).offset(35/SCALE_Y);
-        make.left.equalTo(topView).offset(15);
-        make.height.mas_equalTo(22/SCALE_Y);
-    }];
-    
-
-    [maskBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.center.equalTo(button);
-        make.height.width.mas_equalTo(30/SCALE_Y);
-    }];
-
-
-
+    [lv_topView addSubview:lv_levelLabel];
     [lv_levelLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(lv_headView.mas_centerX);
         make.top.equalTo(lv_headView.mas_bottom).offset(10);
         make.height.mas_equalTo(16);
         make.width.mas_equalTo(70);
-        
+    
     }];
     
+    lv_upLabel = [[UILabel alloc] init];
+    lv_upLabel.text = @"还差000元升级";
+    lv_upLabel.textAlignment = NSTextAlignmentCenter;
+    [lv_upLabel setTextColor:COLORFromRGB(0xffffff)];
+    lv_upLabel.font = [UIFont systemFontOfSize:12];
+    [self.view addSubview:lv_upLabel];
     [lv_upLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(lv_levelLabel.mas_centerX);
-        make.top.equalTo(lv_levelLabel.mas_bottom).offset(10);
+        make.top.equalTo(lv_levelLabel.mas_bottom).offset(5);
         make.height.mas_equalTo(12);
         make.width.mas_equalTo(150);
-        
+
     }];
     
 }

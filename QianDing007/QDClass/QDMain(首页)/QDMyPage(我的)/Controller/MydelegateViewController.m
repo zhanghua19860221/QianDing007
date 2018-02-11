@@ -63,8 +63,8 @@
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             NSString *day =[NSString stringWithFormat:@"%@天",responseObject[@"day"]];
-            NSString *agency_distribute =[NSString stringWithFormat:@"%@元", responseObject[@"agency_distribute"]];
-            NSString *avg_distribute =[NSString stringWithFormat:@"%@元",responseObject[@"avg_distribute"]];
+            NSString *agency_distribute =[NSString stringWithFormat:@"%@", responseObject[@"agency_distribute"]];
+            NSString *avg_distribute =[NSString stringWithFormat:@"%@",responseObject[@"avg_distribute"]];
 
             NSArray *array = @[day,agency_distribute,avg_distribute];
             [self mdCreateFirstView:array];

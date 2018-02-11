@@ -12,7 +12,7 @@
 @property (strong , nonatomic) UILabel *orderLabel;    //订单号
 @property (strong , nonatomic) UILabel *accountLabel;  //账户
 @property (strong , nonatomic) UILabel *moneyLabel;    //提现金额
-@property (strong , nonatomic) UILabel *stateLabel;    //提现状态
+@property (strong , nonatomic) UIImageView *stateView; //提现状态视图
 @property (strong , nonatomic) UILabel *timeLabel;     //提现时间
 -(void)addDataSourceView:(PresentRecordModel*)model;
 

@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface PresentRecordModel : NSObject
-@property (strong , nonatomic) NSString *orderStr;    //订单号
-@property (strong , nonatomic) NSString *accountStr;  //账户
-@property (strong , nonatomic) NSString *moneyStr;    //提现金额
-@property (strong , nonatomic) NSString *stateStr;    //提现状态
-@property (strong , nonatomic) NSString *timeStr;     //提现时间
+@property (strong , nonatomic) NSString *order_no;    //订单号
+@property (strong , nonatomic) NSString *bank_account;  //账户
+@property (strong , nonatomic) NSString *money;    //提现金额
+@property (strong , nonatomic) NSString *is_paid;    //提现状态
+@property (strong , nonatomic) NSString *time;     //提现时间
 
 @end
