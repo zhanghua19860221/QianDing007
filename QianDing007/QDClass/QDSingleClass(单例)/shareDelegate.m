@@ -39,7 +39,21 @@
     });
     return sharedAccountManagerInstance;
 }
-
+/**
+ AVSpeechSynthesizer 语音播报单例
+ 
+ */
++ (AVSpeechSynthesizer *)shareAVSpeechSynthesizer{
+    
+    static AVSpeechSynthesizer * sharedAVSpeechSynthesizerInstance = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        
+        sharedAVSpeechSynthesizerInstance = [[AVSpeechSynthesizer alloc] init];
+        
+    });
+    return sharedAVSpeechSynthesizerInstance;
+}
 /**
  获取字符串长度
 

@@ -13,8 +13,14 @@
 #import <FMDatabase.h>
 #import <FMDB.h>
 #import "LoginMain.h"
+//推送通知
+#import <UserNotifications/UserNotifications.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate,RCIMConnectionStatusDelegate,UIAlertViewDelegate>
+
+
+
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate,RCIMReceiveMessageDelegate,AVSpeechSynthesizerDelegate,RCIMConnectionStatusDelegate,RCIMUserInfoDataSource,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *mainNav;

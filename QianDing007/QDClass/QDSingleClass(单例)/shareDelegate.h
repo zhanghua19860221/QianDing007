@@ -10,6 +10,8 @@
 #import "ZHProgressView.h"
 #import <FMDatabase.h>
 #import <FMDB.h>
+#import <AVFoundation/AVSpeechSynthesis.h>
+
 @interface shareDelegate : NSObject
 
 //用来记录用户是否设置过账户
@@ -26,6 +28,12 @@
  NSUserDefaults单例
  */
 + (NSUserDefaults *)shareNSUserDefaults;
+
+/**
+ AVSpeechSynthesizer 语音播报单例
+ 
+ */
++ (AVSpeechSynthesizer *)shareAVSpeechSynthesizer;
 
 /**
  

@@ -8,12 +8,8 @@
 
 #import "AppDelegate.h"
 #import "RootViewController.h"
+@interface AppDelegate ()
 
-@interface AppDelegate (){
-    
-    AVSpeechSynthesizer*zh_voice;//语音播报
-    
-}
 @end
 
 @implementation AppDelegate
@@ -38,18 +34,25 @@
     }
     self.window.rootViewController = self.mainNav ;
     
+
+    
     //集成融云
     [self IntegrateRongCloud];
     
     //是否出现引导页
-    [self IsGuidePage];
+    //  [self IsGuidePage];
     
     //mob分享
     [self mobShareInit];
+    
+    //语音播报代理方法
+    [shareDelegate shareAVSpeechSynthesizer].delegate=self;
 
     // Override point for customization after application launch.
     return YES;
 }
+
+#pragma ************************融云集成******************************
 
 /**
  集成融云消息
@@ -57,19 +60,24 @@
 - (void)IntegrateRongCloud{
     //初始化融云SDK
     [[RCIM sharedRCIM] initWithAppKey:RONGCLOUD_IM_APPKEY];
+    //遵守融云消息监听协议
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];
+    //IMKit连接状态的监听器
     [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
+    //设置用户信息提供者,页面展现的用户头像及昵称都会从此代理取
+    [[RCIM sharedRCIM] setUserInfoDataSource:self];
+    //设置前台提示音 NO 开启 YES 关闭
+    [[RCIM sharedRCIM] setDisableMessageAlertSound:YES];
+    //是否关闭本地通知，默认是打开的
+    [[RCIM sharedRCIM] setDisableMessageNotificaiton:NO];
 
-
- 
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
     if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
         RCTextMessage *content = (RCTextMessage*)message.content;
-
         NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
-        NSLog(@"getDict title == %@" ,getDict[@"title"]);
+        
         if (![getDict[@"title"] isEqualToString:@""]&& getDict[@"title"]!=NULL ) {
 
             [[NSNotificationCenter defaultCenter] postNotificationName:@"saveFMDBData" object:nil userInfo:getDict];
@@ -78,10 +86,7 @@
         BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
         NSLog(@"is_OpenSoundOne == %d",is_OpenSound);
         if (!is_OpenSound) {
-            zh_voice= [[AVSpeechSynthesizer alloc]init];
-            
-            zh_voice.delegate=self;//挂上代理
-            
+
             AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
             
             utterance.rate=0.52;// 设置语速，范围0-1，注意0最慢，1最快；AVSpeechUtteranceMinimumSpeechRate最慢，AVSpeechUtteranceMaximumSpeechRate最快
@@ -90,7 +95,7 @@
             
             utterance.voice= voice;
             
-            [zh_voice speakUtterance:utterance];//开始
+            [[shareDelegate shareAVSpeechSynthesizer] speakUtterance:utterance];//开始
         }
 
         
@@ -127,17 +132,85 @@
                               otherButtonTitles:nil, nil];
         
         [alert show];
-        //注意这里下面的4行，根据自己需要修改  也可以注释了，但是只能注释这4行，网络状态变化这个方法一定要实
+
     }
-    
 }
 
-//UIAlertView 协议代理方法 实现单点登陆功能
+//UIAlertView 协议代理方法 实现融云单点登陆功能
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     self.root = [[LoginMain alloc] init];
     [self.mainNav pushViewController:self.root animated:YES];
     
 }
+/**
+ *此方法中要提供给融云用户的信息，建议缓存到本地，前台时不走 此方法
+ */
+- (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion{
+    NSLog(@"1231");
+    //    //此处为了演示写了一个用户信息
+    //    if ([@"1" isEqual:userId]) {
+    //        RCUserInfo *user = [[RCUserInfo alloc]init];
+    //        user.userId = @"1";
+    //        user.name = @"测试1";
+    //        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    //
+    //        return completion(user);
+    //    }else if([@"2" isEqual:userId]) {
+    //        RCUserInfo *user = [[RCUserInfo alloc]init];
+    //        user.userId = @"2";
+    //        user.name = @"测试2";
+    //        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
+    //        return completion(user);
+    //    }
+}
+//这两个直接看注释，写的非常详细
+-(BOOL)onRCIMCustomLocalNotification:(RCMessage*)message withSenderName:(NSString *)senderName{
+    
+    NSLog(@"融云后台通知");
+    
+    return NO;
+}
+
+#pragma ************************后台语音播报******************************
+
+//程序后台运行时 激活多媒体处理事件 保持语音播报
+-(void)applicationWillResignActive:(UIApplication* )application{
+    //开启后台处理多媒体事件
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    AVAudioSession *session=[AVAudioSession sharedInstance];
+    [session setActive:YES error:nil];
+    //后台播放
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    //这样做，可以在按home键进入后台后 ，播放一段时间，几分钟吧。
+    //但是不能持续播放网络歌曲，若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是：
+    //其中的_bgTaskId是后台任务
+    UIBackgroundTaskIdentifier _bgTaskId;
+    _bgTaskId=[AppDelegate backgroundPlayerID:_bgTaskId];
+}
+
+//程序后台运行时 激活多媒体处理事件 保持语音播报
+
+//实现一下backgroundPlayerID:这个方法:
++(UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId{
+    //设置并激活音频会话类别
+    AVAudioSession *session=[AVAudioSession sharedInstance];
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+    [session setActive:YES error:nil];
+    //允许应用程序接收远程控制
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    //设置后台任务ID
+    UIBackgroundTaskIdentifier newTaskId=UIBackgroundTaskInvalid;
+    newTaskId=[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+    if(newTaskId!=UIBackgroundTaskInvalid&&backTaskId!=UIBackgroundTaskInvalid)
+    {
+        [[UIApplication sharedApplication] endBackgroundTask:backTaskId];
+    }
+    return newTaskId;
+}
+
+#pragma ************************mob分享******************************
+
 /**
  初始化配置mob分享
  */
@@ -185,6 +258,8 @@
     }];
 
 }
+#pragma ************************引导页******************************
+
 -(void)IsGuidePage{
     
     NSString * Version = [[shareDelegate  shareNSUserDefaults]  objectForKey:@"AppVersion"];
@@ -205,15 +280,6 @@
         [[shareDelegate shareNSUserDefaults] setObject:app_Version forKey:@"AppVersion"];
     }
 }
-- (void)applicationWillResignActive:(UIApplication *)application {
-    NSLog(@"%@",@"applicationWillResignActive");
-    
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
-    
-}
-
-
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     NSLog(@"%@",@"applicationDidEnterBackground");
 
@@ -241,6 +307,8 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
 }
+#pragma ************************支付宝集成******************************
+
 - (BOOL)application:(UIApplication *)application
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
