@@ -48,6 +48,14 @@
     //语音播报代理方法
     [shareDelegate shareAVSpeechSynthesizer].delegate=self;
 
+    // 设置应用程序的图标右上角的数字
+    [application setApplicationIconBadgeNumber:0];
+    if ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0) {
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
+        [application registerUserNotificationSettings:settings];
+        
+    }
+
     // Override point for customization after application launch.
     return YES;
 }
@@ -73,9 +81,10 @@
 
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    
     if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
         RCTextMessage *content = (RCTextMessage*)message.content;
-        NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
+        NSData * getJsonData = [content.content dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
         
         if (![getDict[@"title"] isEqualToString:@""]&& getDict[@"title"]!=NULL ) {
@@ -144,31 +153,22 @@
     
 }
 /**
- *此方法中要提供给融云用户的信息，建议缓存到本地，前台时不走 此方法
+ *程序在后台运行时 回调的方法 ，可以查询发送者信息 弹出本地通知
  */
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion{
-    NSLog(@"1231");
-    //    //此处为了演示写了一个用户信息
-    //    if ([@"1" isEqual:userId]) {
-    //        RCUserInfo *user = [[RCUserInfo alloc]init];
-    //        user.userId = @"1";
-    //        user.name = @"测试1";
-    //        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
-    //
-    //        return completion(user);
-    //    }else if([@"2" isEqual:userId]) {
-    //        RCUserInfo *user = [[RCUserInfo alloc]init];
-    //        user.userId = @"2";
-    //        user.name = @"测试2";
-    //        user.portraitUri = @"https://ss0.baidu.com/73t1bjeh1BF3odCf/it/u=1756054607,4047938258&fm=96&s=94D712D20AA1875519EB37BE0300C008";
-    //        return completion(user);
-    //    }
+    NSLog(@"回调的方法%@",userId);
+        //此处为了演示写了一个用户信息
+            RCUserInfo *user = [[RCUserInfo alloc]init];
+            user.userId = userId;
+            user.name = @"钱叮";
+            return completion(user);
 }
-//这两个直接看注释，写的非常详细
+/**
+ *是否发送后台 本地通知
+ */
 -(BOOL)onRCIMCustomLocalNotification:(RCMessage*)message withSenderName:(NSString *)senderName{
-    
-    NSLog(@"融云后台通知");
-    
+    NSLog(@"本地通知");
+
     return NO;
 }
 
