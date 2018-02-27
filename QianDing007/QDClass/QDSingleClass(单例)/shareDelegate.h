@@ -10,7 +10,7 @@
 #import "ZHProgressView.h"
 #import <FMDatabase.h>
 #import <FMDB.h>
-#import <AVFoundation/AVSpeechSynthesis.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface shareDelegate : NSObject
 

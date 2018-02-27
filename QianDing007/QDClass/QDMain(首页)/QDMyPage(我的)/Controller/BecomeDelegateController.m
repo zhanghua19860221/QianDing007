@@ -7,11 +7,12 @@
 //
 
 #import "BecomeDelegateController.h"
+#import "LSCityChooseView.h"
 #import "MyPage.h"
 
 @interface BecomeDelegateController (){
 
-    UITextField *cityField;   //城市
+    UILabel     *bd_cityLabel;   //城市
     UITextField *nameField;   //姓名
     UITextField *teleField;   //联系电话
     UITextField *emailField;  //邮箱
@@ -86,7 +87,7 @@
 }
 - (void)fillDataToSubView:(NSDictionary *)dic{
     
-    cityField.text = dic[@"city"];
+    bd_cityLabel.text = dic[@"city"];
     nameField.text = dic[@"name"];
     teleField.text = dic[@"tel"];
     emailField.text = dic[@"email"];
@@ -161,17 +162,32 @@
         make.height.mas_equalTo(50);
         
     }];
-    cityField = [[UITextField alloc] init];
-    [self.view addSubview:cityField];
-    cityField.delegate = self;
-    cityField.textAlignment = NSTextAlignmentLeft;
-    cityField.font = [UIFont systemFontOfSize:16];
-    [cityField setTextColor:COLORFromRGB(0x666666)];
-    cityField.placeholder = @"（必填）";
-    [cityField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(line.mas_bottom);
-        make.left.right.equalTo(line);
-        make.height.mas_equalTo(50);
+    
+    UIButton *selectorCityBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [selectorCityBtn  setTitle:@"+" forState:UIControlStateNormal];
+    [selectorCityBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    selectorCityBtn.backgroundColor = COLORFromRGB(0Xe10000);
+    selectorCityBtn.titleLabel.font = [UIFont systemFontOfSize:16];
+    [self.view addSubview:selectorCityBtn];
+    [selectorCityBtn addTarget:self action:@selector(selectorCityClick) forControlEvents:UIControlEventTouchUpInside];
+    [selectorCityBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(cityLabel.mas_centerY);
+        make.left.equalTo(cityLabel.mas_right).offset(5);
+        make.height.mas_equalTo(30);
+        make.width.mas_equalTo(30);
+    }];
+    
+    bd_cityLabel = [[UILabel alloc] init];
+    bd_cityLabel.numberOfLines = 0;
+    [self.view addSubview:bd_cityLabel];
+    bd_cityLabel.textAlignment = NSTextAlignmentLeft;
+    bd_cityLabel.font = [UIFont systemFontOfSize:16];
+    [bd_cityLabel setTextColor:COLORFromRGB(0x666666)];
+    [bd_cityLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(line.mas_bottom).offset(-5);
+        make.left.equalTo(selectorCityBtn.mas_right).offset(5);
+        make.width.mas_equalTo(SC_WIDTH-150);
+        make.height.mas_equalTo(40);
     }];
 
     UIImageView *lineOne = [[UIImageView alloc] init];
@@ -328,7 +344,6 @@
         make.height.mas_equalTo(50);
     }];
     
-    
     bd_submitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [bd_submitBtn setTitle:@"提交" forState:UIControlStateNormal];
     bd_submitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
@@ -345,7 +360,28 @@
         make.height.mas_equalTo(50/SCALE_Y);
         
     }];
-
+}
+- (void)selectorCityClick{
+    [self.view endEditing:YES];
+    
+    LSCityChooseView * view = [[LSCityChooseView alloc] initWithFrame:CGRectMake(0, 20, SC_WIDTH, SC_HEIGHT)];
+    view.selectedBlock = ^(NSString * province, NSString * city, NSString * area){
+        bd_cityLabel.text = [NSString stringWithFormat:@"%@-%@-%@",province,city,area];
+        
+    float stateHeight =[shareDelegate labelHeightText:bd_cityLabel.text Font:16 Width:SC_WIDTH-150];
+        
+        if (stateHeight>20) {
+            
+            [bd_cityLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+                make.height.mas_equalTo(stateHeight+1);
+                
+            }];
+            [self.view layoutIfNeeded];
+            
+        }
+    };
+    [self.view addSubview:view];
+    
 }
 //防止重复点击
 - (void)changeButtonStatus{
@@ -356,23 +392,16 @@
  提交按钮点击事件
  */
 - (void)bdSubmitBtnClick{
-    
     bd_submitBtn.enabled = NO;
     //防止重复点击
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
-    
-    if (![shareDelegate deptNameInputShouldChinese:cityField.text]) {
-        [self bdShowAlertFail:@"请输入正确的城市名称。"];
-        
-        return;
-    }
 
     if (![shareDelegate deptNameInputShouldChinese:nameField.text]) {
         [self bdShowAlertFail:@"请输入正确的中文名称。"];
         
         return;
     }
-
+    
     if (![shareDelegate isChinaMobile:teleField.text]) {
         [self bdShowAlertFail:@"请输入正确的手机号。"];
         
@@ -384,14 +413,13 @@
         
         return;
     }
-
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
 
     NSDictionary *bdDic =@{@"auth_session":oldSession,
                            @"tel":teleField.text,
                            @"name":nameField.text,
                            @"address":addressField.text,
-                           @"city":cityField.text,
+                           @"city":bd_cityLabel.text,
                            @"email":emailField.text
                            
                            };
@@ -414,13 +442,13 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//       NSLog(@"%@",[shareDelegate logDic:responseObject]);
+       NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"]  isEqualToString:@"1"]) {
             
             NSString *is_agency  = responseObject[@"is_agency"];
             [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
             
-            [self bdShowAlertSuccess:@"信息提交成功。"];
+            [self bdShowAlertSuccess:responseObject[@"info"]];
         }else{
             [self bdShowAlertFail:responseObject[@"info"]];
 

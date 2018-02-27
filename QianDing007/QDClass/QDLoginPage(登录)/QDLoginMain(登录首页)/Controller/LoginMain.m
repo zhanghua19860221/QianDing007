@@ -25,6 +25,11 @@
     UITextField *lg_passField; //密码输入文本
     UIImageView *lg_line;  //第一条线
     UIImageView *lg_lineOne; //第二条线
+    
+    UIButton *lg_qqBtn;     //第三方qq登陆btn
+    UIButton *lg_wechatBtn; //第三方wechatbtn
+
+    
 
 }
 @end
@@ -155,6 +160,110 @@
         
     }];
     
+    lg_qqBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [lg_qqBtn setImage:[UIImage imageNamed:@"LoginQQ"] forState:UIControlStateNormal];
+    [lg_qqBtn addTarget:self action:@selector(lgQQClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+    lg_qqBtn.layer.cornerRadius = 25;
+    lg_qqBtn.layer.masksToBounds = YES;
+    [self.view addSubview:lg_qqBtn];
+    [lg_qqBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom).offset(-49);
+        make.centerX.equalTo(self.view.mas_centerX).offset(-65);
+        make.width.height.mas_equalTo(50);
+        
+    }];
+    
+    UILabel *qqLabel = [[UILabel alloc] init];
+    qqLabel.text = @"QQ";
+    qqLabel.textAlignment = NSTextAlignmentCenter;
+    qqLabel.font = [UIFont systemFontOfSize:14];
+    [qqLabel setTextColor:COLORFromRGB(0x999999)];
+    [self.view addSubview:qqLabel];
+    [qqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lg_qqBtn.mas_bottom).offset(5);
+        make.centerX.equalTo(lg_qqBtn.mas_centerX);
+        make.width.equalTo(lg_qqBtn.mas_width);
+        make.height.mas_equalTo(15);
+
+    }];
+    
+    lg_wechatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [lg_wechatBtn addTarget:self action:@selector(lgWechatClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+    [lg_wechatBtn setImage:[UIImage imageNamed:@"Login微信"] forState:UIControlStateNormal];
+    lg_wechatBtn.layer.cornerRadius = 25;
+    lg_wechatBtn.layer.masksToBounds = YES;
+    [self.view addSubview:lg_wechatBtn];
+    [lg_wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.view.mas_bottom).offset(-49);
+        make.centerX.equalTo(self.view.mas_centerX).offset(65);
+        make.width.height.mas_equalTo(50);
+        
+    }];
+    
+    UILabel *wechatLabel = [[UILabel alloc] init];
+    wechatLabel.textAlignment = NSTextAlignmentCenter;
+    wechatLabel.text = @"微信";
+    wechatLabel.font = [UIFont systemFontOfSize:14];
+    [wechatLabel setTextColor:COLORFromRGB(0x999999)];
+    [self.view addSubview:wechatLabel];
+    [wechatLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(lg_wechatBtn.mas_bottom).offset(5);
+        make.centerX.equalTo(lg_wechatBtn.mas_centerX);
+        make.width.equalTo(lg_wechatBtn.mas_width);
+        make.height.mas_equalTo(15);
+        
+    }];
+}
+
+/**
+ QQ第三方登录点击事件
+
+ @param btn <#btn description#>
+ */
+- (void)lgQQClickBtn:(UIButton *)btn{
+    
+    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
+         if (state == SSDKResponseStateSuccess){
+             
+             NSLog(@"uidQQ=%@",user.uid);
+             NSLog(@"credentialQQ=%@",user.credential);
+             NSLog(@"tokenQQ=%@",user.credential.token);
+             NSLog(@"nicknameQQ=%@",user.nickname);
+             NSLog(@"headimageUrl=%@",user.icon);
+
+         }else{
+             
+             NSLog(@"%@",error);
+         }
+         
+     }];
+    
+}
+/**
+ wechat第三方登录点击事件
+ 
+ @param btn <#btn description#>
+ */
+- (void)lgWechatClickBtn:(UIButton *)btn{
+    
+    [ShareSDK getUserInfo:SSDKPlatformTypeWechat
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
+         if (state == SSDKResponseStateSuccess){
+
+             NSLog(@"uidWechat=%@",user.uid);
+             NSLog(@"credentialWechat=%@",user.credential);
+             NSLog(@"tokenWechat=%@",user.credential.token);
+             NSLog(@"nicknameWechat=%@",user.nickname);
+             NSLog(@"headimageUrl=%@",user.icon);
+
+         }else{
+
+             NSLog(@"%@",error);
+         }
+
+     }];
 }
 /**
  创建登录按钮
@@ -294,7 +403,6 @@
  */
 -(void)landRongCloud:(NSString *)token{
     
-    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
         NSLog(@"链接成功: %@", userId);
         [shareDelegate sharedManager].b_userID = userId;
@@ -346,7 +454,6 @@
 -(void)getPassWord{
     GetPassWord *vc = [[GetPassWord alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
-
 
 }
 /**

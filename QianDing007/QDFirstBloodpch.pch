@@ -63,9 +63,6 @@
 #define MYDELEGATE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=index&r_type=1"
 
 //我的代理商户列表
-#define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1"
-
-//我的代理资金管理
 #define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1&page=%ld"
 
 //我的代理分润 明细 分润类别(1 升级 分润 2 收款分润)
@@ -133,7 +130,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 //语音播报
-#import <AVFoundation/AVSpeechSynthesis.h>
+#import <AVFoundation/AVFoundation.h>
 //融云消息
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMKit/RongIMKit.h>

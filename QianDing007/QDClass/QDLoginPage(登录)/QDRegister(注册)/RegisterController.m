@@ -398,7 +398,7 @@
                                                               //响应事件
                     [self.navigationController popViewControllerAnimated:YES];
                                                               
-                                                                 }];
+                    }];
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
@@ -417,7 +417,9 @@
             frame.origin.y -= 50;
             self.view.frame=frame;
         }
+    
 }
+
 - (void)keyBoardhide:(NSNotification*)notification{
     
     CGFloat  duration = [notification.userInfo [UIKeyboardAnimationDurationUserInfoKey] doubleValue];

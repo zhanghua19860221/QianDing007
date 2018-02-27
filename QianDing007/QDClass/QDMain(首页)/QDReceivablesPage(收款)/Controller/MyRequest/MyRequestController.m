@@ -629,6 +629,8 @@
     NSString *tempStr = @"http://101.201.117.15/wap/index.php?ctl=qd_user&act=Register&invite_code=";
     NSString *inviteUrl = [NSString stringWithFormat:@"%@%@",tempStr,sharePhone];
 
+    
+    
     //创建分享参数
     NSMutableDictionary *shareParams = [NSMutableDictionary dictionary];
     [shareParams SSDKSetupShareParamsByText:SHATETEXT

@@ -83,7 +83,6 @@
     com_maskView= [[UIView alloc] initWithFrame:CGRectMake(0, 0,SC_WIDTH, SC_HEIGHT)];
     com_maskView.hidden = YES;
     com_maskView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
-//    [[UIApplication sharedApplication].keyWindow addSubview:com_maskView];
     [self.view addSubview:com_maskView];
     UITapGestureRecognizer *tapGesturRecognizer=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(mrTapAction:)];
     

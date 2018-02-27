@@ -36,6 +36,7 @@
 		14823E011FFCCDA90064D74A /* ChangePassWordController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823E001FFCCDA90064D74A /* ChangePassWordController.m */; };
 		14823E041FFCCDCF0064D74A /* NextChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823E031FFCCDCF0064D74A /* NextChangeTeleController.m */; };
 		148BA9191FF38DF70091F11D /* MyRequestCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 148BA9181FF38DF70091F11D /* MyRequestCell.m */; };
+		149192FD2041400E004408D4 /* ThirdLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 149192FC2041400E004408D4 /* ThirdLoginController.m */; };
 		1495367D1FF254EF00C85C05 /* shareDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 14F58B291FF0934500594656 /* shareDelegate.m */; };
 		1495367E1FF254EF00C85C05 /* customTextFieldView.m in Sources */ = {isa = PBXBuildFile; fileRef = 149E8B311FDE8C660037B996 /* customTextFieldView.m */; };
 		1495367F1FF254EF00C85C05 /* LoginMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 1424F6651FDE35EE00309E33 /* LoginMain.m */; };
@@ -192,6 +193,8 @@
 		14823E031FFCCDCF0064D74A /* NextChangeTeleController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NextChangeTeleController.m; sourceTree = "<group>"; };
 		148BA9171FF38DF70091F11D /* MyRequestCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRequestCell.h; sourceTree = "<group>"; };
 		148BA9181FF38DF70091F11D /* MyRequestCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRequestCell.m; sourceTree = "<group>"; };
+		149192FB2041400E004408D4 /* ThirdLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThirdLoginController.h; path = "QianDing007/QDClass/QDQuickLogin(三方登录) /ThirdLoginController.h"; sourceTree = "<group>"; };
+		149192FC2041400E004408D4 /* ThirdLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ThirdLoginController.m; path = "QianDing007/QDClass/QDQuickLogin(三方登录) /ThirdLoginController.m"; sourceTree = "<group>"; };
 		149536BB1FF26C4200C85C05 /* PersonalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalController.h; sourceTree = "<group>"; };
 		149536BC1FF26C4200C85C05 /* PersonalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalController.m; sourceTree = "<group>"; };
 		149536BE1FF26C5C00C85C05 /* CompanyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompanyController.h; sourceTree = "<group>"; };
@@ -760,6 +763,8 @@
 		14B4A81C1FDE15D900B5183C /* QDQuickLogin(三方登录)  */ = {
 			isa = PBXGroup;
 			children = (
+				149192FB2041400E004408D4 /* ThirdLoginController.h */,
+				149192FC2041400E004408D4 /* ThirdLoginController.m */,
 			);
 			name = "QDQuickLogin(三方登录) ";
 			sourceTree = "<group>";
@@ -1094,7 +1099,7 @@
 		14A0ACD51FDA1D6C0095003F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "张华";
 				TargetAttributes = {
 					14A0ACDC1FDA1D6C0095003F = {
@@ -1254,6 +1259,7 @@
 				149536B51FF2579400C85C05 /* UserListModel.m in Sources */,
 				149536B61FF2579400C85C05 /* PresentRecordModel.m in Sources */,
 				149536B71FF2579400C85C05 /* MyGetProfitCell.m in Sources */,
+				149192FD2041400E004408D4 /* ThirdLoginController.m in Sources */,
 				149536B81FF2579400C85C05 /* UpProfitCell.m in Sources */,
 				1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */,
 				149536B91FF2579400C85C05 /* UserListCell.m in Sources */,
@@ -1385,7 +1391,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1393,7 +1401,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -1434,7 +1446,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1442,7 +1456,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;

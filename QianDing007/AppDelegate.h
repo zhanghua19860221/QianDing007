@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <RongIMLib/RongIMLib.h>
 #import <RongIMKit/RongIMKit.h>
-#import <AVFoundation/AVSpeechSynthesis.h>
+#import <AVFoundation/AVFoundation.h>
 #import <FMDatabase.h>
 #import <FMDB.h>
 #import "LoginMain.h"

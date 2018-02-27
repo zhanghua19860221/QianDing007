@@ -13,12 +13,13 @@
 @end
 
 @implementation AppDelegate
-
+/*
+    应用程序启动后，要执行的委托调用，系统启动代理（第一个页面的加载）
+ */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    NSLog(@"%@",@"didFinishLaunchingWithOptions");
+    NSLog(@"%@",@"应用程序启动后，要执行的委托调用，系统启动代理（第一个页面的加载）");
 
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
@@ -28,13 +29,10 @@
         self.root = [[LoginMain alloc] init];
         self.mainNav = [[UINavigationController alloc] initWithRootViewController:self.root];
     }else{
-
         RootViewController *rootOne = [[RootViewController alloc] init];
         self.mainNav = [[UINavigationController alloc] initWithRootViewController:rootOne];
     }
     self.window.rootViewController = self.mainNav ;
-    
-
     
     //集成融云
     [self IntegrateRongCloud];
@@ -47,12 +45,17 @@
     
     //语音播报代理方法
     [shareDelegate shareAVSpeechSynthesizer].delegate=self;
-
+    
     // 设置应用程序的图标右上角的数字
-    [application setApplicationIconBadgeNumber:0];
+//    [application setApplicationIconBadgeNumber:50];
     if ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound categories:nil];
-        [application registerUserNotificationSettings:settings];
+        if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+            UIUserNotificationType type =  UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound;
+            UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:type
+                                                                                     categories:nil];
+            [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+            
+        }
         
     }
 
@@ -81,10 +84,10 @@
 
 }
 - (void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
-    
+        
     if ([message.objectName isEqualToString:@"RC:TxtMsg"]) {
         RCTextMessage *content = (RCTextMessage*)message.content;
-        NSData * getJsonData = [content.content dataUsingEncoding:NSUTF8StringEncoding];
+        NSData * getJsonData = [content.extra dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary * getDict = [NSJSONSerialization JSONObjectWithData:getJsonData options:NSJSONReadingMutableContainers error:nil];
         
         if (![getDict[@"title"] isEqualToString:@""]&& getDict[@"title"]!=NULL ) {
@@ -93,7 +96,7 @@
         }
         //用户是否屏蔽语音
         BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
-        NSLog(@"is_OpenSoundOne == %d",is_OpenSound);
+        
         if (!is_OpenSound) {
 
             AVSpeechUtterance*utterance = [[AVSpeechUtterance alloc]initWithString:getDict[@"title"]];//需要转换的文字
@@ -156,27 +159,28 @@
  *程序在后台运行时 回调的方法 ，可以查询发送者信息 弹出本地通知
  */
 - (void)getUserInfoWithUserId:(NSString *)userId completion:(void(^)(RCUserInfo* userInfo))completion{
-    NSLog(@"回调的方法%@",userId);
-        //此处为了演示写了一个用户信息
+            //此处为了演示写了一个用户信息
             RCUserInfo *user = [[RCUserInfo alloc]init];
             user.userId = userId;
             user.name = @"钱叮";
             return completion(user);
 }
 /**
- *是否发送后台 本地通知
+ *是否发送后台 NO接收本地通知 Yes不可接受本地通知
  */
 -(BOOL)onRCIMCustomLocalNotification:(RCMessage*)message withSenderName:(NSString *)senderName{
-    NSLog(@"本地通知");
-
+    
     return NO;
 }
 
 #pragma ************************后台语音播报******************************
-
+/*
+ 应用程序将要由活动状态切换到非活动状态时执行的委托调用，如按下home 按钮，返回主屏幕，或全屏之间切换应用程序等。
+*/
 //程序后台运行时 激活多媒体处理事件 保持语音播报
 -(void)applicationWillResignActive:(UIApplication* )application{
     //开启后台处理多媒体事件
+    NSLog(@"%@",@" 应用程序将要由活动状态切换到非活动状态时执行的委托调用");
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     AVAudioSession *session=[AVAudioSession sharedInstance];
     [session setActive:YES error:nil];
@@ -186,7 +190,7 @@
     //但是不能持续播放网络歌曲，若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是：
     //其中的_bgTaskId是后台任务
     UIBackgroundTaskIdentifier _bgTaskId;
-    _bgTaskId=[AppDelegate backgroundPlayerID:_bgTaskId];
+    _bgTaskId = [AppDelegate backgroundPlayerID:_bgTaskId];
 }
 
 //程序后台运行时 激活多媒体处理事件 保持语音播报
@@ -280,29 +284,36 @@
         [[shareDelegate shareNSUserDefaults] setObject:app_Version forKey:@"AppVersion"];
     }
 }
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    NSLog(@"%@",@"applicationDidEnterBackground");
 
+/*
+ 在应用程序已进入后台程序时，要执行的委托调用。所以要设置后台继续运行，则在这个函数里面设置即可。
+ */
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    NSLog(@"%@",@"在应用程序已进入后台程序时，要执行的委托调用。");
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
-
-
+/*
+ 在应用程序将要进入前台时(被激活)，要执行的委托调用，与applicationWillResignActive方法相对应。
+ */
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    NSLog(@"%@",@"applicationWillEnterForeground");
+    NSLog(@"%@",@"在应用程序将要进入前台时(被激活)，要执行的委托调用");
 
     // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
 }
-
-
+/*
+ 在应用程序已被激活后，要执行的委托调用，刚好与  applicationDidEnterBackground 方法相对应。
+ */
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    NSLog(@"%@",@"applicationDidBecomeActive");
+    NSLog(@"%@",@"在应用程序已被激活后，要执行的委托调用");
 
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
-
+/*
+ 在应用程序要完全退出的时候，要执行的委托调用。
+ */
 - (void)applicationWillTerminate:(UIApplication *)application {
-    NSLog(@"%@",@"applicationWillTerminate");
+    NSLog(@"%@",@"在应用程序要完全退出的时候，要执行的委托调用。");
 
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     
@@ -317,7 +328,7 @@
     if ([url.host isEqualToString:@"safepay"]) {
         //跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url standbyCallback:^(NSDictionary *resultDic) {
-            NSLog(@"result = %@",resultDic);
+//            NSLog(@"result = %@",resultDic);
         }];
     }
     return YES;
@@ -335,5 +346,28 @@
     }
     return YES;
 }
-
+///**
+// 网络提示 弹出框
+// */
+//- (void)adShowAlert:(NSString *)warning{
+//
+//    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+//                                                                   message:warning
+//                                                            preferredStyle:UIAlertControllerStyleAlert];
+//
+//    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+//                                                          handler:^(UIAlertAction * action) {
+//                                                              //响应事件
+//                                                              NSLog(@"action = %@", action);
+//                                                          }];
+//
+//    [alert addAction:defaultAction];
+//
+//    UIWindow *alertWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+//    alertWindow.rootViewController = [[UIViewController alloc] init];
+//    alertWindow.windowLevel = UIWindowLevelAlert + 1;
+//    [alertWindow makeKeyAndVisible];
+//    [alertWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+//
+//}
 @end
