@@ -7,7 +7,6 @@
 //
 
 #import "AboutWeController.h"
-
 @interface AboutWeController (){
     UIImageView *logoImageView;//logo视图
 
@@ -21,7 +20,6 @@
     [super viewDidLoad];
     [self createNavgation];
     [self createMainTextView];
-    
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
 }

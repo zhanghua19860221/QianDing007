@@ -140,7 +140,7 @@
         
     }];
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"agency"];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",[shareDelegate stringBuilder:REQUESTCODE_URL],oldSession,@"agency"];
     [codeView sd_setImageWithURL:[NSURL URLWithString:imageUrl] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
     
 }
@@ -498,7 +498,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:REQUESTESMS_URL parameters:mrDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:REQUESTESMS_URL] parameters:mrDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

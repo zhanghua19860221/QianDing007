@@ -10,11 +10,11 @@
 #import "GetPassWord.h"
 #import "RegisterController.h"
 #import "RootViewController.h"
+#import "ThirdLoginController.h"
 @interface LoginMain (){
 
     UITextField *lg_selectTextField  ;//记录当前编辑的输入框
     UIButton *lg_selectBtn  ;//记录选中的按钮
-
     UIImageView *lg_logoImageView;//logo图标
     UIButton *lg_loginBtn;//登录按钮
     UIButton *lg_getPassWordBtn;//找回密码
@@ -42,7 +42,6 @@
     [self lgCreateLoginTextView];
     [self lgCreateLoginBtn];
     [self lgCreateGetPassWordBtn];
-
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -223,15 +222,103 @@
  */
 - (void)lgQQClickBtn:(UIButton *)btn{
     
-    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
-           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
+    [ShareSDK authorize:SSDKPlatformTypeQQ settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+
+//    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
+//           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
          if (state == SSDKResponseStateSuccess){
-             
-             NSLog(@"uidQQ=%@",user.uid);
-             NSLog(@"credentialQQ=%@",user.credential);
+             NSLog(@"credential=%@",user.credential);
              NSLog(@"tokenQQ=%@",user.credential.token);
+             NSLog(@"uid=%@",user.credential.uid);
              NSLog(@"nicknameQQ=%@",user.nickname);
              NSLog(@"headimageUrl=%@",user.icon);
+             
+             NSDictionary *tlDic =@{@"open_id":user.credential.uid,
+                                    @"open_type":@"qq",
+                                    @"access_token":user.credential.token,
+                                    @"open_name":user.nickname,
+                                    @"open_icon":user.icon
+                                    };
+             NSLog(@"tlDic == %@",tlDic);
+             
+             //创建请求菊花进度条
+             [self.view addSubview:[shareDelegate shareZHProgress]];
+             [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+                 make.center.equalTo(self.view);
+                 make.height.width.mas_equalTo(100);
+             }];
+             [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+             
+             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+             manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+             manager.responseSerializer = [AFJSONResponseSerializer serializer];
+             manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+             
+             [manager POST:[shareDelegate stringBuilder:THIRDLOGIN_URL] parameters:tlDic progress:^(NSProgress * _Nonnull uploadProgress) {
+                 
+                 
+             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                 
+                 NSLog(@"%@",responseObject);
+
+                 if ([responseObject[@"status"] isEqualToString:@"1"]) {
+                     NSString *thirdSessID = responseObject[@"sess_id"];
+                     [[shareDelegate shareNSUserDefaults] setObject:thirdSessID forKey:@"Third_Sess_Id"];
+                     
+                     //判断商户是否认证
+                     NSString *is_checked  = responseObject[@"checked"];
+                     [[shareDelegate shareNSUserDefaults] setObject:is_checked forKey:@"is_checked"];
+                     
+                     //判断商户认证类型
+                     NSString *temp_Account = responseObject[@"account_type"];
+                     [[shareDelegate shareNSUserDefaults] setObject:temp_Account forKey:@"account_type"];
+                     
+                     //is_agency判断是否为代理商
+                     NSString *is_agency  = responseObject[@"is_agency"];
+                     [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
+                     
+                     //本地保存用户头像NSData数据
+                     NSString *logoString = [responseObject objectForKey:@"logo"];
+                     NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:logoString]];
+                     [[shareDelegate shareNSUserDefaults] setObject:data forKey:@"LOGO"];
+                     
+                     //本地保存用户 登录标志 数据
+                     NSString *loginSession = [responseObject objectForKey:@"auth_session"];
+                     [[shareDelegate shareNSUserDefaults] setObject:loginSession forKey:@"auth_session"];
+                     
+                     //本地保存用户 手机号 数据
+                     NSString *logPhone = [responseObject objectForKey:@"phone"];
+                     [[shareDelegate shareNSUserDefaults] setObject:logPhone forKey:@"phone"];
+       
+                     //本地保存商户名称
+                     NSString *merchantName = [responseObject objectForKey:@"name"];
+                     [[shareDelegate shareNSUserDefaults] setObject:merchantName forKey:@"merchantName"];
+                     
+                     //获取融云token
+                     NSString *userRongToken = [responseObject objectForKey:@"rongtoken"];
+                     [[shareDelegate shareNSUserDefaults] setObject:userRongToken forKey:@"RongToken"];
+                     //链接融云
+                     [self landRongCloud:userRongToken];
+                     RootViewController *home = [[RootViewController alloc] init];
+                     [self.navigationController pushViewController:home animated:YES];
+                     
+
+                 }else if([responseObject[@"status"] isEqualToString:@"2"]){
+                     NSString *thirdSessID = responseObject[@"sess_id"];
+                     [[shareDelegate shareNSUserDefaults] setObject:thirdSessID forKey:@"Third_Sess_Id"];
+                     ThirdLoginController *thirdVc = [[ThirdLoginController alloc] init];
+                     [self.navigationController pushViewController:thirdVc animated:YES];
+                     
+                 }else{
+                     
+                     [self lgShowAlert:responseObject[@"info"]];
+                 }
+                 //移除菊花进度条
+                 [[shareDelegate shareZHProgress] removeFromSuperview];
+             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                 
+                 NSLog(@"%@",error);
+             }];
 
          }else{
              
@@ -244,24 +331,112 @@
 /**
  wechat第三方登录点击事件
  
- @param btn <#btn description#>
  */
 - (void)lgWechatClickBtn:(UIButton *)btn{
     
-    [ShareSDK getUserInfo:SSDKPlatformTypeWechat
-           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
-         if (state == SSDKResponseStateSuccess){
-
-             NSLog(@"uidWechat=%@",user.uid);
-             NSLog(@"credentialWechat=%@",user.credential);
-             NSLog(@"tokenWechat=%@",user.credential.token);
-             NSLog(@"nicknameWechat=%@",user.nickname);
-             NSLog(@"headimageUrl=%@",user.icon);
-
-         }else{
-
-             NSLog(@"%@",error);
-         }
+    [ShareSDK authorize:SSDKPlatformTypeWechat settings:nil onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error) {
+    
+//    [ShareSDK getUserInfo:SSDKPlatformTypeWechat
+//           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
+               if (state == SSDKResponseStateSuccess){
+                   NSLog(@"tokenwechat=%@",user.credential.token);
+                   NSLog(@"uid=%@",user.credential.uid);
+                   NSLog(@"nicknamewechat=%@",user.nickname);
+                   NSLog(@"headimageUrl=%@",user.icon);
+                   
+                   NSDictionary *tlDic =@{@"open_id":user.credential.uid,
+                                          @"open_type":@"wechat",
+                                          @"access_token":user.credential.token,
+                                          @"open_name":user.nickname,
+                                          @"open_icon":user.icon
+                                          };
+                   NSLog(@"tlDic == %@",tlDic);
+                   
+                   //创建请求菊花进度条
+                   [self.view addSubview:[shareDelegate shareZHProgress]];
+                   [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
+                       make.center.equalTo(self.view);
+                       make.height.width.mas_equalTo(100);
+                   }];
+                   [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+                   
+                   AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                   manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+                   manager.responseSerializer = [AFJSONResponseSerializer serializer];
+                   manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+                   
+                   [manager POST:[shareDelegate stringBuilder:THIRDLOGIN_URL] parameters:tlDic progress:^(NSProgress * _Nonnull uploadProgress) {
+                       
+                       
+                   } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+                       
+                       NSLog(@"%@",responseObject);
+                       
+                       if ([responseObject[@"status"] isEqualToString:@"1"]) {
+                           NSString *thirdSessID = responseObject[@"sess_id"];
+                           [[shareDelegate shareNSUserDefaults] setObject:thirdSessID forKey:@"Third_Sess_Id"];
+                           
+                           //判断商户是否认证
+                           NSString *is_checked  = responseObject[@"checked"];
+                           [[shareDelegate shareNSUserDefaults] setObject:is_checked forKey:@"is_checked"];
+                           
+                           //判断商户认证类型
+                           NSString *temp_Account = responseObject[@"account_type"];
+                           [[shareDelegate shareNSUserDefaults] setObject:temp_Account forKey:@"account_type"];
+                           
+                           //is_agency判断是否为代理商
+                           NSString *is_agency  = responseObject[@"is_agency"];
+                           [[shareDelegate shareNSUserDefaults] setObject:is_agency forKey:@"is_agency"];
+                           
+                           //本地保存用户头像NSData数据
+                           NSString *logoString = [responseObject objectForKey:@"logo"];
+                           NSData *data = [NSData dataWithContentsOfURL:[NSURL  URLWithString:logoString]];
+                           [[shareDelegate shareNSUserDefaults] setObject:data forKey:@"LOGO"];
+                           
+                           //本地保存用户 登录标志 数据
+                           NSString *loginSession = [responseObject objectForKey:@"auth_session"];
+                           [[shareDelegate shareNSUserDefaults] setObject:loginSession forKey:@"auth_session"];
+                           
+                           //本地保存用户 手机号 数据
+                           NSString *logPhone = [responseObject objectForKey:@"phone"];
+                           [[shareDelegate shareNSUserDefaults] setObject:logPhone forKey:@"phone"];
+                           
+                           //本地保存商户名称
+                           NSString *merchantName = [responseObject objectForKey:@"name"];
+                           [[shareDelegate shareNSUserDefaults] setObject:merchantName forKey:@"merchantName"];
+                           
+                           //获取融云token
+                           NSString *userRongToken = [responseObject objectForKey:@"rongtoken"];
+                           [[shareDelegate shareNSUserDefaults] setObject:userRongToken forKey:@"RongToken"];
+                           //链接融云
+                           [self landRongCloud:userRongToken];
+                           RootViewController *home = [[RootViewController alloc] init];
+                           [self.navigationController pushViewController:home animated:YES];
+                           
+                           
+                       }else if([responseObject[@"status"] isEqualToString:@"2"]){
+                           NSString *thirdSessID = responseObject[@"sess_id"];
+                           [[shareDelegate shareNSUserDefaults] setObject:thirdSessID forKey:@"Third_Sess_Id"];
+                           ThirdLoginController *thirdVc = [[ThirdLoginController alloc] init];
+                           [self.navigationController pushViewController:thirdVc animated:YES];
+                           
+                       }else{
+                           
+                           [self lgShowAlert:responseObject[@"info"]];
+                       }
+                       //移除菊花进度条
+                       [[shareDelegate shareZHProgress] removeFromSuperview];
+                   } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                       
+                       NSLog(@"%@",error);
+                   }];
+                   
+               }else{
+                   
+                   NSLog(@"%@",error);
+               }
+               
+               
 
      }];
 }
@@ -313,7 +488,6 @@
     }
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.height.width.mas_equalTo(100);
@@ -322,23 +496,20 @@
 
     
     NSString * rsPassWord_md5 = [MyMD5 md5:lg_passField.text];
-    
     NSDictionary *lgDic =@{@"phone":lg_teleField.text,
                            @"password":rsPassWord_md5,
 
                            };
-    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    
-    [manager POST:LOGIN_URL parameters:lgDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:LOGIN_URL] parameters:lgDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-//        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        NSLog(@"%@",[shareDelegate logDic:responseObject]);
 
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
@@ -366,10 +537,6 @@
             //本地保存用户 手机号 数据
             NSString *logPhone = [responseObject objectForKey:@"phone"];
             [[shareDelegate shareNSUserDefaults] setObject:logPhone forKey:@"phone"];
-
-            //本地保存用户 登录密码 数据
-            NSString *logPassWord = [responseObject objectForKey:@"password"];
-            [[shareDelegate shareNSUserDefaults] setObject:logPassWord forKey:@"password"];
             
             //本地保存商户名称
             NSString *merchantName = [responseObject objectForKey:@"name"];

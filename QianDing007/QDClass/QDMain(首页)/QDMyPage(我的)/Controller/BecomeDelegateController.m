@@ -63,7 +63,7 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        [manager POST:DELEGATEGETINFO_URL parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+        [manager POST:[shareDelegate stringBuilder:DELEGATEGETINFO_URL] parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
@@ -438,7 +438,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:DELEGATE_URL parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:DELEGATE_URL] parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

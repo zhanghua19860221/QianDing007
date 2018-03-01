@@ -60,6 +60,7 @@
  @return 是否是字母数字组合
  */
 + (BOOL)judgePassWordLegal:(NSString *)pass;
+
 /**
  
  把Unicode编码转换为 中文
@@ -137,4 +138,10 @@
  
  */
 + (BOOL)isSocialCredit18Number:(NSString *)socialCreditNum;
+
+/**
+ url 拼接
+ 
+ */
++ (NSMutableString *)stringBuilder:(NSString *)url;
 @end

@@ -35,7 +35,7 @@
     [[SDImageCache sharedImageCache] clearMemory];//可有可无
 
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",[shareDelegate stringBuilder:SWEEPME_URL],oldSession];
     sm_url = imageUrl;
     
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
@@ -118,7 +118,7 @@
     
     //二维码展示视图
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",SWEEPME_URL,oldSession];
+    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",[shareDelegate stringBuilder:SWEEPME_URL],oldSession];
     sm_url = imageUrl;
     
 //    NSLog(@"imageUrl == %@",imageUrl);

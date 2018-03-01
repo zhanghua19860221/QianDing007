@@ -54,7 +54,7 @@
     
     NSString * urlStr = [NSString stringWithFormat:RECEIVEACCOUNT_URL,(long)1];
     
-    [manager POST:urlStr parameters:midDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:midDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -182,7 +182,7 @@
     
     NSString * urlStr = [NSString stringWithFormat:RECEIVEACCOUNT_URL,(long)self.page++];
 
-    [manager POST:urlStr parameters:midDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:midDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

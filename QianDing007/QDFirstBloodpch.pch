@@ -9,82 +9,95 @@
 #ifndef QDFirstBloodpch_pch
 #define QDFirstBloodpch_pch
 
+//#define SERVER @"http://www.qiandingsc.com/"
+#define SERVER @"http://101.201.117.15/"
+
 //登录接口
-#define LOGIN_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=login&r_type=1"
+#define LOGIN_URL @"qd_api/index.php?ctl=qd_sso&act=login&r_type=1"
+
 //首页接口
-#define HOME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=index&r_type=1&i_type=1"
+#define HOME_URL @"qd_api/index.php?ctl=qd_supplier&act=index&r_type=1&i_type=1"
 //注册接口
-#define REGISTER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=register&r_type=1&i_type=1"
+#define REGISTER_URL @"qd_api/index.php?ctl=qd_sso&act=register&r_type=1&i_type=1"
 //重置密码和找回密码接口
-#define RESET_PWD_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=restPassword&r_type=1"
+#define RESET_PWD_URL @"qd_api/index.php?ctl=qd_sso&act=restPassword&r_type=1"
 
 //修改手机号下一步接口
-#define CHANGE_PHONE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=modifyPhoneOne&r_type=1"
+#define CHANGE_PHONE_URL @"qd_api/index.php?ctl=qd_sso&act=modifyPhoneOne&r_type=1"
 
 //修改手机号接口
-#define MODIFY_PHONE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=modifyPhone&r_type=1"
+#define MODIFY_PHONE_URL @"qd_api/index.php?ctl=qd_sso&act=modifyPhone&r_type=1"
 
 //发送短信
-#define SMS_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=sendSms&r_type=1&i_type=1"
+#define SMS_URL @"qd_api/index.php?ctl=qd_sso&act=sendSms&r_type=1&i_type=1"
 //我的等级
-#define LEVEL_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myLevel&r_type=1"
+#define LEVEL_URL @"qd_api/index.php?ctl=qd_supplier&act=myLevel&r_type=1"
 //我的邀请
-#define INVITATION_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1&page=%ld"
+#define INVITATION_URL @"qd_api/index.php?ctl=qd_supplier&act=myinvite&r_type=1&page=%ld"
 
 //我的邀请 二维码图片 url
-#define REQUESTCODE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=getPersonalQR&r_type=1&i_type=1"
+#define REQUESTCODE_URL @"qd_api/index.php?ctl=qd_sso&act=getPersonalQR&r_type=1&i_type=1"
 
 //我通讯录邀请接口
-#define REQUESTESMS_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=sharePersonSms&r_type=1"
+#define REQUESTESMS_URL @"qd_api/index.php?ctl=qd_sso&act=sharePersonSms&r_type=1"
 
 //获取商户信息
-#define GETINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1"
+#define GETINFOUSER_URL @"qd_api/index.php?ctl=qd_supplier&act=getSupplierInfo&r_type=1"
 
 ////提交商户信息
-#define SAVEINFOUSER_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=saveSupplierInfo&r_type=1&"
+#define SAVEINFOUSER_URL @"qd_api/index.php?ctl=qd_supplier&act=saveSupplierInfo&r_type=1&"
 
 
 //我扫吧接口
-#define SCANME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=scanPay&r_type=1"
+#define SCANME_URL @"qd_api/index.php?ctl=qd_supplier&act=scanPay&r_type=1"
 
 //扫我图片url地址
-#define SWEEPME_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=getQrUrl&r_type=1&auth_session="
+#define SWEEPME_URL @"qd_api/index.php?ctl=qd_supplier&act=getQrUrl&r_type=1&auth_session="
 
 //上传商户logo
-#define PUSHLOGO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_sso&act=uploadLogo&r_type=1"
+#define PUSHLOGO_URL @"qd_api/index.php?ctl=qd_sso&act=uploadLogo&r_type=1"
 
 //获取代理状态及信息接口
-#define DELEGATEGETINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getAgencyApplyInfo&r_type=1"
+#define DELEGATEGETINFO_URL @"qd_api/index.php?ctl=qd_agency&act=getAgencyApplyInfo&r_type=1"
 
 //成为代理
-#define DELEGATE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=addAgencyApply&r_type=1"
+#define DELEGATE_URL @"qd_api/index.php?ctl=qd_agency&act=addAgencyApply&r_type=1"
 
 //我的代理首页
-#define MYDELEGATE_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=index&r_type=1"
+#define MYDELEGATE_URL @"qd_api/index.php?ctl=qd_agency&act=index&r_type=1"
 
 //我的代理商户列表
-#define USERLIST_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1&page=%ld"
+#define USERLIST_URL @"qd_api/index.php?ctl=qd_agency&act=myAgencySupplierInfo&r_type=1&page=%ld"
 
 //我的代理分润 明细 分润类别(1 升级 分润 2 收款分润)
-#define PROFIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=agencyDistributeDetails&r_type=1&page=%ld"
+#define PROFIT_URL @"qd_api/index.php?ctl=qd_agency&act=agencyDistributeDetails&r_type=1&page=%ld"
 
 //收款界面收款记录接口
-#define RECEIVEACCOUNT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1&page=%ld"
+#define RECEIVEACCOUNT_URL @"qd_api/index.php?ctl=qd_supplier&act=myReceiveAccount&r_type=1&page=%ld"
 
 //资金管理首页获取数据接口
-#define GETMONEYSUBMIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getMoneySubmit&r_type=1"
+#define GETMONEYSUBMIT_URL @"qd_api/index.php?ctl=qd_agency&act=getMoneySubmit&r_type=1"
 
 //资金管理首页提交数据接口
-#define POSTMONEYSUBMIT_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=withdrawDone&r_type=1"
+#define POSTMONEYSUBMIT_URL @"qd_api/index.php?ctl=qd_agency&act=withdrawDone&r_type=1"
 
 //资金管理提现账户设置接口
-#define SAVESETBANKINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=saveUserBankInfo&r_type=1"
+#define SAVESETBANKINFO_URL @"qd_api/index.php?ctl=qd_agency&act=saveUserBankInfo&r_type=1"
 
 //资金管理获取银行卡信息接口
-#define GETBANKINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getUserBankInfo&r_type=1"
+#define GETBANKINFO_URL @"qd_api/index.php?ctl=qd_agency&act=getUserBankInfo&r_type=1"
 
 //资金管理提现记录接口
-#define GETRECORDINFO_URL @"http://101.201.117.15/qd_api/index.php?ctl=qd_agency&act=getSubmitMoneyInfo&r_type=1&page=%ld"
+#define GETRECORDINFO_URL @"qd_api/index.php?ctl=qd_agency&act=getSubmitMoneyInfo&r_type=1&page=%ld"
+
+//第三方登录接口
+#define THIRDLOGIN_URL @"qd_api/index.php?ctl=qd_sso&act=loginByOpenId&r_type=1"
+
+//第三方登录绑定手机号接口
+#define BINGPHONE_URL @"qd_api/index.php?ctl=qd_sso&act=bingPhoneByOpenId&r_type=1"
+
+//第三方登录绑定注册接口
+#define REGISTERTHIRDLOGIN_URL @"qd_api/index.php?ctl=qd_sso&act=registerByOpenId&r_type=1"
 
 
 

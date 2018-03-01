@@ -174,7 +174,7 @@
  */
 + (BOOL)isChinaMobile:(NSString *)phoneNum{
     
-    NSString *CM = @"^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[0678])\\d{8}$";
+    NSString *CM = @"^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[0678]|2[0-9])\\d{8}$";
     
     NSPredicate *regextestcm = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", CM];
     
@@ -681,5 +681,17 @@
     }
     
     return YES;
+}
+/**
+ url 拼接
+ 
+ */
++ (NSMutableString *)stringBuilder:(NSString *)url{
+    
+    NSMutableString *str = [NSMutableString string];
+    [str appendString:SERVER];
+    [str appendString:url];
+    
+    return str;
 }
 @end

@@ -62,7 +62,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:GETMONEYSUBMIT_URL parameters:mmDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:GETMONEYSUBMIT_URL] parameters:mmDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -336,7 +336,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:POSTMONEYSUBMIT_URL parameters:mmDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:POSTMONEYSUBMIT_URL] parameters:mmDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

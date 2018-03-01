@@ -324,7 +324,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:GETINFOUSER_URL parameters:levelDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:GETINFOUSER_URL] parameters:levelDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -487,7 +487,7 @@
                                                          @"text/json",
                                                          nil];
 
-    [manager POST:SAVEINFOUSER_URL parameters:personalDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
+    [manager POST:[shareDelegate stringBuilder:SAVEINFOUSER_URL] parameters:personalDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
         
         NSArray *potoNameArray = @[@"身份证正面.png",@"身份证反面.png",@"法人手持身份证.png",@"门头照.png",@"经营场所.png",@"收银台.png",@"租赁合同一.png",@"租赁合同二.png"];
         NSArray *array = @[@"idcard_img_one",@"idcard_img_two",@"idcard_img_three",@"shop_img_one",@"shop_img_two",@"shop_img_three",@"contract_img_one",@"contract_img_two"];

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "RootViewController.h"
+
 @interface AppDelegate ()
 
 @end
@@ -251,8 +252,8 @@
                           appSecret:@"9c441187acc8e59a5763b3f1ab8338ac"];
                  break;
              case SSDKPlatformTypeQQ:
-                 [appInfo SSDKSetupQQByAppId:@"100371282"
-                                      appKey:@"aed9b0303e3ed1e27bae87c33761161d"
+                 [appInfo SSDKSetupQQByAppId:@"1106666513"
+                                      appKey:@"fYI3sI6j1o4tWS8J"
                                     authType:SSDKAuthTypeBoth];
                  break;
 

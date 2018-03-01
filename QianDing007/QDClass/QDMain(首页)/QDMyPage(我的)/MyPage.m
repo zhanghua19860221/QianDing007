@@ -80,7 +80,7 @@
     // 异步执行任务创建方法
     dispatch_async(queue, ^{
         NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
-        NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",REQUESTCODE_URL,oldSession,@"supplier"];
+        NSString *imageUrl = [NSString stringWithFormat:@"%@&auth_session=%@&type=%@",[shareDelegate stringBuilder:REQUESTCODE_URL],oldSession,@"supplier"];
         NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
         NSURL *urlImage = [NSURL URLWithString:tempUrlStr];
         NSData *imageData = [NSData dataWithContentsOfURL:urlImage];
@@ -175,7 +175,7 @@
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:DELEGATEGETINFO_URL parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:DELEGATEGETINFO_URL] parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -858,7 +858,7 @@
     NSDictionary *mpDic =@{@"auth_session":oldSession,
                            @"logo":@"头像.jpeg"
                            };
-    [manager POST:PUSHLOGO_URL parameters:mpDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
+    [manager POST:[shareDelegate stringBuilder:PUSHLOGO_URL] parameters:mpDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
         NSString *fileName = @"头像.jpeg";
         //上传的参数(上传图片，以文件流的格式)
         [formData appendPartWithFileData:imageData

@@ -1,35 +1,33 @@
 //
-//  RegisterController.m
+//  RegisterLoginController.m
 //  QianDing007
 //
-//  Created by 张华 on 17/12/18.
-//  Copyright © 2017年 张华. All rights reserved.
+//  Created by 张华 on 2018/2/27.
+//  Copyright © 2018年 张华. All rights reserved.
 //
 
-#import "RegisterController.h"
-
-@interface RegisterController (){
-    UITextField *zc_selectField;       //记录当前编辑的输入框
-    NSString    *zc_sess_id;           //请求验证码时获取
-    UITextField *zc_inviteField;       //邀请码
-    UITextField *zc_teleField;         //电话号码
-    UITextField *zc_setPassWordField;  //设置密码
-    UITextField *zc_againPassWordField;//确认密码
-    UITextField *zc_getCodeField;      //验证码
-    UILabel     *zc_promptLabel;       //提示文本
-    UIButton    *zc_SubmitBtn;         //提交按钮
+#import "RegisterLoginController.h"
+#import "LoginMain.h"
+@interface RegisterLoginController (){
+    UITextField *rl_selectField;       //记录当前编辑的输入框
+    NSString    *rl_sess_id;           //请求验证码时获取
+    UITextField *rl_inviteField;       //邀请码
+    UITextField *rl_teleField;         //电话号码
+    UITextField *rl_setPassWordField;  //设置密码
+    UITextField *rl_againPassWordField;//确认密码
+    UILabel     *rl_promptLabel;       //提示文本
+    UIButton    *rl_SubmitBtn;         //提交按钮
 }
 
 @end
 
-@implementation RegisterController
+@implementation RegisterLoginController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self createNavgation];
     [self createInfoText];
     self.view.backgroundColor = [UIColor whiteColor];
-
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -49,22 +47,22 @@
     line.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(zc_promptLabel.mas_bottom).offset(50/SCALE_Y);
+        make.top.equalTo(rl_promptLabel.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_equalTo(1);
-
+        
     }];
-
     
-    zc_inviteField = [[UITextField alloc] init];
-    zc_inviteField.text = @"";
-    zc_inviteField.delegate = self;
-    zc_inviteField.placeholder = @"请输入邀请码(选填)";
-    zc_inviteField.font = [UIFont systemFontOfSize:18];
-    [zc_inviteField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:zc_inviteField];
-    [zc_inviteField mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+    rl_inviteField = [[UITextField alloc] init];
+    rl_inviteField.text = @"";
+    rl_inviteField.delegate = self;
+    rl_inviteField.placeholder = @"请输入邀请码(选填)";
+    rl_inviteField.font = [UIFont systemFontOfSize:18];
+    [rl_inviteField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:rl_inviteField];
+    [rl_inviteField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(line.mas_bottom);
         make.left.equalTo(line).offset(10);
         make.right.equalTo(line).offset(-10);
@@ -83,14 +81,14 @@
         
     }];
     
-    zc_teleField = [[UITextField alloc] init];
-    zc_teleField.placeholder = @"请输入手机号";
-    zc_teleField.delegate = self;
-    [zc_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-    zc_teleField.font = [UIFont systemFontOfSize:18];
-    [zc_teleField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:zc_teleField];
-    [zc_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
+    rl_teleField = [[UITextField alloc] init];
+    rl_teleField.placeholder = @"请输入手机号";
+    rl_teleField.delegate = self;
+    [rl_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    rl_teleField.font = [UIFont systemFontOfSize:18];
+    [rl_teleField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:rl_teleField];
+    [rl_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
@@ -108,14 +106,14 @@
         make.height.mas_equalTo(1);
         
     }];
-    zc_setPassWordField = [[UITextField alloc] init];
-    zc_setPassWordField.delegate = self;
-    zc_setPassWordField.secureTextEntry = YES;
-    zc_setPassWordField.placeholder = @"请设置6至18位数字、字母组合密码";
-    zc_setPassWordField.font = [UIFont systemFontOfSize:18];
-    [zc_setPassWordField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:zc_setPassWordField];
-    [zc_setPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
+    rl_setPassWordField = [[UITextField alloc] init];
+    rl_setPassWordField.delegate = self;
+    rl_setPassWordField.secureTextEntry = YES;
+    rl_setPassWordField.placeholder = @"请设置6至18位数字、字母组合密码";
+    rl_setPassWordField.font = [UIFont systemFontOfSize:18];
+    [rl_setPassWordField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:rl_setPassWordField];
+    [rl_setPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineTwo.mas_bottom);
         make.left.equalTo(lineTwo).offset(10);
         make.right.equalTo(lineTwo).offset(-10);
@@ -134,75 +132,33 @@
         
     }];
     
-    zc_againPassWordField = [[UITextField alloc] init];
-    zc_againPassWordField.placeholder = @"请确认密码";
-    zc_againPassWordField.delegate = self;
-    zc_againPassWordField.secureTextEntry = YES;
-    zc_againPassWordField.font = [UIFont systemFontOfSize:18];
-    [zc_againPassWordField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:zc_againPassWordField];
-    [zc_againPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
+    rl_againPassWordField = [[UITextField alloc] init];
+    rl_againPassWordField.placeholder = @"请确认密码";
+    rl_againPassWordField.delegate = self;
+    rl_againPassWordField.secureTextEntry = YES;
+    rl_againPassWordField.font = [UIFont systemFontOfSize:18];
+    [rl_againPassWordField setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:rl_againPassWordField];
+    [rl_againPassWordField mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineThird.mas_bottom);
         make.left.equalTo(lineThird).offset(10);
         make.right.equalTo(lineThird).offset(-10);
         make.height.mas_equalTo(50/SCALE_Y);
         
     }];
-    
-    UIImageView *lineFour = [[UIImageView alloc] init];
-    lineFour.backgroundColor = COLORFromRGB(0xf9f9f9);
-    [self.view addSubview:lineFour];
-    [lineFour mas_makeConstraints:^(MASConstraintMaker *make) {
+
+
+    rl_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [rl_SubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
+    [rl_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
+    rl_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
+    rl_SubmitBtn.layer.masksToBounds = YES;
+    rl_SubmitBtn.layer.cornerRadius = 22/SCALE_Y;
+    rl_SubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
+    [rl_SubmitBtn addTarget:self action:@selector(rlSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:rl_SubmitBtn];
+    [rl_SubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineThird.mas_bottom).offset(50/SCALE_Y);
-        make.left.equalTo(self.view).offset(15);
-        make.right.equalTo(self.view).offset(-15);
-        make.height.mas_equalTo(1);
-        
-    }];
-    
-    zc_getCodeField = [[UITextField alloc] init];
-    zc_getCodeField.placeholder = @"请输入验证码";
-    zc_getCodeField.delegate = self;
-    zc_getCodeField.font = [UIFont systemFontOfSize:18];
-    [zc_getCodeField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:zc_getCodeField];
-    [zc_getCodeField mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFour.mas_bottom);
-        make.left.equalTo(lineFour).offset(10);
-        make.right.equalTo(lineFour).offset(-10);
-        make.height.mas_equalTo(50/SCALE_Y);
-        
-    }];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    button.backgroundColor = COLORFromRGB(0xe10000);
-    [button setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(zcGetCodeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    button.layer.masksToBounds = YES;
-    button.layer.cornerRadius  = 3;
-    button.titleLabel.font = [UIFont systemFontOfSize:18];
-    [button setTitle:@"获取验证码" forState:UIControlStateNormal];
-    [self.view addSubview:button];
-    [button mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(lineFour.mas_bottom);
-        make.right.equalTo(lineFour);
-        make.height.mas_equalTo(40/SCALE_Y);
-        make.width.mas_equalTo(140/SCALE_X);
-
-        
-        }];
-
-    zc_SubmitBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [zc_SubmitBtn setTitle:@"提交" forState:UIControlStateNormal];
-    [zc_SubmitBtn setTitleColor:COLORFromRGB(0xffffff) forState:UIControlStateNormal];
-    zc_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
-    zc_SubmitBtn.layer.masksToBounds = YES;
-    zc_SubmitBtn.layer.cornerRadius = 22/SCALE_Y;
-    zc_SubmitBtn.titleLabel.font = [UIFont systemFontOfSize:18];
-    [zc_SubmitBtn addTarget:self action:@selector(zcSubmitBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:zc_SubmitBtn];
-    [zc_SubmitBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lineFour.mas_bottom).offset(50/SCALE_Y);
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_equalTo(44/SCALE_Y);
@@ -212,37 +168,37 @@
 }
 //防止重复点击
 - (void)changeButtonStatus{
-    zc_SubmitBtn.enabled = YES;
+    rl_SubmitBtn.enabled = YES;
     
 }
 /**
  注册提交按钮
  */
--(void)zcSubmitBtnClick:(UIButton*)btn{
+-(void)rlSubmitBtnClick:(UIButton*)btn{
     
-    zc_SubmitBtn.enabled = NO;
+    rl_SubmitBtn.enabled = NO;
     //防止重复点击
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
     
     btn.backgroundColor = COLORFromRGB(0xe10000);
-    BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
+    BOOL isPhone = [shareDelegate isChinaMobile:rl_teleField.text];
     if (!isPhone) {
-        [self zcShowAlertFail:@"请输入正确的手机号码。"];
+        [self rlShowAlertFail:@"请输入正确的手机号码。"];
         return;
         
     }
-
-    BOOL isoK = [shareDelegate judgePassWordLegal:zc_setPassWordField.text];
+    
+    BOOL isoK = [shareDelegate judgePassWordLegal:rl_setPassWordField.text];
     if (!isoK) {
-        [self zcShowAlertFail:@"请设置6至18位数字、字母组合密码."];
+        [self rlShowAlertFail:@"请设置6至18位数字、字母组合密码."];
         return;
         
     }
-    if (![zc_setPassWordField.text isEqualToString:zc_againPassWordField.text]) {
-        [self zcShowAlertFail:@"两次密码输入不相同，请重新输入。"];
+    if (![rl_setPassWordField.text isEqualToString:rl_againPassWordField.text]) {
+        [self rlShowAlertFail:@"两次密码输入不相同，请重新输入。"];
         return;
         
-        }
+    }
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -250,40 +206,47 @@
         make.height.width.mas_equalTo(100);
     }];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
+    
+    NSString *oldSessID = [[shareDelegate shareNSUserDefaults] objectForKey:@"Third_Sess_Id"];
+    NSString *safeToken = [[shareDelegate shareNSUserDefaults] objectForKey:@"Third_Safe_token"];
 
-    NSString * temp_id = [[shareDelegate shareNSUserDefaults] stringForKey:@"register_sess_id"];
-    if (temp_id == NULL) {
-        [self zcShowAlertFail:@"请获取正确的验证码"];
+    
+    NSLog(@"oldSessID == %@",oldSessID);
+    NSLog(@"safeToken == %@",safeToken);
+
+    
+    if (oldSessID == NULL) {
+        [self rlShowAlertFail:@"请获取正确的验证码"];
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
         return;
     }
-    
-    
-    NSString * passWord_md5 = [MyMD5 md5:zc_againPassWordField.text];
-    NSDictionary *zcDic =@{@"phone":zc_teleField.text,
-                         @"password":passWord_md5,
-                         @"captcha":zc_getCodeField.text,
-                         @"invite":zc_inviteField.text,
-                         @"sess_id":temp_id
-                         
-                         };
+
+    NSString * passWord_md5 = [MyMD5 md5:rl_againPassWordField.text];
+    NSDictionary *rlDic =@{@"phone":rl_teleField.text,
+                           @"password":passWord_md5,
+                           @"invite":rl_inviteField.text,
+                           @"sess_id":oldSessID,
+                           @"safe_token":safeToken
+                           
+                           };
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:[shareDelegate stringBuilder:REGISTER_URL] parameters:zcDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:REGISTERTHIRDLOGIN_URL] parameters:rlDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-//    NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        //    NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
-            [self zcShowAlertSuccess:@"注册成功"];
+            [self rlShowAlertSuccess:@"注册成功"];
+            
             
         }else{
-            [self zcShowAlertFail:responseObject[@"info"]];
+            [self rlShowAlertFail:responseObject[@"info"]];
             
         }
         //移除菊花进度条
@@ -296,16 +259,16 @@
 /**
  获取验证码
  */
-- (void)zcGetCodeBtnClick:(UIButton*)btn{
+- (void)rlGetCodeBtnClick:(UIButton*)btn{
     
-    BOOL isPhone = [shareDelegate isChinaMobile:zc_teleField.text];
+    BOOL isPhone = [shareDelegate isChinaMobile:rl_teleField.text];
     if (!isPhone) {
-        [self zcShowAlertFail:@"请输入正确的手机号码。"];
+        [self rlShowAlertFail:@"请输入正确的手机号码。"];
         return;
         
     }
     [btn startCountDownTime:60 withCountDownBlock:^{
-        NSDictionary *dic = @{@"phone":zc_teleField.text};
+        NSDictionary *dic = @{@"phone":rl_teleField.text};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -314,8 +277,8 @@
         [manager POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-            zc_sess_id = [responseObject objectForKey:@"sess_id"];
-            [[shareDelegate shareNSUserDefaults] setObject:zc_sess_id forKey:@"register_sess_id"];
+            rl_sess_id = [responseObject objectForKey:@"sess_id"];
+            [[shareDelegate shareNSUserDefaults] setObject:rl_sess_id forKey:@"register_sess_id"];
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -337,25 +300,25 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;
     
-
-    zc_promptLabel = [[UILabel alloc] init];
-    zc_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加\“ a \”。";
-    zc_promptLabel.font = [UIFont systemFontOfSize:14];
-    //文字居中显示
-    zc_promptLabel.textAlignment = NSTextAlignmentCenter;
-    //自动折行设置
-    zc_promptLabel.lineBreakMode =NSLineBreakByWordWrapping;
-    [zc_promptLabel setNumberOfLines:0];
     
-    [zc_promptLabel setTextColor:COLORFromRGB(0xe10000)];
-    [self.view addSubview:zc_promptLabel];
-    [zc_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+    rl_promptLabel = [[UILabel alloc] init];
+    rl_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加\“ a \”。";
+    rl_promptLabel.font = [UIFont systemFontOfSize:14];
+    //文字居中显示
+    rl_promptLabel.textAlignment = NSTextAlignmentCenter;
+    //自动折行设置
+    rl_promptLabel.lineBreakMode =NSLineBreakByWordWrapping;
+    [rl_promptLabel setNumberOfLines:0];
+    
+    [rl_promptLabel setTextColor:COLORFromRGB(0xe10000)];
+    [self.view addSubview:rl_promptLabel];
+    [rl_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view).offset(64);
         make.left.right.equalTo(self.view).offset(40/SCALE_X);
         make.right.equalTo(self.view).offset(-40/SCALE_X);
         make.height.mas_offset(100/SCALE_Y);
     }];
-
+    
 }
 /**
  导航栏返回按钮
@@ -367,8 +330,8 @@
 /**
  警示 提示框
  */
-- (void)zcShowAlertFail:(NSString *)warning{
-
+- (void)rlShowAlertFail:(NSString *)warning{
+    
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
                                                             preferredStyle:UIAlertControllerStyleAlert];
@@ -376,9 +339,9 @@
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
                                                               //响应事件
-
+                                                              
                                                           }];
-
+    
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
@@ -386,7 +349,7 @@
 /**
  成功 提示框
  */
-- (void)zcShowAlertSuccess:(NSString *)warning{
+- (void)rlShowAlertSuccess:(NSString *)warning{
     
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
                                                                    message:warning
@@ -394,10 +357,13 @@
     
     UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
-                                                              //响应事件
-                    [self.navigationController popViewControllerAnimated:YES];
-                                                              
-                    }];
+       //组册成功返回登录页面
+       for (UIViewController *controller in self.navigationController.viewControllers) {
+                 if ([controller isKindOfClass:[LoginMain class]]) {
+                         [self.navigationController popToViewController:controller animated:YES];
+                }
+        }
+     }];
     
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
@@ -412,10 +378,10 @@
     frame.origin.y -= 50;
     self.view.frame=frame;
     
-        if ( (zc_selectField.frame.origin.y + keyboardHeight + 100) >= ([[UIScreen mainScreen] bounds].size.height)){
-            frame.origin.y -= 50;
-            self.view.frame=frame;
-        }
+    if ( (rl_selectField.frame.origin.y + keyboardHeight + 100) >= ([[UIScreen mainScreen] bounds].size.height)){
+        frame.origin.y -= 50;
+        self.view.frame=frame;
+    }
     
 }
 
@@ -435,8 +401,7 @@
  
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
-    zc_selectField = textField;
-
+    rl_selectField = textField;
     
 }
 /**
@@ -453,15 +418,17 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
-    NSString *one = zc_teleField.text;
-    NSString *two = zc_setPassWordField.text;
-    NSString *three = zc_againPassWordField.text;
-    NSString *four = zc_getCodeField.text;
-    if (![one isEqualToString:@""]&&![two isEqualToString:@""]&&![three isEqualToString:@""]&&![four isEqualToString:@""]) {
-        zc_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
+    NSString *one = rl_teleField.text;
+    NSString *two = rl_setPassWordField.text;
+    NSString *three = rl_againPassWordField.text;
+    if (![one isEqualToString:@""]&&![two isEqualToString:@""]&&![three isEqualToString:@""]) {
+        rl_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
         
+    }else{
+        
+        rl_SubmitBtn.backgroundColor = COLORFromRGB(0xf9cccc);
     };
-
+    
 }
 /**
  当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )
@@ -469,7 +436,6 @@
  */
 - (BOOL)textField:( UITextField  *)textField shouldChangeCharactersInRange:(NSRange )range replacementString:( NSString  *)string{
     NSString *tem = [[string componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]componentsJoinedByString:@""];
-    
     //非空格判断
     if (![string isEqualToString:tem]) {
         
@@ -499,9 +465,9 @@
  */
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-      [textField resignFirstResponder];
-
-
+    [textField resignFirstResponder];
+    
+    
     return YES;
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{

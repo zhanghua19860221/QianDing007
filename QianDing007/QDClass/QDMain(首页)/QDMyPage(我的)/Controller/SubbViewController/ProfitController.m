@@ -63,7 +63,7 @@
     
         NSString * urlStr = [NSString stringWithFormat:PROFIT_URL,(long)1];
     
-    [manager POST:urlStr parameters:pcDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:pcDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         

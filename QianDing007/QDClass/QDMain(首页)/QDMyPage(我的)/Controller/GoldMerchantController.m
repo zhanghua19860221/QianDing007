@@ -46,7 +46,7 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)1];
 
-    [manager POST:urlStr parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -170,7 +170,7 @@
     
     NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)self.page++];
 
-    [manager POST:urlStr parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

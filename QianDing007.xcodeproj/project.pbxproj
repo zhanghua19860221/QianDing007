@@ -114,6 +114,7 @@
 		14FAFB4A1FFF501700A81D9C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FAFB491FFF501700A81D9C /* AssetsLibrary.framework */; };
 		14FAFB4C1FFF502900A81D9C /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14FAFB4B1FFF502900A81D9C /* MobileCoreServices.framework */; };
 		14FAFB4F1FFF513300A81D9C /* ZHScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FAFB4E1FFF513300A81D9C /* ZHScanViewController.m */; };
+		14FF5A9D2045537200328909 /* RegisterLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FF5A9C2045537200328909 /* RegisterLoginController.m */; };
 		F05BE45C5E375CE5D2CF6283 /* libPods-QianDing007.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */; };
 /* End PBXBuildFile section */
 
@@ -336,6 +337,8 @@
 		14FEFBA01FEF8A180050E524 /* UserListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListCell.m; sourceTree = "<group>"; };
 		14FEFBB41FEFA87E0050E524 /* ManageMoneyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageMoneyController.h; sourceTree = "<group>"; };
 		14FEFBB51FEFA87E0050E524 /* ManageMoneyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageMoneyController.m; sourceTree = "<group>"; };
+		14FF5A9B2045537200328909 /* RegisterLoginController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RegisterLoginController.h; path = "QianDing007/QDClass/QDQuickLogin(三方登录) /RegisterLoginController.h"; sourceTree = "<group>"; };
+		14FF5A9C2045537200328909 /* RegisterLoginController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RegisterLoginController.m; path = "QianDing007/QDClass/QDQuickLogin(三方登录) /RegisterLoginController.m"; sourceTree = "<group>"; };
 		5BBBFBDE65AFC5AE26C8F2BB /* Pods-QianDing007.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.debug.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.debug.xcconfig"; sourceTree = "<group>"; };
 		697391937D9A45F48C0C43E3 /* libPods-QianDing007.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-QianDing007.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B81C44ABD2E0C75D48E7F0E1 /* Pods-QianDing007.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QianDing007.release.xcconfig"; path = "Pods/Target Support Files/Pods-QianDing007/Pods-QianDing007.release.xcconfig"; sourceTree = "<group>"; };
@@ -765,6 +768,8 @@
 			children = (
 				149192FB2041400E004408D4 /* ThirdLoginController.h */,
 				149192FC2041400E004408D4 /* ThirdLoginController.m */,
+				14FF5A9B2045537200328909 /* RegisterLoginController.h */,
+				14FF5A9C2045537200328909 /* RegisterLoginController.m */,
 			);
 			name = "QDQuickLogin(三方登录) ";
 			sourceTree = "<group>";
@@ -1287,6 +1292,7 @@
 				14FAFB4F1FFF513300A81D9C /* ZHScanViewController.m in Sources */,
 				14FAFB481FFF176600A81D9C /* SweepMeController.m in Sources */,
 				149536A11FF256BB00C85C05 /* UserListController.m in Sources */,
+				14FF5A9D2045537200328909 /* RegisterLoginController.m in Sources */,
 				149536A21FF256BB00C85C05 /* ManageMoneyController.m in Sources */,
 				149536A31FF256BB00C85C05 /* ProfitController.m in Sources */,
 				149536BD1FF26C4200C85C05 /* PersonalController.m in Sources */,

@@ -49,7 +49,7 @@
     NSLog(@"urlStr one == %@", urlStr);
 
     
-    [manager POST:urlStr parameters:prDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:prDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -234,7 +234,7 @@
     
     NSLog(@"urlStr == %@", urlStr);
     
-    [manager POST:urlStr parameters:prDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:prDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

@@ -34,6 +34,7 @@
     
     //注册消息通知-把数据保存到数据库
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFMDBData:) name:@"saveFMDBData" object:nil];
+    
 }
 
 - (void)viewDidLoad{

@@ -143,7 +143,7 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        [manager POST:SMS_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        [manager POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -210,7 +210,7 @@
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
         manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        [manager POST:CHANGE_PHONE_URL parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        [manager POST:[shareDelegate stringBuilder:CHANGE_PHONE_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
