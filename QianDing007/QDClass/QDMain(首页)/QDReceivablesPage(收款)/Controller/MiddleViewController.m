@@ -197,9 +197,7 @@
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;
         }
-        NSLog(@"%@",responseObject);
-        NSLog(@"self.page == %ld",self.page);
-        
+
         NSString *has_list = responseObject[@"has_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]){

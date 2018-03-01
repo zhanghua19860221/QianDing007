@@ -67,7 +67,6 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-          NSLog(@"%@",[shareDelegate logDic:responseObject]);
             if ([responseObject[@"status"]  isEqualToString:@"1"]) {
 
                 [self fillDataToSubView:responseObject[@"partner_info"]];
@@ -442,7 +441,6 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-       NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"]  isEqualToString:@"1"]) {
             
             NSString *is_agency  = responseObject[@"is_agency"];

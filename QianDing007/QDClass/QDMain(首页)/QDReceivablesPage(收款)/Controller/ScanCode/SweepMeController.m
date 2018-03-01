@@ -39,10 +39,7 @@
     sm_url = imageUrl;
     
     NSString *tempUrlStr = [imageUrl stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-    
-    NSLog(@"tempUrlStr = %@",tempUrlStr);
 
-    
     [sm_codeView sd_setImageWithURL:[NSURL URLWithString:tempUrlStr] placeholderImage:[UIImage imageNamed:@"二维码占位图"]];
 }
 /**
@@ -297,7 +294,7 @@
         PHAssetChangeRequest *req = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
         
     } completionHandler:^(BOOL success, NSError * _Nullable error) {
-        NSLog(@"success = %d, error = %@", success, error);
+
         if (success == 1) {
             [self smShowAlert:@"二维码保存成功"];
         }else{

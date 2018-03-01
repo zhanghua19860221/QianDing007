@@ -81,7 +81,6 @@
             [self mlGetUrlDataToSubview:lv_TopDic[@"my_level_info"]];
             NSArray *dicArray  =  lv_TopDic[@"promote_level_list"] ;
             int ID = [lv_TopDic[@"my_level_info"][@"id"] intValue];
-            NSLog(@"ID == %d",ID);
             if (ID>=4) {
                 
                 UIImageView *imageView = [[UIImageView alloc] init];

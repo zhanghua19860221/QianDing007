@@ -65,7 +65,6 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
-    NSLog(@"当前输入框结束编辑时触发");
 }
 /**
  当输入框文字发生变化时触发 ( 只有通过键盘输入时 , 文字改变 , 触发 )

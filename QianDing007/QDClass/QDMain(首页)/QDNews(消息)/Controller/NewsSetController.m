@@ -53,7 +53,6 @@
     }];
     UISwitch *switchView = [[UISwitch alloc] init];
     BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
-    NSLog(@"is_OpenSoundTwo == %d",is_OpenSound);
 
     if (is_OpenSound) {
         switchView.on = YES;//默认打开
@@ -147,14 +146,12 @@
         NSLog(@"打开开关");
         [[shareDelegate shareNSUserDefaults] setBool:YES forKey:@"is_OpenSound"];
         BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
-        NSLog(@"is_OpenSoundThire == %d",is_OpenSound);
         
     }else {
         //关闭开关
         NSLog(@"关闭开关");
         [[shareDelegate shareNSUserDefaults] setBool:NO forKey:@"is_OpenSound"];
         BOOL is_OpenSound =  [[shareDelegate shareNSUserDefaults] boolForKey:@"is_OpenSound"];
-        NSLog(@"is_OpenSoundfour == %d",is_OpenSound);
 
     }
     

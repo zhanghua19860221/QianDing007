@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface RegisterLoginController : UIViewController<UITextFieldDelegate>
-
 @property (strong ,nonatomic)NSString *teleNum; //手机号码
 
 @end

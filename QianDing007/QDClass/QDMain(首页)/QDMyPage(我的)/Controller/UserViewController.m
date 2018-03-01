@@ -354,7 +354,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     
     NSString *type = [[shareDelegate shareNSUserDefaults] objectForKey:@"account_type"];
-    NSLog(@"type == %@",type);
+//    NSLog(@"type == %@",type);
 
     //未认证情况下可以点击出现效果
     if ([type isEqualToString:@"3"]){

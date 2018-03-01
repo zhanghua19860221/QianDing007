@@ -202,11 +202,6 @@
     NSString *oldSessID = [[shareDelegate shareNSUserDefaults] objectForKey:@"Third_Sess_Id"];
     NSString *safeToken = [[shareDelegate shareNSUserDefaults] objectForKey:@"Third_Safe_token"];
 
-    
-    NSLog(@"oldSessID == %@",oldSessID);
-    NSLog(@"safeToken == %@",safeToken);
-
-    
     if (oldSessID == NULL) {
         [self rlShowAlertFail:@"请获取正确的验证码"];
         //移除菊花进度条
@@ -231,8 +226,7 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //  NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
+
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self rlShowAlertSuccess:@"注册成功"];
             

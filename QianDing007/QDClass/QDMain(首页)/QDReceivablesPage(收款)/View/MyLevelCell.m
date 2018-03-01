@@ -575,7 +575,6 @@
             
             [[AlipaySDK defaultService] payOrder:signedString fromScheme:appScheme callback:^(NSDictionary *resultDic) {
                 
-                NSLog(@"reslut = %@",resultDic);
             }];
             _maskView.hidden = YES;
             [[shareDelegate shareZHProgress] removeFromSuperview];

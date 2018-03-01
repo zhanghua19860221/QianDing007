@@ -462,7 +462,6 @@
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
-      NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //上传成功后禁止scrollview滚动
         [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"account_type"] forKey:@"account_type"];
@@ -509,7 +508,6 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
 
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             if ([responseObject[@"account_type"] isEqualToString:@"2"]) {
                 [self fillDataToSubView:responseObject];

@@ -827,7 +827,7 @@
 // 当得到照片或者视频后，调用该方法
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
-    NSLog(@"%@---", info);
+    
     NSString *mediaType = [info objectForKey:UIImagePickerControllerMediaType];
     picker.allowsEditing = YES;
     // 判断获取类型：图片
@@ -878,7 +878,6 @@
         //打印下上传进度
     } success:^(NSURLSessionDataTask *_Nonnull task,id _Nullable responseObject) {
         //上传成功
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         [self mpShowAlert:responseObject[@"info"]];
 
     } failure:^(NSURLSessionDataTask *_Nullable task, NSError *_Nonnull error) {

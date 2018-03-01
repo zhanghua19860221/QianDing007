@@ -227,11 +227,11 @@
 //    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
 //           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
          if (state == SSDKResponseStateSuccess){
-             NSLog(@"credential=%@",user.credential);
-             NSLog(@"tokenQQ=%@",user.credential.token);
-             NSLog(@"uid=%@",user.credential.uid);
-             NSLog(@"nicknameQQ=%@",user.nickname);
-             NSLog(@"headimageUrl=%@",user.icon);
+//             NSLog(@"credential=%@",user.credential);
+//             NSLog(@"tokenQQ=%@",user.credential.token);
+//             NSLog(@"uid=%@",user.credential.uid);
+//             NSLog(@"nicknameQQ=%@",user.nickname);
+//             NSLog(@"headimageUrl=%@",user.icon);
              
              NSDictionary *tlDic =@{@"open_id":user.credential.uid,
                                     @"open_type":@"qq",
@@ -239,7 +239,6 @@
                                     @"open_name":user.nickname,
                                     @"open_icon":user.icon
                                     };
-             NSLog(@"tlDic == %@",tlDic);
              
              //创建请求菊花进度条
              [self.view addSubview:[shareDelegate shareZHProgress]];
@@ -259,8 +258,6 @@
                  
              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                  
-                 NSLog(@"%@",responseObject);
-
                  if ([responseObject[@"status"] isEqualToString:@"1"]) {
                      NSString *thirdSessID = responseObject[@"sess_id"];
                      [[shareDelegate shareNSUserDefaults] setObject:thirdSessID forKey:@"Third_Sess_Id"];
@@ -339,10 +336,10 @@
 //    [ShareSDK getUserInfo:SSDKPlatformTypeWechat
 //           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error){
                if (state == SSDKResponseStateSuccess){
-                   NSLog(@"tokenwechat=%@",user.credential.token);
-                   NSLog(@"uid=%@",user.credential.uid);
-                   NSLog(@"nicknamewechat=%@",user.nickname);
-                   NSLog(@"headimageUrl=%@",user.icon);
+//                   NSLog(@"tokenwechat=%@",user.credential.token);
+//                   NSLog(@"uid=%@",user.credential.uid);
+//                   NSLog(@"nicknamewechat=%@",user.nickname);
+//                   NSLog(@"headimageUrl=%@",user.icon);
                    
                    NSDictionary *tlDic =@{@"open_id":user.credential.uid,
                                           @"open_type":@"wechat",
@@ -350,7 +347,6 @@
                                           @"open_name":user.nickname,
                                           @"open_icon":user.icon
                                           };
-                   NSLog(@"tlDic == %@",tlDic);
                    
                    //创建请求菊花进度条
                    [self.view addSubview:[shareDelegate shareZHProgress]];
@@ -369,8 +365,6 @@
                        
                        
                    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-                       
-                       NSLog(@"%@",responseObject);
                        
                        if ([responseObject[@"status"] isEqualToString:@"1"]) {
                            NSString *thirdSessID = responseObject[@"sess_id"];
@@ -508,10 +502,7 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
 
-        
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //判断商户是否认证
             NSString *is_checked  = responseObject[@"checked"];

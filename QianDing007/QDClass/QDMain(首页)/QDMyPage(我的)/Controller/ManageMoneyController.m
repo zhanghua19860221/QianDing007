@@ -66,8 +66,7 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
+
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             labelMoney.text =[NSString stringWithFormat:@"账户可提现金额%@元",responseObject[@"money"]];
             tempMoney = [responseObject[@"money"] floatValue];

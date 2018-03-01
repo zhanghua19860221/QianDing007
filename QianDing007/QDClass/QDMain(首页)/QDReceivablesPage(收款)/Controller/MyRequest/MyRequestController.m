@@ -79,8 +79,6 @@
             [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
            return ;
         }
-        NSLog(@"responseObject == %@",responseObject);
-        
         [mr_Dic addEntriesFromDictionary:responseObject];
         NSString *requestStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_count"]];
         NSString *codeStr = [NSString stringWithFormat:@"%@",responseObject[@"invite_code"]];
@@ -191,9 +189,6 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
     NSString * urlStr = [NSString stringWithFormat:INVITATION_URL,(long)self.page++];
-    
-    NSLog(@"urlStr == %@",urlStr);
-
 
     [manager POST:[shareDelegate stringBuilder:urlStr] parameters:mrDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
@@ -204,7 +199,6 @@
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;
         }
-        NSLog(@"%@",responseObject);
 
         NSArray *array = responseObject[@"invite_supplier_list"];
         NSString *requestList = [NSString stringWithFormat:@"%@",responseObject[@"has_supplier_list"]];
@@ -649,7 +643,7 @@
                otherPlatformTypes:nil
                       shareParams:shareParams
               onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
-                  NSLog(@"(unsigned long)state==%lu",(unsigned long)state);
+                  
              switch (state) {
                  case SSDKResponseStateSuccess:{
                      [self shareStataView:@"分享成功"];
@@ -783,7 +777,6 @@
                            @"type":@"supplier"
 
                            };
-    NSLog(@"mrDic == %@",mrDic);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];

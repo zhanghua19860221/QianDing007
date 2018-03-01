@@ -329,8 +329,7 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        if ([responseObject[@"status"] isEqualToString:@"1"]) {
+            if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //判断认证类型
             if ([responseObject[@"account_type"] isEqualToString:@"1"]) {
                 [self fillDataToSubView:responseObject];

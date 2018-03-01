@@ -46,15 +46,12 @@
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
     NSString * urlStr = [NSString stringWithFormat:GETRECORDINFO_URL,(long)1];
-    NSLog(@"urlStr one == %@", urlStr);
 
-    
     [manager POST:[shareDelegate stringBuilder:urlStr] parameters:prDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
+
         NSString *have_list = responseObject[@"have_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {
@@ -232,8 +229,6 @@
     
     NSString * urlStr = [NSString stringWithFormat:GETRECORDINFO_URL,(long)self.page++];
     
-    NSLog(@"urlStr == %@", urlStr);
-    
     [manager POST:[shareDelegate stringBuilder:urlStr] parameters:prDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
@@ -243,7 +238,6 @@
             self.dataArray = nil;
         }
         
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *have_list = responseObject[@"have_list"];
         NSString *status = responseObject[@"status"];
         if ([status isEqualToString:@"1"]) {

@@ -197,10 +197,6 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
-        
-        
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             //判断商户是否认证
             NSString *is_checked  = responseObject[@"checked"];
@@ -295,9 +291,7 @@
     }
     
     NSString *oldSessID = [[shareDelegate shareNSUserDefaults] objectForKey:@"Third_Sess_Id"];
-    
-    NSLog(@"oldSessID == %@",oldSessID);
-    
+
     [btn startCountDownTime:60 withCountDownBlock:^{
         NSDictionary *dic = @{@"phone":tl_teleField.text,
                               @"sess_id":oldSessID
@@ -311,7 +305,6 @@
         [manager POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
-            NSLog(@"%@",responseObject);
             [self tlShowAlertFail:responseObject[@"info"]];
             
         } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {

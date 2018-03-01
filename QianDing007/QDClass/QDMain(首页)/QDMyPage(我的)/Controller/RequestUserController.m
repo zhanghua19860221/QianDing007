@@ -340,10 +340,7 @@
            otherPlatformTypes:nil
                   shareParams:shareParams
           onShareStateChanged:^(SSDKResponseState state, SSDKPlatformType platformType, NSDictionary *userData, SSDKContentEntity *contentEntity, NSError *error, BOOL end){
-              
-              NSLog(@"state == %lu",(unsigned long)state);
-              
-              
+
               switch (state) {
                       
                   case SSDKResponseStateSuccess:{
@@ -492,7 +489,6 @@
                            @"type":@"agency"
                            
                            };
-    NSLog(@"mrDic == %@",mrDic);
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     manager.requestSerializer = [AFHTTPRequestSerializer serializer];
     manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -502,7 +498,7 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self rqShowAlert:@"短信已发送"];
         }else if ([responseObject[@"status"] isEqualToString:@"-2"]){

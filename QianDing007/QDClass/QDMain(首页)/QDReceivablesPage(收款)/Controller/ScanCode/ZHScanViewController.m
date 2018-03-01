@@ -163,7 +163,6 @@
         
         AVMetadataMachineReadableCodeObject * metadataObject = [metadataObjects objectAtIndex:0];
         NSString *stringValue = [NSString stringWithFormat:@"%@",metadataObject.stringValue];
-        NSLog(@"stringValue = %@",stringValue);
         
         if([shareDelegate deptNumInputShouldNumber:stringValue]){
             [self backController:@"无法识别的二维码。"];
@@ -250,7 +249,6 @@
     [manager POST:[shareDelegate stringBuilder:SCANME_URL] parameters:Dic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             SuccessScanController *successVc = [[SuccessScanController alloc] init];

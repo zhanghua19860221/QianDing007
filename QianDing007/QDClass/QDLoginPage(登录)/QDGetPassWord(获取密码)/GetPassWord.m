@@ -270,7 +270,6 @@
     }];
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
-    NSLog(@"%@",temp_id);
     NSString * rsPassWord_md5 = [MyMD5 md5:rs_againPassWordField.text];
     NSDictionary *rsDic =@{@"phone":rs_teleField.text,
                            @"password":rsPassWord_md5,

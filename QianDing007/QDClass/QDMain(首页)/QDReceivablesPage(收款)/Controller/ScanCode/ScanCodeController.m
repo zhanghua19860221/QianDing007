@@ -295,7 +295,6 @@
                 sc_recordMoney=[sc_moneyField.text stringByAppendingString:btn.currentTitle];
             }
             NSArray * array=[sc_recordMoney componentsSeparatedByString:tempPoint];
-            NSLog(@"count == %ld",array.count);
 
             NSInteger count=[array count]-1;
 

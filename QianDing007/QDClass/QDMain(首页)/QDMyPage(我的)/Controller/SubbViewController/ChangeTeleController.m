@@ -148,8 +148,6 @@
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
-            NSLog(@"%@",[shareDelegate logDic:responseObject]);
-            
            //本地保存用户 sess_id 数据
             NSString *sess_id = [responseObject objectForKey:@"sess_id"];
             [[shareDelegate shareNSUserDefaults] setObject:sess_id forKey:@"change_sess_id"];
@@ -214,9 +212,7 @@
             
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-            
-            NSLog(@"%@",[shareDelegate logDic:responseObject]);
-            
+
             if ([responseObject[@"status"] isEqualToString:@"1"]) {
                 //本地保存用户 sess_id 数据
                 NSString *tokenSMS = [responseObject objectForKey:@"token"];
