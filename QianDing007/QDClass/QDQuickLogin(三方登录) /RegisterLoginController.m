@@ -12,7 +12,7 @@
     UITextField *rl_selectField;       //记录当前编辑的输入框
     NSString    *rl_sess_id;           //请求验证码时获取
     UITextField *rl_inviteField;       //邀请码
-    UITextField *rl_teleField;         //电话号码
+    UILabel     *rl_teleLabel;         //电话号码
     UITextField *rl_setPassWordField;  //设置密码
     UITextField *rl_againPassWordField;//确认密码
     UILabel     *rl_promptLabel;       //提示文本
@@ -81,14 +81,12 @@
         
     }];
     
-    rl_teleField = [[UITextField alloc] init];
-    rl_teleField.placeholder = @"请输入手机号";
-    rl_teleField.delegate = self;
-    [rl_teleField setAutocapitalizationType:UITextAutocapitalizationTypeNone];
-    rl_teleField.font = [UIFont systemFontOfSize:18];
-    [rl_teleField setTextColor:COLORFromRGB(0x333333)];
-    [self.view addSubview:rl_teleField];
-    [rl_teleField mas_makeConstraints:^(MASConstraintMaker *make) {
+    rl_teleLabel = [[UILabel alloc] init];
+    rl_teleLabel.text = self.teleNum;
+    rl_teleLabel.font = [UIFont systemFontOfSize:18];
+    [rl_teleLabel setTextColor:COLORFromRGB(0x333333)];
+    [self.view addSubview:rl_teleLabel];
+    [rl_teleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.bottom.equalTo(lineOne.mas_bottom);
         make.left.equalTo(lineOne).offset(10);
         make.right.equalTo(lineOne).offset(-10);
@@ -181,13 +179,7 @@
     [self performSelector:@selector(changeButtonStatus)withObject:nil afterDelay:2.0f];
     
     btn.backgroundColor = COLORFromRGB(0xe10000);
-    BOOL isPhone = [shareDelegate isChinaMobile:rl_teleField.text];
-    if (!isPhone) {
-        [self rlShowAlertFail:@"请输入正确的手机号码。"];
-        return;
-        
-    }
-    
+
     BOOL isoK = [shareDelegate judgePassWordLegal:rl_setPassWordField.text];
     if (!isoK) {
         [self rlShowAlertFail:@"请设置6至18位数字、字母组合密码."];
@@ -223,7 +215,7 @@
     }
 
     NSString * passWord_md5 = [MyMD5 md5:rl_againPassWordField.text];
-    NSDictionary *rlDic =@{@"phone":rl_teleField.text,
+    NSDictionary *rlDic =@{@"phone":rl_teleLabel.text,
                            @"password":passWord_md5,
                            @"invite":rl_inviteField.text,
                            @"sess_id":oldSessID,
@@ -239,11 +231,10 @@
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
-        //    NSLog(@"%@",[shareDelegate logDic:responseObject]);
+        //  NSLog(@"%@",[shareDelegate logDic:responseObject]);
         
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self rlShowAlertSuccess:@"注册成功"];
-            
             
         }else{
             [self rlShowAlertFail:responseObject[@"info"]];
@@ -260,15 +251,9 @@
  获取验证码
  */
 - (void)rlGetCodeBtnClick:(UIButton*)btn{
-    
-    BOOL isPhone = [shareDelegate isChinaMobile:rl_teleField.text];
-    if (!isPhone) {
-        [self rlShowAlertFail:@"请输入正确的手机号码。"];
-        return;
-        
-    }
+
     [btn startCountDownTime:60 withCountDownBlock:^{
-        NSDictionary *dic = @{@"phone":rl_teleField.text};
+        NSDictionary *dic = @{@"phone":rl_teleLabel.text};
         AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
         manager.requestSerializer = [AFHTTPRequestSerializer serializer];
         manager.responseSerializer = [AFJSONResponseSerializer serializer];
@@ -418,10 +403,9 @@
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
     
-    NSString *one = rl_teleField.text;
     NSString *two = rl_setPassWordField.text;
     NSString *three = rl_againPassWordField.text;
-    if (![one isEqualToString:@""]&&![two isEqualToString:@""]&&![three isEqualToString:@""]) {
+    if (![two isEqualToString:@""]&&![three isEqualToString:@""]) {
         rl_SubmitBtn.backgroundColor = COLORFromRGB(0xe10000);
         
     }else{

@@ -7,6 +7,7 @@
 //
 
 #import "shareDelegate.h"
+#import "LoginMain.h"
 @implementation shareDelegate
 
 /**
@@ -693,5 +694,29 @@
     [str appendString:url];
     
     return str;
+}
+
+/**
+ 返回登录页弹出框
+ 
+ */
++ (void)returnLoginController:(NSString *)info  UINavigationController:(UINavigationController *)nav UIViewController:(UIViewController *)vc{
+  
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+                                                                   message:info
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault
+          handler:^(UIAlertAction * action) {
+              
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
+              
+            LoginMain *loginVC = [[LoginMain alloc] init];
+            [nav pushViewController:loginVC animated:YES];
+         }];
+    
+    [alert addAction:defaultAction];
+    [vc presentViewController:alert animated:YES completion:nil];
+
 }
 @end

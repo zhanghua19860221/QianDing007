@@ -71,6 +71,10 @@
             [self mdCreateSecondView];
             //商户名称
             labelName.text = [NSString stringWithFormat:@"%@",responseObject[@"name"]];
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
         }else{
         
             [self mdShowAlert:responseObject[@"info"]];

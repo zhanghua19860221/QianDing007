@@ -505,6 +505,10 @@
         NSLog(@"%@",[shareDelegate logDic:responseObject]);
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self rqShowAlert:@"短信已发送"];
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
         }else{
             
             [self rqShowAlert:responseObject[@"info"]];

@@ -58,6 +58,12 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
+        }
+        
 //        NSLog(@"%@",[shareDelegate logDic:responseObject]);
         NSString *has_list = responseObject[@"has_list"];
         NSString *status = responseObject[@"status"];

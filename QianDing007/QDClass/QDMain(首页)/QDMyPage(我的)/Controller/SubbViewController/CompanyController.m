@@ -470,6 +470,10 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"changeScrollEnabled" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
             [self cpShowAlert:@"资料上传成功"];
 
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
         }else{
             [self cpShowAlert:responseObject[@"info"]];
         }

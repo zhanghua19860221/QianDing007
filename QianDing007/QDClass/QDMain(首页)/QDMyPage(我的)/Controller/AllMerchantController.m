@@ -163,6 +163,12 @@
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
+        if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
+        }
+        
         [self endRefresh];
         if (2 == self.page) { // 说明是在重新请求数据.
             self.dataArray = nil;

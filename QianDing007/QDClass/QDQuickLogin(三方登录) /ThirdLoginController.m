@@ -246,6 +246,7 @@
             [[shareDelegate shareNSUserDefaults] setObject:thirdSessID forKey:@"Third_Safe_token"];
             
             RegisterLoginController *registerLogin = [[RegisterLoginController alloc] init];
+            registerLogin.teleNum = tl_teleField.text;
             [self.navigationController pushViewController:registerLogin animated:YES];
             
         }else{

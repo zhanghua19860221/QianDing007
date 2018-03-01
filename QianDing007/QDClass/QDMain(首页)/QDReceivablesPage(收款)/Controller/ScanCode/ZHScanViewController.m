@@ -260,6 +260,10 @@
             successVc.order_status = responseObject[@"status"];
             [self.navigationController pushViewController:successVc animated:YES];
             
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
         }else{
             [self alertControllerMessage:responseObject[@"info"]];
 

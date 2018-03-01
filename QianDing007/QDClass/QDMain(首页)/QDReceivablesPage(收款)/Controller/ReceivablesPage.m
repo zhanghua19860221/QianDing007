@@ -96,8 +96,13 @@
         if ([responseObject[@"status"] isEqualToString:@"1"]) {
             [self addDataToSubview];
             
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
         }else{
             [self rvShowAlert:responseObject[@"info"]];
+            
         }
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
@@ -296,7 +301,7 @@
  */
 - (void)upGradeBtnClick{
 
-        NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
     
     if ([is_checked isEqualToString:@"1"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
@@ -451,7 +456,7 @@
 }
 -(void)showMoreBtn{
 
-        NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
+    NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
     if ([is_checked isEqualToString:@"1"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
         MoreOrderController *orderVc = [[MoreOrderController alloc] init];

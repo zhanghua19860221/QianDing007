@@ -94,6 +94,10 @@
 
                 }];
                 
+            }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+                
+                [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+                
             }else{
             
                 [self addDataToTabelAarry:dicArray];

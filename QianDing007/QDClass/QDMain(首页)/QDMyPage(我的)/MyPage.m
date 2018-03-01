@@ -119,6 +119,10 @@
 - (void)upDataTableView{
     NSString *is_checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
     
+    if (is_checked == nil) {
+        
+        return;
+    }
     NSArray *imageFirstArray = @[@"商户认证",@"我的代理"];
     NSArray *stateFirstArray = @[is_checked,@"空"];
     NSArray *imageSecondArray = @[@"安全设置",@"关于我们",@"联系我们",@"检查更新"];
@@ -183,6 +187,10 @@
         if ([responseObject[@"status"]  isEqualToString:@"1"]) {
             
             [[shareDelegate shareNSUserDefaults] setObject:responseObject[@"is_agency"] forKey:@"is_agency"];
+            
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
             
         }else{
             

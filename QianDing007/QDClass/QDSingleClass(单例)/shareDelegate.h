@@ -144,4 +144,10 @@
  
  */
 + (NSMutableString *)stringBuilder:(NSString *)url;
+
+/**
+ 返回登录页弹出框
+ 
+ */
++ (void)returnLoginController:(NSString *)info  UINavigationController:(UINavigationController *)nav UIViewController:(UIViewController *)vc;
 @end

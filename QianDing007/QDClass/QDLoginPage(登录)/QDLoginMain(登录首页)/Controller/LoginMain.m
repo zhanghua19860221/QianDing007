@@ -585,6 +585,8 @@
 /**
  创建找回密码按钮
  */
+
+
 - (void)lgCreateGetPassWordBtn{
     lg_getPassWordBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [lg_getPassWordBtn setTitle:@"找回密码？" forState:UIControlStateNormal];

@@ -71,6 +71,10 @@
         if ([responseObject[@"status"]  isEqualToString:@"1"]) {
             pc_nowLabel.text = responseObject[@"now_distribute"];
             pc_totalLabel.text = responseObject[@"total_distribute"];
+        }else if ([responseObject[@"status"] isEqualToString:@"-2"]){
+            
+            [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
+            
         }else{
         
             [self pcShowAlert:responseObject[@"info"]];
