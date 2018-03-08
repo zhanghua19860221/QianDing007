@@ -39,10 +39,12 @@
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshMyLevel:) name:@"refreshMyLevel" object:nil];
     
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
 }
 - (void)refreshMyLevel:(NSNotification *)noti{
     [self getDataSource];
-
 
 }
 - (void)getDataSource{
@@ -325,8 +327,14 @@
     return headerView;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+
+    return 0;
+}
+-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)sectionj{
+    UIView *footerView = [[UIView alloc] init];
+    footerView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    return footerView;
     
-    return CGFLOAT_MIN;
 }
 /**
  警示 弹出框
@@ -357,6 +365,8 @@
     [[shareDelegate shareZHProgress] removeFromSuperview];
     //移除通知
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"refreshMyLevel"  object:nil];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
 }
 /*

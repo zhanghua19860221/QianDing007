@@ -44,7 +44,13 @@
     tabbarView .backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:tabbarView];
     [tabbarView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(64);
+        if (SC_HEIGHT == 812) {
+            make.top.mas_equalTo(84);
+
+        }else{
+            make.top.mas_equalTo(64);
+
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(50);
         
@@ -195,6 +201,8 @@
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xe10000);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
 /**
@@ -202,13 +210,8 @@
  */
 - (void)createNavgation{
     self.navigationItem.title = @"商户列表";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标白色",12,20)
+
 }
 /**
  导航栏返回按钮
@@ -232,6 +235,12 @@
         imageLine.frame = CGRectMake(x*SC_WIDTH/5.0,48,SC_WIDTH/5.0, 2);
     }];
     
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

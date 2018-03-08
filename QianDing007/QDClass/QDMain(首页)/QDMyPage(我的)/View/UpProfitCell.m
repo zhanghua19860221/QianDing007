@@ -102,7 +102,7 @@
     [_payStrOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_payStr.mas_centerY);
         make.left.equalTo(_payStr.mas_right);
-        make.width.mas_equalTo(_oldLevelLabelOne.mas_width);
+        make.width.mas_equalTo(120);
         make.height.mas_equalTo(16);
         
     }];
@@ -123,7 +123,7 @@
     
     _upStrLabelOne= [[UILabel alloc] init];
     _upStrLabelOne.font = [UIFont systemFontOfSize:16];
-    _upStrLabelOne.textAlignment = NSTextAlignmentCenter;
+    _upStrLabelOne.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:_upStrLabelOne];
     [_upStrLabelOne mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(_upStrLabel.mas_centerY);
@@ -153,6 +153,16 @@
         make.left.mas_equalTo(_profitLabel.mas_right);
         make.width.mas_equalTo(_upStrLabelOne.mas_width);
         make.height.mas_equalTo(16);
+        
+    }];
+    UIImageView *lineView = [[UIImageView alloc] init];
+    lineView.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.contentView addSubview:lineView];
+    [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.contentView.mas_bottom);
+        make.left.equalTo(self.contentView).offset(15);
+        make.width.mas_equalTo(SC_WIDTH-30);
+        make.height.mas_equalTo(1);
         
     }];
 

@@ -328,15 +328,10 @@
  创建导航栏
  */
 - (void)createNavgation{
+
     
     self.navigationItem.title = @"注册";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标黑色",12,20)
 
     zc_promptLabel = [[UILabel alloc] init];
     zc_promptLabel.text = @"提示：商户邀请码为手机号，代理商邀请码在手机号码前加\“ a \”。";
@@ -350,7 +345,13 @@
     [zc_promptLabel setTextColor:COLORFromRGB(0xe10000)];
     [self.view addSubview:zc_promptLabel];
     [zc_promptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+
+        }else{
+            make.top.equalTo(self.view).offset(64);
+
+        }
         make.left.right.equalTo(self.view).offset(40/SCALE_X);
         make.right.equalTo(self.view).offset(-40/SCALE_X);
         make.height.mas_offset(100/SCALE_Y);

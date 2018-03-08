@@ -36,8 +36,10 @@
     [super viewWillAppear:animated];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    //隐藏TabBar
     [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
-
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
 
@@ -477,7 +479,13 @@
     [sc_topView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
         make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(64+200/SCALE_Y);
+        if (SC_HEIGHT == 812) {
+            make.height.mas_equalTo(84+200/SCALE_Y);
+
+        }else{
+            make.height.mas_equalTo(64+200/SCALE_Y);
+
+        }
         
     }];
     
@@ -486,7 +494,13 @@
     [sc_topView addSubview:backBtn];
     [backBtn addTarget:self action:@selector(backBtnClick) forControlEvents:UIControlEventTouchUpInside];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(sc_topView).offset(20);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(sc_topView).offset(44);
+
+        }else{
+            make.top.equalTo(sc_topView).offset(20);
+
+        }
         make.left.equalTo(sc_topView).offset(15);
         make.width.mas_equalTo(23);
         make.height.mas_equalTo(40);
@@ -603,6 +617,12 @@
     
     
     return YES;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

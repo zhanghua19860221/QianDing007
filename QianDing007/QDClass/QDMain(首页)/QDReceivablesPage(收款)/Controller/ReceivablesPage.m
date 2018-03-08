@@ -657,7 +657,11 @@
 - (void)createBasicView{
     
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    if (SC_HEIGHT == 812) {
+        imageView.frame = CGRectMake(0, 0, SC_WIDTH, 44);
+    }else{
+        imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    }
     imageView.backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:imageView];
     
@@ -665,7 +669,11 @@
     mebInfoView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:mebInfoView];
     [mebInfoView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(44);
+        }else{
+            make.top.equalTo(self.view).offset(20);
+        }
         make.left.equalTo(self.view);
         make.width.mas_equalTo(SC_WIDTH);
         make.height.mas_equalTo(140.0/SCALE_Y);

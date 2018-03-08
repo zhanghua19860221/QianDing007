@@ -52,7 +52,9 @@
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(changeScrollEnabled:) name:@"changeScrollEnabled" object:nil];
-    
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
 }
 - (void)changeScrollEnabled:(NSNotification *)noti{
     _scrollView.scrollEnabled = NO;
@@ -87,9 +89,15 @@
     if ([type isEqualToString:@"1"]) {
         //个人认证
         [_scrollView setContentOffset:CGPointMake(SC_WIDTH, 0) animated:YES];
-        scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
-        [lableOne setTextColor:COLORFromRGB(0x999999)];
-        [lableTwo setTextColor:COLORFromRGB(0x999999)];
+        if (SC_HEIGHT == 812) {
+            scrollLine.frame = CGRectMake(SC_WIDTH/2.0,142,SC_WIDTH/2.0, 2);
+
+        }else{
+            scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+
+        }
+        [lableOne setTextColor:COLORFromRGB(0x666666)];
+        [lableTwo setTextColor:COLORFromRGB(0x666666)];
         [lableThree setTextColor:COLORFromRGB(0xe10000)];
         [lableFour  setTextColor:COLORFromRGB(0xe10000)];
         
@@ -97,17 +105,28 @@
     }else if ([type isEqualToString:@"2"]){
         //商户认证
         [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
-        [lableOne setTextColor:COLORFromRGB(0xe10000)];
+        if (SC_HEIGHT == 812) {
+            scrollLine.frame = CGRectMake(0,142,SC_WIDTH/2.0 , 2);
+            
+        }else{
+            scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0 , 2);
+            
+        }        [lableOne setTextColor:COLORFromRGB(0xe10000)];
         [lableTwo setTextColor:COLORFromRGB(0xe10000)];
-        [lableThree setTextColor:COLORFromRGB(0x999999)];
-        [lableFour  setTextColor:COLORFromRGB(0x999999)];
+        [lableThree setTextColor:COLORFromRGB(0x666666)];
+        [lableFour  setTextColor:COLORFromRGB(0x666666)];
 
  
     }else if ([type isEqualToString:@"3"]){
         //未认证
         [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
-        scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+        if (SC_HEIGHT == 812) {
+            scrollLine.frame = CGRectMake(0,142,SC_WIDTH/2.0 , 2);
+            
+        }else{
+            scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0 , 2);
+            
+        }
         _scrollView.scrollEnabled = YES;
 
 
@@ -130,7 +149,13 @@
     topView = [[UIView alloc] init];
     [self.view addSubview:topView];
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+
+        }else{
+            make.top.equalTo(self.view).offset(64);
+
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(60);
         
@@ -166,7 +191,13 @@
         lableOne.font = [UIFont systemFontOfSize:16];
         [self.view addSubview:lableOne];
         [lableOne mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(64);
+            if (SC_HEIGHT == 812) {
+                make.top.equalTo(self.view).offset(84);
+                
+            }else{
+                make.top.equalTo(self.view).offset(64);
+                
+            }
             make.left.equalTo(self.view).offset(-5);
             make.width.mas_equalTo(SC_WIDTH/4.0);
             make.height.mas_equalTo(60);
@@ -180,8 +211,13 @@
         lableTwo.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:lableTwo];
         [lableTwo mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(64);
-            make.left.equalTo(lableOne.mas_right);
+            if (SC_HEIGHT == 812) {
+                make.top.equalTo(self.view).offset(84);
+                
+            }else{
+                make.top.equalTo(self.view).offset(64);
+                
+            }            make.left.equalTo(lableOne.mas_right);
             make.height.mas_equalTo(60);
             make.width.mas_equalTo(SC_WIDTH/4.0);
     
@@ -195,7 +231,13 @@
         lableThree.font = [UIFont systemFontOfSize:16];
         [self.view addSubview:lableThree];
         [lableThree mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(64);
+            if (SC_HEIGHT == 812) {
+                make.top.equalTo(self.view).offset(84);
+                
+            }else{
+                make.top.equalTo(self.view).offset(64);
+                
+            }
             make.left.equalTo(lableTwo.mas_right).offset(-5);
             make.width.mas_equalTo(SC_WIDTH/4.0);
             make.height.mas_equalTo(60);
@@ -209,16 +251,28 @@
         lableFour.font = [UIFont systemFontOfSize:14];
         [self.view addSubview:lableFour];
         [lableFour mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(64);
+            if (SC_HEIGHT == 812) {
+                make.top.equalTo(self.view).offset(84);
+                
+            }else{
+                make.top.equalTo(self.view).offset(64);
+                
+            }
             make.left.equalTo(lableThree.mas_right);
             make.height.mas_equalTo(60);
             make.width.mas_equalTo(SC_WIDTH/4.0);
-        
+            
         }];
     //滚动线条
     scrollLine = [[UIImageView alloc] init];
     scrollLine.backgroundColor = COLORFromRGB(0xe10000);
-    scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0 , 2);
+    if (SC_HEIGHT == 812) {
+        scrollLine.frame = CGRectMake(0,142,SC_WIDTH/2.0 , 2);
+
+    }else{
+        scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0 , 2);
+
+    }
     [self.view addSubview:scrollLine];
     
     NSString *is_Checked = [[shareDelegate shareNSUserDefaults] objectForKey:@"is_checked"];
@@ -291,8 +345,13 @@
                 [lableFour  setTextColor:COLORFromRGB(0x666666)];
                 _scrollView.contentOffset = CGPointMake(0, 0);
                 [UIView animateWithDuration:0.3 animations:^{
-                    scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
-                }];
+                    if (SC_HEIGHT == 812) {
+                        scrollLine.frame = CGRectMake(0,142,SC_WIDTH/2.0, 2);
+                        
+                    }else{
+                        scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+                        
+                    }                }];
             }
                 break;
             case 301:{
@@ -302,8 +361,13 @@
                 [lableTwo setTextColor:COLORFromRGB(0x666666)];
                 _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
                 [UIView animateWithDuration:0.3 animations:^{
-                    scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
-                }];
+                    if (SC_HEIGHT == 812) {
+                        scrollLine.frame = CGRectMake(SC_WIDTH/2.0,142,SC_WIDTH/2.0, 2);
+                        
+                    }else{
+                        scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+                        
+                    }                }];
             }
                 break;
             default:
@@ -331,13 +395,7 @@
  */
 - (void)createNavgation{
     self.navigationItem.title = @"商家认证";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标白色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标白色",12,20)
 
 }
 /**
@@ -366,8 +424,13 @@
             [lableThree setTextColor:COLORFromRGB(0x666666)];
             [lableFour  setTextColor:COLORFromRGB(0x666666)];
             [UIView animateWithDuration:0.3 animations:^{
-                scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
-            }];
+                if (SC_HEIGHT == 812) {
+                    scrollLine.frame = CGRectMake(0,142,SC_WIDTH/2.0, 2);
+                    
+                }else{
+                    scrollLine.frame = CGRectMake(0,122,SC_WIDTH/2.0, 2);
+                    
+                }            }];
             
         }else if (x == 1){
             [lableThree setTextColor:COLORFromRGB(0xe10000)];
@@ -375,8 +438,13 @@
             [lableOne setTextColor:COLORFromRGB(0x666666)];
             [lableTwo setTextColor:COLORFromRGB(0x666666)];
             [UIView animateWithDuration:0.3 animations:^{
-                scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
-            }];
+                if (SC_HEIGHT == 812) {
+                    scrollLine.frame = CGRectMake(SC_WIDTH/2.0,142,SC_WIDTH/2.0, 2);
+                    
+                }else{
+                    scrollLine.frame = CGRectMake(SC_WIDTH/2.0,122,SC_WIDTH/2.0, 2);
+                    
+                }            }];
             
         }
         
@@ -412,7 +480,7 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"changeScrollEnabled"  object:nil];
-    
+
 }
 /*
 #pragma mark - Navigation

@@ -37,9 +37,16 @@
     [logoImageView setImage:[UIImage imageNamed:@"组2"]];
     [self.view addSubview:logoImageView];
     [logoImageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+            make.height.mas_equalTo(SC_HEIGHT-84);
+
+        }else{
+            make.top.equalTo(self.view).offset(64);
+            make.height.mas_equalTo(SC_HEIGHT-64);
+
+        }
         make.centerX.equalTo(self.view.mas_centerX);
-        make.height.mas_equalTo(SC_HEIGHT-64);
         make.width.mas_equalTo(SC_WIDTH);
         
     }];
@@ -52,19 +59,18 @@
 - (void)createNavgation{
     self.navigationItem.title = @"关于我们";
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回箭头红色",20,20)
+ 
 }
 /**
  导航栏返回按钮
  */
 - (void)leftBackClick{
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
     [self.navigationController popViewControllerAnimated:YES];
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

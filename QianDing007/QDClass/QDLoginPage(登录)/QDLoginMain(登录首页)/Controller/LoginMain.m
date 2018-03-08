@@ -66,8 +66,8 @@
         
         make.centerX.mas_equalTo(self.view.mas_centerX);
         make.top.mas_equalTo(self.view).offset(100/SCALE_Y);
-        make.height.mas_equalTo(110/SCALE_Y);
-        make.width.mas_equalTo(110/SCALE_X);
+        make.height.mas_equalTo(110);
+        make.width.mas_equalTo(110);
         
     }];
 }
@@ -159,60 +159,71 @@
         
     }];
     
-    lg_qqBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [lg_qqBtn setImage:[UIImage imageNamed:@"LoginQQ"] forState:UIControlStateNormal];
-    [lg_qqBtn addTarget:self action:@selector(lgQQClickBtn:) forControlEvents:UIControlEventTouchUpInside];
-    lg_qqBtn.layer.cornerRadius = 25;
-    lg_qqBtn.layer.masksToBounds = YES;
-    [self.view addSubview:lg_qqBtn];
-    [lg_qqBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom).offset(-49);
-        make.centerX.equalTo(self.view.mas_centerX).offset(-65);
-        make.width.height.mas_equalTo(50);
-        
-    }];
-    
-    UILabel *qqLabel = [[UILabel alloc] init];
-    qqLabel.text = @"QQ";
-    qqLabel.textAlignment = NSTextAlignmentCenter;
-    qqLabel.font = [UIFont systemFontOfSize:14];
-    [qqLabel setTextColor:COLORFromRGB(0x999999)];
-    [self.view addSubview:qqLabel];
-    [qqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lg_qqBtn.mas_bottom).offset(5);
-        make.centerX.equalTo(lg_qqBtn.mas_centerX);
-        make.width.equalTo(lg_qqBtn.mas_width);
-        make.height.mas_equalTo(15);
-
-    }];
-    
-    lg_wechatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [lg_wechatBtn addTarget:self action:@selector(lgWechatClickBtn:) forControlEvents:UIControlEventTouchUpInside];
-    [lg_wechatBtn setImage:[UIImage imageNamed:@"Login微信"] forState:UIControlStateNormal];
-    lg_wechatBtn.layer.cornerRadius = 25;
-    lg_wechatBtn.layer.masksToBounds = YES;
-    [self.view addSubview:lg_wechatBtn];
-    [lg_wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.view.mas_bottom).offset(-49);
-        make.centerX.equalTo(self.view.mas_centerX).offset(65);
-        make.width.height.mas_equalTo(50);
-        
-    }];
-    
-    UILabel *wechatLabel = [[UILabel alloc] init];
-    wechatLabel.textAlignment = NSTextAlignmentCenter;
-    wechatLabel.text = @"微信";
-    wechatLabel.font = [UIFont systemFontOfSize:14];
-    [wechatLabel setTextColor:COLORFromRGB(0x999999)];
-    [self.view addSubview:wechatLabel];
-    [wechatLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(lg_wechatBtn.mas_bottom).offset(5);
-        make.centerX.equalTo(lg_wechatBtn.mas_centerX);
-        make.width.equalTo(lg_wechatBtn.mas_width);
-        make.height.mas_equalTo(15);
-        
-    }];
+//    lg_qqBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [lg_qqBtn setImage:[UIImage imageNamed:@"LoginQQ"] forState:UIControlStateNormal];
+//    [lg_qqBtn addTarget:self action:@selector(lgQQClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    lg_qqBtn.layer.cornerRadius = 25;
+//    lg_qqBtn.layer.masksToBounds = YES;
+//    [self.view addSubview:lg_qqBtn];
+//    [lg_qqBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        if (SC_HEIGHT == 812) {
+//            make.bottom.equalTo(self.view.mas_bottom).offset(-83);
+//
+//        }else{
+//            make.bottom.equalTo(self.view.mas_bottom).offset(-49);
+//        }
+//        make.centerX.equalTo(self.view.mas_centerX).offset(-65);
+//        make.width.height.mas_equalTo(50);
+//
+//    }];
+//
+//    UILabel *qqLabel = [[UILabel alloc] init];
+//    qqLabel.text = @"QQ";
+//    qqLabel.textAlignment = NSTextAlignmentCenter;
+//    qqLabel.font = [UIFont systemFontOfSize:14];
+//    [qqLabel setTextColor:COLORFromRGB(0x999999)];
+//    [self.view addSubview:qqLabel];
+//    [qqLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lg_qqBtn.mas_bottom).offset(5);
+//        make.centerX.equalTo(lg_qqBtn.mas_centerX);
+//        make.width.equalTo(lg_qqBtn.mas_width);
+//        make.height.mas_equalTo(15);
+//
+//    }];
+//
+//    lg_wechatBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//
+//    [lg_wechatBtn addTarget:self action:@selector(lgWechatClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+//    [lg_wechatBtn setImage:[UIImage imageNamed:@"Login微信"] forState:UIControlStateNormal];
+//    lg_wechatBtn.layer.cornerRadius = 25;
+//    lg_wechatBtn.layer.masksToBounds = YES;
+//    [self.view addSubview:lg_wechatBtn];
+//    [lg_wechatBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+//        if (SC_HEIGHT == 812) {
+//            make.bottom.equalTo(self.view.mas_bottom).offset(-83);
+//
+//        }else{
+//            make.bottom.equalTo(self.view.mas_bottom).offset(-49);
+//
+//        }
+//        make.centerX.equalTo(self.view.mas_centerX).offset(65);
+//        make.width.height.mas_equalTo(50);
+//
+//    }];
+//
+//    UILabel *wechatLabel = [[UILabel alloc] init];
+//    wechatLabel.textAlignment = NSTextAlignmentCenter;
+//    wechatLabel.text = @"微信";
+//    wechatLabel.font = [UIFont systemFontOfSize:14];
+//    [wechatLabel setTextColor:COLORFromRGB(0x999999)];
+//    [self.view addSubview:wechatLabel];
+//    [wechatLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(lg_wechatBtn.mas_bottom).offset(5);
+//        make.centerX.equalTo(lg_wechatBtn.mas_centerX);
+//        make.width.equalTo(lg_wechatBtn.mas_width);
+//        make.height.mas_equalTo(15);
+//
+//    }];
 }
 
 /**
@@ -673,7 +684,7 @@
  
  */
 - (void)textFieldDidBeginEditing:( UITextField*)textField{
-    
+
     lg_selectTextField = textField;
     switch (textField.tag) {
         case 51:{
@@ -710,7 +721,7 @@
  
  */
 - (void)textFieldDidEndEditing:( UITextField *)textField{
-    
+
     
 }
 
@@ -726,6 +737,9 @@
         
         return NO;
     }
+    
+    NSLog(@"1231231");
+    
     return YES;
 }
 /**

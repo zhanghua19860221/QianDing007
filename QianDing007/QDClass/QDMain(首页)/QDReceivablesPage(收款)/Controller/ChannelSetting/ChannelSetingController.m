@@ -31,7 +31,12 @@
     [self.view addSubview:imageView];
     [imageView setImage:[UIImage imageNamed:@"组9"]];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64+50/SCALE_Y);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84+50/SCALE_Y);
+        }else{
+            make.top.equalTo(self.view).offset(64+50/SCALE_Y);
+
+        }
         make.left.equalTo(self.view).offset(15);
         make.height.width.mas_equalTo(40);
         
@@ -43,7 +48,12 @@
     [label setTextColor:COLORFromRGB(0x333333)];
     [self.view addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64+50/SCALE_Y);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84+50/SCALE_Y);
+        }else{
+            make.top.equalTo(self.view).offset(64+50/SCALE_Y);
+
+        }
         make.left.equalTo(imageView.mas_right).offset(10);
         make.height.mas_equalTo(16);
         make.width.mas_equalTo(150);
@@ -110,13 +120,10 @@
 - (void)createNavgation{
     
     self.navigationItem.title = @"通道设置";
+
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标黑色",12,20)
+
     
 }
 - (void)leftBackClick{

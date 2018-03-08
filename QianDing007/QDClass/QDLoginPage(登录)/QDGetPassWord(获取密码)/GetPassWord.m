@@ -45,7 +45,13 @@
     line.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:line];
     [line mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64+50/SCALE_Y);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84+50/SCALE_Y);
+
+        }else{
+            make.top.equalTo(self.view).offset(64+50/SCALE_Y);
+
+        }
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_equalTo(1);
@@ -308,12 +314,7 @@
  */
 - (void)rsCreateNavgation{
         self.navigationItem.title = @"找回密码";
-        UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        leftButton.frame = CGRectMake(0, 0, 20,20);
-        [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
-        [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-        self.navigationItem.leftBarButtonItem = leftItem;
+        CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标黑色",12,20)
     
 }
 /**

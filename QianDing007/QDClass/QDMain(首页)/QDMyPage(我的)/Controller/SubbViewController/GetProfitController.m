@@ -122,8 +122,13 @@
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
             make.left.right.equalTo(self.view);
-            make.height.mas_offset(SC_HEIGHT-200);
-            
+            if (SC_HEIGHT == 812) {
+                make.height.mas_equalTo(SC_HEIGHT-234);
+                
+            }else{
+                make.height.mas_equalTo(SC_HEIGHT-210);
+                
+            }
         }];
         
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{

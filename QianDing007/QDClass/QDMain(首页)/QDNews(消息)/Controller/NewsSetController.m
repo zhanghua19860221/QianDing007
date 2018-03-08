@@ -25,6 +25,8 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
+    //修改状态栏字体颜色黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
 }
 - (void)createSubView{
@@ -33,20 +35,27 @@
     view.backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:view];
     [view mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(84);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(108);
+
+        }else{
+            make.top.equalTo(self.view).offset(84);
+
+        }
         make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(50/SCALE_Y);
-        make.width.mas_equalTo(self.view);
+        make.height.mas_equalTo(50);
+        make.width.mas_equalTo(self.view.mas_width);
         
     }];
     
     UILabel *label = [[UILabel alloc] init];
     label.text = @"屏蔽语音";
+    label.textAlignment = NSTextAlignmentLeft;
     [view addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(view.mas_centerY);
+        make.top.equalTo(view);
         make.left.equalTo(view).offset(15);
-        make.height.mas_equalTo(50/SCALE_Y);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(100);
     
         
@@ -65,9 +74,9 @@
     [switchView addTarget:self action:@selector(switchAction:) forControlEvents:UIControlEventValueChanged];   // 开关事件切换通知
     [view addSubview:switchView];
     [switchView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.centerY.equalTo(label.mas_centerY);
-        make.right.equalTo(self.view).offset(-30);
-        make.width.mas_equalTo(40);
+        make.top.equalTo(view).offset(10);
+        make.right.equalTo(view).offset(-15);
+        make.width.mas_equalTo(50);
         make.height.mas_equalTo(20);
 
     }];
@@ -76,10 +85,10 @@
     [lineView setImage:[UIImage imageNamed:@"分割线"]];
     [self.view addSubview:lineView];
     [lineView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(view.mas_bottom).offset(1);
-        make.left.equalTo(view);
-        make.height.mas_equalTo(1);
-        make.width.mas_equalTo(SC_WIDTH);
+        make.top.equalTo(view.mas_bottom).offset(0.5);
+        make.left.equalTo(view).offset(15);
+        make.height.mas_equalTo(0.5);
+        make.width.mas_equalTo(SC_WIDTH-30);
     }];
     
     
@@ -89,7 +98,7 @@
     [view2 mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(lineView.mas_bottom);
         make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(50/SCALE_Y);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(self.view);
         
     }];
@@ -101,7 +110,7 @@
         
         make.centerY.equalTo(view2.mas_centerY);
         make.left.equalTo(view2).offset(15);
-        make.height.mas_equalTo(50/SCALE_Y);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(200);
         
     }];
@@ -112,7 +121,7 @@
     [button mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerY.equalTo(view2.mas_centerY);
         make.left.equalTo(view2).offset(15);
-        make.height.mas_equalTo(50/SCALE_Y);
+        make.height.mas_equalTo(50);
         make.width.mas_equalTo(200);
         
     }];
@@ -126,15 +135,11 @@
  */
 - (void)createNavgation{
     self.navigationItem.title = @"消息设置";
-    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
+    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
+    self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
 
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回箭头白色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回箭头红色",20,20)
+ 
 }
 
 -(void)switchAction:(id)sender{
@@ -157,6 +162,8 @@
     
 }
 - (void)leftBackClick{
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self.navigationController popViewControllerAnimated:YES];
     
 }

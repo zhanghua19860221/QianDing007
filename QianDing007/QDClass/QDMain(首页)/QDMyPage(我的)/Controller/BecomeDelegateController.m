@@ -38,6 +38,8 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
     [self.navigationController setNavigationBarHidden:NO animated:YES];
+    //恢复状态栏字体黑色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
 }
 
@@ -105,7 +107,13 @@
     [label setTextColor:COLORFromRGB(0xe10000)];
     [self.view addSubview:label];
     [label mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64+20/SCALE_Y);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84+20/SCALE_Y);
+
+        }else{
+            make.top.equalTo(self.view).offset(64+20/SCALE_Y);
+
+        }
         make.left.equalTo(self.view).offset(40/SCALE_X);
         make.height.mas_equalTo(14);
         make.width.mas_equalTo(SC_WIDTH-40/SCALE_X);
@@ -464,14 +472,9 @@
  */
 - (void)createNavgation{
     self.navigationItem.title = @"加入";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标黑色",12,20)
+
 }
 /**
  导航栏返回按钮
@@ -554,10 +557,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
+    
+    //设置状态栏字体颜色为白色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
 /**

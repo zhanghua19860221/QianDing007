@@ -29,6 +29,11 @@
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"removeTabBar" object:nil userInfo:@{@"color":@"1",@"title":@"1"}];
 
     //二维码展示视图
     [[SDImageCache sharedImageCache] clearDisk];
@@ -51,7 +56,13 @@
     [backView setImage:[UIImage imageNamed:@"返回箭头白色"]];
     [self.view addSubview:backView];
     [backView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(31);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(55);
+
+        }else{
+            make.top.equalTo(self.view).offset(31);
+
+        }
         make.left.equalTo(self.view).offset(15);
         make.width.mas_equalTo(13);
         make.height.mas_equalTo(22);
@@ -90,7 +101,13 @@
     firstBjView.layer.masksToBounds = YES;
     firstBjView.layer.cornerRadius = 10;
     [firstBjView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64+30/SCALE_Y);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84+30/SCALE_Y);
+
+        }else{
+            make.top.equalTo(self.view).offset(64+30/SCALE_Y);
+
+        }
         make.left.equalTo(self.view).offset(15);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_equalTo(365/SCALE_Y);
@@ -317,6 +334,8 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:NO];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
 }
 - (void)didReceiveMemoryWarning {

@@ -102,7 +102,7 @@
 //    [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
 //    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    leftButton.frame = CGRectMake(0, 0, 20,20);
-//    [leftButton setImage:[UIImage imageNamed:@"返回图标"] forState:UIControlStateNormal];
+//    [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
 //    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
 //    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
 //    self.navigationItem.leftBarButtonItem = leftItem;

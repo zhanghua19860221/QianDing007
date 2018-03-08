@@ -42,7 +42,8 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
 - (void)mmGetDateSource{
@@ -89,7 +90,12 @@
     topView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:topView];
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+        }else{
+            make.top.equalTo(self.view).offset(64);
+            
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(160/SCALE_Y);
     }];
@@ -372,6 +378,7 @@
         [self.navigationController pushViewController:setAccount animated:YES];
         
     }
+
 }
 /**
  跳转到提现记录页面
@@ -394,7 +401,12 @@
     [navView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.view);
         make.left.right.equalTo(self.view);
-        make.height.mas_equalTo(64);
+        if (SC_HEIGHT == 812) {
+            make.height.mas_equalTo(84);
+        }else{
+            make.height.mas_equalTo(64);
+
+        }
     }];
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -402,7 +414,12 @@
     [backBtn addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     [navView addSubview:backBtn];
     [backBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(navView).offset(31);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(navView).offset(55);
+        }else{
+            make.top.equalTo(navView).offset(31);
+
+        }
         make.left.equalTo(navView).offset(15);
         make.width.mas_equalTo(12);
         make.height.mas_equalTo(22);
@@ -416,7 +433,12 @@
     [navView addSubview:titleLabel];
     
     [titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(navView).offset(20);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(navView).offset(44);
+        }else{
+            make.top.equalTo(navView).offset(20);
+
+        }
         make.centerX.equalTo(navView.mas_centerX);
         make.width.mas_equalTo(100);
         make.height.mas_equalTo(44);
@@ -534,7 +556,6 @@
     
     [self.view endEditing:YES];
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

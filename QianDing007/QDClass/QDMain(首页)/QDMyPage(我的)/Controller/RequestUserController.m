@@ -33,7 +33,12 @@
     firstView.backgroundColor = COLORFromRGB(0xffffff);
     [self.view addSubview:firstView];
     [firstView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+        }else{
+            make.top.equalTo(self.view).offset(64);
+            
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(120/SCALE_Y);
     }];
@@ -251,6 +256,9 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
     [self createNavgation];
+    //恢复状态栏字体黑色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
     
     
 }
@@ -260,13 +268,9 @@
  */
 - (void)createNavgation{
     self.navigationItem.title = @"邀请商家";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标黑色",12,20)
+
     
 }
 /**
@@ -518,8 +522,12 @@
     }];
     
 }
-
-
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //设置状态栏字体颜色为白色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+    
+}
 /*
 #pragma mark - Navigation
 

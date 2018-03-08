@@ -47,6 +47,9 @@
     //语音播报代理方法
     [shareDelegate shareAVSpeechSynthesizer].delegate=self;
     
+    //状态栏 变黑
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    
     // 设置应用程序的图标右上角的数字
 //    [application setApplicationIconBadgeNumber:50];
     if ([[UIDevice currentDevice].systemVersion doubleValue] >= 8.0) {

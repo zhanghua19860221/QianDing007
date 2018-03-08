@@ -113,15 +113,19 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor orangeColor];
         [self.view addSubview:self.tableView];
         _tableView.separatorStyle = NO;
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
             make.left.right.equalTo(self.view);
-            make.height.mas_offset(SC_HEIGHT-114);
-            
+            if (SC_HEIGHT == 812) {
+                make.height.mas_offset(SC_HEIGHT-138);
+                
+            }else{
+                make.height.mas_offset(SC_HEIGHT-114);
+                
+            }
         }];
         
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{

@@ -44,7 +44,14 @@
     [self.view addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.centerX.equalTo(self.view.mas_centerX);
-        make.top.equalTo(self.view).offset(64+60/SCALE_Y);
+        
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84+60/SCALE_Y);
+        }else{
+            make.top.equalTo(self.view).offset(64+60/SCALE_Y);
+
+        }
+        
         make.width.height.mas_equalTo(100);
     }];
     
@@ -140,12 +147,7 @@
 - (void)createNavgation{
     
     self.navigationItem.title = @"我扫吧";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标黑色",12,20)
 
 }
 /**

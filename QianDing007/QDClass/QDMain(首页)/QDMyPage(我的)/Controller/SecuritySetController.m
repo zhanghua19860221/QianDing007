@@ -27,8 +27,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
-//    UINavigationBar * bar = self.navigationController.navigationBar;
-//    bar.barTintColor = COLORFromRGB(0xe10000);
     
 }
 - (void)createSubView{
@@ -177,17 +175,15 @@
     self.navigationItem.title = @"安全设置";
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
-    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回箭头红色",20,20)
+ 
 }
 - (void)leftBackClick{
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
     [self.navigationController popViewControllerAnimated:YES];
+    
 
 }
 - (void)didReceiveMemoryWarning {

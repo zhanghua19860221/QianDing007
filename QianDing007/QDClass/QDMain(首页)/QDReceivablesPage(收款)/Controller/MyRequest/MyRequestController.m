@@ -39,6 +39,9 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
 
 }
 
@@ -144,9 +147,15 @@
         _tableView.separatorStyle = NO;
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(self.view).offset(74+90/SCALE_Y);
-            make.left.right.equalTo(self.view);
+            if (SC_HEIGHT == 812) {
+                make.top.equalTo(self.view).offset(98+90/SCALE_Y);
+
+            }else{
+                make.top.equalTo(self.view).offset(74+90/SCALE_Y);
+
+            }
             make.height.mas_offset(SC_HEIGHT-10-90/SCALE_Y);
+            make.left.right.equalTo(self.view);
             
         }];
         
@@ -227,12 +236,8 @@
     
     self.navigationItem.title = @"我的邀请";
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标白色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标白色",12,20)
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 40,40);
@@ -282,7 +287,12 @@
     mr_requestView.layer.shadowColor = COLORFromRGB(0xe10000).CGColor;
     [self.view addSubview:mr_requestView];
     [mr_requestView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+        }else{
+            make.top.equalTo(self.view).offset(64);
+
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(90/SCALE_Y);
         
@@ -592,8 +602,7 @@
                      
                  case SSDKResponseStateSuccess:{
                      [self shareStataView:@"分享成功"];
-                     
-                     
+                    
                  }
                      break;
                  case SSDKResponseStateFail:{
@@ -829,11 +838,14 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
 }
-- (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
 
 
 

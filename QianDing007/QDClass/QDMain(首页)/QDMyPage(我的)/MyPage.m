@@ -258,7 +258,7 @@
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(mp_topView.mas_bottom).offset(40/SCALE_Y);
+            make.top.equalTo(mp_topView.mas_bottom).offset(20/SCALE_Y);
             make.left.right.equalTo(self.view);
             make.height.mas_equalTo(SC_HEIGHT);
         }];
@@ -425,33 +425,18 @@
     [self.view addSubview:mp_codeButton];
     [mp_codeButton addTarget:self action:@selector(myCodeButton:) forControlEvents:UIControlEventTouchUpInside];
     [mp_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(44);
+
+        }else{
+            make.top.equalTo(self.view).offset(20);
+
+        }
         make.right.equalTo(self.view).offset(-15);
         make.width.height.mas_equalTo(44);
         
-        
     }];
-    
-    mp_headViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    mp_headViewBtn.layer.cornerRadius = 35;
-    mp_headViewBtn.layer.masksToBounds = YES;
-    mp_headViewBtn.layer.borderWidth = 1;
-    mp_headViewBtn.layer.borderColor = [COLORFromRGB(0xf39f34)CGColor];
-    NSData *dataImage = [[shareDelegate shareNSUserDefaults] objectForKey:@"LOGO"];
-    
-    UIImage *image = [UIImage imageWithData:dataImage]; // 取得图片
-    if (dataImage == NULL) {
-        [mp_headViewBtn setImage:[UIImage imageNamed:@"图层1"] forState:UIControlStateNormal];
-        
-    }else{
-        [mp_headViewBtn setImage:image forState:UIControlStateNormal];
-        
-    }
-    [mp_headViewBtn addTarget:self action:@selector(choseGetType) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:mp_headViewBtn];
-    
-    
-    
+
     
     mp_stateLabel = [[UILabel alloc] init];
     
@@ -471,19 +456,38 @@
     mp_stateLabel.textAlignment = NSTextAlignmentCenter;
     mp_stateLabel.font = [UIFont systemFontOfSize:16];
     [mp_topView addSubview:mp_stateLabel];
-    
-    [mp_headViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.size.mas_equalTo(CGSizeMake(70, 70));
-        make.center.equalTo(mp_topView);
-        
-    }];
-
     [mp_stateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(mp_headViewBtn.mas_bottom).offset(10);
+        make.bottom.equalTo(mp_topView.mas_bottom).offset(-30);
         make.width.mas_equalTo(70);
         make.height.mas_equalTo(16);
         make.centerX.equalTo(mp_topView.mas_centerX);
     }];
+    
+    
+    mp_headViewBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    mp_headViewBtn.layer.cornerRadius = 35;
+    mp_headViewBtn.layer.masksToBounds = YES;
+    mp_headViewBtn.layer.borderWidth = 1;
+    mp_headViewBtn.layer.borderColor = [COLORFromRGB(0xf39f34)CGColor];
+    NSData *dataImage = [[shareDelegate shareNSUserDefaults] objectForKey:@"LOGO"];
+    
+    UIImage *image = [UIImage imageWithData:dataImage]; // 取得图片
+    if (dataImage == NULL) {
+        [mp_headViewBtn setImage:[UIImage imageNamed:@"图层1"] forState:UIControlStateNormal];
+        
+    }else{
+        [mp_headViewBtn setImage:image forState:UIControlStateNormal];
+        
+    }
+    [mp_headViewBtn addTarget:self action:@selector(choseGetType) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:mp_headViewBtn];
+    [mp_headViewBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(mp_stateLabel.mas_top).offset(-7);
+        make.width.height.mas_equalTo(70);
+        make.centerX.equalTo(mp_topView.mas_centerX);
+        
+    }];
+    
     
 }
 
@@ -815,7 +819,8 @@
     return CGFLOAT_MIN;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    return 20;
+    
+    return 0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
@@ -914,6 +919,8 @@
     [super viewWillDisappear:animated];
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
+    //恢复状态栏字体默认颜色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 /**
  

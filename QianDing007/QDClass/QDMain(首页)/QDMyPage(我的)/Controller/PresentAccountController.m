@@ -38,7 +38,8 @@
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
     [self paGetDateSource];
-
+    //恢复状态栏字体黑色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
 }
 - (void)paGetDateSource{
@@ -212,7 +213,12 @@
     imageView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+        }else{
+            make.top.equalTo(self.view).offset(64);
+            
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(10);
         
@@ -370,17 +376,14 @@
 - (void)paCreateNavgation{
     
     self.navigationItem.title = @"提现账户";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回箭头红色",20,20)
+
     
     UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeCustom];
     rightButton.frame = CGRectMake(0, 0, 40,40);
     [rightButton setTitleColor:COLORFromRGB(0x333333) forState:UIControlStateNormal];
+    rightButton.titleLabel.font = [UIFont systemFontOfSize:14];
     [rightButton setTitle:@"编辑" forState:UIControlStateNormal];
     [rightButton addTarget:self action:@selector(rightBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightButton];
@@ -391,7 +394,8 @@
  导航栏左侧按钮
  */
 - (void)leftBackClick{
-    
+    //设置状态栏字体颜色为白色 
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
     [self.navigationController popViewControllerAnimated:YES];
     
 }

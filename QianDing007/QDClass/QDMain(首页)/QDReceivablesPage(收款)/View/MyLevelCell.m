@@ -123,7 +123,7 @@
         
     }];
     [_mebList mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_levelView.mas_bottom).offset(20/SCALE_Y);
+        make.top.equalTo(_spaceLine.mas_bottom).offset(15/SCALE_Y);
         make.left.equalTo(self.contentView).offset(25/SCALE_X);
         make.right.equalTo(self.contentView);
         make.height.mas_equalTo(16);
@@ -168,8 +168,8 @@
 //        make.width.mas_equalTo(SC_WIDTH-50);
 //    }];
     [_requestUseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self.contentView).offset(-20/SCALE_Y);
-        make.left.equalTo(self.contentView).offset(50/SCALE_X);
+        make.bottom.equalTo(self.contentView.mas_bottom).offset(-20/SCALE_Y);
+        make.centerX.equalTo(self.contentView.mas_centerX);
         make.height.mas_equalTo(32);
         make.width.mas_equalTo(110/SCALE_X);
     }];

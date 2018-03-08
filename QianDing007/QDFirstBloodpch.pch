@@ -170,6 +170,8 @@
 #define SHATETEXT  @"钱叮是最前沿的支付平台，开启聚合支付新模式"
 #define SHATETITLE @"好友邀请您加入钱叮商户一起赚大钱"
 
+#define CUSTOMBACKCONCTORLLER(backMethodName,delegate,viewContorll,backIconName,iconWidth,iconHeight){    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];leftButton.backgroundColor = [UIColor clearColor];[leftButton addTarget:delegate action:@selector(backMethodName) forControlEvents:UIControlEventTouchUpInside];[viewContorll addSubview:leftButton];[leftButton mas_makeConstraints:^(MASConstraintMaker *make) {if (SC_HEIGHT == 812) {make.top.equalTo(viewContorll).offset(44);}else{make.top.equalTo(viewContorll).offset(20);}make.left.equalTo(viewContorll);make.width.mas_equalTo(100);make.height.mas_equalTo(44);}];    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];delegate.navigationItem.leftBarButtonItem = leftItem;UIButton *showImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];[showImageBtn setImage:[UIImage imageNamed:backIconName] forState:UIControlStateNormal];[showImageBtn addTarget:delegate action:@selector(backMethodName) forControlEvents:UIControlEventTouchUpInside];[leftButton addSubview:showImageBtn];[showImageBtn mas_makeConstraints:^(MASConstraintMaker *make) {make.centerY.equalTo(leftButton.mas_centerY);make.left.equalTo(leftButton);make.width.mas_equalTo(iconWidth);make.height.mas_equalTo(iconHeight);}];}
+
 
 
 // Include any system framework and library headers here that should be included in all compilation units.

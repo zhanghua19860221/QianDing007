@@ -131,7 +131,14 @@
         make.width.mas_equalTo(SC_WIDTH-110);
         make.height.mas_equalTo(16);
     }];
-
+    UIImageView *bottomLine = [[UIImageView alloc] init];
+    bottomLine.backgroundColor = COLORFromRGB(0xf9f9f9);
+    [self.contentView addSubview:bottomLine];
+    [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.mas_equalTo(self.contentView.mas_bottom);
+        make.left.right.equalTo(self.contentView);
+        make.height.mas_equalTo(1);
+    }];
     
 }
 -(void)addDataSourceView:(UserListModel*)model{

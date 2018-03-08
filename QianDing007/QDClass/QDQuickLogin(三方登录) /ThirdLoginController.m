@@ -51,7 +51,13 @@
     [textLabel setTextColor:COLORFromRGB(0xe10000)];
     [self.view addSubview:textLabel];
     [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(84);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(104);
+
+        }else{
+            make.top.equalTo(self.view).offset(84);
+
+        }
         make.left.right.equalTo(self.view).offset(25);
         make.right.equalTo(self.view).offset(-15);
         make.height.mas_offset(70);
@@ -322,7 +328,7 @@
     self.navigationItem.title = @"绑定手机号";
     UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
     leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回"] forState:UIControlStateNormal];
+    [leftButton setImage:[UIImage imageNamed:@"返回图标黑色"] forState:UIControlStateNormal];
     [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
     self.navigationItem.leftBarButtonItem = leftItem;

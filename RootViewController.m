@@ -31,9 +31,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeTabBar:) name:@"removeTabBar" object:nil];
     //注册通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showTabBar:) name:@"showTabBar" object:nil];
-    
     //注册消息通知-把数据保存到数据库
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFMDBData:) name:@"saveFMDBData" object:nil];
+
     
 }
 
@@ -44,14 +44,15 @@
     self.view.backgroundColor = COLORFromRGB(0xf9f9f9);
     // Do any additional setup after loading the view.
 }
+//隐藏tabbar
 - (void)removeTabBar:(NSNotification *)noti{
     [self.tabBar removeFromSuperview];
-    _tabberView.hidden = YES;
+    self.rc_tabberView.hidden = YES;
 }
+//隐藏展示tabbar
 - (void)showTabBar:(NSNotification *)noti{
     
-    
-    _tabberView.hidden = NO;
+    self.rc_tabberView.hidden = NO;
 }
 /**
  数据库添加数据
@@ -72,12 +73,16 @@
     NSArray *tabDafImageArray = @[@"收款2",@"消息2",@"我的2"];
     NSArray *tabSelImageArray = @[@"收款1",@"消息",@"操作栏我的选中@2x"];
     
-    _tabberView = [[UIView alloc] init];
-    _tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
-    _tabberView.layer.borderWidth = 1;
-    _tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
-    _tabberView.frame = CGRectMake(0, SC_HEIGHT-49, SC_WIDTH, 49);
-    [self.view addSubview:_tabberView];
+    self.rc_tabberView = [[UIView alloc] init];
+    self.rc_tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
+    self.rc_tabberView.layer.borderWidth = 1;
+    self.rc_tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
+    if (SC_HEIGHT == 812) {
+        self.rc_tabberView.frame = CGRectMake(0, SC_HEIGHT-83, SC_WIDTH, 83);
+    }else{
+        self.rc_tabberView.frame = CGRectMake(0, SC_HEIGHT-49, SC_WIDTH, 49);
+    }
+    [self.view addSubview:self.rc_tabberView];
     
     for (int i=0; i<3; i++) {
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -85,7 +90,7 @@
         [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
         button.tag = 100+i;
         button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0, 49);
-        [_tabberView addSubview:button];
+        [self.rc_tabberView addSubview:button];
         
         if (0==i) {
 
@@ -108,13 +113,15 @@
     
     switch (btn.tag) {
         case 100:
+            [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
             break;
             
         case 101:
-            
+            [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
             break;
         case 102:
-
+            [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
             break;
         default:
             break;
@@ -136,7 +143,7 @@
     
 }
 - (void)viewDidDisappear:(BOOL)animated{
-    
+
   [super viewDidDisappear:animated];
   [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
   [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];

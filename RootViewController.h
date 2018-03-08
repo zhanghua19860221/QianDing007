@@ -10,5 +10,6 @@
 
 @interface RootViewController : UITabBarController
 @property (strong , nonatomic)  UIButton*selectedButton;//记录上一个button
-@property (strong , nonatomic)  UIView *tabberView;
+@property (strong , nonatomic)  UIView *rc_tabberView;
+
 @end

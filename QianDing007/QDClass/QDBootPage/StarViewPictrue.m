@@ -108,7 +108,13 @@
             [button.layer setCornerRadius:3.0];
             button.layer.borderColor = [COLORFromRGB(0x999999) CGColor];
             button.titleLabel.font = [UIFont systemFontOfSize:16];
-            button.frame = CGRectMake(SC_WIDTH-75, 64, 60, 20) ;
+            if (SC_HEIGHT == 812) {
+                button.frame = CGRectMake(SC_WIDTH-75, 84, 60, 20) ;
+
+            }else{
+                button.frame = CGRectMake(SC_WIDTH-75, 64, 60, 20) ;
+
+            }
             [button addTarget:self action:@selector(bttonClick) forControlEvents:UIControlEventTouchUpInside];
             button.userInteractionEnabled = YES;
             [imageView addSubview:button];

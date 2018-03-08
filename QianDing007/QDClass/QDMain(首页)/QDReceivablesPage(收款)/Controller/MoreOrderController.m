@@ -17,7 +17,7 @@
     FrontViewController *frontViewVC;//我的界面
     MiddleViewController *middleViewVC;//收款界面
     ThirdViewController *thirdViewVC;//消息界面
-    UIView *tabberView;//操作栏视图
+    UIView *m_tabberView;//操作栏视图
     UIView *tabberLineView;//滚动线条
 
 }
@@ -40,7 +40,9 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xe10000);
-
+    
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 }
 /**
  创建子控制器
@@ -70,11 +72,11 @@
     _scrollView.contentSize = CGSizeMake(SC_WIDTH*3.0, 0);
     _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
     [_scrollView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(tabberView.mas_bottom).offset(10);
+        make.top.equalTo(m_tabberView.mas_bottom).offset(10);
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(SC_HEIGHT);
-    
+        
     }];
     
     for (int i=0; i<3; i++) {
@@ -91,14 +93,17 @@
 - (void)createTabberView{
     
     NSArray *textArray = @[@"处理中",@"已处理",@"退 款"];
-    tabberView = [[UIView alloc] init];
-    tabberView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:tabberView];
-    
+    m_tabberView = [[UIView alloc] init];
+    m_tabberView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:m_tabberView];
+    [m_tabberView mas_makeConstraints:^(MASConstraintMaker *make) {
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
 
-    
-    [tabberView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        }else{
+            make.top.equalTo(self.view).offset(64);
+
+        }
         make.left.equalTo(self.view);
         make.right.equalTo(self.view);
         make.height.mas_offset(44);
@@ -108,10 +113,11 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitleColor:COLORFromRGB(0x333333) forState:UIControlStateNormal];
         [button setTitleColor:COLORFromRGB(0xe10000) forState:UIControlStateSelected];
+        button.titleLabel.font = [UIFont systemFontOfSize:16];
         button.tag = 150+i;
         [button setTitle:textArray[i] forState:UIControlStateNormal];
         button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0,44);
-        [tabberView addSubview:button];
+        [m_tabberView addSubview:button];
         
         if (1==i) {
             
@@ -125,7 +131,7 @@
     tabberLineView = [[UIView alloc] init];
     tabberLineView.frame = CGRectMake(SC_WIDTH/3.0,42,SC_WIDTH/3.0, 2);
     tabberLineView.backgroundColor = COLORFromRGB(0xffffff);
-    [tabberView addSubview:tabberLineView];
+    [m_tabberView addSubview:tabberLineView];
     
     UIImageView *imageLine = [[UIImageView alloc] init];
     imageLine.backgroundColor = COLORFromRGB(0xe10000);
@@ -175,12 +181,7 @@
 
     self.navigationItem.title = @"收款记录";
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0xffffff),NSForegroundColorAttributeName,nil]];
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
-    [leftButton setImage:[UIImage imageNamed:@"返回图标白色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回图标白色",12,20)
 
 }
 - (void)leftBackClick{
@@ -276,7 +277,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
+}
 /*
 #pragma mark - Navigation
 

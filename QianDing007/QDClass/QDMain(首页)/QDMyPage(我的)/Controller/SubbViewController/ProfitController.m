@@ -38,8 +38,9 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
-    
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
+
 }
 - (void)pcGetUrlDataSource{
     
@@ -115,7 +116,12 @@
 }
 - (void)createTopView{
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    if (SC_HEIGHT == 812) {
+        imageView.frame = CGRectMake(0, 0, SC_WIDTH, 44);
+    }else{
+        imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+
+    }
     imageView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:imageView];
     
@@ -123,7 +129,12 @@
     topView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:topView];
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(44);
+        }else{
+            make.top.equalTo(self.view).offset(20);
+
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(120/SCALE_Y);
         
@@ -241,7 +252,13 @@
     }
     imageLine = [[UIImageView alloc] init];
     imageLine.backgroundColor = COLORFromRGB(0xe10000);
-    imageLine.frame = CGRectMake(0,120/SCALE_Y+70,SC_WIDTH/2.0 , 2);
+    if (SC_HEIGHT == 812) {
+        imageLine.frame = CGRectMake(0,120/SCALE_Y+94,SC_WIDTH/2.0 , 2);
+
+    }else{
+        imageLine.frame = CGRectMake(0,120/SCALE_Y+70,SC_WIDTH/2.0 , 2);
+
+    }
     [self.view addSubview:imageLine];
 
     
@@ -255,7 +272,13 @@
     switch (btn.tag) {
         case 230:{
             [UIView animateWithDuration:0.3 animations:^{
-                imageLine.frame = CGRectMake(0,120/SCALE_Y+70,SC_WIDTH/2.0, 2);
+                if (SC_HEIGHT == 812) {
+                    imageLine.frame = CGRectMake(0,120/SCALE_Y+94,SC_WIDTH/2.0 , 2);
+                    
+                }else{
+                    imageLine.frame = CGRectMake(0,120/SCALE_Y+70,SC_WIDTH/2.0 , 2);
+                    
+                }
             }];
     
             _scrollView.contentOffset = CGPointMake(0, 0);
@@ -265,7 +288,13 @@
         case 231:{
         
             [UIView animateWithDuration:0.3 animations:^{
-                imageLine.frame = CGRectMake(SC_WIDTH/2.0,120/SCALE_Y+70,SC_WIDTH/2.0, 2);
+                if (SC_HEIGHT == 812) {
+                    imageLine.frame = CGRectMake(SC_WIDTH/2.0,120/SCALE_Y+94,SC_WIDTH/2.0 , 2);
+                    
+                }else{
+                    imageLine.frame = CGRectMake(SC_WIDTH/2.0,120/SCALE_Y+70,SC_WIDTH/2.0 , 2);
+                    
+                }
             }];
             _scrollView.contentOffset = CGPointMake(SC_WIDTH, 0);
 
@@ -300,6 +329,8 @@
     [super viewWillDisappear:animated];
     //移除菊花进度条
     [[shareDelegate shareZHProgress] removeFromSuperview];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 }
 #pragma ********************UIScrollViewDelegate**************
 // 滚动视图减速完成，滚动将停止时，调用该方法。一次有效滑动，只执行一次。
@@ -313,13 +344,20 @@
         selectBtn = tempButton;
     }
     [UIView animateWithDuration:0.3 animations:^{
-        imageLine.frame = CGRectMake(x*SC_WIDTH/2.0,120/SCALE_Y+70,SC_WIDTH/2.0, 2);
+        if (SC_HEIGHT == 812) {
+            imageLine.frame = CGRectMake(x*SC_WIDTH/2.0,120/SCALE_Y+94,SC_WIDTH/2.0 , 2);
+            
+        }else{
+            imageLine.frame = CGRectMake(x*SC_WIDTH/2.0,120/SCALE_Y+70,SC_WIDTH/2.0 , 2);
+            
+        }
     }];
     
     
     //    [_scrollView setContentOffset:CGPointMake(0, 500) animated:YES];
     
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     

@@ -35,6 +35,9 @@
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     UINavigationBar * bar = self.navigationController.navigationBar;
     bar.barTintColor = COLORFromRGB(0xe10000);
+    
+    //修改状态栏颜色 为白色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleLightContent;
 
 }
 - (void)mpGetUrlInfoData{
@@ -230,7 +233,13 @@
  */
 - (void)mdCreateTopView{
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+    if (SC_HEIGHT == 812) {
+        imageView.frame = CGRectMake(0, 0, SC_WIDTH, 44);
+
+    }else{
+        imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
+
+    }
     imageView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:imageView];
     
@@ -238,7 +247,13 @@
     topView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:topView];
     [topView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(20);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(44);
+
+        }else{
+            make.top.equalTo(self.view).offset(20);
+
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(94);
         
@@ -316,8 +331,8 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    //移除菊花进度条
-//    [[shareDelegate shareZHProgress] removeFromSuperview];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
 
 }
 - (void)didReceiveMemoryWarning {

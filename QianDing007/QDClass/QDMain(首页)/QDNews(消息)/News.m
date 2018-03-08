@@ -115,12 +115,15 @@
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(topView.mas_bottom).offset(10);
             make.left.right.equalTo(self.view);
-            make.height.mas_offset(SC_HEIGHT-130);
-            
+            if (SC_HEIGHT == 812) {
+                make.height.mas_offset(SC_HEIGHT-154);
+
+            }else{
+                make.height.mas_offset(SC_HEIGHT-130);
+
+            }
         }];
-        
     }
-        
     return _tableView;
 }
 
@@ -130,14 +133,29 @@
 - (void)nsCreateTopView{
     
     UIImageView *imageView = [[UIImageView alloc] init];
-    imageView.frame = CGRectMake(0, 0, SC_WIDTH, 20);
     imageView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:imageView];
+    [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.view);
+        make.left.right.equalTo(self.view);
+        if (SC_HEIGHT == 812) {
+            make.height.mas_equalTo(44);
+
+        }else{
+            make.height.mas_equalTo(20);
+
+        }
+    }];
+    
     
     topView = [[UIView alloc] init];
-    topView.frame = CGRectMake(0, 20, SC_WIDTH, 44);
     topView.backgroundColor = COLORFromRGB(0xe10000);
     [self.view addSubview:topView];
+    [topView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(imageView.mas_bottom);
+        make.left.right.equalTo(self.view);
+        make.height.mas_equalTo(44);
+    }];
     
     UILabel *topLabel = [[UILabel alloc] init];
     topLabel.text = @"消息";
@@ -215,6 +233,9 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [nullImageView removeFromSuperview];
+    //修改状态栏颜色 为黑色
+    [UIApplication sharedApplication].statusBarStyle = UIStatusBarStyleDefault;
+
     
 }
 /*

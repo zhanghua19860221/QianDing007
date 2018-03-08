@@ -17,13 +17,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self tvGetUrlDataSource];
+    self.view.backgroundColor = COLORFromRGB(0xffffff);
+
     // Do any additional setup after loading the view.
 }
 - (void)tvGetUrlDataSource{
     
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.height.width.mas_equalTo(100);
@@ -114,15 +115,19 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.backgroundColor = [UIColor orangeColor];
         [self.view addSubview:self.tableView];
         _tableView.separatorStyle = NO;
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
             make.left.right.equalTo(self.view);
-            make.height.mas_offset(SC_HEIGHT-114);
-            
+            if (SC_HEIGHT == 812) {
+                make.height.mas_offset(SC_HEIGHT-138);
+                
+            }else{
+                make.height.mas_offset(SC_HEIGHT-114);
+                
+            }
         }];
         
         _tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{

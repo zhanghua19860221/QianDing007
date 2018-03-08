@@ -39,7 +39,7 @@
     [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     self.navigationController.navigationBar.barTintColor = COLORFromRGB(0xffffff);
-    
+
 }
 - (void)eaGetDateSource{
     //创建请求菊花进度条
@@ -84,7 +84,12 @@
     imageView.backgroundColor = COLORFromRGB(0xf9f9f9);
     [self.view addSubview:imageView];
     [imageView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view).offset(64);
+        if (SC_HEIGHT == 812) {
+            make.top.equalTo(self.view).offset(84);
+        }else{
+            make.top.equalTo(self.view).offset(64);
+            
+        }
         make.left.right.equalTo(self.view);
         make.height.mas_equalTo(10);
         
@@ -448,13 +453,9 @@
 - (void)eaCreateNavgation{
     
     self.navigationItem.title = @"重新编辑";
-    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftButton.frame = CGRectMake(0, 0, 20,20);
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:COLORFromRGB(0x333333),NSForegroundColorAttributeName,nil]];
-    [leftButton setImage:[UIImage imageNamed:@"返回箭头红色"] forState:UIControlStateNormal];
-    [leftButton addTarget:self action:@selector(leftBackClick) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];
-    self.navigationItem.leftBarButtonItem = leftItem;
+    CUSTOMBACKCONCTORLLER(leftBackClick,self,self.view,@"返回箭头红色",20,20)
+
     
 
 }

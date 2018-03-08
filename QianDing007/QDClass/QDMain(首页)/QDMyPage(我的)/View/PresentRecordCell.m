@@ -103,7 +103,7 @@
     UILabel *money= [[UILabel alloc] init];
     money.font = [UIFont systemFontOfSize:14];
     money.textAlignment = NSTextAlignmentLeft;
-    [money setTextColor:COLORFromRGB(0x333333)];
+    [money setTextColor:COLORFromRGB(0x666666)];
     money.text = @"提现金额";
     [self.contentView addSubview:money];
     [money mas_makeConstraints:^(MASConstraintMaker *make) {
