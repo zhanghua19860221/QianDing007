@@ -336,6 +336,8 @@
     
     mp_showCodeView  = [[UIView alloc] init];
     mp_showCodeView.backgroundColor = COLORFromRGB(0xffffff);
+    mp_showCodeView.layer.cornerRadius = 5;
+    mp_showCodeView.layer.masksToBounds = YES;
     [mp_myCodeMaskView addSubview:mp_showCodeView];
     [mp_showCodeView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(mp_myCodeMaskView).offset(20);

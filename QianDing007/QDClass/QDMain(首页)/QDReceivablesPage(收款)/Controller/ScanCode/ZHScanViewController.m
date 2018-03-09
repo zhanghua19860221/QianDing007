@@ -263,7 +263,7 @@
             [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
             
         }else{
-            [self alertControllerMessage:responseObject[@"info"]];
+            [self alertControllerMessage:@"网络错误，请稍后重试。"];
 
         }
         //移除菊花进度条

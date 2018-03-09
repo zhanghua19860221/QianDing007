@@ -1512,10 +1512,10 @@
 				INFOPLIST_FILE = QianDing007/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hengfengyzf.yinzhifubusiness;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hengfengyzf.YinZhiFuBusinesss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f9ea84ed-f7be-4751-8956-8c27cbdff57c";
-				PROVISIONING_PROFILE_SPECIFIER = QianDingFile;
+				PROVISIONING_PROFILE = "927f758d-a8b3-444d-b9fa-aa6517379a48";
+				PROVISIONING_PROFILE_SPECIFIER = QDSHD007;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1540,10 +1540,10 @@
 				INFOPLIST_FILE = QianDing007/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hengfengyzf.yinzhifubusiness;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hengfengyzf.YinZhiFuBusinesss;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f9ea84ed-f7be-4751-8956-8c27cbdff57c";
-				PROVISIONING_PROFILE_SPECIFIER = QianDingFile;
+				PROVISIONING_PROFILE = "927f758d-a8b3-444d-b9fa-aa6517379a48";
+				PROVISIONING_PROFILE_SPECIFIER = QDSHD007;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
