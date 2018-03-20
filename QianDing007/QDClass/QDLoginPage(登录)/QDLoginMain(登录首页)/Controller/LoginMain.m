@@ -736,8 +736,6 @@
         return NO;
     }
     
-    NSLog(@"1231231");
-    
     return YES;
 }
 /**

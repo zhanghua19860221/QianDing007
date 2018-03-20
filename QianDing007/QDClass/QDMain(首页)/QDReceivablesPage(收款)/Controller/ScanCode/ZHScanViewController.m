@@ -13,7 +13,6 @@
     
     int num;
     BOOL upOrdown;
-    CAShapeLayer *cropLayer;
     NSString *Str;
 }
 @end
@@ -111,17 +110,24 @@
  创建透明度蒙板
  */
 - (void)creatCropLayer{
-    
-    cropLayer = [[CAShapeLayer alloc] init];
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, nil, kScanRect);
-    CGPathAddRect(path, nil, self.view.bounds);
-    [cropLayer setFillRule:kCAFillRuleEvenOdd];
-    [cropLayer setPath:path];
-    [cropLayer setFillColor:[UIColor blackColor].CGColor];
-    [cropLayer setOpacity:0.6];
-    [cropLayer setNeedsDisplay];
+
+    CAShapeLayer* cropLayer = [[CAShapeLayer alloc] init];
     [self.view.layer addSublayer:cropLayer];
+    // 创建一个绘制路径
+    CGMutablePathRef path =CGPathCreateMutable();
+    // 空心矩形的rect
+    CGRect cropRect = CGRectMake((SC_WIDTH/2.0-130), (SC_HEIGHT/2.0-130), 260, 260);
+    // 绘制rect
+    CGPathAddRect(path, nil, self.view.bounds);
+    CGPathAddRect(path, nil, cropRect);
+    // 设置填充规则(重点)
+    [cropLayer setFillRule:kCAFillRuleEvenOdd];
+    // 关联绘制的path
+    [cropLayer setPath:path];
+    // 设置填充的颜色
+    [cropLayer setFillColor:[[UIColor blackColor] colorWithAlphaComponent:0.7].CGColor];
+    //手动释放绘图路径 不然会造成内存泄露
+    CGPathRelease(path);
     
 }
 
