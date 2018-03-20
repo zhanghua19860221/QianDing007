@@ -217,12 +217,11 @@
                            @"safe_token":safeToken
                            
                            };
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:[shareDelegate stringBuilder:REGISTERTHIRDLOGIN_URL] parameters:rlDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:REGISTERTHIRDLOGIN_URL] parameters:rlDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -248,12 +247,12 @@
 
     [btn startCountDownTime:60 withCountDownBlock:^{
         NSDictionary *dic = @{@"phone":rl_teleLabel.text};
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        [manager POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+        [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+        [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+        
+        [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject){
             rl_sess_id = [responseObject objectForKey:@"sess_id"];

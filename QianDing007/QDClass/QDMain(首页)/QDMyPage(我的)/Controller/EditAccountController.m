@@ -53,12 +53,11 @@
     NSString *oldSession  = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
     NSDictionary *paDic =@{@"auth_session":oldSession};
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:[shareDelegate stringBuilder:GETBANKINFO_URL] parameters:paDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:GETBANKINFO_URL] parameters:paDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -420,12 +419,11 @@
                            @"bank_info":bankNumbField.text   //银行卡号
                            };
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:[shareDelegate stringBuilder:SAVESETBANKINFO_URL] parameters:saDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:SAVESETBANKINFO_URL] parameters:saDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

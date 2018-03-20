@@ -174,12 +174,11 @@
     
     NSDictionary *bdDic =@{@"auth_session":oldSession};
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:[shareDelegate stringBuilder:DELEGATEGETINFO_URL] parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:DELEGATEGETINFO_URL] parameters:bdDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -861,9 +860,8 @@
     [[shareDelegate shareNSUserDefaults] setObject:imageData forKey:@"LOGO"];
     NSString *oldSession = [[shareDelegate shareNSUserDefaults] objectForKey:@"auth_session"];
 
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     //接收类型不一致请替换一致text/html或别的
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json",
                                                          @"text/html",
                                                          @"image/jpeg",
                                                          @"image/png",
@@ -873,7 +871,7 @@
     NSDictionary *mpDic =@{@"auth_session":oldSession,
                            @"logo":@"头像.jpeg"
                            };
-    [manager POST:[shareDelegate stringBuilder:PUSHLOGO_URL] parameters:mpDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:PUSHLOGO_URL] parameters:mpDic constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
         NSString *fileName = @"头像.jpeg";
         //上传的参数(上传图片，以文件流的格式)
         [formData appendPartWithFileData:imageData

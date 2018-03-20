@@ -148,12 +148,11 @@
         NSDictionary *dic = @{@"phone":nct_newTeleField.text,
                               @"sess_id":sess_id
                               };
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-        manager.responseSerializer = [AFJSONResponseSerializer serializer];
-        manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+        [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+        [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+        [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
         
-        [manager POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
+        [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:SMS_URL] parameters:dic progress:^(NSProgress * _Nonnull uploadProgress) {
             
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -198,7 +197,6 @@
 
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.height.width.mas_equalTo(100);
@@ -206,12 +204,11 @@
     [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
-    [manager POST:[shareDelegate stringBuilder:MODIFY_PHONE_URL] parameters:nctDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:MODIFY_PHONE_URL] parameters:nctDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

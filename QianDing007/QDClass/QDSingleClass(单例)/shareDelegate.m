@@ -41,6 +41,21 @@
     return sharedAccountManagerInstance;
 }
 /**
+ SessionManager单例对象
+ 
+ */
++ (AFHTTPSessionManager *)shareAFHTTPSessionManager
+{
+    static AFHTTPSessionManager * shareAFHTTPSessionManager = nil;
+    static dispatch_once_t predicate;
+    dispatch_once(&predicate, ^{
+        
+        shareAFHTTPSessionManager = [AFHTTPSessionManager manager];
+        
+    });
+    return shareAFHTTPSessionManager;
+}
+/**
  AVSpeechSynthesizer 语音播报单例
  
  */

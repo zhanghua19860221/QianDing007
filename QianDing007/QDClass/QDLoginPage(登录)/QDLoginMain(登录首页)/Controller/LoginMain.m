@@ -259,12 +259,11 @@
              }];
              [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
              
-             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-             manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-             manager.responseSerializer = [AFJSONResponseSerializer serializer];
-             manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+             [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+             [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+             [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
              
-             [manager POST:[shareDelegate stringBuilder:THIRDLOGIN_URL] parameters:tlDic progress:^(NSProgress * _Nonnull uploadProgress) {
+             [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:THIRDLOGIN_URL] parameters:tlDic progress:^(NSProgress * _Nonnull uploadProgress) {
                  
                  
              } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -367,12 +366,11 @@
                    }];
                    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
                    
-                   AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                   manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-                   manager.responseSerializer = [AFJSONResponseSerializer serializer];
-                   manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+                   [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+                   [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+                   [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
                    
-                   [manager POST:[shareDelegate stringBuilder:THIRDLOGIN_URL] parameters:tlDic progress:^(NSProgress * _Nonnull uploadProgress) {
+                   [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:THIRDLOGIN_URL] parameters:tlDic progress:^(NSProgress * _Nonnull uploadProgress) {
                        
                        
                    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
@@ -505,11 +503,11 @@
                            @"password":rsPassWord_md5,
 
                            };
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
-    [manager POST:[shareDelegate stringBuilder:LOGIN_URL] parameters:lgDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:LOGIN_URL] parameters:lgDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

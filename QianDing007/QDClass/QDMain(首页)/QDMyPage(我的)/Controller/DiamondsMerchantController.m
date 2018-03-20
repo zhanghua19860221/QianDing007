@@ -30,7 +30,6 @@
     
     //创建请求菊花进度条
     [self.view addSubview:[shareDelegate shareZHProgress]];
-    [self.view bringSubviewToFront:[shareDelegate shareZHProgress]];
     [[shareDelegate shareZHProgress] mas_makeConstraints:^(MASConstraintMaker *make) {
         make.center.equalTo(self.view);
         make.height.width.mas_equalTo(100);
@@ -43,13 +42,12 @@
                            @"supplier_level":@"4"
                            };
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)1];
 
-    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:urlStr] parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
@@ -172,14 +170,13 @@
                            
                            };
     
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
-    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
+    [shareDelegate shareAFHTTPSessionManager].requestSerializer = [AFHTTPRequestSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer = [AFJSONResponseSerializer serializer];
+    [shareDelegate shareAFHTTPSessionManager].responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript",@"text/html",@"text/plain",nil];
     
     NSString * urlStr = [NSString stringWithFormat:USERLIST_URL,(long)self.page++];
  
-    [manager POST:[shareDelegate stringBuilder:urlStr] parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
+    [[shareDelegate shareAFHTTPSessionManager] POST:[shareDelegate stringBuilder:urlStr] parameters:ulDic progress:^(NSProgress * _Nonnull uploadProgress) {
         
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

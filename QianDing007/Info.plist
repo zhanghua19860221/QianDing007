@@ -64,7 +64,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.1.1</string>
+	<string>1.1.2</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>mqqopensdkapiv2</string>
@@ -93,12 +93,6 @@
 	<string>App需要您的同意,才能访问麦克风</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photoLibraryDesciption</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

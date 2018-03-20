@@ -101,10 +101,6 @@
 
 
 
-
-
-
-
 // 公用头文件
 
 //进度条
@@ -161,15 +157,20 @@
 
 // 自定义宏
 
+//获取屏幕宽高
 #define SC_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define SC_HEIGHT [UIScreen mainScreen].bounds.size.height
 #define WS(weakSelf)  __weak __typeof(&*self)weakSelf = self
+//屏幕比例适配
 #define SCALE_X 375.0*SC_WIDTH
 #define SCALE_Y 667.0*SC_HEIGHT
-#define COLORFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000)>>16))/255.0 green:((float)((rgbValue & 0xFF00)>>8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]//设置颜色
+//设置颜色
+#define COLORFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000)>>16))/255.0 green:((float)((rgbValue & 0xFF00)>>8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+//分享内容
 #define SHATETEXT  @"钱叮是最前沿的支付平台，开启聚合支付新模式"
 #define SHATETITLE @"好友邀请您加入钱叮商户一起赚大钱"
 
+//导航栏 leftItem返回键封装
 #define CUSTOMBACKCONCTORLLER(backMethodName,delegate,viewContorll,backIconName,iconWidth,iconHeight){    UIButton *leftButton = [UIButton buttonWithType:UIButtonTypeCustom];leftButton.backgroundColor = [UIColor clearColor];[leftButton addTarget:delegate action:@selector(backMethodName) forControlEvents:UIControlEventTouchUpInside];[viewContorll addSubview:leftButton];[leftButton mas_makeConstraints:^(MASConstraintMaker *make) {if (SC_HEIGHT == 812) {make.top.equalTo(viewContorll).offset(44);}else{make.top.equalTo(viewContorll).offset(20);}make.left.equalTo(viewContorll);make.width.mas_equalTo(100);make.height.mas_equalTo(44);}];    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithCustomView:leftButton];delegate.navigationItem.leftBarButtonItem = leftItem;UIButton *showImageBtn = [UIButton buttonWithType:UIButtonTypeCustom];[showImageBtn setImage:[UIImage imageNamed:backIconName] forState:UIControlStateNormal];[showImageBtn addTarget:delegate action:@selector(backMethodName) forControlEvents:UIControlEventTouchUpInside];[leftButton addSubview:showImageBtn];[showImageBtn mas_makeConstraints:^(MASConstraintMaker *make) {make.centerY.equalTo(leftButton.mas_centerY);make.left.equalTo(leftButton);make.width.mas_equalTo(iconWidth);make.height.mas_equalTo(iconHeight);}];}
 
 

@@ -11,6 +11,8 @@
 #import <FMDatabase.h>
 #import <FMDB.h>
 #import <AVFoundation/AVFoundation.h>
+#import "AFHTTPSessionManager.h"
+
 
 @interface shareDelegate : NSObject
 
@@ -28,6 +30,11 @@
  NSUserDefaults单例
  */
 + (NSUserDefaults *)shareNSUserDefaults;
+/**
+ 
+ SessionManager单例
+ */
++ (AFHTTPSessionManager *)shareAFHTTPSessionManager;
 
 /**
  AVSpeechSynthesizer 语音播报单例

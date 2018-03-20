@@ -30,6 +30,7 @@
 		1444FDE41FF4781700F6D945 /* LSCityChooseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDE21FF4781700F6D945 /* LSCityChooseView.m */; };
 		1444FDEB1FF4B30A00F6D945 /* BecomeDelegateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */; };
 		144C0BB72028470F00E4D8D4 /* QDPickerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 144C0BB62028470F00E4D8D4 /* QDPickerModel.m */; };
+		146954EA205FAB1200E0ADDC /* bankList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 146954E9205FAB1200E0ADDC /* bankList.plist */; };
 		146EA966201EBFF100E53CA8 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 146EA965201EBFF000E53CA8 /* Photos.framework */; };
 		147B90B51FFF78AB00644A89 /* SuccessScanController.m in Sources */ = {isa = PBXBuildFile; fileRef = 147B90B41FFF78AB00644A89 /* SuccessScanController.m */; };
 		14823DFE1FFCCD990064D74A /* ChangeTeleController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14823DFD1FFCCD990064D74A /* ChangeTeleController.m */; };
@@ -183,6 +184,7 @@
 		1444FDEA1FF4B30A00F6D945 /* BecomeDelegateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BecomeDelegateController.m; sourceTree = "<group>"; };
 		144C0BB52028470F00E4D8D4 /* QDPickerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QDPickerModel.h; sourceTree = "<group>"; };
 		144C0BB62028470F00E4D8D4 /* QDPickerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QDPickerModel.m; sourceTree = "<group>"; };
+		146954E9205FAB1200E0ADDC /* bankList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = bankList.plist; path = "QianDing007/QDClass/QDMain(首页)/QDMyPage(我的)/bankList.plist"; sourceTree = SOURCE_ROOT; };
 		146EA965201EBFF000E53CA8 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		147B90B31FFF78AB00644A89 /* SuccessScanController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuccessScanController.h; path = ScanCode/SuccessScanController.h; sourceTree = "<group>"; };
 		147B90B41FFF78AB00644A89 /* SuccessScanController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuccessScanController.m; path = ScanCode/SuccessScanController.m; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 		1444FDDA1FF476A300F6D945 /* SelectorView */ = {
 			isa = PBXGroup;
 			children = (
+				146954E9205FAB1200E0ADDC /* bankList.plist */,
 				1444FDE01FF4781700F6D945 /* city.plist */,
 				1444FDE11FF4781700F6D945 /* LSCityChooseView.h */,
 				1444FDE21FF4781700F6D945 /* LSCityChooseView.m */,
@@ -1160,6 +1163,7 @@
 				14A0ACF01FDA1D6C0095003F /* LaunchScreen.storyboard in Resources */,
 				1444FDE31FF4781700F6D945 /* city.plist in Resources */,
 				14A0ACED1FDA1D6C0095003F /* images.xcassets in Resources */,
+				146954EA205FAB1200E0ADDC /* bankList.plist in Resources */,
 				14A0ACEB1FDA1D6C0095003F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

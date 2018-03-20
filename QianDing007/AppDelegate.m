@@ -120,11 +120,8 @@
 }
 
 /**
- 
  *  网络状态变化。
- 
  *
- 
  *  @param status 网络状态。
  
  */
@@ -182,40 +179,40 @@
  应用程序将要由活动状态切换到非活动状态时执行的委托调用，如按下home 按钮，返回主屏幕，或全屏之间切换应用程序等。
 */
 //程序后台运行时 激活多媒体处理事件 保持语音播报
--(void)applicationWillResignActive:(UIApplication* )application{
-    //开启后台处理多媒体事件
-    NSLog(@"%@",@" 应用程序将要由活动状态切换到非活动状态时执行的委托调用");
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    AVAudioSession *session=[AVAudioSession sharedInstance];
-    [session setActive:YES error:nil];
-    //后台播放
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    //这样做，可以在按home键进入后台后 ，播放一段时间，几分钟吧。
-    //但是不能持续播放网络歌曲，若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是：
-    //其中的_bgTaskId是后台任务
-    UIBackgroundTaskIdentifier _bgTaskId;
-    _bgTaskId = [AppDelegate backgroundPlayerID:_bgTaskId];
-}
+//-(void)applicationWillResignActive:(UIApplication* )application{
+//    //开启后台处理多媒体事件
+//    NSLog(@"%@",@" 应用程序将要由活动状态切换到非活动状态时执行的委托调用");
+//    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+//    AVAudioSession *session=[AVAudioSession sharedInstance];
+//    [session setActive:YES error:nil];
+//    //后台播放
+//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+//    //这样做，可以在按home键进入后台后 ，播放一段时间，几分钟吧。
+//    //但是不能持续播放网络歌曲，若需要持续播放网络歌曲，还需要申请后台任务id，具体做法是：
+//    //其中的_bgTaskId是后台任务
+//    UIBackgroundTaskIdentifier _bgTaskId;
+//    _bgTaskId = [AppDelegate backgroundPlayerID:_bgTaskId];
+//}
 
 //程序后台运行时 激活多媒体处理事件 保持语音播报
 
 //实现一下backgroundPlayerID:这个方法:
-+(UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId{
-    //设置并激活音频会话类别
-    AVAudioSession *session=[AVAudioSession sharedInstance];
-    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-    [session setActive:YES error:nil];
-    //允许应用程序接收远程控制
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    //设置后台任务ID
-    UIBackgroundTaskIdentifier newTaskId=UIBackgroundTaskInvalid;
-    newTaskId=[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
-    if(newTaskId!=UIBackgroundTaskInvalid&&backTaskId!=UIBackgroundTaskInvalid)
-    {
-        [[UIApplication sharedApplication] endBackgroundTask:backTaskId];
-    }
-    return newTaskId;
-}
+//+(UIBackgroundTaskIdentifier)backgroundPlayerID:(UIBackgroundTaskIdentifier)backTaskId{
+//    //设置并激活音频会话类别
+//    AVAudioSession *session=[AVAudioSession sharedInstance];
+//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
+//    [session setActive:YES error:nil];
+//    //允许应用程序接收远程控制
+//    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+//    //设置后台任务ID
+//    UIBackgroundTaskIdentifier newTaskId=UIBackgroundTaskInvalid;
+//    newTaskId=[[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil];
+//    if(newTaskId!=UIBackgroundTaskInvalid&&backTaskId!=UIBackgroundTaskInvalid)
+//    {
+//        [[UIApplication sharedApplication] endBackgroundTask:backTaskId];
+//    }
+//    return newTaskId;
+//}
 
 #pragma ************************mob分享******************************
 
