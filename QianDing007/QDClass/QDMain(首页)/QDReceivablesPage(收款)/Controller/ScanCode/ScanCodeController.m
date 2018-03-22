@@ -11,7 +11,7 @@
 @interface ScanCodeController (){
     UITextField * sc_moneyField;
     UITextField * sc_moneyOneField;
-    NSString * sc_recordMoney;//拼接赋值字符串
+    NSString    * sc_recordMoney;//拼接赋值字符串
     NSMutableString * sc_oldMoney;//一个个清除数据记录
     UIView *sc_topView;//头部视图
     UIView *sc_calculatorView;//计算器视图

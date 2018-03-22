@@ -75,8 +75,8 @@
     
     self.rc_tabberView = [[UIView alloc] init];
     self.rc_tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
-    self.rc_tabberView.layer.borderWidth = 1;
-    self.rc_tabberView.layer.borderColor = [[UIColor grayColor] CGColor];
+
+    
     if (SC_HEIGHT == 812) {
         self.rc_tabberView.frame = CGRectMake(0, SC_HEIGHT-83, SC_WIDTH, 83);
     }else{
@@ -147,7 +147,7 @@
   [super viewDidDisappear:animated];
   [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"removeTabBar"  object:nil];
   [[NSNotificationCenter defaultCenter]  removeObserver:self  name:@"showTabBar"    object:nil];
-    [[NSNotificationCenter defaultCenter]  removeObserver:self
+  [[NSNotificationCenter defaultCenter]  removeObserver:self
                                                         name:@"saveFMDBData"                  object:nil];
     
 }
