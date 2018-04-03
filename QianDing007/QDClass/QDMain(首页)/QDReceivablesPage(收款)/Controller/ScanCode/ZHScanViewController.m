@@ -270,13 +270,16 @@
             [shareDelegate returnLoginController:responseObject[@"info"] UINavigationController:self.navigationController UIViewController:self];
             
         }else{
-            [self alertControllerMessage:@"网络错误，请稍后重试。"];
+            [self alertControllerMessage:@"服务器网络错误，请稍后重试。"];
 
         }
         //移除菊花进度条
         [[shareDelegate shareZHProgress] removeFromSuperview];
         
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        
+        
+        
         
     }];
 

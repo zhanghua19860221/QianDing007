@@ -253,6 +253,12 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        
+        //去除上啦加载数据屏幕弹动问题
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionHeaderHeight =0;
+        _tableView.estimatedSectionFooterHeight =0;
+        
         [self.view addSubview:_tableView];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);

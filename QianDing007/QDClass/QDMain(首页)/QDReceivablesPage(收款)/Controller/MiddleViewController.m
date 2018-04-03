@@ -135,6 +135,11 @@
         _tableView.backgroundColor = [UIColor orangeColor];
         [self.view addSubview:self.tableView];
         _tableView.separatorStyle = NO;
+        
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionHeaderHeight =0;
+        _tableView.estimatedSectionFooterHeight =0;
+        
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
@@ -223,7 +228,7 @@
             [self midShowAlert:responseObject[@"info"]];
         }
         [self.tableView reloadData];
-        
+
     } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error){
         [self endRefresh];
         

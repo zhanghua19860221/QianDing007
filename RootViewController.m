@@ -34,7 +34,8 @@
     //注册消息通知-把数据保存到数据库
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveFMDBData:) name:@"saveFMDBData" object:nil];
 
-    
+    self.tabBar.hidden = YES;
+
 }
 
 - (void)viewDidLoad{
@@ -75,6 +76,9 @@
     
     self.rc_tabberView = [[UIView alloc] init];
     self.rc_tabberView.backgroundColor =COLORFromRGB(0xf9f9f9);
+    self.rc_tabberView.layer.borderWidth = 0.5 ;
+    self.rc_tabberView.layer.borderColor = COLORFromRGB(0x666666).CGColor ;
+
 
     
     if (SC_HEIGHT == 812) {
@@ -88,6 +92,8 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
+        button.layer.borderWidth = 0;
+        button.layer.borderColor = COLORFromRGB(0xffffff).CGColor;
         button.tag = 100+i;
         button.frame = CGRectMake(i*SC_WIDTH/3.0, 0, SC_WIDTH/3.0, 49);
         [self.rc_tabberView addSubview:button];

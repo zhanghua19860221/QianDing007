@@ -9,8 +9,8 @@
 #ifndef QDFirstBloodpch_pch
 #define QDFirstBloodpch_pch
 
-//#define SERVER @"http://www.qiandingsc.com/"
-#define SERVER @"http://101.201.117.15/"
+#define SERVER @"http://www.qiandingsc.com/"
+//#define SERVER @"http://101.201.117.15/"
 
 //登录接口
 #define LOGIN_URL @"qd_api/index.php?ctl=qd_sso&act=login&r_type=1"

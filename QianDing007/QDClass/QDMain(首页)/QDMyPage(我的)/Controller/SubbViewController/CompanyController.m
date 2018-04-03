@@ -896,6 +896,7 @@
     
     UIImageView *handPotoView = [[UIImageView alloc] init];
     [handPotoView setImage:[UIImage imageNamed:@"示例"]];
+    handPotoView.contentMode = UIViewContentModeScaleAspectFit;
     handPotoView.backgroundColor = COLORFromRGB(0xffffff);
     [com_scrollView addSubview:handPotoView];
     [handPotoView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -935,7 +936,7 @@
     UIButton *licenseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [licenseBtn setImage:[UIImage imageNamed:@"营业执照"] forState:UIControlStateNormal];
     licenseBtn.tag = 103;
-    
+
     [licenseBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
     licenseBtn.backgroundColor = COLORFromRGB(0xffffff);
     [com_scrollView addSubview:licenseBtn];
@@ -958,6 +959,7 @@
     
     UIButton *doorFhotoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     [doorFhotoBtn setImage:[UIImage imageNamed:@"门头照"] forState:UIControlStateNormal];
+    doorFhotoBtn.imageView.contentMode = UIViewContentModeScaleAspectFit;
     doorFhotoBtn.tag = 104;
     [doorFhotoBtn addTarget:self action:@selector(cpButPhotoListClick:) forControlEvents:UIControlEventTouchUpInside];
     doorFhotoBtn.backgroundColor = COLORFromRGB(0xffffff);

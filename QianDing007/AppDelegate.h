@@ -25,6 +25,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *mainNav;
 @property (strong, nonatomic) LoginMain *root;
+@property (nonatomic ,assign)NSInteger allowRotate; 
 
 @end
 

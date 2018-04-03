@@ -117,6 +117,12 @@
         _tableView.dataSource = self;
         [self.view addSubview:self.tableView];
         _tableView.separatorStyle = NO;
+        
+        //去除上啦加载数据屏幕弹动问题
+        _tableView.estimatedRowHeight = 0;
+        _tableView.estimatedSectionHeaderHeight =0;
+        _tableView.estimatedSectionFooterHeight =0;
+        
         _tableView.backgroundColor = COLORFromRGB(0xf9f9f9);
         [_tableView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(self.view);
