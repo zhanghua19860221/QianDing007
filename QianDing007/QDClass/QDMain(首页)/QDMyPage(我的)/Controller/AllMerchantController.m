@@ -107,7 +107,7 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        [self.view addSubview:self.tableView];
+        [self.view addSubview:_tableView];
         _tableView.separatorStyle = NO;
         
         //去除上啦加载数据屏幕弹动问题
